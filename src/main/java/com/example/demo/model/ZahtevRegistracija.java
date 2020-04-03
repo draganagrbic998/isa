@@ -13,17 +13,17 @@ public class ZahtevRegistracija {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
-	private String email;
+	private String noviEmail;
 	@Column
-	private String lozinka;
+	private String novaLozinka;
 	@Column
-	private String ime;
+	private String novoIme;
 	@Column
-	private String prezime;
+	private String novoPrezime;
 	@Column
-	private String telefon;
+	private String noviTelefon;
 	@Column
-	private String brojOsiguranika;
+	private String noviBrojOsiguranika;
 	
 	public ZahtevRegistracija() {
 		super();
@@ -37,52 +37,52 @@ public class ZahtevRegistracija {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getNoviEmail() {
+		return noviEmail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setNoviEmail(String noviEmail) {
+		this.noviEmail = noviEmail;
 	}
 
-	public String getLozinka() {
-		return lozinka;
+	public String getNovaLozinka() {
+		return novaLozinka;
 	}
 
-	public void setLozinka(String lozinka) {
-		this.lozinka = lozinka;
+	public void setNovaLozinka(String novaLozinka) {
+		this.novaLozinka = novaLozinka;
 	}
 
-	public String getIme() {
-		return ime;
+	public String getNovoIme() {
+		return novoIme;
 	}
 
-	public void setIme(String ime) {
-		this.ime = ime;
+	public void setNovoIme(String novoIme) {
+		this.novoIme = novoIme;
 	}
 
-	public String getPrezime() {
-		return prezime;
+	public String getNovoPrezime() {
+		return novoPrezime;
 	}
 
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+	public void setNovoPrezime(String novoPrezime) {
+		this.novoPrezime = novoPrezime;
 	}
 
-	public String getTelefon() {
-		return telefon;
+	public String getNoviTelefon() {
+		return noviTelefon;
 	}
 
-	public void setTelefon(String telefon) {
-		this.telefon = telefon;
+	public void setNoviTelefon(String noviTelefon) {
+		this.noviTelefon = noviTelefon;
 	}
 
-	public String getBrojOsiguranika() {
-		return brojOsiguranika;
+	public String getNoviBrojOsiguranika() {
+		return noviBrojOsiguranika;
 	}
 
-	public void setBrojOsiguranika(String brojOsiguranika) {
-		this.brojOsiguranika = brojOsiguranika;
+	public void setNoviBrojOsiguranika(String noviBrojOsiguranika) {
+		this.noviBrojOsiguranika = noviBrojOsiguranika;
 	}
 	
 }
