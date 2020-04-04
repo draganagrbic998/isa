@@ -12,13 +12,13 @@ public class ZahtevRegistracijaConversion {
 	public ZahtevRegistracija get(ZahtevRegistracijaDTO zahtevDTO) {
 		
 		ZahtevRegistracija zahtev = new ZahtevRegistracija();
-		zahtev.setNoviEmail(zahtevDTO.getEmail());
-		zahtev.setNovaLozinka(zahtevDTO.getLozinka());
-		zahtev.setNovoIme(zahtevDTO.getIme());
-		zahtev.setNovoPrezime(zahtevDTO.getPrezime());
-		zahtev.setNoviTelefon(zahtevDTO.getTelefon());
-		zahtev.setNoviBrojOsiguranika(zahtevDTO.getBrojOsiguranika());
-		zahtev.setNovaLokacija(new Lokacija(zahtevDTO.getDrzava(), zahtevDTO.getGrad(), zahtevDTO.getAdresa()));
+		zahtev.setNoviEmail(zahtevDTO.getNoviEmail());
+		zahtev.setNovaLozinka(zahtevDTO.getNovaLozinka());
+		zahtev.setNovoIme(zahtevDTO.getNovoIme());
+		zahtev.setNovoPrezime(zahtevDTO.getNovoPrezime());
+		zahtev.setNoviTelefon(zahtevDTO.getNoviTelefon());
+		zahtev.setNoviBrojOsiguranika(zahtevDTO.getNoviBrojOsiguranika());
+		zahtev.setNovaLokacija(new Lokacija(zahtevDTO.getNovaDrzava(), zahtevDTO.getNoviGrad(), zahtevDTO.getNovaAdresa()));
 		return zahtev;
 		
 	}

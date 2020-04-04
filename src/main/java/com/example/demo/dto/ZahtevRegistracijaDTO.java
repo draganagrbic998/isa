@@ -4,15 +4,15 @@ import com.example.demo.model.ZahtevRegistracija;
 
 public class ZahtevRegistracijaDTO {
 	
-	private String email;
-	private String lozinka;
-	private String ime;
-	private String prezime;
-	private String telefon;
-	private String brojOsiguranika;
-	private String drzava;
-	private String grad;
-	private String adresa;
+	private String noviEmail;
+	private String novaLozinka;
+	private String novoIme;
+	private String novoPrezime;
+	private String noviTelefon;
+	private String noviBrojOsiguranika;
+	private String novaDrzava;
+	private String noviGrad;
+	private String novaAdresa;
 	
 	public ZahtevRegistracijaDTO() {
 		super();
@@ -20,89 +20,87 @@ public class ZahtevRegistracijaDTO {
 
 	public ZahtevRegistracijaDTO(ZahtevRegistracija zahtev) {
 		super();
-		this.email = zahtev.getNoviEmail();
-		this.lozinka = zahtev.getNovaLozinka();
-		this.ime = zahtev.getNovoIme();
-		this.prezime = zahtev.getNovoPrezime();
-		this.telefon = zahtev.getNoviTelefon();
-		this.brojOsiguranika = zahtev.getNoviBrojOsiguranika();
-		this.drzava = zahtev.getNovaLokacija().getDrzava();
-		this.grad = zahtev.getNovaLokacija().getGrad();
-		this.adresa = zahtev.getNovaLokacija().getAdresa();
+		this.noviEmail = zahtev.getNoviEmail();
+		this.novaLozinka = zahtev.getNovaLozinka();
+		this.novoIme = zahtev.getNovoIme();
+		this.novoPrezime = zahtev.getNovoPrezime();
+		this.noviTelefon = zahtev.getNoviTelefon();
+		this.noviBrojOsiguranika = zahtev.getNoviBrojOsiguranika();
+		this.novaDrzava = zahtev.getNovaLokacija().getDrzava();
+		this.noviGrad = zahtev.getNovaLokacija().getGrad();
+		this.novaAdresa = zahtev.getNovaLokacija().getAdresa();
 	}
 
-
-
-	public String getEmail() {
-		return email;
+	public String getNoviEmail() {
+		return noviEmail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setNoviEmail(String noviEmail) {
+		this.noviEmail = noviEmail;
 	}
 
-	public String getLozinka() {
-		return lozinka;
+	public String getNovaLozinka() {
+		return novaLozinka;
 	}
 
-	public void setLozinka(String lozinka) {
-		this.lozinka = lozinka;
+	public void setNovaLozinka(String novaLozinka) {
+		this.novaLozinka = novaLozinka;
 	}
 
-	public String getIme() {
-		return ime;
+	public String getNovoIme() {
+		return novoIme;
 	}
 
-	public void setIme(String ime) {
-		this.ime = ime;
+	public void setNovoIme(String novoIme) {
+		this.novoIme = novoIme;
 	}
 
-	public String getPrezime() {
-		return prezime;
+	public String getNovoPrezime() {
+		return novoPrezime;
 	}
 
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+	public void setNovoPrezime(String novoPrezime) {
+		this.novoPrezime = novoPrezime;
 	}
 
-	public String getTelefon() {
-		return telefon;
+	public String getNoviTelefon() {
+		return noviTelefon;
 	}
 
-	public void setTelefon(String telefon) {
-		this.telefon = telefon;
+	public void setNoviTelefon(String noviTelefon) {
+		this.noviTelefon = noviTelefon;
 	}
 
-	public String getBrojOsiguranika() {
-		return brojOsiguranika;
+	public String getNoviBrojOsiguranika() {
+		return noviBrojOsiguranika;
 	}
 
-	public void setBrojOsiguranika(String brojOsiguranika) {
-		this.brojOsiguranika = brojOsiguranika;
+	public void setNoviBrojOsiguranika(String noviBrojOsiguranika) {
+		this.noviBrojOsiguranika = noviBrojOsiguranika;
 	}
 
-	public String getDrzava() {
-		return drzava;
+	public String getNovaDrzava() {
+		return novaDrzava;
 	}
 
-	public void setDrzava(String drzava) {
-		this.drzava = drzava;
+	public void setNovaDrzava(String novaDrzava) {
+		this.novaDrzava = novaDrzava;
 	}
 
-	public String getGrad() {
-		return grad;
+	public String getNoviGrad() {
+		return noviGrad;
 	}
 
-	public void setGrad(String grad) {
-		this.grad = grad;
+	public void setNoviGrad(String noviGrad) {
+		this.noviGrad = noviGrad;
 	}
 
-	public String getAdresa() {
-		return adresa;
+	public String getNovaAdresa() {
+		return novaAdresa;
 	}
 
-	public void setAdresa(String adresa) {
-		this.adresa = adresa;
+	public void setNovaAdresa(String novaAdresa) {
+		this.novaAdresa = novaAdresa;
 	}
 
 }
