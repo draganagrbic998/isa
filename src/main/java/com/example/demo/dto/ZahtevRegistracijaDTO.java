@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.ZahtevRegistracija;
+
 public class ZahtevRegistracijaDTO {
 	
 	private String emailDTO;
@@ -11,6 +13,16 @@ public class ZahtevRegistracijaDTO {
 	
 	public ZahtevRegistracijaDTO() {
 		super();
+	}
+
+	public ZahtevRegistracijaDTO(ZahtevRegistracija zahtev) {
+		super();
+		this.emailDTO = zahtev.getNoviEmail();
+		this.lozinkaDTO = zahtev.getNovaLozinka();
+		this.imeDTO = zahtev.getNovoIme();
+		this.prezimeDTO = zahtev.getNovoPrezime();
+		this.telefonDTO = zahtev.getNoviTelefon();
+		this.brojOsiguranikaDTO = zahtev.getNoviBrojOsiguranika();
 	}
 
 	public String getEmailDTO() {

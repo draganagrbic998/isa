@@ -121,7 +121,10 @@ Vue.component('registracija', {
 			
 			if (this.greska) return;
 			
-			alert("MAMA MIA");
+			axios.post("/zahtevRegistracija/kreiranje", this.zahtev)
+			.then(response => {
+				alert("VAS ZAHTEV JE USPESNO POSLAT! Ocekujte odgovor u roku od par dana.");
+			});
 			
 		}
 		
