@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.ZahtevRegistracija;
+import com.example.demo.dto.ZahtevRegistracijaDTO;
+import com.example.demo.dto.conversion.ZahtevRegistracijaConversion;
 import com.example.demo.service.ZahtevRegistracijaService;
 
 @RestController
@@ -18,12 +19,15 @@ public class ZahtevRegistracijaController {
 	
 	@Autowired
 	private ZahtevRegistracijaService zahtevService;
+	
+	@Autowired
+	private ZahtevRegistracijaConversion zahtevConversion;
 		
 	//potrebno je dodati validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody ZahtevRegistracija zahtev) {
+	public ResponseEntity<?> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
 
-		this.zahtevService.create(zahtev);
+		this.zahtevService.create(this.zahtevConversion.get(zahtevDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
