@@ -93,3 +93,29 @@ th{
 .registracija td.right {
 	text-align: left;
 }
+
+/*-------------------------PRIJAVA-------------------------*/
+
+.prijava {
+	text-align: center;
+	margin: auto;
+	width: 50%;
+}
+
+.prijava h1 {
+	text-align: center;
+}
+
+.prijava table {
+	margin: auto;
+	border-style: none;
+}
+
+.prijava td {
+	border: none;		
+	min-width: 200px;
+}
+
+.prijava td.left {
+	text-align: right;
+}

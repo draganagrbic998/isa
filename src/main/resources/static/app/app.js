@@ -1,10 +1,12 @@
 const registracija = {template: '<registracija></registracija>'}
+const prijava = {template: '<prijava></prijava>'}
 
 const router = new VueRouter({
 
 	mode: 'hash', 
 	routes: [
-		{path: '/', component: registracija}
+		{path: '/', component: prijava},
+		{path: '/registracija', component: registracija}
 	]
 	
 });
