@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ZahtevRegistracija {
@@ -24,6 +26,9 @@ public class ZahtevRegistracija {
 	private String noviTelefon;
 	@Column
 	private String noviBrojOsiguranika;
+	@ManyToOne
+	@JoinColumn(name="lokacija")
+	private Lokacija lokacija;
 	
 	public ZahtevRegistracija() {
 		super();
@@ -83,6 +88,14 @@ public class ZahtevRegistracija {
 
 	public void setNoviBrojOsiguranika(String noviBrojOsiguranika) {
 		this.noviBrojOsiguranika = noviBrojOsiguranika;
+	}
+
+	public Lokacija getLokacija() {
+		return lokacija;
+	}
+
+	public void setLokacija(Lokacija lokacija) {
+		this.lokacija = lokacija;
 	}
 	
 }

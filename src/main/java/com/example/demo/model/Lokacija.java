@@ -23,6 +23,13 @@ public class Lokacija {
 		super();
 	}
 
+	public Lokacija(String drzava, String grad, String adresa) {
+		super();
+		this.drzava = drzava;
+		this.grad = grad;
+		this.adresa = adresa;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

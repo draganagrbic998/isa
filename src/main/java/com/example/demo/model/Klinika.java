@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -20,7 +19,7 @@ public class Klinika {
 	private Integer id;
 	@Column
 	private String opis;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="lokacija")
 	private Lokacija lokacija;
 	@OneToOne

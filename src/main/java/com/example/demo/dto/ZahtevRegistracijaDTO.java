@@ -10,6 +10,9 @@ public class ZahtevRegistracijaDTO {
 	private String prezimeDTO;
 	private String telefonDTO;
 	private String brojOsiguranikaDTO;
+	private String drzavaDTO;
+	private String gradDTO;
+	private String adresaDTO;
 	
 	public ZahtevRegistracijaDTO() {
 		super();
@@ -23,6 +26,9 @@ public class ZahtevRegistracijaDTO {
 		this.prezimeDTO = zahtev.getNovoPrezime();
 		this.telefonDTO = zahtev.getNoviTelefon();
 		this.brojOsiguranikaDTO = zahtev.getNoviBrojOsiguranika();
+		this.drzavaDTO = zahtev.getLokacija().getDrzava();
+		this.gradDTO = zahtev.getLokacija().getGrad();
+		this.adresaDTO = zahtev.getLokacija().getAdresa();
 	}
 
 	public String getEmailDTO() {
@@ -71,6 +77,30 @@ public class ZahtevRegistracijaDTO {
 
 	public void setBrojOsiguranikaDTO(String brojOsiguranikaDTO) {
 		this.brojOsiguranikaDTO = brojOsiguranikaDTO;
+	}
+
+	public String getDrzavaDTO() {
+		return drzavaDTO;
+	}
+
+	public void setDrzavaDTO(String drzavaDTO) {
+		this.drzavaDTO = drzavaDTO;
+	}
+
+	public String getGradDTO() {
+		return gradDTO;
+	}
+
+	public void setGradDTO(String gradDTO) {
+		this.gradDTO = gradDTO;
+	}
+
+	public String getAdresaDTO() {
+		return adresaDTO;
+	}
+
+	public void setAdresaDTO(String adresaDTO) {
+		this.adresaDTO = adresaDTO;
 	}
 
 }
