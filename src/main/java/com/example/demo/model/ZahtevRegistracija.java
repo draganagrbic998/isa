@@ -28,7 +28,7 @@ public class ZahtevRegistracija {
 	private String noviBrojOsiguranika;
 	@ManyToOne
 	@JoinColumn(name="lokacija")
-	private Lokacija lokacija;
+	private Lokacija novaLokacija;
 	
 	public ZahtevRegistracija() {
 		super();
@@ -90,12 +90,12 @@ public class ZahtevRegistracija {
 		this.noviBrojOsiguranika = noviBrojOsiguranika;
 	}
 
-	public Lokacija getLokacija() {
-		return lokacija;
+	public Lokacija getNovaLokacija() {
+		return novaLokacija;
 	}
 
-	public void setLokacija(Lokacija lokacija) {
-		this.lokacija = lokacija;
+	public void setNovaLokacija(Lokacija novaLokacija) {
+		this.novaLokacija = novaLokacija;
 	}
 	
 }
