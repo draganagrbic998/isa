@@ -4,6 +4,7 @@ import com.example.demo.model.ZahtevRegistracija;
 
 public class ZahtevRegistracijaDTO {
 	
+	private Integer id;
 	private String noviEmail;
 	private String novaLozinka;
 	private String novoIme;
@@ -20,6 +21,7 @@ public class ZahtevRegistracijaDTO {
 
 	public ZahtevRegistracijaDTO(ZahtevRegistracija zahtev) {
 		super();
+		this.id = zahtev.getId();
 		this.noviEmail = zahtev.getNoviEmail();
 		this.novaLozinka = zahtev.getNovaLozinka();
 		this.novoIme = zahtev.getNovoIme();
@@ -29,6 +31,14 @@ public class ZahtevRegistracijaDTO {
 		this.novaDrzava = zahtev.getNovaLokacija().getDrzava();
 		this.noviGrad = zahtev.getNovaLokacija().getGrad();
 		this.novaAdresa = zahtev.getNovaLokacija().getAdresa();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNoviEmail() {

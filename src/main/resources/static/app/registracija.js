@@ -3,6 +3,7 @@ Vue.component('registracija', {
 	data: function(){
 		return {
 			zahtev: {
+				'id': null,
 				'noviEmail': '', 
 				'novaLozinka': '', 
 				'novoIme': '', 
