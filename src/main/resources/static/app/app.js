@@ -3,6 +3,7 @@ const registracija = {template: '<registracija></registracija>'}
 const poslat_zahtev = {template: '<poslat_zahtev></poslat_zahtev>'}
 const registracijaLekara = {template: '<registracijaLekara></registracijaLekara>'}
 const lekarHome = {template: '<lekarHome></lekarHome>'}
+const lekarBrisanje = {template: '<lekarBrisanje></lekarBrisanje>'}
 const router = new VueRouter({
 
 	mode: 'hash', 
@@ -11,7 +12,8 @@ const router = new VueRouter({
 		{path: '/registracija', component: registracija}, 
 		{path: '/poslat_zahtev', component: poslat_zahtev},
 		{path: '/registracijaLekara', component: registracijaLekara},
-		{path: '/lekarHome', component: lekarHome}
+		{path: '/lekarHome', component: lekarHome},
+		{path: '/lekarBrisanje', component: lekarBrisanje}
 	]
 	
 });

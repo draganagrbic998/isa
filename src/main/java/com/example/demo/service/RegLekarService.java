@@ -28,6 +28,21 @@ public class RegLekarService {
 		return klinikaRepository.findAll();
 	}
 	
+	public void obrisiLekara(String email) {
+		Integer id = null;
+		Lekar l = null;
+		for (Lekar lekar : lekarRepository.findAll()) {
+			if (lekar.getEmail().equals(email)) {
+				id = lekar.getId();
+				break;
+			}
+		}
+		if (id!=null) {
+			lekarRepository.deleteById(id);
+			this.create(l);
+		}
+	}
+	
 	//ovo radi admin
 	public void create(Lekar lekar) {
 		this.lokacijaRepository.save(lekar.getLokacija());

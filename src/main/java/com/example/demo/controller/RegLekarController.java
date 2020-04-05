@@ -33,7 +33,14 @@ public class RegLekarController {
 	public ResponseEntity<?> create(@RequestBody RegLekarDTO lekarDTO) {
 		this.lekarService.create(this.lekarConversion.get(lekarDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
-		
+	}
+	
+	@PostMapping(value = "/brisanje", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ResponseEntity<?> create(@RequestBody String email) {
+		String emailV1 = email.replace("%40", "@");
+		String emailCorrect = emailV1.substring(0, emailV1.length() - 1);
+		this.lekarService.obrisiLekara(emailCorrect);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/dobaviKlinike", produces = MediaType.APPLICATION_JSON_VALUE)
