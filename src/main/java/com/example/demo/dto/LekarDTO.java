@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Lekar;
 
-public class RegLekarDTO {
+public class LekarDTO {
 
 	private String emailLekar;
 	private String lozinkaLekar;
@@ -15,11 +15,11 @@ public class RegLekarDTO {
 	private String novaSpecijalizacija;
 	private Integer novaKlinika;
 	
-	public RegLekarDTO() {
+	public LekarDTO() {
 		super();
 	}
 
-	public RegLekarDTO(Lekar lekar) {
+	public LekarDTO(Lekar lekar) {
 		super();
 		this.emailLekar = lekar.getEmail();
 		this.lozinkaLekar = lekar.getLozinka();

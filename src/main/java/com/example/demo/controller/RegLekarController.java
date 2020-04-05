@@ -14,33 +14,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Klinika;
-import com.example.demo.dto.RegLekarDTO;
-import com.example.demo.dto.conversion.RegLekarConversion;
-import com.example.demo.service.RegLekarService;
+import com.example.demo.dto.LekarDTO;
+import com.example.demo.dto.conversion.LekarConversion;
+import com.example.demo.service.LekarService;
 
 @RestController
 @RequestMapping(value = "/registracijaLekar")
 public class RegLekarController {
 
 	@Autowired
-	private RegLekarService lekarService;
+	private LekarService lekarService;
 	
 	@Autowired
-	private RegLekarConversion lekarConversion;
+	private LekarConversion lekarConversion;
 		
 	//nisam odradila validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody RegLekarDTO lekarDTO) {
+	public ResponseEntity<?> create(@RequestBody LekarDTO lekarDTO) {
 		this.lekarService.create(this.lekarConversion.get(lekarDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/brisanje", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ResponseEntity<?> create(@RequestBody String email) {
-		String emailV1 = email.replace("%40", "@");
-		String emailCorrect = emailV1.substring(0, emailV1.length() - 1);
-		this.lekarService.obrisiLekara(emailCorrect);
-		return new ResponseEntity<>(HttpStatus.OK);
+		String replaced = email.replace("%40", "@");
+		String emailCorrect = replaced.substring(0, replaced.length() - 1);
+		boolean isDone = this.lekarService.obrisiLekara(emailCorrect);
+		if (isDone) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@GetMapping(value="/dobaviKlinike", produces = MediaType.APPLICATION_JSON_VALUE)

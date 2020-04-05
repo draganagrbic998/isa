@@ -9,13 +9,13 @@ import com.example.demo.model.Lekar;
 import com.example.demo.model.Klinika;
 import com.example.demo.repository.LokacijaRepository;
 import com.example.demo.repository.KlinikaRepository;
-import com.example.demo.repository.RegLekarRepository;
+import com.example.demo.repository.LekarRepository;
 
 
 @Component
-public class RegLekarService {
+public class LekarService {
 	@Autowired
-	private RegLekarRepository lekarRepository;
+	private LekarRepository lekarRepository;
 	
 	@Autowired
 	private KlinikaRepository klinikaRepository;
@@ -28,19 +28,20 @@ public class RegLekarService {
 		return klinikaRepository.findAll();
 	}
 	
-	public void obrisiLekara(String email) {
+	public boolean obrisiLekara(String email) {
 		Integer id = null;
-		Lekar l = null;
 		for (Lekar lekar : lekarRepository.findAll()) {
 			if (lekar.getEmail().equals(email)) {
 				id = lekar.getId();
 				break;
 			}
 		}
-		if (id!=null) {
+		if (id != null) {
 			lekarRepository.deleteById(id);
-			this.create(l);
+			lekarRepository.flush();
+			return true;
 		}
+		return false;
 	}
 	
 	//ovo radi admin

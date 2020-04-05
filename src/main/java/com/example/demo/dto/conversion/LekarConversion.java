@@ -2,18 +2,18 @@ package com.example.demo.dto.conversion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.example.demo.dto.RegLekarDTO;
+import com.example.demo.dto.LekarDTO;
 import com.example.demo.model.Lokacija;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.model.Lekar;
 
 @Component
-public class RegLekarConversion {
+public class LekarConversion {
 
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 
-	public Lekar get(RegLekarDTO lekarDTO) {
+	public Lekar get(LekarDTO lekarDTO) {
 		Lekar lekar = new Lekar();
 		lekar.setEmail(lekarDTO.getEmailLekar());
 		lekar.setLozinka(lekarDTO.getLozinkaLekar());
@@ -29,7 +29,7 @@ public class RegLekarConversion {
 		return lekar;
 	}
 	
-	public RegLekarDTO get(Lekar lekar) {
-		return new RegLekarDTO(lekar);
+	public LekarDTO get(Lekar lekar) {
+		return new LekarDTO(lekar);
 	}
 }

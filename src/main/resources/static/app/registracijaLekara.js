@@ -10,8 +10,8 @@ Vue.component('registracijaLekara', {
 				'telefonLekar': '',  
 				'novaDrzava': '', 
 				'novaAdresa': '', 
-				'novaSpecijalizacija': '',
-				'novaKlinika': '',
+				'novaSpecijalizacija': 'Oftamolog',
+				'novaKlinika': '1',
 				'noviGrad': ''
 			}, 
 			klinike: null,
@@ -52,10 +52,10 @@ Vue.component('registracijaLekara', {
 					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
 					<tr><td class="left">Specijalizacija: </td>
 						<td class="right"><select v-model = "lekar.novaSpecijalizacija">
-						<option selected="selected" value="Oftamolog">Oftamolog</option>
+						<option>Oftamolog</option>
 						<option>Dermatolog</option>
 						</select></td></tr>
-					<tr><td class="left">Naziv klinike: </td>
+					<tr><td class="left">Id klinike: </td>
 						<td class="right"><select v-model="lekar.novaKlinika">
 						<option v-for="k in klinike">{{k.id}}</option>
 						</select></td></tr>
@@ -102,7 +102,7 @@ Vue.component('registracijaLekara', {
 		registruj_lekara: function(){
 			
 			this.osvezi();
-			this.lekar.lozinkaLekar = this.lozinkaLekar;
+			this.lekar.lozinkaLekar = this.novaLozinka;
 			
 			if (!this.emailProvera(this.lekar.emailLekar)){
 				this.greskaEmail = "Email nije ispravan. ";

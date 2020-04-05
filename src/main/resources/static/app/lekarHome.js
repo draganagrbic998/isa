@@ -10,9 +10,8 @@ Vue.component('lekarHome', {
 			
 				<tr><td colspan="10">Ovu stranicu tek treba napraviti.</td></tr>
 				<br>
-				<tr><td colspan="6"><router-link to="/">HOME PAGE</router-link></td></tr>
+				<tr><td colspan="6"><router-link to="/">Pocetna stranica</router-link></td></tr>
 				
-			
 			</table>
 		
 		</div>

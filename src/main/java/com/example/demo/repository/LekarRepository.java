@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.Lekar;
 
-public interface RegLekarRepository extends JpaRepository<Lekar, Integer>{
+public interface LekarRepository extends JpaRepository<Lekar, Integer>{
 
 }
