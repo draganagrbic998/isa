@@ -21,10 +21,13 @@ Vue.component('lekarBrisanje', {
 	
 	`, 
 	methods : {
+	
 		emailProvera: function emailIsValid(email){
     		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 		}, 
 		obrisiLekara : function() {
+			this.greska = false;
+			
 			if (!this.emailProvera(this.email)){
 				this.greskaEmail = "Email nije ispravan. ";
 				this.greska = true;
