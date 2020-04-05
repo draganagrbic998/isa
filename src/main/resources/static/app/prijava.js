@@ -27,6 +27,7 @@ Vue.component('prijava', {
 				<tr><td colspan="3">{{greskaServer}}</td></tr>
 				<br>
 				<tr><td colspan="6">Niste registrovani? <router-link to="/registracija">Registruj se</router-link></td></tr>
+				<tr><td colspan="6">Registruj lekara <router-link to="/registracijaLekara">Registruj lekara</router-link></td></tr>
 				
 			
 			</table>
