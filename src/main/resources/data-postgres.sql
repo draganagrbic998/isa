@@ -96,11 +96,11 @@ values ('sestra', true, true, 'sestra3@gmail.com', 'ja sam sestra3', 'sestra3', 
 --LEKARI (KORISNIK)
 --treba dodati radno vreme
 insert into korisnik (tip, aktivan, promenjena_sifra, email, lozinka, ime, prezime, telefon, lokacija, klinika, specijalizacija, ocena, pocetno_vreme, krajnje_vreme) 
-values ('lekar', true, true, 'lekar@gmail.com', 'ja sam lekar', 'lekar', 'lekar', '123123', 1, 1, 'izivljavanje', 1, to_date('12:00', 'HH:MI'), to_date('20:00', 'HH:MI'));
+values ('lekar', true, true, 'lekar@gmail.com', 'ja sam lekar', 'lekar', 'lekar', '123123', 1, 1, 'izivljavanje', 1, to_date('2:00', 'HH:MI'), to_date('12:00', 'HH:MI'));
 insert into korisnik (tip, aktivan, promenjena_sifra, email, lozinka, ime, prezime, telefon, lokacija, klinika, specijalizacija, ocena, pocetno_vreme, krajnje_vreme) 
-values ('lekar', true, true, 'lekar2@gmail.com', 'ja sam lekar2', 'lekar2', 'lekar2', '123123', 2, 2, 'istresanje', 2, to_date('12:00', 'HH:MI'), to_date('20:00', 'HH:MI'));
+values ('lekar', true, true, 'lekar2@gmail.com', 'ja sam lekar2', 'lekar2', 'lekar2', '123123', 2, 2, 'istresanje', 2, to_date('2:00', 'HH:MI'), to_date('12:00', 'HH:MI'));
 insert into korisnik (tip, aktivan, promenjena_sifra, email, lozinka, ime, prezime, telefon, lokacija, klinika, specijalizacija, ocena, pocetno_vreme, krajnje_vreme) 
-values ('lekar', true, true, 'lekar3@gmail.com', 'ja sam lekar3', 'lekar3', 'lekar3', '123123', 3, 3, 'provociranje', 3, to_date('12:00', 'HH:MI'), to_date('20:00', 'HH:MI'));
+values ('lekar', true, true, 'lekar3@gmail.com', 'ja sam lekar3', 'lekar3', 'lekar3', '123123', 3, 3, 'provociranje', 3, to_date('2:00', 'HH:MI'), to_date('12:00', 'HH:MI'));
 
 --PACIJENT (KORISNIK)
 insert into korisnik (tip, aktivan, promenjena_sifra, email, lozinka, ime, prezime, telefon, lokacija) 
