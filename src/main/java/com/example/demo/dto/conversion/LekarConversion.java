@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.dto.LekarDTO;
 import com.example.demo.model.Lokacija;
 import com.example.demo.repository.KlinikaRepository;
+import com.example.demo.model.Klinika;
 import com.example.demo.model.Lekar;
 
 @Component
@@ -15,6 +16,7 @@ public class LekarConversion {
 
 	public Lekar get(LekarDTO lekarDTO) {
 		Lekar lekar = new Lekar();
+		lekar.setId(lekarDTO.getId());
 		lekar.setEmail(lekarDTO.getEmailLekar());
 		lekar.setLozinka(lekarDTO.getLozinkaLekar());
 		lekar.setIme(lekarDTO.getImeLekar());
@@ -22,10 +24,11 @@ public class LekarConversion {
 		lekar.setTelefon(lekarDTO.getTelefonLekar());
 		lekar.setSpecijalizacija(lekarDTO.getNovaSpecijalizacija());
 		lekar.setLokacija(new Lokacija(lekarDTO.getNovaDrzava(), lekarDTO.getNoviGrad(), lekarDTO.getNovaAdresa()));
-		//ovo je bilo neophodno ovako odraditi, jer ukoliko bih stavila lekara kao zaposlenog
-		//dobijam gresku da treba onda Zaposlenog flush odraditi sto sada nije poenta
-		this.klinikaRepository.findById(lekarDTO.getNovaKlinika()).get().setZaposleni(null);
-		lekar.setKlinika(this.klinikaRepository.findById(lekarDTO.getNovaKlinika()).get());
+		//ovo samo za sada ovako da mozemo da testiramo
+		if (lekarDTO.getNovaKlinika() != null) {
+			Klinika klinika = this.klinikaRepository.getOne(lekarDTO.getNovaKlinika());
+			lekar.setKlinika(klinika);
+		}
 		return lekar;
 	}
 	

@@ -4,6 +4,7 @@ import com.example.demo.model.Lekar;
 
 public class LekarDTO {
 
+	private Integer id;
 	private String emailLekar;
 	private String lozinkaLekar;
 	private String imeLekar;
@@ -21,6 +22,7 @@ public class LekarDTO {
 
 	public LekarDTO(Lekar lekar) {
 		super();
+		this.id = lekar.getId();
 		this.emailLekar = lekar.getEmail();
 		this.lozinkaLekar = lekar.getLozinka();
 		this.imeLekar = lekar.getIme();
@@ -31,6 +33,14 @@ public class LekarDTO {
 		this.noviGrad = lekar.getLokacija().getGrad();
 		this.novaAdresa = lekar.getLokacija().getAdresa();
 		this.novaKlinika = lekar.getKlinika().getId();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getEmailLekar() {

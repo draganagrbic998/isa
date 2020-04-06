@@ -18,6 +18,8 @@ public class Klinika {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
+	private String naziv;
+	@Column
 	private String opis;
 	@OneToOne
 	@JoinColumn(name="lokacija")
@@ -44,6 +46,14 @@ public class Klinika {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
 	}
 
 	public String getOpis() {

@@ -3,6 +3,7 @@ Vue.component('registracijaLekara', {
 	data: function(){
 		return {
 			lekar: {
+				'id': null,
 				'emailLekar': '', 
 				'lozinkaLekar': '', 
 				'imeLekar': '', 
@@ -10,11 +11,10 @@ Vue.component('registracijaLekara', {
 				'telefonLekar': '',  
 				'novaDrzava': '', 
 				'novaAdresa': '', 
-				'novaSpecijalizacija': 'Oftamolog',
-				'novaKlinika': '1',
+				'novaSpecijalizacija': '',
+				'novaKlinika': '',
 				'noviGrad': ''
 			}, 
-			klinike: null,
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
 			greskaEmail: '', 
@@ -26,7 +26,9 @@ Vue.component('registracijaLekara', {
 			greskaDrzava: '', 
 			greskaAdresa: '', 
 			greskaGrad: '',
-			greska: false
+			greska: false, 
+			klinike: [], 
+			nazivKlinike: ''
 		}
 	}, 
 	
@@ -50,15 +52,14 @@ Vue.component('registracijaLekara', {
 					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="lekar.novaAdresa"></td><td>{{greskaAdresa}}</td></tr>
 					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
 					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
-					<tr><td class="left">Specijalizacija: </td>
-						<td class="right"><select v-model = "lekar.novaSpecijalizacija">
+					<tr><td class="left">Specijalizacija: </td><td class="right"><select v-model="lekar.novaSpecijalizacija">
 						<option>Oftamolog</option>
 						<option>Dermatolog</option>
-						</select></td></tr>
-					<tr><td class="left">Id klinike: </td>
-						<td class="right"><select v-model="lekar.novaKlinika">
-						<option v-for="k in klinike">{{k.id}}</option>
-						</select></td></tr>
+					</select></td><td>{{greskaSpecijalizacija}}</td></tr>
+					<tr><td class="left">Klinika: </td><td class="right"><select v-model="nazivKlinike">
+						<option v-for="k in klinike">{{k.naziv}}</option>
+					</select></td><td>{{greskaKlinika}}</td></tr>
+
 					
 					<br>
 					<tr><td colspan="3"><button v-on:click="registruj_lekara()">KREIRAJ PROFIL</button><br></td></tr>
@@ -76,7 +77,15 @@ Vue.component('registracijaLekara', {
 		novaLozinka: function(){
 			if (this.novaLozinka == '')
 				this.ponovljenaLozinka = '';
+		}, 
+		
+		nazivKlinike: function(){
+			for (let k of this.klinike){
+				if (k.naziv == this.nazivKlinike)
+					this.lekar.novaKlinika = k.id;
+			}
 		}
+		
 	}, 
 	
 	methods: {
@@ -92,7 +101,6 @@ Vue.component('registracijaLekara', {
 			this.greskaIme = '';
 			this.greskaPrezime = '';
 			this.greskaTelefon = '';
-			this.greskaBrojOsiguranika = '';
 			this.greskaDrzava = '';
 			this.greskaGrad = '';
 			this.greskaAdresa = '';
@@ -153,7 +161,7 @@ Vue.component('registracijaLekara', {
 			
 			if (this.greska) return;
 			
-			axios.post("/registracijaLekar/kreiranje", this.lekar)
+			axios.post("/lekar/kreiranje", this.lekar)
 			.then(response => {
 				//ovde da obavesti da je kreiran profil
 				this.$router.push("/lekarHome");
@@ -166,7 +174,7 @@ Vue.component('registracijaLekara', {
 	},
 	mounted () {
 		axios
-        .get("/registracijaLekar/dobaviKlinike")
+        .get("/klinika/pregled")
         .then(response => (this.klinike = response.data));
 	},
 	
