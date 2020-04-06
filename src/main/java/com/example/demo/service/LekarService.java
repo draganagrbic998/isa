@@ -21,21 +21,9 @@ public class LekarService {
 	
 	
 	
-//	public boolean obrisiLekara(String email) {
-//		Integer id = null;
-//		for (Lekar lekar : lekarRepository.findAll()) {
-//			if (lekar.getEmail().equals(email)) {
-//				id = lekar.getId();
-//				break;
-//			}
-//		}
-//		if (id != null) {
-//			lekarRepository.deleteById(id);
-//			lekarRepository.flush();
-//			return true;
-//		}
-//		return false;
-//	}
+	public void delete(Integer lekarId) {
+		this.korisnikRepository.deleteById(lekarId);
+	}
 	
 	//ovo radi admin
 	public void create(Lekar lekar) {

@@ -1,48 +1,53 @@
 Vue.component('lekarBrisanje', {
 
 	data: function () {
-	    return {
-	     email: '',
-	     greskaEmail : '',
-	     greska: false
-	    }
-},
+		return{
+			id: null, 
+			greskaId: '', 
+			greska: false
+		}
+	
+	},
+	
 	template: `
 	
-		<div>
+		
+		
+		<div class="prijava">
+		
 			<h1>Brisanje lekara</h1>
-			<table>	
+			
+			<table>
 				<tr><td colspan="6"><router-link to="/">Pocetna stranica</router-link></td></tr>
 				<br>
-				<tr><td class="left">Email:</td><td class="right"><input type="text" v-model="email" name="name"></td> {{greskaEmail}}</tr> 
+
+				<tr><td class="left">Id: </td><td><input type="text" v-model="id"></td><td>{{greskaId}}</td></tr>
+				<tr><td colspan="3"><br><button v-on:click="obrisiLekara()">OBRISI</button><br></td></tr>
+
+			
 			</table>
-			<button v-on:click="obrisiLekara">Obrisi</button>
+		
 		</div>
 	
 	`, 
 	methods : {
 	
-		emailProvera: function emailIsValid(email){
-    		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-		}, 
+		
 		obrisiLekara : function() {
 			this.greska = false;
 			
-			if (!this.emailProvera(this.email)){
-				this.greskaEmail = "Email nije ispravan. ";
-				this.greska = true;
-			}
 			
-			if (this.email === ''){
-				this.greskaEmail = "Morate uneti email. ";
+			
+			if (this.id === ''){
+				this.greskaId = "Morate uneti id. ";
 				this.greska = true;
 			}
 			
 			if (this.greska) return;
 			
-			axios.post("/registracijaLekar/brisanje", this.email)
+			axios.delete("/lekar/brisanje/" + this.id, this.id)
 			.then(response => {
-				alert("Lekar "+this.email+" uspesno obrisan!");
+				alert("Lekar "+this.id+" uspesno obrisan!");
 				this.$router.push("/");
 			})
 			.catch(error => {
