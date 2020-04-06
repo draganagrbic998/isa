@@ -5,7 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ZahtevPoseta extends ZahtevKlinika{
+public abstract class ZahtevPoseta extends ZahtevKlinika{
 
 	@ManyToOne
 	@JoinColumn(name="karton")

@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +12,8 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class StavkaSifrarnika {
+@DiscriminatorColumn(name="tip", discriminatorType=DiscriminatorType.STRING)
+public abstract class StavkaSifrarnika {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

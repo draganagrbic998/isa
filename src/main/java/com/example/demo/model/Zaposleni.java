@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Zaposleni extends Korisnik{
+public abstract class Zaposleni extends Korisnik{
 	
 	@Column
 	private Date pocetnoVreme;

@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@DiscriminatorValue("predefinisan")
 public class ZahtevPredefinisaniTermin extends ZahtevPoseta{
 
 	@ManyToOne
