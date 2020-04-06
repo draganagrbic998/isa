@@ -27,3 +27,4 @@ deploy:
   provider: heroku
   api_key: a116ba37-37f7-49f3-a85b-853d84577424
   app: nasaaplikacija
+  skip_cleanup: true
