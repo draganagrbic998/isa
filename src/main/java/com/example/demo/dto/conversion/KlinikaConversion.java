@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.model.Klinika;
+import com.example.demo.model.Lokacija;
 
 @Component
 public class KlinikaConversion {
@@ -16,6 +17,7 @@ public class KlinikaConversion {
 		klinika.setId(klinikaDTO.getId());
 		klinika.setNaziv(klinikaDTO.getNaziv());
 		klinika.setOpis(klinikaDTO.getOpis());
+		klinika.setLokacija(new Lokacija(klinikaDTO.getNovaDrzava(), klinikaDTO.getNoviGrad(), klinikaDTO.getNovaAdresa()));
 		return klinika;
 	}
 	
