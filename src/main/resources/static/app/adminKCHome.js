@@ -1,10 +1,10 @@
-Vue.component('lekarHome', {
+Vue.component('adminKCHome', {
 	
 	template: `
 	
 		<div>
 		
-			<h1>Pocetna stranica za lekara</h1>
+			<h1>Pocetna stranica za administratora klinickog centra</h1>
 			
 			<table>
 			

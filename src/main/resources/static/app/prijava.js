@@ -29,7 +29,8 @@ Vue.component('prijava', {
 				<tr><td colspan="6">Niste registrovani? <router-link to="/registracija">Registruj se</router-link></td></tr>
 				<tr><td colspan="6">Registruj lekara <router-link to="/registracijaLekara">Registruj lekara</router-link></td></tr>
 				<tr><td colspan="6">Obrisi lekara <router-link to="/lekarBrisanje">Obrisi lekara</router-link></td></tr>
-			
+				<tr><td colspan="6">Registruj Kliniku <router-link to="/registracijaKlinike">Registruj kliniku</router-link></td></tr>
+
 			</table>
 		
 		</div>
