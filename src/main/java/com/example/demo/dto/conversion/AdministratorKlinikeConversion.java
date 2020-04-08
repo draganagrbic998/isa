@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.AdministratorKlinikeDTO;
-import com.example.demo.model.Lokacija;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Klinika;
@@ -18,20 +17,19 @@ public class AdministratorKlinikeConversion {
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 
-	public Admin get(AdministratorKlinikeDTO adminKlinikeDTO) {
+	public Admin get(AdministratorKlinikeDTO lekarDTO) {
 		Admin admin = new Admin();
-		admin.setId(adminKlinikeDTO.getId());
-		admin.setEmail(adminKlinikeDTO.getEmailAdmin());
-		admin.setLozinka(adminKlinikeDTO.getLozinkaAdmin());
-		admin.setIme(adminKlinikeDTO.getImeAdmin());
-		admin.setPrezime(adminKlinikeDTO.getPrezimeAdmin());
-		admin.setTelefon(adminKlinikeDTO.getTelefonAdmin());
-		admin.setLokacija(new Lokacija(adminKlinikeDTO.getNovaDrzava(), adminKlinikeDTO.getNoviGrad(), adminKlinikeDTO.getNovaAdresa()));
-		//ovo samo za sada ovako da mozemo da testiramo
-		if (adminKlinikeDTO.getNovaKlinika() != null) {
-			Klinika klinika = this.klinikaRepository.getOne(adminKlinikeDTO.getNovaKlinika());
-			admin.setKlinika(klinika);
-		}
+		admin.setId(lekarDTO.getId());
+		admin.setEmail(lekarDTO.getEmail());
+		admin.setLozinka(lekarDTO.getLozinka());
+		admin.setIme(lekarDTO.getIme());
+		admin.setPrezime(lekarDTO.getPrezime());
+		admin.setTelefon(lekarDTO.getTelefon());
+		admin.setDrzava(lekarDTO.getDrzava());
+		admin.setAdresa(lekarDTO.getAdresa());
+		admin.setGrad(lekarDTO.getGrad());
+		Klinika klinika = this.klinikaRepository.getOne(lekarDTO.getKlinika());
+		admin.setKlinika(klinika);
 		return admin;
 	}
 	

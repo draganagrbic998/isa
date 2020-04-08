@@ -5,10 +5,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("lekar")
@@ -16,9 +14,8 @@ public class Lekar extends Zaposleni{
 
 	@Column
 	private String specijalizacija;
-	@OneToOne
-	@JoinColumn(name="ocena")
-	private Ocena ocena;
+	@OneToMany
+	private Set<Ocena> ocene;
 	@ManyToMany
 	private Set<Poseta> posete;
 	@OneToMany
@@ -36,12 +33,12 @@ public class Lekar extends Zaposleni{
 		this.specijalizacija = specijalizacija;
 	}
 
-	public Ocena getOcena() {
-		return ocena;
+	public Set<Ocena> getOcene() {
+		return ocene;
 	}
 
-	public void setOcena(Ocena ocena) {
-		this.ocena = ocena;
+	public void setOcene(Set<Ocena> ocene) {
+		this.ocene = ocene;
 	}
 
 	public Set<Poseta> getPosete() {

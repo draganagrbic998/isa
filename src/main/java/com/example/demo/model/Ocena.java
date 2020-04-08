@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Ocena {
@@ -12,10 +14,11 @@ public class Ocena {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@ManyToOne
+	@JoinColumn(name="pacijent")
+	private Pacijent pacijent;
 	@Column
-	private Double suma;
-	@Column
-	private Integer brojac;
+	private Double ocena;
 	
 	public Ocena() {
 		super();
@@ -29,20 +32,20 @@ public class Ocena {
 		this.id = id;
 	}
 
-	public Double getSuma() {
-		return suma;
+	public Pacijent getPacijent() {
+		return pacijent;
 	}
 
-	public void setSuma(Double suma) {
-		this.suma = suma;
+	public void setPacijent(Pacijent pacijent) {
+		this.pacijent = pacijent;
 	}
 
-	public Integer getBrojac() {
-		return brojac;
+	public Double getOcena() {
+		return ocena;
 	}
 
-	public void setBrojac(Integer brojac) {
-		this.brojac = brojac;
+	public void setOcena(Double ocena) {
+		this.ocena = ocena;
 	}
 	
 }

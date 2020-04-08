@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.model.Lekar;
-import com.example.demo.repository.LokacijaRepository;
 import com.example.demo.repository.KorisnikRepository;
 
 
@@ -16,10 +15,6 @@ public class LekarService {
 	private KorisnikRepository korisnikRepository;
 	
 	
-	@Autowired
-	private LokacijaRepository lokacijaRepository;
-	
-	
 	
 	public void delete(Integer lekarId) {
 		this.korisnikRepository.deleteById(lekarId);
@@ -27,7 +22,6 @@ public class LekarService {
 	
 	//ovo radi admin
 	public void create(Lekar lekar) {
-		this.lokacijaRepository.save(lekar.getLokacija());
 		this.korisnikRepository.save(lekar);
 	}
 }

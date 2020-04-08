@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class ZahtevRegistracija {
@@ -15,20 +13,24 @@ public class ZahtevRegistracija {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
-	private String noviEmail;
+	private String email;
 	@Column
-	private String novaLozinka;
+	private String lozinka;
 	@Column
-	private String novoIme;
+	private String ime;
 	@Column
-	private String novoPrezime;
+	private String prezime;
 	@Column
-	private String noviTelefon;
+	private String telefon;
 	@Column
-	private String noviBrojOsiguranika;
-	@ManyToOne
-	@JoinColumn(name="lokacija")
-	private Lokacija novaLokacija;
+	private String brojOsiguranika;
+	@Column
+	private String drzava;
+	@Column
+	private String grad;
+	@Column
+	private String adresa;
+	
 	
 	public ZahtevRegistracija() {
 		super();
@@ -42,60 +44,76 @@ public class ZahtevRegistracija {
 		this.id = id;
 	}
 
-	public String getNoviEmail() {
-		return noviEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setNoviEmail(String noviEmail) {
-		this.noviEmail = noviEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getNovaLozinka() {
-		return novaLozinka;
+	public String getLozinka() {
+		return lozinka;
 	}
 
-	public void setNovaLozinka(String novaLozinka) {
-		this.novaLozinka = novaLozinka;
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
 	}
 
-	public String getNovoIme() {
-		return novoIme;
+	public String getIme() {
+		return ime;
 	}
 
-	public void setNovoIme(String novoIme) {
-		this.novoIme = novoIme;
+	public void setIme(String ime) {
+		this.ime = ime;
 	}
 
-	public String getNovoPrezime() {
-		return novoPrezime;
+	public String getPrezime() {
+		return prezime;
 	}
 
-	public void setNovoPrezime(String novoPrezime) {
-		this.novoPrezime = novoPrezime;
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
 	}
 
-	public String getNoviTelefon() {
-		return noviTelefon;
+	public String getTelefon() {
+		return telefon;
 	}
 
-	public void setNoviTelefon(String noviTelefon) {
-		this.noviTelefon = noviTelefon;
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
 	}
 
-	public String getNoviBrojOsiguranika() {
-		return noviBrojOsiguranika;
+	public String getBrojOsiguranika() {
+		return brojOsiguranika;
 	}
 
-	public void setNoviBrojOsiguranika(String noviBrojOsiguranika) {
-		this.noviBrojOsiguranika = noviBrojOsiguranika;
+	public void setBrojOsiguranika(String brojOsiguranika) {
+		this.brojOsiguranika = brojOsiguranika;
 	}
 
-	public Lokacija getNovaLokacija() {
-		return novaLokacija;
+	public String getDrzava() {
+		return drzava;
 	}
 
-	public void setNovaLokacija(Lokacija novaLokacija) {
-		this.novaLokacija = novaLokacija;
+	public void setDrzava(String drzava) {
+		this.drzava = drzava;
+	}
+
+	public String getGrad() {
+		return grad;
+	}
+
+	public void setGrad(String grad) {
+		this.grad = grad;
+	}
+
+	public String getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
 	}
 	
 }

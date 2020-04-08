@@ -4,15 +4,15 @@ Vue.component('registracijaAdminaKlinike', {
 		return {
 			admin: {
 				'id': null,
-				'emailAdmin': '', 
-				'lozinkaAdmin': '', 
-				'imeAdmin': '', 
-				'prezimeAdmin': '', 
-				'telefonAdmin': '',  
-				'novaDrzava': '', 
-				'novaAdresa': '', 
-				'noviGrad': '', 
-				'novaKlinika': ''
+				'email': '', 
+				'lozinka': '', 
+				'ime': '', 
+				'prezime': '', 
+				'telefon': '',  
+				'drzava': '', 
+				'adresa': '', 
+				'grad': '', 
+				'klinika': ''
 			}, 
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
@@ -42,13 +42,13 @@ Vue.component('registracijaAdminaKlinike', {
 			
 				<table>
 				
-					<tr><td class="left">Email: </td><td class="right"><input type="text" v-model="admin.emailAdmin"></td><td>{{greskaEmail}}</td></tr>
-					<tr><td class="left">Ime: </td><td class="right"><input type="text" v-model="admin.imeAdmin"></td><td>{{greskaIme}}</td></tr>
-					<tr><td class="left">Prezime: </td><td class="right"><input type="text" v-model="admin.prezimeAdmin"></td><td>{{greskaPrezime}}</td></tr>
-					<tr><td class="left">Telefon: </td><td class="right"><input type="text" v-model="admin.telefonAdmin"></td><td>{{greskaTelefon}}</td></tr>
-					<tr><td class="left">Drzava: </td><td class="right"><input type="text" v-model="admin.novaDrzava"></td><td>{{greskaDrzava}}</td></tr>
-					<tr><td class="left">Grad: </td><td class="right"><input type="text" v-model="admin.noviGrad"></td><td>{{greskaGrad}}</td></tr>
-					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="admin.novaAdresa"></td><td>{{greskaAdresa}}</td></tr>
+					<tr><td class="left">Email: </td><td class="right"><input type="text" v-model="admin.email"></td><td>{{greskaEmail}}</td></tr>
+					<tr><td class="left">Ime: </td><td class="right"><input type="text" v-model="admin.ime"></td><td>{{greskaIme}}</td></tr>
+					<tr><td class="left">Prezime: </td><td class="right"><input type="text" v-model="admin.prezime"></td><td>{{greskaPrezime}}</td></tr>
+					<tr><td class="left">Telefon: </td><td class="right"><input type="text" v-model="admin.telefon"></td><td>{{greskaTelefon}}</td></tr>
+					<tr><td class="left">Drzava: </td><td class="right"><input type="text" v-model="admin.drzava"></td><td>{{greskaDrzava}}</td></tr>
+					<tr><td class="left">Grad: </td><td class="right"><input type="text" v-model="admin.grad"></td><td>{{greskaGrad}}</td></tr>
+					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="admin.adresa"></td><td>{{greskaAdresa}}</td></tr>
 					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
 					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
 
@@ -78,7 +78,7 @@ Vue.component('registracijaAdminaKlinike', {
 		nazivKlinike: function(){
 			for (let k of this.klinike){
 				if (k.naziv == this.nazivKlinike)
-					this.admin.novaKlinika = k.id;
+					this.admin.klinika = k.id;
 			}
 		}
 		
@@ -106,39 +106,39 @@ Vue.component('registracijaAdminaKlinike', {
 		registruj_admina_klinike: function(){
 			
 			this.osvezi();
-			this.admin.lozinkaAdmin = this.novaLozinka;
+			this.admin.lozinka = this.novaLozinka;
 			
-			if (!this.emailProvera(this.admin.emailAdmin)){
+			if (!this.emailProvera(this.admin.email)){
 				this.greskaEmail = "Email nije ispravan. ";
 				this.greska = true;
 			}
 			
-			if (this.admin.imeAdmin == ''){
+			if (this.admin.ime == ''){
 				this.greskaIme = "Ime ne sme biti prazno. ";
 				this.greska = true;
 			}
 			
-			if (this.admin.prezimeAdmin == ''){
+			if (this.admin.prezime == ''){
 				this.greskaPrezime = "Prezime ne sme biti prazno. ";
 				this.greska = true;
 			}
 			
-			if (isNaN(parseInt(this.admin.telefonAdmin)) || parseInt(this.admin.telefonAdmin) < 0){
+			if (isNaN(parseInt(this.admin.telefon)) || parseInt(this.admin.telefon) < 0){
 				this.greskaTelefon = "Telefon nije ispravan. ";
 				this.greska = true;
 			}
 			
-			if (this.admin.novaDrzava == ''){
+			if (this.admin.drzava == ''){
 				this.greskaDrzava = "Drzava ne sme biti prazna. ";
 				this.greska = true;
 			}
 			
-			if (this.admin.noviGrad == ''){
+			if (this.admin.grad == ''){
 				this.greskaGrad = "Grad ne sme biti prazan. ";
 				this.greska = true;
 			}
 			
-			if (this.admin.novaAdresa == ''){
+			if (this.admin.adresa == ''){
 				this.greskaAdresa = "Adresa ne sme biti prazna. ";
 				this.greska = true;
 			}

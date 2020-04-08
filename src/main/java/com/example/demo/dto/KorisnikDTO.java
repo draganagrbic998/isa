@@ -1,36 +1,36 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.ZahtevRegistracija;
+import com.example.demo.model.Korisnik;
 
-public class ZahtevRegistracijaDTO {
+public class KorisnikDTO {
 	
+	//dodajte aktivan i promenjenaSifra ako mislite da ce trebati
 	private Integer id;
 	private String email;
 	private String lozinka;
 	private String ime;
 	private String prezime;
 	private String telefon;
-	private String brojOsiguranika;
 	private String drzava;
 	private String grad;
 	private String adresa;
 	
-	public ZahtevRegistracijaDTO() {
+	public KorisnikDTO() {
 		super();
 	}
 
-	public ZahtevRegistracijaDTO(ZahtevRegistracija zahtev) {
+	public KorisnikDTO(Korisnik korisnik) {
 		super();
-		this.id = zahtev.getId();
-		this.email = zahtev.getEmail();
-		this.lozinka = zahtev.getLozinka();
-		this.ime = zahtev.getIme();
-		this.prezime = zahtev.getPrezime();
-		this.telefon = zahtev.getTelefon();
-		this.brojOsiguranika = zahtev.getBrojOsiguranika();
-		this.drzava = zahtev.getDrzava();
-		this.grad = zahtev.getGrad();
-		this.adresa = zahtev.getAdresa();
+		this.id = korisnik.getId();
+		this.email = korisnik.getEmail();
+		this.lozinka = korisnik.getLozinka();
+		this.ime = korisnik.getIme();
+		this.prezime = korisnik.getPrezime();
+		this.telefon = korisnik.getTelefon();
+		this.drzava = korisnik.getDrzava();
+		this.grad = korisnik.getGrad();
+		this.adresa = korisnik.getAdresa();
+		
 	}
 
 	public Integer getId() {
@@ -81,14 +81,6 @@ public class ZahtevRegistracijaDTO {
 		this.telefon = telefon;
 	}
 
-	public String getBrojOsiguranika() {
-		return brojOsiguranika;
-	}
-
-	public void setBrojOsiguranika(String brojOsiguranika) {
-		this.brojOsiguranika = brojOsiguranika;
-	}
-
 	public String getDrzava() {
 		return drzava;
 	}
@@ -112,5 +104,7 @@ public class ZahtevRegistracijaDTO {
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
 	}
+	
+	
 
 }

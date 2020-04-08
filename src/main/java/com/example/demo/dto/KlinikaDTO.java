@@ -8,9 +8,7 @@ public class KlinikaDTO {
 	private Integer id;
 	private String naziv;
 	private String opis;
-	private String novaDrzava;
-	private String noviGrad;
-	private String novaAdresa;
+	private String adresa;
 	
 	public KlinikaDTO() {
 		super();
@@ -21,9 +19,7 @@ public class KlinikaDTO {
 		this.id = klinika.getId();
 		this.naziv = klinika.getNaziv();
 		this.opis = klinika.getOpis();
-		this.novaAdresa = klinika.getLokacija().getAdresa();
-		this.novaDrzava = klinika.getLokacija().getDrzava();
-		this.noviGrad = klinika.getLokacija().getGrad();
+		this.adresa = klinika.getAdresa();
 	}
 
 	public Integer getId() {
@@ -50,28 +46,14 @@ public class KlinikaDTO {
 		this.opis = opis;
 	}
 
-	public String getNovaDrzava() {
-		return novaDrzava;
+	public String getAdresa() {
+		return adresa;
 	}
 
-	public void setNovaDrzava(String novaDrzava) {
-		this.novaDrzava = novaDrzava;
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
 	}
 
-	public String getNoviGrad() {
-		return noviGrad;
-	}
-
-	public void setNoviGrad(String noviGrad) {
-		this.noviGrad = noviGrad;
-	}
-
-	public String getNovaAdresa() {
-		return novaAdresa;
-	}
-
-	public void setNovaAdresa(String novaAdresa) {
-		this.novaAdresa = novaAdresa;
-	}
-
+	
+	
 }

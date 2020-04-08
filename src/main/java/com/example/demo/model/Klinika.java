@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Klinika {
@@ -21,12 +19,10 @@ public class Klinika {
 	private String naziv;
 	@Column
 	private String opis;
-	@OneToOne
-	@JoinColumn(name="lokacija")
-	private Lokacija lokacija;
-	@OneToOne
-	@JoinColumn(name="ocena")
-	private Ocena ocena;
+	@Column
+	private String adresa;
+	@OneToMany
+	private Set<Ocena> ocene;
 	@OneToMany
 	private Set<Zaposleni> zaposleni;
 	@OneToMany
@@ -64,20 +60,20 @@ public class Klinika {
 		this.opis = opis;
 	}
 
-	public Lokacija getLokacija() {
-		return lokacija;
+	public String getAdresa() {
+		return adresa;
 	}
 
-	public void setLokacija(Lokacija lokacija) {
-		this.lokacija = lokacija;
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
 	}
 
-	public Ocena getOcena() {
-		return ocena;
+	public Set<Ocena> getOcene() {
+		return ocene;
 	}
 
-	public void setOcena(Ocena ocena) {
-		this.ocena = ocena;
+	public void setOcene(Set<Ocena> ocene) {
+		this.ocene = ocene;
 	}
 
 	public Set<Zaposleni> getZaposleni() {

@@ -7,4 +7,3 @@ import com.example.demo.model.Klinika;
 public interface KlinikaRepository extends JpaRepository<Klinika, Integer>{
 
 }
-

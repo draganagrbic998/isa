@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,9 +32,12 @@ public abstract class Korisnik {
 	private Boolean aktivan;
 	@Column
 	private Boolean promenjenaSifra;
-	@OneToOne
-	@JoinColumn(name="lokacija")
-	private Lokacija lokacija;
+	@Column
+	private String drzava;
+	@Column
+	private String grad;
+	@Column
+	private String adresa;
 	
 	public Korisnik() {
 		super();
@@ -106,12 +107,28 @@ public abstract class Korisnik {
 		this.promenjenaSifra = promenjenaSifra;
 	}
 
-	public Lokacija getLokacija() {
-		return lokacija;
+	public String getDrzava() {
+		return drzava;
 	}
 
-	public void setLokacija(Lokacija lokacija) {
-		this.lokacija = lokacija;
+	public void setDrzava(String drzava) {
+		this.drzava = drzava;
+	}
+
+	public String getGrad() {
+		return grad;
+	}
+
+	public void setGrad(String grad) {
+		this.grad = grad;
+	}
+
+	public String getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
 	}
 
 }

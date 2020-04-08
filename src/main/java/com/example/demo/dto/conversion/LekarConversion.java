@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.example.demo.dto.LekarDTO;
-import com.example.demo.model.Lokacija;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Lekar;
@@ -20,18 +19,17 @@ public class LekarConversion {
 	public Lekar get(LekarDTO lekarDTO) {
 		Lekar lekar = new Lekar();
 		lekar.setId(lekarDTO.getId());
-		lekar.setEmail(lekarDTO.getEmailLekar());
-		lekar.setLozinka(lekarDTO.getLozinkaLekar());
-		lekar.setIme(lekarDTO.getImeLekar());
-		lekar.setPrezime(lekarDTO.getPrezimeLekar());
-		lekar.setTelefon(lekarDTO.getTelefonLekar());
-		lekar.setSpecijalizacija(lekarDTO.getNovaSpecijalizacija());
-		lekar.setLokacija(new Lokacija(lekarDTO.getNovaDrzava(), lekarDTO.getNoviGrad(), lekarDTO.getNovaAdresa()));
-		//ovo samo za sada ovako da mozemo da testiramo
-		if (lekarDTO.getNovaKlinika() != null) {
-			Klinika klinika = this.klinikaRepository.getOne(lekarDTO.getNovaKlinika());
-			lekar.setKlinika(klinika);
-		}
+		lekar.setEmail(lekarDTO.getEmail());
+		lekar.setLozinka(lekarDTO.getLozinka());
+		lekar.setIme(lekarDTO.getIme());
+		lekar.setPrezime(lekarDTO.getPrezime());
+		lekar.setTelefon(lekarDTO.getTelefon());
+		lekar.setSpecijalizacija(lekarDTO.getSpecijalizacija());
+		lekar.setDrzava(lekarDTO.getDrzava());
+		lekar.setAdresa(lekarDTO.getAdresa());
+		lekar.setGrad(lekarDTO.getGrad());
+		Klinika klinika = this.klinikaRepository.getOne(lekarDTO.getKlinika());
+		lekar.setKlinika(klinika);
 		return lekar;
 	}
 	
