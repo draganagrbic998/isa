@@ -28,7 +28,7 @@ public class LekarController {
 	//nisam odradila validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody LekarDTO lekarDTO) {
-		this.lekarService.create(this.lekarConversion.get(lekarDTO));
+		this.lekarService.save(this.lekarConversion.get(lekarDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

@@ -188,7 +188,6 @@ Vue.component("profil", {
 			
 			axios.post("/user/izmena", this.korisnik)
 			.then(response => {
-				alert(response.data);
 				if (response.data == "pacijent")
 					this.$router.push("pacijentHome");
 				else if (response.data == "lekar")

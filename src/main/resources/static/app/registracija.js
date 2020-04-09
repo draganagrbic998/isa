@@ -107,7 +107,7 @@ Vue.component("registracija", {
 					<tr>
 					
 						<th scope="row">Lozinka: </th>
-						<td><input type="text" v-model="novaLozinka" class="form-control"></td>
+						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
 						<td>{{greskaLozinka}}</td>
 					
 					</tr>
@@ -115,7 +115,7 @@ Vue.component("registracija", {
 					<tr>
 					
 						<th scope="row">Ponovljena lozinka: </th>
-						<td><input type="text" v-model="ponovljenaLozinka" class="form-control"></td>
+						<td><input type="password" v-model="ponovljenaLozinka" class="form-control"></td>
 						<td>{{greskaPonovljenaLozinka}}</td>
 					
 					</tr>

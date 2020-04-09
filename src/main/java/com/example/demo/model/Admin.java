@@ -6,7 +6,5 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("admin")
 public class Admin extends Zaposleni{
-	
-	//prazan konstruktor??
 
 }

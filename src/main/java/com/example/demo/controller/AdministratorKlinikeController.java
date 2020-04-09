@@ -26,7 +26,7 @@ public class AdministratorKlinikeController {
 	//nisam odradila validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody AdministratorKlinikeDTO adminKlinikeDTO) {
-		this.adminKlinikeService.create(this.adminKlinikeConversion.get(adminKlinikeDTO));
+		this.adminKlinikeService.save(this.adminKlinikeConversion.get(adminKlinikeDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

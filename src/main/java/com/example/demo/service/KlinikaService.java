@@ -20,7 +20,7 @@ public class KlinikaService {
 	}
 
 	//ovo radi admin
-	public void create(Klinika klinika) {
+	public void save(Klinika klinika) {
 		this.klinikaRepository.save(klinika);
 	}
 	

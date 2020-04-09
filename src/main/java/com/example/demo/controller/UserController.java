@@ -28,6 +28,8 @@ public class UserController {
 	@Autowired
 	private KorisnikService korisnikService;
 	
+	//Ovo Hibernate. pa nest trebace vam ako koristiti polimorfizam (bar meni tada trebalo)
+	
 	@PostMapping(value="/prijava", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> prijava(@RequestBody User user) {
 		
@@ -58,27 +60,27 @@ public class UserController {
 	
 	@PostMapping(value="/izmena")
 	public ResponseEntity<?> izmena(@RequestBody KorisnikDTO korisnikDTO){
-		Korisnik korisnik = (Korisnik) this.session.getAttribute("korisnik");
-		if (korisnik == null)
+		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
+		if (k == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
-		Korisnik k = this.korisnikService.getOne(korisnikDTO.getId());
-		k.setLozinka(korisnikDTO.getLozinka());
-		k.setIme(korisnikDTO.getIme());
-		k.setPrezime(korisnikDTO.getPrezime());
-		k.setTelefon(korisnikDTO.getTelefon());
-		k.setDrzava(korisnikDTO.getDrzava());
-		k.setGrad(korisnikDTO.getGrad());
-		k.setAdresa(korisnikDTO.getAdresa());
-		this.session.setAttribute("korisnik", k);
+		Korisnik korisnik = this.korisnikService.getOne(korisnikDTO.getId());
+		korisnik.setLozinka(korisnikDTO.getLozinka());
+		korisnik.setIme(korisnikDTO.getIme());
+		korisnik.setPrezime(korisnikDTO.getPrezime());
+		korisnik.setTelefon(korisnikDTO.getTelefon());
+		korisnik.setDrzava(korisnikDTO.getDrzava());
+		korisnik.setGrad(korisnikDTO.getGrad());
+		korisnik.setAdresa(korisnikDTO.getAdresa());
+		this.session.setAttribute("korisnik", korisnik);
 
-		this.korisnikService.save(k);
+		this.korisnikService.save(korisnik);
 		
 		//sto mora ovo osvezavanje sesije?
 
 		//ovo sa hibernate proxy mozda da ne koristite
 
-		return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
+		return new ResponseEntity<>(Hibernate.getClass(korisnik).getSimpleName().toLowerCase(), HttpStatus.OK);
 	}
 	
 }

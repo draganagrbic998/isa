@@ -21,7 +21,7 @@ public class LekarService {
 	}
 	
 	//ovo radi admin
-	public void create(Lekar lekar) {
+	public void save(Lekar lekar) {
 		this.korisnikRepository.save(lekar);
 	}
 }

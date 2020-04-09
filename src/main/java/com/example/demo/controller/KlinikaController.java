@@ -34,7 +34,7 @@ public class KlinikaController {
 
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody KlinikaDTO klinikaDTO) {
-		this.klinikaService.create(this.klinikaConversion.get(klinikaDTO));
+		this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

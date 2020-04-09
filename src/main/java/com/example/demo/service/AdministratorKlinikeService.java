@@ -18,7 +18,7 @@ public class AdministratorKlinikeService {
 	
 	
 	//ovo radi admin
-	public void create(Admin admin) {
+	public void save(Admin admin) {
 		this.korisnikRepository.save(admin);
 	}
 }

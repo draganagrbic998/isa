@@ -13,7 +13,7 @@ public class ZahtevRegistracijaService {
 	private ZahtevRegistracijaRepository zahtevRepository;
 	
 	//ovo ce raditi neregistrovani korisnik
-	public void create(ZahtevRegistracija zahtev) {
+	public void save(ZahtevRegistracija zahtev) {
 		this.zahtevRepository.save(zahtev);
 	}
 
