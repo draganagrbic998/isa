@@ -29,9 +29,6 @@ public class Klinika {
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "ocena"))
 	private Set<Ocena> ocene;
-	//ovo pravljenje nove tabele moramo jer ocena nema referencu na kliniku
-	//glavni razlog sto ocena nema referencu na kliniku je sto ona moze da se odnosi i na lekara
-	//a lekar i klinika ne implementiraju neki zajednicki interfejs
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Zaposleni> zaposleni;
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
@@ -43,7 +40,6 @@ public class Klinika {
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "zahtev"))
 	private Set<ZahtevKlinika> zahtevi;
-	//ovo pravljenje nove tabele moramo jer zahtev nema referencu na kliniku
 	
 	public Klinika() {
 		super();

@@ -9,11 +9,8 @@ Vue.component("poslatZahtev", {
 			Vas zahtev je poslat. Za par dana bicete obavesteni o registraciji. <br><br>
 			<router-link to="/">MAIN PAGE</router-link><br>
 		
-		</div>
-	
+		</div>	
 	
 	`
-	
-
 
 });

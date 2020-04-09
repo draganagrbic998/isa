@@ -29,7 +29,6 @@ public class Izvestaj {
     joinColumns = @JoinColumn(name = "izvestaj"),
     inverseJoinColumns = @JoinColumn(name = "dijagnoza"))
 	private Set<Dijagnoza> dijagnoze;
-	//dijagnoza nema referencu na izvestaje, pogledaj mappredby
 	@OneToOne
 	@JoinColumn(name="terapija")
 	private Terapija terapija;

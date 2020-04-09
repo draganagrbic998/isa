@@ -27,35 +27,32 @@ public class UserController {
 	
 	@Autowired
 	private KorisnikService korisnikService;
-	
-	//Ovo Hibernate. pa nest trebace vam ako koristiti polimorfizam (bar meni tada trebalo)
-	
+		
 	@PostMapping(value="/prijava", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> prijava(@RequestBody User user) {
 		
-		Korisnik korisnik = this.korisnikService.prijava(user);
-		if (korisnik == null)
+		Korisnik k = this.korisnikService.prijava(user);
+		if (k == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		this.session.setAttribute("korisnik", korisnik);
-		return new ResponseEntity<>(Hibernate.getClass(korisnik).getSimpleName().toLowerCase(), HttpStatus.OK);
+		this.session.setAttribute("korisnik", k);
+		return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
 		
 	}
 	
 	@GetMapping(value="/ime/prezime")
 	public ResponseEntity<?> imePrezime(){
-		Korisnik korisnik = (Korisnik) this.session.getAttribute("korisnik");
-		if (korisnik == null)
+		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
+		if (k == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(korisnik.getIme() + " " + korisnik.getPrezime(), HttpStatus.OK);
+		return new ResponseEntity<>(k.getIme() + " " + k.getPrezime(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> profil(){
-		Korisnik korisnik = (Korisnik) this.session.getAttribute("korisnik");
-		if (korisnik == null)
+		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
+		if (k == null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		//ne treba KorisnikConversion za samo ovo
-		return new ResponseEntity<>(new KorisnikDTO(korisnik), HttpStatus.OK);
+		return new ResponseEntity<>(new KorisnikDTO(k), HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/izmena")
@@ -72,14 +69,9 @@ public class UserController {
 		korisnik.setDrzava(korisnikDTO.getDrzava());
 		korisnik.setGrad(korisnikDTO.getGrad());
 		korisnik.setAdresa(korisnikDTO.getAdresa());
-		this.session.setAttribute("korisnik", korisnik);
-
 		this.korisnikService.save(korisnik);
 		
-		//sto mora ovo osvezavanje sesije?
-
-		//ovo sa hibernate proxy mozda da ne koristite
-
+		this.session.setAttribute("korisnik", korisnik);
 		return new ResponseEntity<>(Hibernate.getClass(korisnik).getSimpleName().toLowerCase(), HttpStatus.OK);
 	}
 	

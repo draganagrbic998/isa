@@ -22,7 +22,6 @@ public class Lekar extends Zaposleni{
     joinColumns = @JoinColumn(name = "lekar"),
     inverseJoinColumns = @JoinColumn(name = "ocena"))
 	private Set<Ocena> ocene;
-	//ovo pravljenje nove tabele moramo jer ocena nema referencu na lekara
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "lekar_poseta",
     joinColumns = @JoinColumn(name = "lekar"),

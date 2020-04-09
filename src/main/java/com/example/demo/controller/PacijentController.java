@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.Bolest;
 import com.example.demo.dto.Termin;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.model.Karton;
@@ -25,22 +26,16 @@ import com.example.demo.model.StanjePosete;
 @RestController
 @RequestMapping(value="/pacijent")
 public class PacijentController {
-	
-	//mozda cu ovaj kontroller razloziti na vise manjih, 
-	//za sada sam razmisljala da je samo jedan kontroller
-	
+		
 	@Autowired
 	private HttpSession session;
 	
 	@Autowired
 	private KartonConversion kartonConversion;
 
-
-
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> karton(){
 		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
-		//ovo za hibernate proveru cemo jos videti jel ok
 		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
 		if (k == null || !(korisnik instanceof Pacijent))
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,6 +65,24 @@ public class PacijentController {
 			
 		}
 		return new ResponseEntity<>(termini, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> bolesti(){
+		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
+		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
+		if (k == null || !(korisnik instanceof Pacijent))
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Pacijent pacijent = (Pacijent) korisnik;
+		Karton karton = pacijent.getKarton();
+
+		List<Bolest> bolesti = new ArrayList<Bolest>();
+		for (Poseta p: karton.getPosete()) {
+			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
+				bolesti.add(new Bolest(p));
+		}
+		return new ResponseEntity<>(bolesti, HttpStatus.OK);
 		
 	}
 	

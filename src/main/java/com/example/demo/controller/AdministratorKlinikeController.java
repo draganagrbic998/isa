@@ -23,12 +23,10 @@ public class AdministratorKlinikeController {
 	@Autowired
 	private AdministratorKlinikeConversion adminKlinikeConversion;
 		
-	//nisam odradila validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody AdministratorKlinikeDTO adminKlinikeDTO) {
 		this.adminKlinikeService.save(this.adminKlinikeConversion.get(adminKlinikeDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
+	}	
 	
 }

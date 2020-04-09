@@ -7,4 +7,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("super")
 public class SuperAdmin extends Korisnik{
 
+	public SuperAdmin() {
+		super();
+	}
+
 }

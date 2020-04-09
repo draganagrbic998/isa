@@ -14,7 +14,7 @@ import com.example.demo.dto.conversion.ZahtevRegistracijaConversion;
 import com.example.demo.service.ZahtevRegistracijaService;
 
 @RestController
-@RequestMapping(value = "/zahtevRegistracija")
+@RequestMapping(value = "/zahtev/registracija")
 public class ZahtevRegistracijaController {
 	
 	@Autowired
@@ -23,7 +23,6 @@ public class ZahtevRegistracijaController {
 	@Autowired
 	private ZahtevRegistracijaConversion zahtevConversion;
 		
-	//potrebno je dodati validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
 
@@ -31,7 +30,5 @@ public class ZahtevRegistracijaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
-	
-	
 
 }

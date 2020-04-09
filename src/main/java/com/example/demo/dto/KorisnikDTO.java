@@ -4,7 +4,6 @@ import com.example.demo.model.Korisnik;
 
 public class KorisnikDTO {
 	
-	//dodajte aktivan i promenjenaSifra ako mislite da ce trebati
 	private Integer id;
 	private String email;
 	private String lozinka;
@@ -104,7 +103,5 @@ public class KorisnikDTO {
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
 	}
-	
-	
 
 }

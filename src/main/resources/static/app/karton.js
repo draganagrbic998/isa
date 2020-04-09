@@ -17,46 +17,33 @@ Vue.component("karton", {
 				<tbody>
 				
 					<tr>
-						
 						<th scope="row">Broj osiguranika: </th>
 						<td><input type="text" v-model="karton.brojOsiguranika" class="form-control" disabled></td>
-						
-					
 					</tr>
 					
 					<tr>
-						
 						<th scope="row">Visina: </th>
 						<td><input type="text" v-model="karton.visina" class="form-control" disabled></td>
-					
 					</tr>
 					
 					<tr>
-						
 						<th scope="row">Tezina: </th>
 						<td><input type="text" v-model="karton.tezina" class="form-control" disabled></td>
-					
 					</tr>
 					
 					<tr>
-						
 						<th scope="row">Leva dioptrija: </th>
 						<td><input type="text" v-model="karton.levaDioptrija" class="form-control" disabled></td>
-					
 					</tr>
 					
 					<tr>
-						
 						<th scope="row">Desna dioptrija: </th>
 						<td><input type="text" v-model="karton.desnaDioptrija" class="form-control" disabled></td>
-					
 					</tr>
 					
 					<tr>
-						
 						<th scope="row">Krvna grupa: </th>
 						<td><input type="text" v-model="karton.krvnaGrupa" class="form-control" disabled></td>
-					
 					</tr>
 				
 				</tbody>

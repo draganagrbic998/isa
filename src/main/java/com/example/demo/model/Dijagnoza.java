@@ -7,4 +7,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("dijagnoza")
 public class Dijagnoza extends StavkaSifrarnika{
 
+	public Dijagnoza() {
+		super();
+	}
+	
 }

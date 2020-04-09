@@ -14,12 +14,10 @@ public class KlinikaService {
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 	
-	
-	public List<Klinika> review(){
+	public List<Klinika> findAll(){
 		return this.klinikaRepository.findAll();
 	}
 
-	//ovo radi admin
 	public void save(Klinika klinika) {
 		this.klinikaRepository.save(klinika);
 	}

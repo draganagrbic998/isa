@@ -7,4 +7,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("sestra")
 public class Sestra extends Zaposleni{
 
+	public Sestra() {
+		super();
+	}
+
 }

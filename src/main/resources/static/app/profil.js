@@ -27,81 +27,61 @@ Vue.component("profil", {
 				<tbody>
 				
 					<tr>
-					
 						<th scope="row">Email: </th>
 						<td><input type="text" v-model="korisnik.email" class="form-control" disabled></td>
 						<td></td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Ime: </th>
 						<td><input type="text" v-model="korisnik.ime" class="form-control"></td>
 						<td>{{greskaIme}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Prezime: </th>
 						<td><input type="text" v-model="korisnik.prezime" class="form-control"></td>
 						<td>{{greskaPrezime}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Telefon: </th>
 						<td><input type="text" v-model="korisnik.telefon" class="form-control"></td>
 						<td>{{greskaTelefon}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Drzava: </th>
 						<td><input type="text" v-model="korisnik.drzava" class="form-control"></td>
 						<td>{{greskaDrzava}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Grad: </th>
 						<td><input type="text" v-model="korisnik.grad" class="form-control"></td>
 						<td>{{greskaGrad}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="korisnik.adresa" class="form-control"></td>
 						<td>{{greskaAdresa}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Nova lozinka: </th>
 						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
 						<td></td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Ponovljena lozinka: </th>
 						<td><input type="password" v-model="ponovljenaLozinka" v-bind:disabled="novaLozinka==''" class="form-control"></td>
 						<td>{{greskaLozinka}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<td colspan="3"><button v-on:click="izmeni()" class="btn btn-primary">IZMENI</button></td>
-					
 					</tr>
 				
 				</tbody>

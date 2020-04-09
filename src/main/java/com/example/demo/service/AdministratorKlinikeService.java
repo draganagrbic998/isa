@@ -14,11 +14,8 @@ public class AdministratorKlinikeService {
 	@Autowired
 	private KorisnikRepository korisnikRepository;
 	
-	
-	
-	
-	//ovo radi admin
 	public void save(Admin admin) {
 		this.korisnikRepository.save(admin);
 	}
+	
 }

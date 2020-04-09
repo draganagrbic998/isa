@@ -30,7 +30,6 @@ public class Terapija {
     joinColumns = @JoinColumn(name = "terapija"),
     inverseJoinColumns = @JoinColumn(name = "lek"))
 	private Set<Lek> lekovi;
-	//lek nema reference na terapiju, pogledaj mappedby
 	
 	public Terapija() {
 		super();

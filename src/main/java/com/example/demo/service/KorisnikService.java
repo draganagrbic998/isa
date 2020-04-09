@@ -22,7 +22,6 @@ public class KorisnikService {
 		
 	}
 	
-	//najbolej svugde nazovite metode save (umesto create ili update)
 	public void save(Korisnik korisnik) {
 		this.korisnikRepository.save(korisnik);
 	}

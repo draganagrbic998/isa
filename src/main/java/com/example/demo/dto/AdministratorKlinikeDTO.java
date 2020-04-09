@@ -12,7 +12,5 @@ public class AdministratorKlinikeDTO extends ZaposleniDTO{
 		super(zaposleni);
 	}
 
-
-
 }
 

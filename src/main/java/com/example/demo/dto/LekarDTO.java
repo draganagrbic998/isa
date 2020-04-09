@@ -23,6 +23,5 @@ public class LekarDTO extends ZaposleniDTO{
 		this.specijalizacija = specijalizacija;
 	}
 
-
 }
 

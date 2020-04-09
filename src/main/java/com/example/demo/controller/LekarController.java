@@ -25,7 +25,6 @@ public class LekarController {
 	@Autowired
 	private LekarConversion lekarConversion;
 		
-	//nisam odradila validaciju sa serverske strane
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody LekarDTO lekarDTO) {
 		this.lekarService.save(this.lekarConversion.get(lekarDTO));
@@ -37,10 +36,5 @@ public class LekarController {
 		this.lekarService.delete(lekarId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
-	
-	
-
 	
 }

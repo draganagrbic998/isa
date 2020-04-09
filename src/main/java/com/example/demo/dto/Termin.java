@@ -7,18 +7,10 @@ import java.util.Set;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Poseta;
 
-//ovo je trebala da bude klasa PosetaDTO
-//medjutim, necemo stedeti na klasama
-//ja sam napravila ovakvu klasu koja odgovara mojim zahtevima (meni ovakva struktura
-//odgovara kad budem prikazivala pacijentu zakazane termine
-//vama kada budete npr. rezervisali salu ili slicno, ovo nece biti dovoljno
-//vi onda napravite novi klasu (nazovete npr. PosetaDTO) koja ce
-//trebati da ima id sale (jer ce admin da postavlja taj id) meni je dovoljan naziv
-//da ga prikazem pacijentu
 public class Termin {
 	
-	private Integer id;		//treba jer cu mozda otkazati termin
-	private Date pocetak;
+	private Integer id;		
+	private Date datum;
 	private String klinika;
 	private String adresa;
 	private Double originalnaCena;
@@ -27,7 +19,7 @@ public class Termin {
 	private String tipPosete;
 	private String nazivPosete;
 	private String sala;
-	private Set<String> lekari;		//dovoljni mi da napisem npr. ime, prezime
+	private Set<String> lekari;		
 	
 	public Termin() {
 		super();
@@ -36,13 +28,12 @@ public class Termin {
 	public Termin(Poseta poseta) {
 		super();
 		this.id = poseta.getId();
-		this.pocetak = poseta.getPocetak();
+		this.datum = poseta.getPocetak();
 		this.klinika = poseta.getTipPosete().getKlinika().getNaziv();
 		this.adresa = poseta.getTipPosete().getKlinika().getAdresa();
 		this.originalnaCena = poseta.getTipPosete().getCena();
 		this.popust = poseta.getPopust();
 		this.novaCena = this.popust != null ? this.originalnaCena - this.originalnaCena * this.popust : this.originalnaCena;
-		//ovo je ako je popust null, o null brinite i vi
 		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
 		this.nazivPosete = poseta.getTipPosete().getNaziv();
 		this.sala = poseta.getSala().getBroj() + " " + poseta.getSala().getNaziv();
@@ -59,12 +50,12 @@ public class Termin {
 		this.id = id;
 	}
 
-	public Date getPocetak() {
-		return pocetak;
+	public Date getDatum() {
+		return datum;
 	}
 
-	public void setPocetak(Date pocetak) {
-		this.pocetak = pocetak;
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 
 	public String getKlinika() {

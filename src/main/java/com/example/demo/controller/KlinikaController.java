@@ -29,7 +29,7 @@ public class KlinikaController {
 	
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<KlinikaDTO> review(){
-		return this.klinikaConversion.get(this.klinikaService.review());
+		return this.klinikaConversion.get(this.klinikaService.findAll());
 	}
 
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)

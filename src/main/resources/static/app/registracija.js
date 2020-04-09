@@ -41,89 +41,67 @@ Vue.component("registracija", {
 				<tbody>
 				
 					<tr>
-					
 						<th scope="row">Email: </th>
 						<td><input type="text" v-model="zahtev.email" class="form-control"></td>
 						<td>{{greskaEmail}}</td>
-					
 					</tr>
 					
 					<tr>
-			
 						<th scope="row">Ime: </th>
 						<td><input type="text" v-model="zahtev.ime" class="form-control"></td>
 						<td>{{greskaIme}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Prezime: </th>
 						<td><input type="text" v-model="zahtev.prezime" class="form-control"></td>
 						<td>{{greskaPrezime}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Telefon: </th>
 						<td><input type="text" v-model="zahtev.telefon" class="form-control"></td>
 						<td>{{greskaTelefon}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Broj osiguranika: </th>
 						<td><input type="text" v-model="zahtev.brojOsiguranika" class="form-control"></td>
 						<td>{{greskaBrojOsiguranika}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Drzava: </th>
 						<td><input type="text" v-model="zahtev.drzava" class="form-control"></td>
 						<td>{{greskaDrzava}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Grad: </th>
 						<td><input type="text" v-model="zahtev.grad" class="form-control"></td>
 						<td>{{greskaGrad}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="zahtev.adresa" class="form-control"></td>
 						<td>{{greskaAdresa}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Lozinka: </th>
 						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
 						<td>{{greskaLozinka}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<th scope="row">Ponovljena lozinka: </th>
 						<td><input type="password" v-model="ponovljenaLozinka" class="form-control"></td>
 						<td>{{greskaPonovljenaLozinka}}</td>
-					
 					</tr>
 					
 					<tr>
-					
 						<td colspan="3"><button v-on:click="posaljiZahtev()" class="btn btn-primary">POSALJI ZAHTEV</button></td>
-					
 					</tr>
 				
 				</tbody>
@@ -133,8 +111,6 @@ Vue.component("registracija", {
 		</div>
 	
 	`, 
-	
-	
 	
 	watch: {
 		novaLozinka: function(){
@@ -222,7 +198,7 @@ Vue.component("registracija", {
 			
 			if (this.greska) return;
 			
-			axios.post("/zahtevRegistracija/kreiranje", this.zahtev)
+			axios.post("/zahtev/registracija/kreiranje", this.zahtev)
 			.then(response => {
 				this.$router.push("/poslatZahtev");
 			})

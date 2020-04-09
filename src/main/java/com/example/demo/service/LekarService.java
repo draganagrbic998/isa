@@ -14,13 +14,10 @@ public class LekarService {
 	@Autowired
 	private KorisnikRepository korisnikRepository;
 	
-	
-	
 	public void delete(Integer lekarId) {
 		this.korisnikRepository.deleteById(lekarId);
 	}
 	
-	//ovo radi admin
 	public void save(Lekar lekar) {
 		this.korisnikRepository.save(lekar);
 	}
