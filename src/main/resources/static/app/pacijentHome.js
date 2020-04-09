@@ -15,12 +15,14 @@ Vue.component("pacijentHome", {
 			<router-link to="/karton">KARTON</router-link><br><br>
 			<router-link to="/termini">ZAKAZANI TERMINI</router-link><br><br>
 			<router-link to="/bolesti">ISTORIJA BOLESTI</router-link><br><br>
+			<button class="btn btn-primary" v-on:click="odjava()">ODJAVA</button><br>
 
 		</div>
 	
 	`, 
 	
 	mounted(){
+
 		axios.get("/user/ime/prezime")
 		.then(response => {
 			this.imePrezime = response.data;
@@ -28,6 +30,20 @@ Vue.component("pacijentHome", {
 		.catch(reponse => {
 			this.$router.push("/");
 		});
+	}, 
+	
+	methods: {
+		
+		odjava: function(){
+			axios.get("/user/odjava")
+			.then(response => {
+				this.$router.push("/");
+			})
+			.catch(response => {
+				alert("SERVER ERROR!!");
+			});
+		}
+		
 	}
 	
 });

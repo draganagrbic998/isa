@@ -39,6 +39,12 @@ public class UserController {
 		
 	}
 	
+	@GetMapping(value="/odjava")
+	public ResponseEntity<?> odjava(){
+		this.session.invalidate();
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	@GetMapping(value="/ime/prezime")
 	public ResponseEntity<?> imePrezime(){
 		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
