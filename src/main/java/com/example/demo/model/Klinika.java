@@ -4,9 +4,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -21,16 +24,26 @@ public class Klinika {
 	private String opis;
 	@Column
 	private String adresa;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "klinika_ocena",
+    joinColumns = @JoinColumn(name = "klinika"),
+    inverseJoinColumns = @JoinColumn(name = "ocena"))
 	private Set<Ocena> ocene;
-	@OneToMany
+	//ovo pravljenje nove tabele moramo jer ocena nema referencu na kliniku
+	//glavni razlog sto ocena nema referencu na kliniku je sto ona moze da se odnosi i na lekara
+	//a lekar i klinika ne implementiraju neki zajednicki interfejs
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Zaposleni> zaposleni;
-	@OneToMany
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<TipPosete> tipoviPoseta;
-	@OneToMany
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Sala> sale;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "klinika_zahtev",
+    joinColumns = @JoinColumn(name = "klinika"),
+    inverseJoinColumns = @JoinColumn(name = "zahtev"))
 	private Set<ZahtevKlinika> zahtevi;
+	//ovo pravljenje nove tabele moramo jer zahtev nema referencu na kliniku
 	
 	public Klinika() {
 		super();

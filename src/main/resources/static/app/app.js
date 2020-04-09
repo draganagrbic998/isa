@@ -1,25 +1,31 @@
 const prijava = {template: '<prijava></prijava>'}
 const registracija = {template: '<registracija></registracija>'}
-const poslat_zahtev = {template: '<poslat_zahtev></poslat_zahtev>'}
 const registracijaLekara = {template: '<registracijaLekara></registracijaLekara>'}
 const registracijaAdminaKlinike = {template: '<registracijaAdminaKlinike></registracijaAdminaKlinike>'}
 const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlinike>'}
 const lekarHome = {template: '<lekarHome></lekarHome>'}
 const adminKCHome = {template: '<adminKCHome></adminKCHome>'}
 const lekarBrisanje = {template: '<lekarBrisanje></lekarBrisanje>'}
+const poslatZahtev = {template: '<poslatZahtev></poslatZahtev>'}
+const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
+
+
 const router = new VueRouter({
 
 	mode: 'hash', 
 	routes: [
 		{path: '/', component: prijava},
 		{path: '/registracija', component: registracija}, 
-		{path: '/poslat_zahtev', component: poslat_zahtev},
 		{path: '/registracijaLekara', component: registracijaLekara},
 		{path: '/registracijaAdminaKlinike', component: registracijaAdminaKlinike},
 		{path: '/registracijaKlinike', component: registracijaKlinike},
 		{path: '/lekarHome', component: lekarHome},
 		{path: '/adminKCHome', component: adminKCHome},
-		{path: '/lekarBrisanje', component: lekarBrisanje}
+		{path: '/lekarBrisanje', component: lekarBrisanje}, 
+		{path: '/poslatZahtev', component: poslatZahtev}, 
+		{path: '/pacijentHome', component: pacijentHome}, 
+
+		
 	]
 	
 });

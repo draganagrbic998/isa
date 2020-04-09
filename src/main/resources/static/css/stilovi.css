@@ -1,0 +1,60 @@
+body {
+	background: linear-gradient(56deg, rgba(36,0,0,0.599362779291404) 0%, rgba(252,255,214,0.7) 35%, rgba(0,212,255,0.85) 100%);
+}
+
+h1{
+  	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 1px 1px 2px black, 0 0 25px #3737ff, 0 0 5px #0000b3;
+}
+
+textarea{
+	width: 100%;
+	min-height: 100px;
+	resize: vertical;
+	
+}
+
+#box{
+	width: 40%;
+	margin-top: 2%;
+	margin-left: 30%;
+	margin-right: 20%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
+#left{
+	width: 30%;
+	margin-left: 5%;
+	margin-top: 3%;
+	margin-right: 10%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+	
+}
+
+#tableBox{
+	width: 55%;
+	margin-top: 2%;
+	margin-left: 25%;
+	margin-right: 20%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
+option {
+    padding: 5px 0;
+}
+
+
+#tableBox td{
+	min-width: 200px;
+}
+
+
+

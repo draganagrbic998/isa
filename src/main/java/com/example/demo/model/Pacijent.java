@@ -13,6 +13,7 @@ public class Pacijent extends Korisnik{
 	@JoinColumn(name="karton")
 	private Karton karton;
 
+
 	public Pacijent() {
 		super();
 	}

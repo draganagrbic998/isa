@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Karton {
 	@OneToOne
 	@JoinColumn(name="pacijent")
 	private Pacijent pacijent;
-	@OneToMany
+	@OneToMany(mappedBy="karton", fetch = FetchType.EAGER)
 	private Set<Poseta> posete;
 	
 	public Karton() {

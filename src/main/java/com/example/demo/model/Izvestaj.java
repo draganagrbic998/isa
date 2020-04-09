@@ -4,10 +4,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -22,8 +24,12 @@ public class Izvestaj {
 	@OneToOne
 	@JoinColumn(name="poseta")
 	private Poseta poseta;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "izvestaj_dijagnoza",
+    joinColumns = @JoinColumn(name = "izvestaj"),
+    inverseJoinColumns = @JoinColumn(name = "dijagnoza"))
 	private Set<Dijagnoza> dijagnoze;
+	//dijagnoza nema referencu na izvestaje, pogledaj mappredby
 	@OneToOne
 	@JoinColumn(name="terapija")
 	private Terapija terapija;

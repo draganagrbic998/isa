@@ -1,38 +1,28 @@
-Vue.component('prijava', {
-
+Vue.component("prijava", {
+	
 	data: function(){
-		return {
+		return{
 			user: {
-				'email': '', 
-				'lozinka': ''
+				"email": '', 
+				"lozinka": ''
 			}, 
 			greskaEmail: '', 
 			greskaLozinka: '', 
-			greskaServer: '', 
+			greskaPrijava: '',
 			greska: false
 		}
-	},
+	}, 
 	
 	template: `
 	
-		<div class="prijava">
+		<div class="well" id="box">
 		
-			<h1>Prijava</h1>
-			
-			<table>
-			
-				<tr><td class="left">Email: </td><td><input type="text" v-model="user.email"></td><td>{{greskaEmail}}</td></tr>
-				<tr><td class="left">Lozinka: </td><td><input type="password" v-model="user.lozinka"></td><td>{{greskaLozinka}}</td></tr>
-				<tr><td colspan="3"><br><button v-on:click="prijava()">PRIJAVA</button><br></td></tr>
-				<tr><td colspan="3">{{greskaServer}}</td></tr>
-				<br>
-				<tr><td colspan="6">Niste registrovani? <router-link to="/registracija">Registruj se</router-link></td></tr>
-				<tr><td colspan="6">Registruj lekara <router-link to="/registracijaLekara">Registruj lekara</router-link></td></tr>
-				<tr><td colspan="6">Obrisi lekara <router-link to="/lekarBrisanje">Obrisi lekara</router-link></td></tr>
-				<tr><td colspan="6">Registruj Kliniku <router-link to="/registracijaKlinike">Registruj kliniku</router-link></td></tr>
-				<tr><td colspan="6">Registruj Admina Klinike <router-link to="/registracijaAdminaKlinike">Registruj admina klinike</router-link></td></tr>
-
-			</table>
+			<h1>Prijava</h1><br>
+			Email: <input type="text" v-model="user.email" class="form-control" placeholder="Email...">{{greskaEmail}}<br><br>
+			Lozinka: <input type="password" v-model="user.lozinka" class="form-control" placeholder="Lozinka...">{{greskaLozinka}}<br><br>
+			<button v-on:click="prijava()" class="btn btn-primary">PRIJAVA</button><br><br>
+			Niste registrovani? <router-link to="/registracija">Registruj se</router-link><br><br>
+			{{greskaPrijava}}<br><br>
 		
 		</div>
 	
@@ -43,7 +33,7 @@ Vue.component('prijava', {
 		osvezi: function(){
 			this.greskaEmail = '';
 			this.greskaLozinka = '';
-			this.greskaServer = '';
+			this.greskaPrijava = '';
 			this.greska = false;
 		}, 
 		
@@ -63,8 +53,22 @@ Vue.component('prijava', {
 			
 			if (this.greska) return;
 			
-			alert("OVA FUNKCTIONALNOST JOS UVEK NIJE IMPLEMENTIRANA, ALI JE SLANJE ZAHTEVA ZA REGISTRACIJU IMPLEMENTIRANO!");
-			
+			axios.post("/user/prijava", this.user)
+			.then(response => {
+				if (response.data == "pacijent")
+					this.$router.push("pacijentHome");
+				else if (response.data == "lekar")
+					this.$router.push("lekarHome");
+				else if (response.data == "sestra")
+					this.$router.push("sestraHome")
+				else if (response.data == "admin")
+					this.$router.push("adminHome");
+				else
+					this.$router.push("superHome");
+			})
+			.catch(response => {
+				this.greskaPrijava = "Unet korisnik ne postoji. ";
+			});
 			
 		}
 		

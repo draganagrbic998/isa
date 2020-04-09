@@ -1,69 +1,140 @@
-Vue.component('registracija', {
-
+Vue.component("registracija", {
+	
 	data: function(){
-		return {
+		return{
 			zahtev: {
-				'id': null,
-				'email': '', 
-				'lozinka': '', 
-				'ime': '', 
-				'prezime': '', 
-				'telefon': '', 
-				'brojOsiguranika': '', 
-				'drzava': '', 
-				'adresa': '', 
-				'grad': ''
+				"id": null, 
+				"email": '', 
+				"lozinka": '', 
+				"ime": '', 
+				"prezime": '', 
+				"telefon": '', 
+				"brojOsiguranika": '', 
+				"drzava": '', 
+				"grad": '', 
+				"adresa": ''
 			}, 
 			novaLozinka: '',
-			ponovljenaLozinka: '', 
+			ponovljenaLozinka: '',
 			greskaEmail: '', 
-			greskaNovaLozinka: '', 
-			greskaPonovljenaLozinka: '', 
+			greskaLozinka: '', 
 			greskaIme: '', 
 			greskaPrezime: '', 
-			greskaTelefon: '', 
+			greskaTelefon: '',
 			greskaBrojOsiguranika: '', 
 			greskaDrzava: '', 
+			greskaGrad: '', 
 			greskaAdresa: '', 
-			greskaGrad: '',
+			greskaPonovljenaLozinka: '', 
 			greska: false
 		}
 	}, 
 	
 	template: `
 	
-		<div class="registracija">
+		<div class="well" id="tableBox">
 		
-			<h1>Registracija novog pacijenta</h1>
+			<h1>Registracija novog pacijenta</h1><br>
 			
+			<table class="table">
 			
-			<div>
-			
-				<table>
+				<tbody>
 				
-					<tr><td class="left">Email: </td><td class="right"><input type="text" v-model="zahtev.email"></td><td>{{greskaEmail}}</td></tr>
-					<tr><td class="left">Ime: </td><td class="right"><input type="text" v-model="zahtev.ime"></td><td>{{greskaIme}}</td></tr>
-					<tr><td class="left">Prezime: </td><td class="right"><input type="text" v-model="zahtev.prezime"></td><td>{{greskaPrezime}}</td></tr>
-					<tr><td class="left">Telefon: </td><td class="right"><input type="text" v-model="zahtev.telefon"></td><td>{{greskaTelefon}}</td></tr>
-					<tr><td class="left">Broj osiguranika: </td><td class="right"><input type="text" v-model="zahtev.brojOsiguranika"></td><td>{{greskaBrojOsiguranika}}</td></tr>
-					<tr><td class="left">Drzava: </td><td class="right"><input type="text" v-model="zahtev.drzava"></td><td>{{greskaDrzava}}</td></tr>
-					<tr><td class="left">Grad: </td><td class="right"><input type="text" v-model="zahtev.grad"></td><td>{{greskaGrad}}</td></tr>
-					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="zahtev.adresa"></td><td>{{greskaAdresa}}</td></tr>
-
-					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
-					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
-					<br>
-					<tr><td colspan="3"><button v-on:click="posalji_zahtev()">POSALJI ZAHTEV</button><br></td></tr>
+					<tr>
 					
-				
-				</table>
-				
+						<th scope="row">Email: </th>
+						<td><input type="text" v-model="zahtev.email" class="form-control"></td>
+						<td>{{greskaEmail}}</td>
+					
+					</tr>
+					
+					<tr>
 			
-			</div>
+						<th scope="row">Ime: </th>
+						<td><input type="text" v-model="zahtev.ime" class="form-control"></td>
+						<td>{{greskaIme}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Prezime: </th>
+						<td><input type="text" v-model="zahtev.prezime" class="form-control"></td>
+						<td>{{greskaPrezime}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Telefon: </th>
+						<td><input type="text" v-model="zahtev.telefon" class="form-control"></td>
+						<td>{{greskaTelefon}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Broj osiguranika: </th>
+						<td><input type="text" v-model="zahtev.brojOsiguranika" class="form-control"></td>
+						<td>{{greskaBrojOsiguranika}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Drzava: </th>
+						<td><input type="text" v-model="zahtev.drzava" class="form-control"></td>
+						<td>{{greskaDrzava}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Grad: </th>
+						<td><input type="text" v-model="zahtev.grad" class="form-control"></td>
+						<td>{{greskaGrad}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Adresa: </th>
+						<td><input type="text" v-model="zahtev.adresa" class="form-control"></td>
+						<td>{{greskaAdresa}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Lozinka: </th>
+						<td><input type="text" v-model="novaLozinka" class="form-control"></td>
+						<td>{{greskaLozinka}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<th scope="row">Ponovljena lozinka: </th>
+						<td><input type="text" v-model="ponovljenaLozinka" class="form-control"></td>
+						<td>{{greskaPonovljenaLozinka}}</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<td colspan="3"><button v-on:click="posaljiZahtev()" class="btn btn-primary">POSALJI ZAHTEV</button></td>
+					
+					</tr>
+				
+				</tbody>
+			
+			</table>
 		
 		</div>
 	
 	`, 
+	
+	
 	
 	watch: {
 		novaLozinka: function(){
@@ -74,14 +145,14 @@ Vue.component('registracija', {
 	
 	methods: {
 		
-		emailProvera: function emailIsValid(email){
+		emailProvera: function(email){
     		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 		}, 
 		
 		osvezi: function(){
+			
 			this.greskaEmail = '';
-			this.greskaNovaLozinka = '';
-			this.greskaPonovljenaLozinka = '';
+			this.greskaLozinka = '';
 			this.greskaIme = '';
 			this.greskaPrezime = '';
 			this.greskaTelefon = '';
@@ -89,14 +160,16 @@ Vue.component('registracija', {
 			this.greskaDrzava = '';
 			this.greskaGrad = '';
 			this.greskaAdresa = '';
+			this.greskaPonovljenaLozinka = '';
 			this.greska = false;
+			
 		}, 
 		
-		posalji_zahtev: function(){
+		posaljiZahtev: function(){
 			
 			this.osvezi();
 			this.zahtev.lozinka = this.novaLozinka;
-			
+
 			if (!this.emailProvera(this.zahtev.email)){
 				this.greskaEmail = "Email nije ispravan. ";
 				this.greska = true;
@@ -112,13 +185,13 @@ Vue.component('registracija', {
 				this.greska = true;
 			}
 			
-			if (isNaN(parseInt(this.zahtev.telefon)) || parseInt(this.zahtev.telefon) < 0){
-				this.greskaTelefon = "Telefon nije ispravan. ";
+			if (this.zahtev.telefon == ''){
+				this.greskaTelefon = "Telefon ne sme biti prazan. ";
 				this.greska = true;
 			}
 			
-			if (isNaN(parseInt(this.zahtev.brojOsiguranika)) || parseInt(this.zahtev.brojOsiguranika) < 0){
-				this.greskaBrojOsiguranika = "Broj osiguranika nije ispravan. ";
+			if (this.zahtev.brojOsiguranika == ''){
+				this.greskaBrojOsiguranika = "Broj osiguranika ne sme biti prazan. ";
 				this.greska = true;
 			}
 			
@@ -137,12 +210,12 @@ Vue.component('registracija', {
 				this.greska = true;
 			}
 			
-			if (this.novaLozinka == ''){
-				this.greskaNovaLozinka = "Lozinka ne sme biti prazna. ";
+			if (this.zahtev.lozinka == ''){
+				this.greskaLozinka = "Lozinka ne sme biti prazna. ";
 				this.greska = true;
 			}
 			
-			if (this.ponovljenaLozinka != this.novaLozinka){
+			if (this.zahtev.lozinka != this.ponovljenaLozinka){
 				this.greskaPonovljenaLozinka = "Lozinke se ne poklapaju. ";
 				this.greska = true;
 			}
@@ -151,10 +224,10 @@ Vue.component('registracija', {
 			
 			axios.post("/zahtevRegistracija/kreiranje", this.zahtev)
 			.then(response => {
-				this.$router.push("/poslat_zahtev");
+				this.$router.push("/poslatZahtev");
 			})
 			.catch(error => {
-				alert("SERVER ERROR!");
+				alert("SERVER ERROR!!");
 			});
 			
 		}
@@ -162,3 +235,6 @@ Vue.component('registracija', {
 	}
 	
 });
+
+
+
