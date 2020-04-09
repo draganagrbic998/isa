@@ -39,7 +39,7 @@ public class LekarConversion {
 	
 	public List<LekarDTO> get(List<Lekar> lekari){
 		
-		List<LekarDTO> lekariDTO = new ArrayList<LekarDTO>();
+		List<LekarDTO> lekariDTO = new ArrayList<>();
 		for (Lekar l: lekari)
 			lekariDTO.add(new LekarDTO(l));
 		return lekariDTO;

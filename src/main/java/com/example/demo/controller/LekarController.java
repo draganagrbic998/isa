@@ -41,16 +41,6 @@ public class LekarController {
 	
 	
 	
-//	@PostMapping(value = "/brisanje", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-//	public ResponseEntity<?> create(@RequestBody String email) {
-//		String replaced = email.replace("%40", "@");
-//		String emailCorrect = replaced.substring(0, replaced.length() - 1);
-//		boolean isDone = this.lekarService.obrisiLekara(emailCorrect);
-//		if (isDone) {
-//			return new ResponseEntity<>(HttpStatus.OK);
-//		}
-//		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//	}
-	
+
 	
 }

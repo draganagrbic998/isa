@@ -26,7 +26,7 @@ public class KlinikaConversion {
 	
 	public List<KlinikaDTO> get(List<Klinika> klinike){
 		
-		List<KlinikaDTO> lista = new ArrayList<KlinikaDTO>();
+		List<KlinikaDTO> lista = new ArrayList<>();
 		for (Klinika k: klinike) 
 			lista.add(new KlinikaDTO(k));
 		return lista;
