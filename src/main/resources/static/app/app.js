@@ -8,7 +8,7 @@ const adminKCHome = {template: '<adminKCHome></adminKCHome>'}
 const lekarBrisanje = {template: '<lekarBrisanje></lekarBrisanje>'}
 const poslatZahtev = {template: '<poslatZahtev></poslatZahtev>'}
 const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
-
+const profil = {template: '<profil></profil>'}
 
 const router = new VueRouter({
 
@@ -24,6 +24,8 @@ const router = new VueRouter({
 		{path: '/lekarBrisanje', component: lekarBrisanje}, 
 		{path: '/poslatZahtev', component: poslatZahtev}, 
 		{path: '/pacijentHome', component: pacijentHome}, 
+		{path: '/profil', component: profil}, 
+
 
 		
 	]
