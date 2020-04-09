@@ -9,6 +9,7 @@ const lekarBrisanje = {template: '<lekarBrisanje></lekarBrisanje>'}
 const poslatZahtev = {template: '<poslatZahtev></poslatZahtev>'}
 const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
 const profil = {template: '<profil></profil>'}
+const karton = {template: '<karton></karton>'}
 
 const router = new VueRouter({
 
@@ -25,7 +26,7 @@ const router = new VueRouter({
 		{path: '/poslatZahtev', component: poslatZahtev}, 
 		{path: '/pacijentHome', component: pacijentHome}, 
 		{path: '/profil', component: profil}, 
-
+		{path: '/karton', component: karton}, 
 
 		
 	]
