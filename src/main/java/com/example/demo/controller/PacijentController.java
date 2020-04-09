@@ -34,8 +34,8 @@ public class PacijentController {
 	public ResponseEntity<?> karton(){
 		Korisnik korisnik = (Korisnik) this.session.getAttribute("korisnik");
 		//ovo za hibernate proveru cemo jos videti jel ok
-		
-		if (korisnik == null || !(Hibernate.getClass(korisnik).getSimpleName().equals("Pacijent")))
+		Korisnik temp = (Korisnik) Hibernate.unproxy(korisnik);
+		if (korisnik == null || !(temp instanceof Pacijent))
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		Pacijent pacijent = (Pacijent) Hibernate.unproxy(korisnik);
 		return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);
