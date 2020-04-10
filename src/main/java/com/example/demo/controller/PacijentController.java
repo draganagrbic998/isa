@@ -10,18 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Bolest;
 import com.example.demo.dto.Termin;
+import com.example.demo.dto.User;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
+import com.example.demo.service.KorisnikService;
+import com.example.demo.service.PosetaService;
 
 @RestController
 @RequestMapping(value="/pacijent")
@@ -32,6 +37,12 @@ public class PacijentController {
 	
 	@Autowired
 	private KartonConversion kartonConversion;
+	
+	@Autowired
+	private PosetaService posetaService;
+	
+	@Autowired
+	private KorisnikService korisnikService;
 
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> karton(){
@@ -83,6 +94,33 @@ public class PacijentController {
 				bolesti.add(new Bolest(p));
 		}
 		return new ResponseEntity<>(bolesti, HttpStatus.OK);
+		
+	}
+	
+	@DeleteMapping(value="/otkazi/termin/{posetaId}")
+	public ResponseEntity<?> otkaziTermin(@PathVariable Integer posetaId){
+		
+		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
+		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
+		if (k == null || !(korisnik instanceof Pacijent))
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Pacijent pacijent = (Pacijent) korisnik;
+
+		//mogla bih dodati da proverim da li je uneti id posete 
+		//poseta koja se nalazi u listi pacijentovih poseta
+		
+		Poseta poseta = this.posetaService.getOne(posetaId);
+		
+		
+		poseta.setKarton(null);
+		poseta.setStanje(StanjePosete.SLOBODNO);
+		this.posetaService.save(poseta);
+
+
+		//sto je potrebna ova sledeca dva reda?
+		korisnik = this.korisnikService.prijava(new User(pacijent.getEmail(), pacijent.getLozinka()));
+		this.session.setAttribute("korisnik", korisnik);
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 	

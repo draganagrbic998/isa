@@ -63,7 +63,7 @@ Vue.component("termini", {
 					</tr>
 				
 					<tr>
-						<td colspan="2"><button v-on:click="otkazi()" class="btn btn-primary">OTKAZI</button></td>
+						<td colspan="2"><button v-on:click="otkazi()" class="btn btn-primary" v-bind:disabled="new Date().addHours(24) >= selectedTermin.datum">OTKAZI</button></td>
 					</tr>
 					
 				</tbody>
@@ -118,6 +118,13 @@ Vue.component("termini", {
 		.catch(response => {
 			this.$router.push("/profil");
 		});
+		
+		Date.prototype.addHours = function(h){
+		    this.setHours(this.getHours()+h);
+		    return this;
+		}
+
+
 		
 	}, 
 	
