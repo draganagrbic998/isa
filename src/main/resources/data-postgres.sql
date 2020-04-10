@@ -19,9 +19,9 @@ values (to_date('21.04.2020.', 'dd.MM.yyyy.'), 0.2, 1, 1, 1, 1);
 insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
 values (to_date('22.04.2020.', 'dd.MM.yyyy.'), 0.2, 1, 1, 1, 1);
 insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('lekar', 'baba', 'deda', 'asd1', 'asd');
+values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd');
 insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('lekar', 'mama', 'tata', 'asd2', 'asd');
+values ('lekar', 'mama', 'tata', 'dragana.grbic.98@uns.ac.rs', 'asd');
 insert into lekar_poseta (lekar, poseta)
 values (2, 1);
 insert into lekar_poseta (lekar, poseta)
