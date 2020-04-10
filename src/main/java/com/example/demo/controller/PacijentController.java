@@ -3,9 +3,6 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,25 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Bolest;
 import com.example.demo.dto.Termin;
-import com.example.demo.dto.User;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.model.Karton;
-import com.example.demo.model.Korisnik;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.service.EmailService;
-import com.example.demo.service.KorisnikService;
 import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping(value="/pacijent")
 public class PacijentController {
-		
+	
 	@Autowired
-	private HttpSession session;
+	private UserService userService;
 	
 	@Autowired
 	private KartonConversion kartonConversion;
@@ -45,28 +40,24 @@ public class PacijentController {
 	private PosetaService posetaService;
 	
 	@Autowired
-	private KorisnikService korisnikService;
-	
-	@Autowired
 	private EmailService emailService;
 
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> karton(){
-		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
-		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
-		if (k == null || !(korisnik instanceof Pacijent))
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Pacijent pacijent = (Pacijent) korisnik;
+		
+		if (!(this.userService.authorized(Pacijent.class)))
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 		return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);
+		
 	}
 	
 	@GetMapping(value="/termini", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> termini(){
-		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
-		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
-		if (k == null || !(korisnik instanceof Pacijent))
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Pacijent pacijent = (Pacijent) korisnik;
+		
+		if (!(this.userService.authorized(Pacijent.class)))
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 
 		Karton karton = pacijent.getKarton();
 		//kada budem otkazivala posete, moram da pazim da referencu POseta izbacim iz liste poseta kartona
@@ -87,11 +78,10 @@ public class PacijentController {
 	
 	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> bolesti(){
-		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
-		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
-		if (k == null || !(korisnik instanceof Pacijent))
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Pacijent pacijent = (Pacijent) korisnik;
+		if (!(this.userService.authorized(Pacijent.class)))
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+
 		Karton karton = pacijent.getKarton();
 
 		List<Bolest> bolesti = new ArrayList<Bolest>();
@@ -106,11 +96,8 @@ public class PacijentController {
 	@DeleteMapping(value="/otkazi/termin/{posetaId}")
 	public ResponseEntity<?> otkaziTermin(@PathVariable Integer posetaId){
 		
-		Korisnik k = (Korisnik) this.session.getAttribute("korisnik");
-		Korisnik korisnik = (Korisnik) Hibernate.unproxy(k);
-		if (k == null || !(korisnik instanceof Pacijent))
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Pacijent pacijent = (Pacijent) korisnik;
+		if (!(this.userService.authorized(Pacijent.class)))
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
 		//mogla bih dodati da proverim da li je uneti id posete 
 		//poseta koja se nalazi u listi pacijentovih poseta
@@ -128,10 +115,6 @@ public class PacijentController {
 		}
 				
 
-
-		//sto je potrebna ova sledeca dva reda?
-		korisnik = this.korisnikService.prijava(new User(pacijent.getEmail(), pacijent.getLozinka()));
-		this.session.setAttribute("korisnik", korisnik);
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
