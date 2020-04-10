@@ -22,10 +22,13 @@ import com.example.demo.dto.User;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
 
 @RestController
@@ -43,6 +46,9 @@ public class PacijentController {
 	
 	@Autowired
 	private KorisnikService korisnikService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> karton(){
@@ -115,6 +121,12 @@ public class PacijentController {
 		poseta.setKarton(null);
 		poseta.setStanje(StanjePosete.SLOBODNO);
 		this.posetaService.save(poseta);
+		
+		String obavestenje = "Poseta zakazana za " + poseta.getPopust() + " je otkazana od strane pacijenta. ";
+		for (Lekar l: poseta.getLekari()) {
+			this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
+		}
+				
 
 
 		//sto je potrebna ova sledeca dva reda?
