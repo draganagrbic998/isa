@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,35 +40,38 @@ public class UserController {
 		
 	}
 	
-	@GetMapping(value="/odjava")
-	public ResponseEntity<?> odjava(){
-		this.userService.odjava();
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+//	@GetMapping(value="/odjava")
+//	public ResponseEntity<?> odjava(){
+//		this.userService.odjava();
+//		return new ResponseEntity<>(HttpStatus.OK);
+//	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/ime/prezime")
 	public ResponseEntity<?> imePrezime(){
 		Korisnik k = this.userService.getSignedKorisnik();
-		if (k == null)
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		if (k == null)
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(k.getIme() + " " + k.getPrezime(), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> profil(){
 		Korisnik k = this.userService.getSignedKorisnik();
-		if (k == null)
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		if (k == null)
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(new KorisnikDTO(k), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/izmena")
 	public ResponseEntity<?> izmena(@RequestBody KorisnikDTO korisnikDTO){
 		Korisnik k = this.userService.getSignedKorisnik();
-		if (k == null)
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		
-		
+//		if (k == null)
+//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//		
+//		
 		
 		k.setLozinka(korisnikDTO.getLozinka());
 		k.setIme(korisnikDTO.getIme());

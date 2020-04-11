@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,21 +43,23 @@ public class PacijentController {
 	@Autowired
 	private EmailService emailService;
 
+	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> karton(){
-		
-		if (!(this.userService.authorized(Pacijent.class)))
-			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//		if (!(this.userService.authorized(Pacijent.class)))
+//			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+		//dodaj da se proveri jel pacijent null (ako ga je neko u medjuvremenu obrisao)
 		return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);
 		
 	}
 	
+	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/termini", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> termini(){
+//		if (!(this.userService.authorized(Pacijent.class)))
+//			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		
-		if (!(this.userService.authorized(Pacijent.class)))
-			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 
 		Karton karton = pacijent.getKarton();
@@ -76,10 +79,11 @@ public class PacijentController {
 		
 	}
 	
+	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> bolesti(){
-		if (!(this.userService.authorized(Pacijent.class)))
-			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//		if (!(this.userService.authorized(Pacijent.class)))
+//			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 
 		Karton karton = pacijent.getKarton();
@@ -93,12 +97,11 @@ public class PacijentController {
 		
 	}
 	
+	@PreAuthorize("hasAuthority('Pacijent')")
 	@DeleteMapping(value="/otkazi/termin/{posetaId}")
 	public ResponseEntity<?> otkaziTermin(@PathVariable Integer posetaId){
-		
-		if (!(this.userService.authorized(Pacijent.class)))
-			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
+//		if (!(this.userService.authorized(Pacijent.class)))
+//			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		//mogla bih dodati da proverim da li je uneti id posete 
 		//poseta koja se nalazi u listi pacijentovih poseta
 		

@@ -15,7 +15,6 @@ Vue.component("pacijentHome", {
 			<router-link to="/karton">KARTON</router-link><br><br>
 			<router-link to="/termini">ZAKAZANI TERMINI</router-link><br><br>
 			<router-link to="/bolesti">ISTORIJA BOLESTI</router-link><br><br>
-			<button class="btn btn-primary" v-on:click="odjava()">ODJAVA</button><br>
 
 		</div>
 	
