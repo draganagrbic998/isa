@@ -5,6 +5,7 @@ values ('123', 10, 10, 10, 10, 1, 1);
 update korisnik
 set karton = 1
 where id = 1;
+
 ---------------
 insert into klinika (naziv, opis, adresa)
 values ('moja klinika', 'super klinika', 'moja adresa');
@@ -19,7 +20,7 @@ values (to_date('21.04.2020.', 'dd.MM.yyyy.'), 0.2, 1, 1, 1, 1);
 insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
 values (to_date('22.04.2020.', 'dd.MM.yyyy.'), 0.2, 1, 1, 1, 1);
 insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd');
+values ('lekar', 'laza', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd');
 insert into korisnik (tip, ime, prezime, email, lozinka)
 values ('lekar', 'mama', 'tata', 'dragana.grbic.98@uns.ac.rs', 'asd');
 insert into lekar_poseta (lekar, poseta)
@@ -148,3 +149,12 @@ insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
 values (4, 5);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
 values (4, 6);
+--------------------
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
+values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
+values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
+values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
+values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1);

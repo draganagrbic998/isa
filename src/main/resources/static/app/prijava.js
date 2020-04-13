@@ -66,9 +66,9 @@ Vue.component("prijava", {
 				else if (response.data == "sestra")
 					this.$router.push("sestraHome")
 				else if (response.data == "admin")
-					this.$router.push("adminHome");
+					this.$router.push("adminKlinikeHome");
 				else
-					this.$router.push("superHome");
+					this.$router.push("adminKCHome");
 			})
 			.catch(response => {
 				this.greskaPrijava = "Unet korisnik ne postoji. ";

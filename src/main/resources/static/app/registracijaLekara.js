@@ -133,7 +133,6 @@ Vue.component('registracijaLekara', {
 			}
 			
 			
-			
 			if (this.lekar.drzava == ''){
 				this.greskaDrzava = "Drzava ne sme biti prazna. ";
 				this.greska = true;
@@ -163,8 +162,8 @@ Vue.component('registracijaLekara', {
 			
 			axios.post("/lekar/kreiranje", this.lekar)
 			.then(response => {
-				//ovde da obavesti da je kreiran profil
-				this.$router.push("/lekarHome");
+				alert("Lekar uspesno kreiran!");
+				this.$router.push("/adminKlinikeHome");
 			})
 			.catch(error => {
 				alert("SERVER ERROR!");
@@ -174,7 +173,7 @@ Vue.component('registracijaLekara', {
 	},
 	mounted () {
 		axios
-        .get("/klinika/pregled")
+        .get("/klinika/vratiKliniku")
         .then(response => (this.klinike = response.data));
 	},
 	

@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.model.Admin;
 import com.example.demo.model.Klinika;
 import com.example.demo.repository.KlinikaRepository;
 
@@ -13,6 +15,7 @@ public class KlinikaService {
 
 	@Autowired
 	private KlinikaRepository klinikaRepository;
+	
 	
 	public List<Klinika> findAll(){
 		return this.klinikaRepository.findAll();

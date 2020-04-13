@@ -117,7 +117,6 @@ public class PacijentController {
 			this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
 		}
 				
-
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}

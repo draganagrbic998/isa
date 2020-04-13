@@ -24,6 +24,12 @@ public class TipPosete {
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
 	
+	@Column
+	private Integer sati;
+	
+	@Column
+	private Integer minuti;
+	
 	public TipPosete() {
 		super();
 	}
@@ -67,5 +73,19 @@ public class TipPosete {
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
 	}
-	
+	public Integer getSati() {
+		return sati;
+	}
+
+	public void setSati(Integer sati) {
+		this.sati = sati;
+	}
+
+	public Integer getMinuti() {
+		return minuti;
+	}
+
+	public void setMinuti(Integer minuti) {
+		this.minuti = minuti;
+	}
 }
