@@ -1,9 +1,9 @@
 Vue.component('lekoviPretraga', {
 	data: function(){
 		return{
-			lekovi: {},
+			lekovi: [],
 			pretraga: '',
-			backupLekovi: {},
+			backupLekovi: [],
 			nemaRezultata: ''
 		}
 	}, 
@@ -13,7 +13,7 @@ Vue.component('lekoviPretraga', {
 		<div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">PRETRAGA LEKOVA</a>
+  <a class="navbar-brand" href="#/adminKCHome">PRETRAGA LEKOVA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -28,14 +28,14 @@ Vue.component('lekoviPretraga', {
           </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#" v-on:click="sifra_sort()">
+        <a class="nav-link" href="#/lekoviPretraga" v-on:click="sifra_sort()">
           <i class="fa fa-address-book">
           </i>
           Sifra
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#" v-on:click="naziv_sort()">
+        <a class="nav-link" href="#/lekoviPretraga" v-on:click="naziv_sort()">
           <i class="fa fa-address-book">
           </i>
           Naziv
@@ -57,7 +57,7 @@ Vue.component('lekoviPretraga', {
 		<tr v-for="l in lekovi">
 			<td>{{l.sifra}}</td>
 			<td>{{l.naziv}}</td>
-			<td><button v-on:click="deleteLek(l.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
+			<td><button v-on:click="deleteLek(l.id, l.naziv)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
 		</div>
@@ -72,7 +72,6 @@ Vue.component('lekoviPretraga', {
 		.catch(response => {
 			this.$router.push("/");
 		});
-		
 	}, 
 	
 	methods: {
@@ -80,10 +79,10 @@ Vue.component('lekoviPretraga', {
 		sifra_sort: function(){
 			for (let i in this.lekovi) {
 				for (let j in this.lekovi) {
-					if (lekovi[i].sifra > lekovi[j].sifra) {
-						let temp = lekovi[j];
-						lekovi[j] = lekovi[i];
-						lekovi[i] = temp;
+					if (this.lekovi[j].sifra > this.lekovi[i].sifra) {
+						let temp = this.lekovi[j];
+						this.lekovi[j] = this.lekovi[i];
+						this.lekovi[i] = temp;
 					}
 				}
 			}
@@ -92,10 +91,10 @@ Vue.component('lekoviPretraga', {
 		naziv_sort: function(){
 			for (let i in this.lekovi) {
 				for (let j in this.lekovi) {
-					if (lekovi[i].naziv > lekovi[j].naziv) {
-						let temp = lekovi[j];
-						lekovi[j] = lekovi[i];
-						lekovi[i] = temp;
+					if (this.lekovi[j].naziv > this.lekovi[i].naziv) {
+						let temp = this.lekovi[j];
+						this.lekovi[j] = this.lekovi[i];
+						this.lekovi[i] = temp;
 					}
 				}
 			}
@@ -128,10 +127,10 @@ Vue.component('lekoviPretraga', {
             }
 		},
 		
-		deleteLek: function(id) {
+		deleteLek: function(id, naziv) {
 			axios.delete("/lek/brisanje/" + id, id)
 			.then(response => {
-				alert("Lek " + id + " uspesno obrisana!");
+				alert("Lek '" + naziv + "' uspesno obrisan!");
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {

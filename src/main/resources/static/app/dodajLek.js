@@ -45,7 +45,7 @@ Vue.component('dodajLek', {
 		}, 
 		
 		proveri_sifru: function(){
-			axios.get("/lek/pribavi")
+			axios.get("/lek/dobaviLekove")
 			.then(response => {
 				this.dijagnoze = response.data;
 			})

@@ -1,9 +1,9 @@
 Vue.component('dijagnozePretraga', {
 	data: function(){
 		return{
-			dijagnoze: {},
+			dijagnoze: [],
 			pretraga: '',
-			backupDijagnoze: {},
+			backupDijagnoze: [],
 			nemaRezultata: ''
 		}
 	}, 
@@ -13,7 +13,7 @@ Vue.component('dijagnozePretraga', {
 		<div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">PRETRAGA DIJAGNOZA</a>
+  <a class="navbar-brand" href="#/adminKCHome">PRETRAGA DIJAGNOZA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -28,14 +28,14 @@ Vue.component('dijagnozePretraga', {
           </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#" v-on:click="sifra_sort()">
+        <a class="nav-link" href="#/dijagnozePretraga" v-on:click="sifra_sort()">
           <i class="fa fa-address-book">
           </i>
           Sifra
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#" v-on:click="naziv_sort()">
+        <a class="nav-link" href="#/dijagnozePretraga" v-on:click="naziv_sort()">
           <i class="fa fa-address-book">
           </i>
           Naziv
@@ -57,7 +57,7 @@ Vue.component('dijagnozePretraga', {
 		<tr v-for="d in dijagnoze">
 			<td>{{d.sifra}}</td>
 			<td>{{d.naziv}}</td>
-			<td><button v-on:click="deleteDijagnoza(d.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
+			<td><button v-on:click="deleteDijagnoza(d.id, d.naziv)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
 		</div>
@@ -80,10 +80,10 @@ Vue.component('dijagnozePretraga', {
 		sifra_sort: function(){
 			for (let i in this.dijagnoze) {
 				for (let j in this.dijagnoze) {
-					if (dijagnoze[i].sifra > dijagnoze[j].sifra) {
-						let temp = dijagnoze[j];
-						dijagnoze[j] = dijagnoze[i];
-						dijagnoze[i] = temp;
+					if (this.dijagnoze[j].sifra > this.dijagnoze[i].sifra) {
+						let temp = this.dijagnoze[j];
+						this.dijagnoze[j] = this.dijagnoze[i];
+						this.dijagnoze[i] = temp;
 					}
 				}
 			}
@@ -92,10 +92,10 @@ Vue.component('dijagnozePretraga', {
 		naziv_sort: function(){
 			for (let i in this.dijagnoze) {
 				for (let j in this.dijagnoze) {
-					if (dijagnoze[i].naziv > dijagnoze[j].naziv) {
-						let temp = dijagnoze[j];
-						dijagnoze[j] = dijagnoze[i];
-						dijagnoze[i] = temp;
+					if (this.dijagnoze[j].naziv > this.dijagnoze[i].naziv) {
+						let temp = this.dijagnoze[j];
+						this.dijagnoze[j] = this.dijagnoze[i];
+						this.dijagnoze[i] = temp;
 					}
 				}
 			}
@@ -128,10 +128,10 @@ Vue.component('dijagnozePretraga', {
             }
 		},
 		
-		deleteDijagnoza: function(id) {
+		deleteDijagnoza: function(id, naziv) {
 			axios.delete("/dijagnoza/brisanje/" + id, id)
 			.then(response => {
-				alert("Dijagnoza " + id + " uspesno obrisana!");
+				alert("Dijagnoza '" + naziv + "' uspesno obrisana!");
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
