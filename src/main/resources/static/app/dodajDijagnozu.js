@@ -53,7 +53,7 @@ Vue.component('dodajDijagnozu', {
 				alert("SERVER ERROR!");
 			});
 			
-			for (d in this.dijagnoze) {
+			for (let d of this.dijagnoze) {
 				if (d.sifra === this.dijagnoza.sifra) {
 					return false;
 				}

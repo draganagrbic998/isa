@@ -1,9 +1,9 @@
-Vue.component('dijagnozePretraga', {
+Vue.component('lekoviPretraga', {
 	data: function(){
 		return{
-			dijagnoze: {},
+			lekovi: {},
 			pretraga: '',
-			backupDijagnoze: {},
+			backupLekovi: {},
 			nemaRezultata: ''
 		}
 	}, 
@@ -13,7 +13,7 @@ Vue.component('dijagnozePretraga', {
 		<div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">PRETRAGA DIJAGNOZA</a>
+  <a class="navbar-brand" href="#">PRETRAGA LEKOVA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -54,20 +54,20 @@ Vue.component('dijagnozePretraga', {
 			<th> Naziv </th>
 		</tr>
 		
-		<tr v-for="d in dijagnoze">
-			<td>{{d.sifra}}</td>
-			<td>{{d.naziv}}</td>
-			<td><button v-on:click="deleteDijagnoza(d.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
+		<tr v-for="l in lekovi">
+			<td>{{l.sifra}}</td>
+			<td>{{l.naziv}}</td>
+			<td><button v-on:click="deleteLek(l.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
 		</div>
 	
 	`, 
 	mounted(){
-		axios.get("/dijagnoza/dobaviDijagnoze")
+		axios.get("/lek/dobaviLekove")
 		.then(response => {
-			this.dijagnoze = response.data;
-			this.backupDijagnoze = response.data;
+			this.lekovi = response.data;
+			this.backupLekovi = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
@@ -78,24 +78,24 @@ Vue.component('dijagnozePretraga', {
 	methods: {
 		
 		sifra_sort: function(){
-			for (let i in this.dijagnoze) {
-				for (let j in this.dijagnoze) {
-					if (dijagnoze[i].sifra > dijagnoze[j].sifra) {
-						let temp = dijagnoze[j];
-						dijagnoze[j] = dijagnoze[i];
-						dijagnoze[i] = temp;
+			for (let i in this.lekovi) {
+				for (let j in this.lekovi) {
+					if (lekovi[i].sifra > lekovi[j].sifra) {
+						let temp = lekovi[j];
+						lekovi[j] = lekovi[i];
+						lekovi[i] = temp;
 					}
 				}
 			}
 		},
 		
 		naziv_sort: function(){
-			for (let i in this.dijagnoze) {
-				for (let j in this.dijagnoze) {
-					if (dijagnoze[i].naziv > dijagnoze[j].naziv) {
-						let temp = dijagnoze[j];
-						dijagnoze[j] = dijagnoze[i];
-						dijagnoze[i] = temp;
+			for (let i in this.lekovi) {
+				for (let j in this.lekovi) {
+					if (lekovi[i].naziv > lekovi[j].naziv) {
+						let temp = lekovi[j];
+						lekovi[j] = lekovi[i];
+						lekovi[i] = temp;
 					}
 				}
 			}
@@ -103,39 +103,39 @@ Vue.component('dijagnozePretraga', {
 		
 		search: function(){
 			this.nemaRezultata = '';
-			this.dijagnoze = [];
+			this.lekovi = [];
 			
             let lowerPretraga = (this.pretraga).toLowerCase();
             
-            for (let d of this.backupDijagnoze){
-            	let sifraNaziv = (d.sifra.concat(" ",d.naziv)).toLowerCase();
-            	let nazivSifra = (d.naziv.concat(" ", d.sifra)).toLowerCase();
+            for (let l of this.backupLekovi){
+            	let sifraNaziv = (l.sifra.concat(" ",l.naziv)).toLowerCase();
+            	let nazivSifra = (l.naziv.concat(" ", l.sifra)).toLowerCase();
             	
             	if (lowerPretraga.includes(" ")) { //sifra i naziv
             		let passedSifraNaziv = (this.pretraga != '') ? (sifraNaziv.includes(lowerPretraga) || sifraNaziv === lowerPretraga) : true;
                     let passedNazivSifra = (this.pretraga != '') ? (nazivSifra.includes(lowerPretraga) || nazivSifra === lowerPretraga) : true;
-                    if (passedSifraNaziv || passedNazivSifra ) this.dijagnoze.push(d);
+                    if (passedSifraNaziv || passedNazivSifra ) this.lekovi.push(l);
             	}
             	else { //ili sifra ili naziv
-            		let passedSifra = (this.pretraga != '') ? (d.sifra.toLowerCase().includes(lowerPretraga)) : true;
-                    let passedNaziv = (this.pretraga != '') ? (d.naziv.toLowerCase().includes(lowerPretraga)) : true;                    
-                    if (passedSifra  || passedNaziv) this.dijagnoze.push(d);
+            		let passedSifra = (this.pretraga != '') ? (l.sifra.toLowerCase().includes(lowerPretraga)) : true;
+                    let passedNaziv = (this.pretraga != '') ? (l.naziv.toLowerCase().includes(lowerPretraga)) : true;                    
+                    if (passedSifra  || passedNaziv) this.lekovi.push(l);
             	}
                                 
             }
-            if (this.dijagnoze.length===0) {
+            if (this.lekovi.length===0) {
             	this.nemaRezultata = "Nema rezultata pretrage."
             }
 		},
 		
-		deleteDijagnoza: function(id) {
-			axios.delete("/dijagnoza/brisanje/" + id, id)
+		deleteLek: function(id) {
+			axios.delete("/lek/brisanje/" + id, id)
 			.then(response => {
-				alert("Dijagnoza " + id + " uspesno obrisana!");
+				alert("Lek " + id + " uspesno obrisana!");
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				alert("Dijagnoza ne postoji u bazi podataka!");
+				alert("Lek ne postoji u bazi podataka!");
 			});
 
 		}

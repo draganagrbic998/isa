@@ -12,6 +12,7 @@ const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlini
 const dodajDijagnozu = {template: '<dodajDijagnozu></dodajDijagnozu>'}
 const dijagnozePretraga = {template: '<dijagnozePretraga></dijagnozePretraga>'}
 const dodajLek = {template: '<dodajLek></dodajLek>'}
+const lekoviPretraga = {template: '<lekoviPretraga></lekoviPretraga>'}
 const lekarHome = {template: '<lekarHome></lekarHome>'}
 const adminKCHome = {template: '<adminKCHome></adminKCHome>'}
 const lekarBrisanje = {template: '<lekarBrisanje></lekarBrisanje>'}
@@ -36,6 +37,7 @@ const router = new VueRouter({
 		{path: '/dodajDijagnozu', component: dodajDijagnozu},
 		{path: '/dijagnozePretraga', component: dijagnozePretraga},
 		{path: '/dodajLek', component: dodajLek},
+		{path: '/lekoviPretraga', component: lekoviPretraga},
 		{path: '/lekarHome', component: lekarHome},
 		{path: '/adminKCHome', component: adminKCHome},
 		{path: '/lekarBrisanje', component: lekarBrisanje}, 

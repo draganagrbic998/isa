@@ -53,7 +53,7 @@ Vue.component('dodajLek', {
 				alert("SERVER ERROR!");
 			});
 			
-			for (l in this.lekovi) {
+			for (let l of this.lekovi) {
 				if (l.sifra === this.lek.sifra) {
 					return false;
 				}
