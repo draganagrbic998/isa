@@ -6,34 +6,34 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.model.Lek;
+import com.example.demo.model.Dijagnoza;
 import com.example.demo.model.StavkaSifrarnika;
 import com.example.demo.repository.StavkaSifrarnikaRepository;
 
 @Component
-public class LekService {
+public class DijagnozaService {
 
 	@Autowired
 	private StavkaSifrarnikaRepository stavkaRepository;
 
-	public void delete(Integer lekId) {
-		this.stavkaRepository.deleteById(lekId);
+	public void delete(Integer dijagnozaId) {
+		this.stavkaRepository.deleteById(dijagnozaId);
 	}
 
-	public List<Lek> findAll() {
-		List<Lek> lekovi = new ArrayList<Lek>();
+	public List<Dijagnoza> findAll() {
+		List<Dijagnoza> dijagnoze = new ArrayList<Dijagnoza>();
 		List<StavkaSifrarnika> stavke = this.stavkaRepository.findAll();
 		
 		for (StavkaSifrarnika ss : stavke) {
-			if (ss.getClass().equals(Lek.class))
-				lekovi.add((Lek) ss);
+			if (ss.getClass().equals(Dijagnoza.class))
+				dijagnoze.add((Dijagnoza) ss);
 		}
 		
-		return lekovi;
+		return dijagnoze;
 	}
 
-	public void save(Lek lek) {
-		this.stavkaRepository.save(lek);
+	public void save(Dijagnoza dijagnoza) {
+		this.stavkaRepository.save(dijagnoza);
 	}
 
 }

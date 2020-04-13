@@ -3,46 +3,30 @@ package com.example.demo.dto.conversion;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.example.demo.dto.LekarDTO;
-import com.example.demo.repository.KlinikaRepository;
-import com.example.demo.model.Klinika;
-import com.example.demo.model.Lekar;
+
+import com.example.demo.dto.DijagnozaDTO;
+import com.example.demo.model.Dijagnoza;
 
 @Component
 public class DijagnozaConversion {
 
-	@Autowired
-	private KlinikaRepository klinikaRepository;
-
-	public Lekar get(LekarDTO lekarDTO) {
-		Lekar lekar = new Lekar();
-		lekar.setId(lekarDTO.getId());
-		lekar.setEmail(lekarDTO.getEmail());
-		lekar.setLozinka(lekarDTO.getLozinka());
-		lekar.setIme(lekarDTO.getIme());
-		lekar.setPrezime(lekarDTO.getPrezime());
-		lekar.setTelefon(lekarDTO.getTelefon());
-		lekar.setSpecijalizacija(lekarDTO.getSpecijalizacija());
-		lekar.setDrzava(lekarDTO.getDrzava());
-		lekar.setAdresa(lekarDTO.getAdresa());
-		lekar.setGrad(lekarDTO.getGrad());
-		Klinika klinika = this.klinikaRepository.getOne(lekarDTO.getKlinika());
-		lekar.setKlinika(klinika);
-		return lekar;
+	public Dijagnoza get(DijagnozaDTO dijagnozaDTO) {
+		Dijagnoza dijagnoza = new Dijagnoza();
+		dijagnoza.setId(dijagnozaDTO.getId());
+		dijagnoza.setSifra(dijagnozaDTO.getSifra());
+		dijagnoza.setNaziv(dijagnozaDTO.getNaziv());
+		return dijagnoza;
 	}
 	
-	public LekarDTO get(Lekar lekar) {
-		return new LekarDTO(lekar);
+	public DijagnozaDTO get(Dijagnoza dijagnoza) {
+		return new DijagnozaDTO(dijagnoza);
 	}
 	
-	public List<LekarDTO> get(List<Lekar> lekari){
-		
-		List<LekarDTO> lekariDTO = new ArrayList<>();
-		for (Lekar l: lekari)
-			lekariDTO.add(new LekarDTO(l));
-		return lekariDTO;
-		
+	public List<DijagnozaDTO> get(List<Dijagnoza> dijagnoze){
+		List<DijagnozaDTO> dijagnozeDTO = new ArrayList<>();
+		for (Dijagnoza d: dijagnoze)
+			dijagnozeDTO.add(new DijagnozaDTO(d));
+		return dijagnozeDTO;
 	}
 }

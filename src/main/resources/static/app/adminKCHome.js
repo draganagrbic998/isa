@@ -5,7 +5,7 @@ Vue.component('adminKCHome', {
 		<div>
 		
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#/adminKCHome">POCETNA STRANICA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -39,7 +39,6 @@ Vue.component('adminKCHome', {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/registracijaAdminaKlinike">Dodaj Administratora Klinike</a>
-          <a class="dropdown-item" href="#">Obrisi Administratora Klinike</a>
           <a class="dropdown-item" href="#">Pretraga Administratora Klinike</a>
           <div class="dropdown-divider"></div>
         </div>
