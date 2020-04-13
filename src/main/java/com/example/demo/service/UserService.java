@@ -30,7 +30,6 @@ public class UserService {
 	
 	
 	public Korisnik prijava(@RequestBody User user) {
-		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka())) {
 				
