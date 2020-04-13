@@ -16,3 +16,9 @@ spring.jpa.hibernate.ddl-auto = create-drop
 
 #optimizacija za postgres upite
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQL95Dialect
+
+spring.mail.host=smtp.gmail.com
+spring.mail.username=draganaasd@gmail.com
+spring.mail.password=fppvxeifuipjwlyg
+spring.mail.port=587
+spring.mail.properties.mail.smtp.starttls.enable=true
