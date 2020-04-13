@@ -10,7 +10,7 @@ Vue.component("termini", {
 	
 	template: `
 	
-		<div class="well" id="box" v-if="selected">
+		<div class="card" id="box" v-if="selected">
 		
 			<h1>Detalji termina</h1><br>
 			

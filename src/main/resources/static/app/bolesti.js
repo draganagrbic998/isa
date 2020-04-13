@@ -12,7 +12,7 @@ Vue.component("bolesti", {
 	
 		<div class="form-row" v-if="selected">
 		
-			<div class="well form-group col-md-7" id="left">
+			<div class="card" style="width: 40rem;" id="left">
 			
 				<h1>Detalji bolesti</h1><br>
 				
@@ -54,7 +54,7 @@ Vue.component("bolesti", {
 			
 			</div>
 			
-			<div class="form-group col-md-5" style="margin-top: 3%">
+			<div class="form-group col-md-3" style="margin-top: 3%">
 				
 				<h1>Dijagnoze</h1><br>
 				

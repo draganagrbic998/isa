@@ -18,7 +18,7 @@ Vue.component("profil", {
 	
 	template: `
 	
-		<div class="well" id="tableBox">
+		<div class="card" id="tableBox">
 		
 			<h1>Podaci o korisniku</h1><br>
 			
