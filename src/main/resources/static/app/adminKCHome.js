@@ -13,7 +13,7 @@ Vue.component('adminKCHome', {
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="#/adminKCHome">
           <i class="fa fa-home"></i>
           Home
           <span class="sr-only">(current)</span>
@@ -52,7 +52,6 @@ Vue.component('adminKCHome', {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/registracijaKlinike">Dodaj Kliniku</a>
-          <a class="dropdown-item" href="#">Obrisi Kliniku</a>
           <a class="dropdown-item" href="#">Pretraga Klinika</a>
           <div class="dropdown-divider"></div>
         </div>
@@ -65,8 +64,7 @@ Vue.component('adminKCHome', {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/dodajDijagnozu">Dodaj Dijagnozu</a>
-          <a class="dropdown-item" href="#/obrisiDijagnozu">Obrisi Dijagnozu</a>
-          <a class="dropdown-item" href="#">Pretraga Dijagnoza</a>
+          <a class="dropdown-item" href="#/dijagnozePretraga">Pretraga Dijagnoza</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>
@@ -78,8 +76,7 @@ Vue.component('adminKCHome', {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/dodajLek">Dodaj Lek</a>
-          <a class="dropdown-item" href="#/obrisiLek">Obrisi Lek</a>
-          <a class="dropdown-item" href="#">Pretraga Lekova</a>
+          <a class="dropdown-item" href="#/lekoviPretraga">Pretraga Lekova</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>

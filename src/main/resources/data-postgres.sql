@@ -150,6 +150,8 @@ values (4, 5);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
 values (4, 6);
 --------------------
+insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa) values 
+('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123');
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
 values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
