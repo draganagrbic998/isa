@@ -28,6 +28,7 @@ Vue.component('registracijaLekara', {
 			greskaGrad: '',
 			greska: false, 
 			klinike: [], 
+			klinika: {},
 			nazivKlinike: ''
 		}
 	}, 
@@ -59,8 +60,6 @@ Vue.component('registracijaLekara', {
 					<tr><td class="left">Klinika: </td><td class="right"><select v-model="nazivKlinike">
 						<option v-for="k in klinike">{{k.naziv}}</option>
 					</select></td><td>{{greskaKlinika}}</td></tr>
-
-					
 					<br>
 					<tr><td colspan="3"><button v-on:click="registruj_lekara()">KREIRAJ PROFIL</button><br></td></tr>
 					
@@ -79,9 +78,11 @@ Vue.component('registracijaLekara', {
 				this.ponovljenaLozinka = '';
 		}, 
 		
+
+
 		nazivKlinike: function(){
 			for (let k of this.klinike){
-				if (k.naziv == this.nazivKlinike)
+				if (k.naziv === this.nazivKlinike)
 					this.lekar.klinika = k.id;
 			}
 		}
@@ -111,6 +112,8 @@ Vue.component('registracijaLekara', {
 			
 			this.osvezi();
 			this.lekar.lozinka = this.novaLozinka;
+			
+			console.log(this.lekar.klinika);
 			
 			if (!this.emailProvera(this.lekar.email)){
 				this.greskaEmail = "Email nije ispravan. ";
@@ -173,8 +176,8 @@ Vue.component('registracijaLekara', {
 	},
 	mounted () {
 		axios
-        .get("/klinika/vratiKliniku")
-        .then(response => (this.klinike = response.data));
+        .get("/klinika/pregled")
+		.then(response => (this.klinike = response.data));
 	},
 	
 });

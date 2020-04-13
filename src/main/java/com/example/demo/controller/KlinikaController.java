@@ -40,7 +40,7 @@ public class KlinikaController {
 		return this.klinikaConversion.get(loggedUser.getKlinika());
 	}
 	
-	//ukoliko niko ne koristi obrisati
+	
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<KlinikaDTO> review(){
 		return this.klinikaConversion.get(this.klinikaService.findAll());

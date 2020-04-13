@@ -17,8 +17,9 @@ Vue.component('noviTipPosete', {
 			greskaKlinika: '', 
 			greskaSati: '', 
 			greskaMinuti: '', 
-			greska: false, 
-			klinike: [], 
+			greska: false,  
+			klinika: {},
+			klinike: [],
 			nazivKlinike: ''
 		}
 	}, 
@@ -40,13 +41,12 @@ Vue.component('noviTipPosete', {
 						<option :value="true">Pregled</option>
 						<option :value="false">Operacija</option>
 					</select></td><td>{{greskaPregled}}</td></tr>
-					<tr><td class="left">Klinika: </td><td class="right"><select v-model="nazivKlinike">
-						<option v-for="k in klinike">{{k.naziv}}</option>
-					</select></td><td>{{greskaKlinika}}</td></tr>
 					<tr><td class="left">Sati: </td><td class="right"><input type="text" v-model="tipPosete.sati"></td><td>{{greskaSati}}</td></tr>
 					<tr><td class="left">Minuti: </td><td class="right"><input type="text" v-model="tipPosete.minuti"></td><td>{{greskaMinuti}}</td></tr>
 					<tr><td class="left">Cena: </td><td class="right"><input type="text" v-model="tipPosete.cena"></td><td>{{greskaCena}}</td></tr>
-					
+					<tr><td class="left">Klinika: </td><td class="right"><select v-model="nazivKlinike">
+						<option v-for="k in klinike">{{k.naziv}}</option>
+					</select></td><td>{{greskaKlinika}}</td></tr>
 					<br>
 					<tr><td colspan="3"><button v-on:click="dodaj_tp()">DODAJ</button><br></td></tr>
 					
@@ -132,7 +132,7 @@ Vue.component('noviTipPosete', {
 	},
 	mounted () {
 		axios
-        .get("/klinika/vratiKliniku")
+        .get("/klinika/pregled")
         .then(response => (this.klinike = response.data));
 	},
 	

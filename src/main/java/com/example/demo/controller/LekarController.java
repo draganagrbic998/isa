@@ -42,6 +42,7 @@ public class LekarController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody LekarDTO lekarDTO) {
+		System.out.println("LEKAR KLINIKA" + lekarDTO.getKlinika());
 		this.lekarService.save(this.lekarConversion.get(lekarDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
