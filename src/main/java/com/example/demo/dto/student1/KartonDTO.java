@@ -7,10 +7,10 @@ public class KartonDTO {
 	
 	private Integer id;
 	private String brojOsiguranika;
-	private Double visina;
-	private Double tezina;
-	private Double levaDioptrija;
-	private Double desnaDioptrija;
+	private double visina;
+	private double tezina;
+	private double levaDioptrija;
+	private double desnaDioptrija;
 	private KrvnaGrupa krvnaGrupa;
 	
 	public KartonDTO() {
@@ -44,35 +44,35 @@ public class KartonDTO {
 		this.brojOsiguranika = brojOsiguranika;
 	}
 
-	public Double getVisina() {
+	public double getVisina() {
 		return visina;
 	}
 
-	public void setVisina(Double visina) {
+	public void setVisina(double visina) {
 		this.visina = visina;
 	}
 
-	public Double getTezina() {
+	public double getTezina() {
 		return tezina;
 	}
 
-	public void setTezina(Double tezina) {
+	public void setTezina(double tezina) {
 		this.tezina = tezina;
 	}
 
-	public Double getLevaDioptrija() {
+	public double getLevaDioptrija() {
 		return levaDioptrija;
 	}
 
-	public void setLevaDioptrija(Double levaDioptrija) {
+	public void setLevaDioptrija(double levaDioptrija) {
 		this.levaDioptrija = levaDioptrija;
 	}
 
-	public Double getDesnaDioptrija() {
+	public double getDesnaDioptrija() {
 		return desnaDioptrija;
 	}
 
-	public void setDesnaDioptrija(Double desnaDioptrija) {
+	public void setDesnaDioptrija(double desnaDioptrija) {
 		this.desnaDioptrija = desnaDioptrija;
 	}
 

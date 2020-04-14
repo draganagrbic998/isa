@@ -13,9 +13,9 @@ public class Termin {
 	private Date datum;
 	private String klinika;
 	private String adresa;
-	private Double originalnaCena;
+	private double originalnaCena;
 	private Double popust;
-	private Double novaCena;
+	private double novaCena;
 	private String tipPosete;
 	private String nazivPosete;
 	private String sala;
@@ -74,11 +74,11 @@ public class Termin {
 		this.adresa = adresa;
 	}
 
-	public Double getOriginalnaCena() {
+	public double getOriginalnaCena() {
 		return originalnaCena;
 	}
 
-	public void setOriginalnaCena(Double originalnaCena) {
+	public void setOriginalnaCena(double originalnaCena) {
 		this.originalnaCena = originalnaCena;
 	}
 
@@ -90,11 +90,11 @@ public class Termin {
 		this.popust = popust;
 	}
 
-	public Double getNovaCena() {
+	public double getNovaCena() {
 		return novaCena;
 	}
 
-	public void setNovaCena(Double novaCena) {
+	public void setNovaCena(double novaCena) {
 		this.novaCena = novaCena;
 	}
 

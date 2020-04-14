@@ -7,7 +7,7 @@ public class TipPoseteDTO {
 	private Integer id;
 	private Boolean pregled;
 	private String naziv;
-	private Double cena;
+	private double cena;
 	private Integer klinika;
 	private Integer sati;
 	private Integer minute;
@@ -51,11 +51,11 @@ public class TipPoseteDTO {
 		this.naziv = naziv;
 	}
 
-	public Double getCena() {
+	public double getCena() {
 		return cena;
 	}
 
-	public void setCena(Double cena) {
+	public void setCena(double cena) {
 		this.cena = cena;
 	}
 
