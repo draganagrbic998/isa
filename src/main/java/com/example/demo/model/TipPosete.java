@@ -15,7 +15,7 @@ public class TipPosete {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
-	private Boolean pregled;
+	private boolean pregled;
 	@Column
 	private String naziv;
 	@Column
@@ -40,11 +40,11 @@ public class TipPosete {
 		this.id = id;
 	}
 
-	public Boolean getPregled() {
+	public boolean getPregled() {
 		return pregled;
 	}
 
-	public void setPregled(Boolean pregled) {
+	public void setPregled(boolean pregled) {
 		this.pregled = pregled;
 	}
 

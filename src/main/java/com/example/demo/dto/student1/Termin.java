@@ -74,12 +74,12 @@ public class Termin {
 		this.adresa = adresa;
 	}
 
-	public Double getCena() {
+	public Double getOriginalnaCena() {
 		return originalnaCena;
 	}
 
-	public void setCena(Double cena) {
-		this.originalnaCena = cena;
+	public void setOriginalnaCena(Double originalnaCena) {
+		this.originalnaCena = originalnaCena;
 	}
 
 	public Double getPopust() {
@@ -88,14 +88,6 @@ public class Termin {
 
 	public void setPopust(Double popust) {
 		this.popust = popust;
-	}
-
-	public Double getOriginalnaCena() {
-		return originalnaCena;
-	}
-
-	public void setOriginalnaCena(Double originalnaCena) {
-		this.originalnaCena = originalnaCena;
 	}
 
 	public Double getNovaCena() {
