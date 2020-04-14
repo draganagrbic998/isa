@@ -105,7 +105,7 @@ public class PacijentController {
 		poseta.setStanje(StanjePosete.SLOBODNO);
 		this.posetaService.save(poseta);
 		
-		String obavestenje = "Poseta zakazana za " + poseta.getPopust() + " je otkazana od strane pacijenta. ";
+		String obavestenje = "Poseta zakazana za " + poseta.getDatum() + " je otkazana od strane pacijenta. ";
 		for (Lekar l: poseta.getLekari()) {
 			this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
 		}

@@ -22,13 +22,13 @@ public class Karton {
 	@Column(unique = true, nullable = false)
 	private String brojOsiguranika;
 	@Column(unique = false, nullable = true)
-	private Double visina;
+	private double visina;
 	@Column(unique = false, nullable = true)
-	private Double tezina;
+	private double tezina;
 	@Column(unique = false, nullable = true)
-	private Double levaDioptrija;
+	private double levaDioptrija;
 	@Column(unique = false, nullable = true)
-	private Double desnaDioptrija;
+	private double desnaDioptrija;
 	@Column(unique = false, nullable = true)
 	private KrvnaGrupa krvnaGrupa;
 	@OneToOne
@@ -57,35 +57,35 @@ public class Karton {
 		this.brojOsiguranika = brojOsiguranika;
 	}
 
-	public Double getVisina() {
+	public double getVisina() {
 		return visina;
 	}
 
-	public void setVisina(Double visina) {
+	public void setVisina(double visina) {
 		this.visina = visina;
 	}
 
-	public Double getTezina() {
+	public double getTezina() {
 		return tezina;
 	}
 
-	public void setTezina(Double tezina) {
+	public void setTezina(double tezina) {
 		this.tezina = tezina;
 	}
 
-	public Double getLevaDioptrija() {
+	public double getLevaDioptrija() {
 		return levaDioptrija;
 	}
 
-	public void setLevaDioptrija(Double levaDioptrija) {
+	public void setLevaDioptrija(double levaDioptrija) {
 		this.levaDioptrija = levaDioptrija;
 	}
 
-	public Double getDesnaDioptrija() {
+	public double getDesnaDioptrija() {
 		return desnaDioptrija;
 	}
 
-	public void setDesnaDioptrija(Double desnaDioptrija) {
+	public void setDesnaDioptrija(double desnaDioptrija) {
 		this.desnaDioptrija = desnaDioptrija;
 	}
 
