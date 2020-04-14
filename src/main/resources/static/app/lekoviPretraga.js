@@ -134,9 +134,13 @@ Vue.component('lekoviPretraga', {
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				alert("Lek ne postoji u bazi podataka!");
+				if (error.response.status === 404)
+					alert("Lek ne postoji u bazi podataka!");
+				else if (error.response.status === 409)
+					alert("Lek je u upotrebi i ne moze biti obrisan!");
+				else
+					alert("SERVER ERROR");
 			});
-
 		}
 		
 	},

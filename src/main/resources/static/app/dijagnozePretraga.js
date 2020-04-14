@@ -135,7 +135,12 @@ Vue.component('dijagnozePretraga', {
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				alert("Dijagnoza ne postoji u bazi podataka!");
+				if (error.response.status === 404)
+					alert("Dijagnoza ne postoji u bazi podataka!");
+				else if (error.response.status === 409)
+					alert("Dijagnoza je u upotrebi i ne moze biti obrisana!");
+				else
+					alert("SERVER ERROR");
 			});
 
 		}

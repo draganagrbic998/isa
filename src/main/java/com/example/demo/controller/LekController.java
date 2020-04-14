@@ -47,8 +47,12 @@ public class LekController {
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@DeleteMapping(value = "/brisanje/{lekId}")
 	public ResponseEntity<?> delete(@PathVariable Integer lekId){
-		this.lekService.delete(lekId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		try {
+			this.lekService.delete(lekId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
 	
 }

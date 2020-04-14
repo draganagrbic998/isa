@@ -47,8 +47,12 @@ public class DijagnozaController {
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@DeleteMapping(value = "/brisanje/{dijagnozaId}")
 	public ResponseEntity<?> delete(@PathVariable Integer dijagnozaId){
-		this.dijagnozaService.delete(dijagnozaId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		try {
+			this.dijagnozaService.delete(dijagnozaId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
 	
 }
