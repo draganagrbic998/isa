@@ -38,19 +38,14 @@ public class UserController {
 		return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
 		
 	}
-	
-//	@GetMapping(value="/odjava")
-//	public ResponseEntity<?> odjava(){
-//		this.userService.odjava();
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
+
+
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/ime/prezime")
 	public ResponseEntity<?> imePrezime(){
 		Korisnik k = this.userService.getSignedKorisnik();
-//		if (k == null)
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
 		return new ResponseEntity<>(k.getIme() + " " + k.getPrezime(), HttpStatus.OK);
 	}
 	
@@ -58,8 +53,7 @@ public class UserController {
 	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> profil(){
 		Korisnik k = this.userService.getSignedKorisnik();
-//		if (k == null)
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
 		return new ResponseEntity<>(new KorisnikDTO(k), HttpStatus.OK);
 	}
 	
@@ -67,10 +61,7 @@ public class UserController {
 	@PostMapping(value="/izmena")
 	public ResponseEntity<?> izmena(@RequestBody KorisnikDTO korisnikDTO){
 		Korisnik k = this.userService.getSignedKorisnik();
-//		if (k == null)
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		
-//		
+
 		
 		k.setLozinka(korisnikDTO.getLozinka());
 		k.setIme(korisnikDTO.getIme());
