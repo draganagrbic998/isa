@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,21 +35,22 @@ public class KlinikaController {
 
 	//metoda vraca kliniku kojoj pripada ulogovani admin
 	//koristim je kod registracije lekara, i dodavanja novih tipova poseta
+	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/vratiKliniku", produces = MediaType.APPLICATION_JSON_VALUE)
 	public KlinikaDTO getClinic(){
 		Admin loggedUser = (Admin) userService.getSignedKorisnik();
 		return this.klinikaConversion.get(loggedUser.getKlinika());
 	}
 	
-	
+	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<KlinikaDTO> review(){
 		return this.klinikaConversion.get(this.klinikaService.findAll());
 	}
 	
-
+	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody KlinikaDTO klinikaDTO) {
+	public ResponseEntity<HttpStatus> create(@RequestBody KlinikaDTO klinikaDTO) {
 		this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

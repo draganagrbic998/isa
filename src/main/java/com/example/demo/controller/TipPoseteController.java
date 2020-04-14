@@ -26,7 +26,7 @@ public class TipPoseteController {
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody TipPoseteDTO tpDTO) {
+	public ResponseEntity<HttpStatus> create(@RequestBody TipPoseteDTO tpDTO) {
 		this.tipPService.save(this.tipPConversion.get(tpDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -47,14 +47,14 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody LekarDTO lekarDTO) {
+	public ResponseEntity<HttpStatus> create(@RequestBody LekarDTO lekarDTO) {
 		this.lekarService.save(this.lekarConversion.get(lekarDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@DeleteMapping(value = "/brisanje/{lekarId}")
-	public ResponseEntity<?> delete(@PathVariable Integer lekarId){
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer lekarId){
 		this.lekarService.delete(lekarId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -39,14 +39,14 @@ public class DijagnozaController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/dodavanje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody DijagnozaDTO dijagnozaDTO) {
+	public ResponseEntity<HttpStatus> create(@RequestBody DijagnozaDTO dijagnozaDTO) {
 		this.dijagnozaService.save(this.dijagnozaConversion.get(dijagnozaDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@DeleteMapping(value = "/brisanje/{dijagnozaId}")
-	public ResponseEntity<?> delete(@PathVariable Integer dijagnozaId){
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer dijagnozaId){
 		try {
 			this.dijagnozaService.delete(dijagnozaId);
 			return new ResponseEntity<>(HttpStatus.OK);

@@ -31,7 +31,7 @@ public class LekarService {
 	}
 	
 	public List<Lekar> findAllOneClinic(Admin admin) {
-		List<Lekar> doctors = new ArrayList<Lekar>();
+		List<Lekar> doctors = new ArrayList<>();
 		for (Lekar l : this.lekarRepository.findAll()) {
 			if (l.getKlinika().getId().equals(admin.getKlinika().getId()))
 				doctors.add(l);

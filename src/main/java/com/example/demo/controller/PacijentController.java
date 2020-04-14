@@ -66,7 +66,7 @@ public class PacijentController {
 		//kada budem otkazivala posete, moram da pazim da referencu POseta izbacim iz liste poseta kartona
 		//to cu proveravati kad budemo uradili kreiranje poseta
 		
-		List<Termin> termini = new ArrayList<Termin>();
+		List<Termin> termini = new ArrayList<>();
 
 		
 		
@@ -88,7 +88,7 @@ public class PacijentController {
 
 		Karton karton = pacijent.getKarton();
 
-		List<Bolest> bolesti = new ArrayList<Bolest>();
+		List<Bolest> bolesti = new ArrayList<>();
 		for (Poseta p: karton.getPosete()) {
 			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
 				bolesti.add(new Bolest(p));

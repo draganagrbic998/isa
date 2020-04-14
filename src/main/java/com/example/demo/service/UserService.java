@@ -1,9 +1,7 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-//import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,7 @@ import com.example.demo.repository.KorisnikRepository;
 
 @Component
 public class UserService {
-	
-//	@Autowired
-//	private HttpSession session;
-	
+		
 	@Autowired
 	private KorisnikRepository korisnikRepository;
 	
@@ -34,13 +29,11 @@ public class UserService {
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka())) {
 				
-		        Collection<GrantedAuthority> lista = new ArrayList<>();
+		        List<GrantedAuthority> lista = new ArrayList<>();
 		        lista.add(new SimpleGrantedAuthority(Hibernate.unproxy(k).getClass().getSimpleName()));
 		        PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(k.getId(), null, lista);
 		        SecurityContextHolder.getContext().setAuthentication(token);
 
-				
-//				this.session.setAttribute("korisnik", k.getId());
 				return k;
 			}
 		}
@@ -49,28 +42,9 @@ public class UserService {
 
 	}
 	
-	
-//	public void odjava() {
-//		this.session.invalidate();
-//	}
-	
-//	public boolean authorized(Class<?> klasa) {
-//		
-//		Integer id = (Integer) this.session.getAttribute("korisnik");
-//		if (id == null)
-//			return false;
-//		Korisnik k = this.korisnikRepository.getOne(id);
-//		if (!(klasa.isInstance(Hibernate.unproxy(k))))
-//			return false;
-//		return true;
-//		
-//	}
+
 	
 	public Korisnik getSignedKorisnik() {
-//		Integer id = (Integer) this.session.getAttribute("korisnik");
-//		if (id == null || !(this.korisnikRepository.existsById(id)))
-//			return null;
-//		return this.korisnikRepository.getOne(id);
 		
 		Authentication prava = SecurityContextHolder.getContext().getAuthentication();
         Integer id = Integer.parseInt(prava.getName());

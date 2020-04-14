@@ -13,17 +13,14 @@ public class PosetaService {
 	private PosetaRepository posetaRepository;
 
 	public Poseta getOne(Integer posetaId) {
-		// TODO Auto-generated method stub
 		return this.posetaRepository.getOne(posetaId);
 	}
 
 	public void save(Poseta poseta) {
-		// TODO Auto-generated method stub
 		this.posetaRepository.save(poseta);
 	}
 
 	public void deleteById(Integer posetaId) {
-		// TODO Auto-generated method stub
 		this.posetaRepository.deleteById(posetaId);
 	}
 

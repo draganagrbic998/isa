@@ -35,13 +35,13 @@ public class Bolest {
 		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
 		this.nazivPosete = poseta.getTipPosete().getNaziv();
 		this.izvestaj = poseta.getIzvestaj().getOpis();
-		this.lekari = new ArrayList<LekarDTO>();
+		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
 			this.lekari.add(new LekarDTO(l));
-		this.dijagnoze = new ArrayList<DijagnozaDTO>();
+		this.dijagnoze = new ArrayList<>();
 		for (Dijagnoza d: poseta.getIzvestaj().getDijagnoze())
 			this.dijagnoze.add(new DijagnozaDTO(d));
-		this.recepti = new ArrayList<Recept>();
+		this.recepti = new ArrayList<>();
 		for (Lek l: poseta.getIzvestaj().getTerapija().getLekovi())
 			this.recepti.add(new Recept(l, poseta.getIzvestaj().getTerapija().getSestra()));
 	}

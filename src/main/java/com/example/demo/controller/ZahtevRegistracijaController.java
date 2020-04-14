@@ -24,7 +24,7 @@ public class ZahtevRegistracijaController {
 	private ZahtevRegistracijaConversion zahtevConversion;
 		
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
+	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
 
 		this.zahtevService.save(this.zahtevConversion.get(zahtevDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
