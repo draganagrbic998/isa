@@ -21,7 +21,7 @@ public class Poseta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
-	private Date pocetak;
+	private Date datum;
 	@Column
 	private Double popust;
 	@Column
@@ -53,12 +53,12 @@ public class Poseta {
 		this.id = id;
 	}
 
-	public Date getPocetak() {
-		return pocetak;
+	public Date getDatum() {
+		return datum;
 	}
 
-	public void setPocetak(Date pocetak) {
-		this.pocetak = pocetak;
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 
 	public Double getPopust() {

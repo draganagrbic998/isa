@@ -39,6 +39,5 @@ public class EmailConfiguration {
 		this.password = password;
 	}
 	
-	
-	
 }
+

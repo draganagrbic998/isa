@@ -19,16 +19,14 @@ public class TipPosete {
 	@Column
 	private String naziv;
 	@Column
+	private Integer sati;
+	@Column
+	private Integer minute;
+	@Column
 	private Double cena;
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
-	
-	@Column
-	private Integer sati;
-	
-	@Column
-	private Integer minuti;
 	
 	public TipPosete() {
 		super();
@@ -57,6 +55,22 @@ public class TipPosete {
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
+	
+	public Integer getSati() {
+		return sati;
+	}
+
+	public void setSati(Integer sati) {
+		this.sati = sati;
+	}
+
+	public Integer getMinute() {
+		return minute;
+	}
+
+	public void setMinute(Integer minute) {
+		this.minute = minute;
+	}
 
 	public Double getCena() {
 		return cena;
@@ -73,19 +87,5 @@ public class TipPosete {
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
 	}
-	public Integer getSati() {
-		return sati;
-	}
-
-	public void setSati(Integer sati) {
-		this.sati = sati;
-	}
-
-	public Integer getMinuti() {
-		return minuti;
-	}
-
-	public void setMinuti(Integer minuti) {
-		this.minuti = minuti;
-	}
+	
 }

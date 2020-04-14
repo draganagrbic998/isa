@@ -2,21 +2,22 @@ package com.example.demo.model;
 
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("lekar")
 public class Lekar extends Zaposleni{
 
-	@Column
-	private String specijalizacija;
+	@ManyToOne
+	@JoinColumn(name="specijalizacija")
+	private TipPosete specijalizacija;
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "lekar_ocena",
     joinColumns = @JoinColumn(name = "lekar"),
@@ -28,17 +29,17 @@ public class Lekar extends Zaposleni{
     inverseJoinColumns = @JoinColumn(name = "poseta"))
 	private Set<Poseta> posete;
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
-	private Set<ZahtevOdsustvo> zahtevi;
+	private Set<ZahtevOdmor> zahtevi;
 	
 	public Lekar() {
 		super();
 	}
 
-	public String getSpecijalizacija() {
+	public TipPosete getSpecijalizacija() {
 		return specijalizacija;
 	}
 
-	public void setSpecijalizacija(String specijalizacija) {
+	public void setSpecijalizacija(TipPosete specijalizacija) {
 		this.specijalizacija = specijalizacija;
 	}
 
@@ -58,11 +59,11 @@ public class Lekar extends Zaposleni{
 		this.posete = posete;
 	}
 
-	public Set<ZahtevOdsustvo> getZahtevi() {
+	public Set<ZahtevOdmor> getZahtevi() {
 		return zahtevi;
 	}
 
-	public void setZahtevi(Set<ZahtevOdsustvo> zahtevi) {
+	public void setZahtevi(Set<ZahtevOdmor> zahtevi) {
 		this.zahtevi = zahtevi;
 	}
 	

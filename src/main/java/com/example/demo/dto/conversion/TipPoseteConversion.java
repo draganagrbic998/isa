@@ -22,7 +22,7 @@ public class TipPoseteConversion {
 		tipPosete.setId(tpDTO.getId());
 		tipPosete.setNaziv(tpDTO.getNaziv());
 		tipPosete.setCena(tpDTO.getCena());
-		tipPosete.setMinuti(tpDTO.getMinuti());
+		tipPosete.setMinute(tpDTO.getMinute());
 		tipPosete.setSati(tpDTO.getSati());
 		tipPosete.setPregled(tpDTO.getPregled());
 		Klinika klinika = this.klinikaRepository.getOne(tpDTO.getKlinika());

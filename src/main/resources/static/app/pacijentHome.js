@@ -8,7 +8,7 @@ Vue.component("pacijentHome", {
 	
 	template: `
 	
-		<div class="well" id="box" style="text-align: center; font-size: 20px;">
+		<div class="card" id="box" style="text-align: center; font-size: 20px;">
 		
 			<h1 style="font-size: 50px">Dobrodosli {{imePrezime}}!</h1><br>
 			<router-link to="/profil">PROFIL</router-link><br><br>
@@ -29,20 +29,6 @@ Vue.component("pacijentHome", {
 		.catch(reponse => {
 			this.$router.push("/");
 		});
-	}, 
-	
-	methods: {
-		
-		odjava: function(){
-			axios.get("/user/odjava")
-			.then(response => {
-				this.$router.push("/");
-			})
-			.catch(response => {
-				alert("SERVER ERROR!!");
-			});
-		}
-		
 	}
 	
 });

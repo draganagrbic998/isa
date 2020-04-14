@@ -5,24 +5,23 @@ values ('123', 10, 10, 10, 10, 1, 1);
 update korisnik
 set karton = 1
 where id = 1;
-
 ---------------
 insert into klinika (naziv, opis, adresa)
 values ('moja klinika', 'super klinika', 'moja adresa');
-insert into tip_posete (pregled, naziv, klinika, cena)
-values (true, 'super pregled', 1, 200);
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute)
+values (true, 'super pregled', 1, 200, 1, 30);
 insert into sala (broj, naziv, klinika)
 values ('21', 'sala jedna mala', 1);
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('20.04.2020.', 'dd.MM.yyyy.'), null, 1, 1, 1, 1);
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('21.04.2020.', 'dd.MM.yyyy.'), 0.2, 1, 1, 1, 1);
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('22.04.2020.', 'dd.MM.yyyy.'), 0.2, 1, 1, 1, 1);
-insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('lekar', 'laza', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd');
-insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('lekar', 'mama', 'tata', 'dragana.grbic.98@uns.ac.rs', 'asd');
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ('2020-04-20 12:00', null, 1, 1, 1, 1);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ('2020-04-21 12:00', 0.2, 1, 1, 1, 1);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ('2020-04-22 12:00', 0.2, 1, 1, 1, 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
+values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd', 1,  '2020-04-20 10:00', '2020-04-20 20:00', 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
+values ('lekar', 'mama', 'tata', 'dragana.grbic.98@uns.ac.rs', 'asd', 1, '2020-04-20 10:00', '2020-04-20 20:00', 1);
 insert into lekar_poseta (lekar, poseta)
 values (2, 1);
 insert into lekar_poseta (lekar, poseta)
@@ -34,14 +33,14 @@ values (3, 2);
 insert into lekar_poseta (lekar, poseta)
 values (2, 3);
 ---------------
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('01.04.2020.', 'dd.MM.yyyy.'), 0.2, 3, 1, 1, 1);
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('02.04.2020.', 'dd.MM.yyyy.'), 0.2, 3, 1, 1, 1);
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('03.04.2020.', 'dd.MM.yyyy.'), 0.2, 3, 1, 1, 1);
-insert into poseta (pocetak, popust, stanje, karton, sala, tip_posete)
-values (to_date('04.04.2020.', 'dd.MM.yyyy.'), 0.2, 3, 1, 1, 1);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ( '2020-04-01 10:00', 0.2, 3, 1, 1, 1);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ( '2020-04-02 10:00', 0.2, 3, 1, 1, 1);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ( '2020-04-03 10:00', 0.2, 3, 1, 1, 1);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
+values ( '2020-04-04 10:00', 0.2, 3, 1, 1, 1);
 -----------------
 insert into lekar_poseta (lekar, poseta)
 values (2, 4);
@@ -76,12 +75,12 @@ update poseta
 set izvestaj = 4
 where id = 7;
 -------------
-insert into stavka_sifrarnika (tip, naziv, sifra)
-values ('lek', 'lek1', 'sifra1');
-insert into stavka_sifrarnika (tip, naziv, sifra)
-values ('lek', 'lek2', 'sifra2');
-insert into stavka_sifrarnika (tip, naziv, sifra)
-values ('lek', 'lek3', 'sifra3');
+insert into lek ( naziv, sifra)
+values ('lek1', 'sifra1');
+insert into lek ( naziv, sifra)
+values ('lek2', 'sifra2');
+insert into lek ( naziv, sifra)
+values ( 'lek3', 'sifra3');
 ---------------------
 insert into korisnik (tip, ime, prezime, email, lozinka)
 values ('sestra', 'baba', 'deda', 'asd1', 'asd');
@@ -122,41 +121,51 @@ where id = 3;
 update izvestaj set terapija = 4
 where id = 4;
 --------------
-insert into stavka_sifrarnika (tip, naziv, sifra)
-values ('dijagnoza', 'dij1', 'asd1');
-insert into stavka_sifrarnika (tip, naziv, sifra)
-values ('dijagnoza', 'dij2', 'asd2');
-insert into stavka_sifrarnika (tip, naziv, sifra)
-values ('dijagnoza', 'dij3', 'asd3');
+insert into dijagnoza ( naziv, sifra)
+values ('dij1', 'asd1');
+insert into dijagnoza ( naziv, sifra)
+values ( 'dij2', 'asd2');
+insert into dijagnoza ( naziv, sifra)
+values ( 'dij3', 'asd3');
 --imam 1, 2, 3, 4 izvestaj
 --imam 4, 5, 6 dijagnoze
 
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (1, 4);
+values (1, 1);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (1, 5);
+values (1, 2);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (1, 6);
+values (1, 3);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (2, 4);
+values (2, 1);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (3, 4);
+values (3, 2);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (3, 5);
+values (3, 3);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (4, 4);
+values (4, 1);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (4, 5);
+values (4, 2);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
-values (4, 6);
---------------------
+values (4, 3);
+-----------------------
+insert into poseta (datum, popust, stanje, sala, tip_posete)
+values ('2020-04-20 12:00:00', 0.2, 0, 1, 1);
+insert into poseta (datum, popust, stanje, sala, tip_posete)
+values ('2020-04-22 12:00:00', 0.2, 0, 1, 1);
+----------------------
+insert into lekar_poseta (lekar, poseta)
+values (2, 8);
+insert into lekar_poseta (lekar, poseta)
+values (3, 9);
+-----------------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa) values 
 ('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123');
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
 values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
-values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
-values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
-values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija)
+values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1, 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija)
+values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1, 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija)
+values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1, 1);

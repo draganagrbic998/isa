@@ -13,8 +13,7 @@ public class KlinikaService {
 
 	@Autowired
 	private KlinikaRepository klinikaRepository;
-	
-	
+		
 	public List<Klinika> findAll(){
 		return this.klinikaRepository.findAll();
 	}

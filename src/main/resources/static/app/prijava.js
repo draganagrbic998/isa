@@ -15,7 +15,7 @@ Vue.component("prijava", {
 	
 	template: `
 	
-		<div class="well" id="box">
+		<div class="card" style="width: 30rem; height: 30rem;" id="box">
 		
 			<h1>Prijava</h1><br>
 			Email: <input type="text" v-model="user.email" class="form-control" placeholder="Email...">{{greskaEmail}}<br><br>

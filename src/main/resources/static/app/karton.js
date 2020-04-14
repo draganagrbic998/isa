@@ -8,7 +8,7 @@ Vue.component("karton", {
 	
 	template: `
 	
-		<div class="card" style="width: 30rem;" id="box">
+		<div class="card"  id="box">
 		
 			<h1>Zdravstveni karton</h1><br>
 			

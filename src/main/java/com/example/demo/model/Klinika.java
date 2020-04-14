@@ -36,10 +36,15 @@ public class Klinika {
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Sala> sale;
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "klinika_zahtev",
+	@JoinTable(name = "klinika_pregled",
     joinColumns = @JoinColumn(name = "klinika"),
-    inverseJoinColumns = @JoinColumn(name = "zahtev"))
-	private Set<ZahtevKlinika> zahtevi;
+    inverseJoinColumns = @JoinColumn(name = "pregled"))
+	private Set<ZahtevPregled> zahteviPregled;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "klinika_odmor",
+    joinColumns = @JoinColumn(name = "klinika"),
+    inverseJoinColumns = @JoinColumn(name = "odmor"))
+	private Set<ZahtevOdmor> zahteviOdmor;
 	
 	public Klinika() {
 		super();
@@ -109,12 +114,20 @@ public class Klinika {
 		this.sale = sale;
 	}
 
-	public Set<ZahtevKlinika> getZahtevi() {
-		return zahtevi;
+	public Set<ZahtevPregled> getZahteviPregled() {
+		return zahteviPregled;
 	}
 
-	public void setZahtevi(Set<ZahtevKlinika> zahtevi) {
-		this.zahtevi = zahtevi;
+	public void setZahteviPregled(Set<ZahtevPregled> zahteviPregled) {
+		this.zahteviPregled = zahteviPregled;
+	}
+
+	public Set<ZahtevOdmor> getZahteviOdmor() {
+		return zahteviOdmor;
+	}
+
+	public void setZahteviOdmor(Set<ZahtevOdmor> zahteviOdmor) {
+		this.zahteviOdmor = zahteviOdmor;
 	}
 	
 }

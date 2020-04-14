@@ -1,8 +1,8 @@
-package com.example.demo.dto;
+package com.example.demo.dto.student1;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Poseta;
@@ -19,7 +19,7 @@ public class Termin {
 	private String tipPosete;
 	private String nazivPosete;
 	private String sala;
-	private Set<String> lekari;		
+	private List<String> lekari;		
 	
 	public Termin() {
 		super();
@@ -28,7 +28,7 @@ public class Termin {
 	public Termin(Poseta poseta) {
 		super();
 		this.id = poseta.getId();
-		this.datum = poseta.getPocetak();
+		this.datum = poseta.getDatum();
 		this.klinika = poseta.getTipPosete().getKlinika().getNaziv();
 		this.adresa = poseta.getTipPosete().getKlinika().getAdresa();
 		this.originalnaCena = poseta.getTipPosete().getCena();
@@ -37,7 +37,7 @@ public class Termin {
 		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
 		this.nazivPosete = poseta.getTipPosete().getNaziv();
 		this.sala = poseta.getSala().getBroj() + " " + poseta.getSala().getNaziv();
-		this.lekari = new HashSet<String>();
+		this.lekari = new ArrayList<String>();
 		for (Lekar l: poseta.getLekari())
 			this.lekari.add(l.getIme() + " " + l.getPrezime());
 	}
@@ -130,11 +130,11 @@ public class Termin {
 		this.sala = sala;
 	}
 
-	public Set<String> getLekari() {
+	public List<String> getLekari() {
 		return lekari;
 	}
 
-	public void setLekari(Set<String> lekari) {
+	public void setLekari(List<String> lekari) {
 		this.lekari = lekari;
 	}
 

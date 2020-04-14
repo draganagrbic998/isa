@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.LekarDTO;
 import com.example.demo.dto.conversion.LekarConversion;
+import com.example.demo.model.Admin;
 import com.example.demo.service.LekarService;
+import com.example.demo.service.UserService;
 
 
 @RestController
@@ -31,18 +33,21 @@ public class LekarController {
 	
 	@Autowired
 	private LekarConversion lekarConversion;
+	
+	@Autowired
+	private UserService userService;
 		
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/dobaviLekare", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<LekarDTO> getDoctors(){
-		return this.lekarConversion.get(this.lekarService.findAllOneClinic());
+		Admin admin = (Admin) this.userService.getSignedKorisnik();
+		return this.lekarConversion.get(this.lekarService.findAllOneClinic(admin));
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> create(@RequestBody LekarDTO lekarDTO) {
-		System.out.println("LEKAR KLINIKA" + lekarDTO.getKlinika());
 		this.lekarService.save(this.lekarConversion.get(lekarDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

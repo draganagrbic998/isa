@@ -1,39 +1,29 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.model.Lek;
-import com.example.demo.model.StavkaSifrarnika;
-import com.example.demo.repository.StavkaSifrarnikaRepository;
+import com.example.demo.repository.LekRepository;
 
 @Component
 public class LekService {
 
 	@Autowired
-	private StavkaSifrarnikaRepository stavkaRepository;
+	private LekRepository lekRepository;
 
 	public void delete(Integer lekId) {
-		this.stavkaRepository.deleteById(lekId);
+		this.lekRepository.deleteById(lekId);
 	}
 
 	public List<Lek> findAll() {
-		List<Lek> lekovi = new ArrayList<Lek>();
-		List<StavkaSifrarnika> stavke = this.stavkaRepository.findAll();
-		
-		for (StavkaSifrarnika ss : stavke) {
-			if (ss.getClass().equals(Lek.class))
-				lekovi.add((Lek) ss);
-		}
-		
-		return lekovi;
+		return this.lekRepository.findAll();
 	}
 
 	public void save(Lek lek) {
-		this.stavkaRepository.save(lek);
+		this.lekRepository.save(lek);
 	}
 
 }

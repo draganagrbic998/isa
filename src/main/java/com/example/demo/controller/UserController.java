@@ -28,7 +28,6 @@ public class UserController {
 	@Autowired
 	private KorisnikService korisnikService;
 	
-	
 		
 	@PostMapping(value="/prijava", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> prijava(@RequestBody User user) {

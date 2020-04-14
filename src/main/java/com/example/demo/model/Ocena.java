@@ -18,7 +18,7 @@ public class Ocena {
 	@JoinColumn(name="pacijent")
 	private Pacijent pacijent;
 	@Column
-	private Double ocena;
+	private Integer vrednost;
 	
 	public Ocena() {
 		super();
@@ -40,12 +40,12 @@ public class Ocena {
 		this.pacijent = pacijent;
 	}
 
-	public Double getOcena() {
-		return ocena;
+	public Integer getVrednost() {
+		return vrednost;
 	}
 
-	public void setOcena(Double ocena) {
-		this.ocena = ocena;
+	public void setVrednost(Integer vrednost) {
+		this.vrednost = vrednost;
 	}
 	
 }

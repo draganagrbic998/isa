@@ -3,25 +3,30 @@ package com.example.demo.model;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@DiscriminatorValue("individualan")
-public class ZahtevIndividualniTermin extends ZahtevPoseta{
+public class ZahtevOdmor {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	@Column
 	private Date pocetak;
-	@ManyToOne
-	@JoinColumn(name="tipPosete")
-	private TipPosete tipPosete;
+	@Column
+	private Date kraj;
+	@Column
+	private Boolean odobren;
 	@ManyToOne
 	@JoinColumn(name="lekar")
 	private Lekar lekar;
 	
-	public ZahtevIndividualniTermin() {
+	public ZahtevOdmor() {
 		super();
 	}
 
@@ -33,12 +38,20 @@ public class ZahtevIndividualniTermin extends ZahtevPoseta{
 		this.pocetak = pocetak;
 	}
 
-	public TipPosete getTipPosete() {
-		return tipPosete;
+	public Date getKraj() {
+		return kraj;
 	}
 
-	public void setTipPosete(TipPosete tipPosete) {
-		this.tipPosete = tipPosete;
+	public void setKraj(Date kraj) {
+		this.kraj = kraj;
+	}
+
+	public Boolean getOdobren() {
+		return odobren;
+	}
+
+	public void setOdobren(Boolean odobren) {
+		this.odobren = odobren;
 	}
 
 	public Lekar getLekar() {
@@ -48,5 +61,5 @@ public class ZahtevIndividualniTermin extends ZahtevPoseta{
 	public void setLekar(Lekar lekar) {
 		this.lekar = lekar;
 	}
-
+	
 }

@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dto.student1;
 
 import com.example.demo.model.Karton;
 import com.example.demo.model.KrvnaGrupa;

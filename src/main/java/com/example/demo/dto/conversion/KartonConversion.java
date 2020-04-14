@@ -2,7 +2,7 @@ package com.example.demo.dto.conversion;
 
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.KartonDTO;
+import com.example.demo.dto.student1.KartonDTO;
 import com.example.demo.model.Karton;
 
 @Component

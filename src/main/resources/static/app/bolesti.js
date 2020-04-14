@@ -12,13 +12,18 @@ Vue.component("bolesti", {
 	
 		<div class="form-row" v-if="selected">
 		
-			<div class="card" style="width: 40rem;" id="left">
+			<div class="card" style="width: 30rem; height: 40rem;" id="left">
 			
 				<h1>Detalji bolesti</h1><br>
 				
 				<table class="table">
 				
 					<tbody>
+					
+						<tr>
+							<th scope="row">Klinika: </th>
+							<td><input type="text" v-model="selectedBolest.klinika" class="form-control" disabled></td>
+						</tr>
 					
 						<tr>
 							<th scope="row">Datum: </th>
@@ -35,15 +40,7 @@ Vue.component("bolesti", {
 							<td><input type="text" v-model="selectedBolest.nazivPosete" class="form-control" disabled></td>
 						</tr>
 						
-						<tr>
-							<th scope="row">Lekari: </th>
-							<td><select class="form-control" v-bind:size="selectedBolest.lekari.length" disabled multiple>
-							
-								<option v-for="l in selectedBolest.lekari">
-									{{l}}
-								</option>
-							</select></td>
-						</tr>
+						
 					
 					</tbody>
 				
@@ -54,7 +51,32 @@ Vue.component("bolesti", {
 			
 			</div>
 			
-			<div class="form-group col-md-3" style="margin-top: 3%">
+			<div class="form-group col-md-5" style="margin-top: 3%">
+				
+				<h1>Lekari</h1><br>
+				
+				
+				<table class="table table-hover">
+					
+					<thead>
+						<tr>
+							<th scope="col">Ime</th>
+							<th scope="col">Prezime</th>
+						</tr>
+					
+					</thead>
+					
+					<tbody>
+						
+						<tr v-for="l in selectedBolest.lekari" v-on:click="selectLekar(l)">
+							<td>{{l.ime}}</td>
+							<td>{{l.prezime}}</td>
+
+						</tr>
+					
+					</tbody>
+				
+				</table>
 				
 				<h1>Dijagnoze</h1><br>
 				

@@ -9,12 +9,6 @@ public class User {
 		super();
 	}
 
-	public User(String email, String lozinka) {
-		super();
-		this.email = email;
-		this.lozinka = lozinka;
-	}
-
 	public String getEmail() {
 		return email;
 	}

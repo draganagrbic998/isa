@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.Bolest;
-import com.example.demo.dto.Termin;
 import com.example.demo.dto.conversion.KartonConversion;
+import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;

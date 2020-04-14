@@ -32,7 +32,7 @@ Vue.component("registracija", {
 	
 	template: `
 	
-		<div class="well" id="tableBox">
+		<div class="card" id="tableBox">
 		
 			<h1>Registracija novog pacijenta</h1><br>
 			

@@ -2,7 +2,7 @@ package com.example.demo.dto.conversion;
 
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.ZahtevRegistracijaDTO;
+import com.example.demo.dto.student1.ZahtevRegistracijaDTO;
 import com.example.demo.model.ZahtevRegistracija;
 
 @Component

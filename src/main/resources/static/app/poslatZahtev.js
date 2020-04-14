@@ -2,7 +2,7 @@ Vue.component("poslatZahtev", {
 	
 	template: `
 	
-		<div class="well" style="text-align:center; font-size: 15px;">
+		<div class="card" style="text-align:center; font-size: 15px;">
 		
 			<h1>Zahtev poslat</h1><br>
 			
