@@ -12,23 +12,23 @@ public class ZahtevRegistracija {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String email;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String lozinka;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String ime;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String prezime;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String telefon;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String brojOsiguranika;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String drzava;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String grad;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String adresa;
 	
 	

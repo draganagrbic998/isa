@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -20,11 +21,11 @@ public class Poseta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = false, nullable = false)
 	private Date datum;
-	@Column
+	@Column(unique = false, nullable = true)
 	private Double popust;
-	@Column
+	@Column(unique = false, nullable = false)
 	private StanjePosete stanje;
 	@ManyToOne
 	@JoinColumn(name="tipPosete")
@@ -33,7 +34,7 @@ public class Poseta {
 	@JoinColumn(name="sala")
 	private Sala sala;
 	@ManyToMany(mappedBy = "posete", fetch = FetchType.EAGER)
-	private Set<Lekar> lekari;
+	private Set<Lekar> lekari = new HashSet<>();
 	@ManyToOne
 	@JoinColumn(name="karton")
 	private Karton karton;

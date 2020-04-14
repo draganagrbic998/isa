@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,33 +19,33 @@ public class Klinika {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = true, nullable = false)
 	private String naziv;
-	@Column
+	@Column(unique = false, nullable = true)
 	private String opis;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String adresa;
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "klinika_ocena",
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "ocena"))
-	private Set<Ocena> ocene;
+	private Set<Ocena> ocene = new HashSet<>();
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
-	private Set<Zaposleni> zaposleni;
+	private Set<Zaposleni> zaposleni = new HashSet<>();
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
-	private Set<TipPosete> tipoviPoseta;
+	private Set<TipPosete> tipoviPoseta = new HashSet<>();
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
-	private Set<Sala> sale;
+	private Set<Sala> sale = new HashSet<>();
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "klinika_pregled",
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "pregled"))
-	private Set<ZahtevPregled> zahteviPregled;
+	private Set<ZahtevPregled> zahteviPregled = new HashSet<>();
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "klinika_odmor",
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "odmor"))
-	private Set<ZahtevOdmor> zahteviOdmor;
+	private Set<ZahtevOdmor> zahteviOdmor = new HashSet<>();
 	
 	public Klinika() {
 		super();

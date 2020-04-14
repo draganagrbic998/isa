@@ -11,9 +11,9 @@ public class Dijagnoza {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = true, nullable = false)
 	private String sifra;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String naziv;
 	
 	public Dijagnoza() {

@@ -16,12 +16,12 @@ public class ZahtevOdmor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = false, nullable = false)
 	private Date pocetak;
-	@Column
+	@Column(unique = false, nullable = false)
 	private Date kraj;
-	@Column
-	private Boolean odobren;
+	@Column(unique = false, nullable = false)
+	private boolean odobren;
 	@ManyToOne
 	@JoinColumn(name="lekar")
 	private Lekar lekar;
@@ -46,11 +46,11 @@ public class ZahtevOdmor {
 		this.kraj = kraj;
 	}
 
-	public Boolean getOdobren() {
+	public boolean getOdobren() {
 		return odobren;
 	}
 
-	public void setOdobren(Boolean odobren) {
+	public void setOdobren(boolean odobren) {
 		this.odobren = odobren;
 	}
 

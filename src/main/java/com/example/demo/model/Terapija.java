@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class Terapija {
 	@JoinTable(name = "terapija_lek",
     joinColumns = @JoinColumn(name = "terapija"),
     inverseJoinColumns = @JoinColumn(name = "lek"))
-	private Set<Lek> lekovi;
+	private Set<Lek> lekovi = new HashSet<>();
 	
 	public Terapija() {
 		super();

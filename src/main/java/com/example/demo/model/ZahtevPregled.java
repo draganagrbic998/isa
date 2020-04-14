@@ -19,7 +19,7 @@ public class ZahtevPregled {
 	@ManyToOne
 	@JoinColumn(name="karton")
 	private Karton karton;
-	@Column
+	@Column(unique = false, nullable = false)
 	private Date datum;
 	@ManyToOne
 	@JoinColumn(name="lekar")

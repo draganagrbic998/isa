@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
@@ -22,14 +23,14 @@ public class Lekar extends Zaposleni{
 	@JoinTable(name = "lekar_ocena",
     joinColumns = @JoinColumn(name = "lekar"),
     inverseJoinColumns = @JoinColumn(name = "ocena"))
-	private Set<Ocena> ocene;
+	private Set<Ocena> ocene = new HashSet<>();
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "lekar_poseta",
     joinColumns = @JoinColumn(name = "lekar"),
     inverseJoinColumns = @JoinColumn(name = "poseta"))
-	private Set<Poseta> posete;
+	private Set<Poseta> posete = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
-	private Set<ZahtevOdmor> zahtevi;
+	private Set<ZahtevOdmor> zahtevi = new HashSet<>();
 	
 	public Lekar() {
 		super();

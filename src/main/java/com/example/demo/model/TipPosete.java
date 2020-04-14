@@ -16,14 +16,15 @@ public class TipPosete {
 	private Integer id;
 	@Column
 	private boolean pregled;
-	@Column
+	@Column(unique = false, nullable = false)
+	//ime tipa posete bice jedinstveno na nivou jedne klinike, a ne na nivou svih tipova poseta
 	private String naziv;
-	@Column
-	private Integer sati;
-	@Column
-	private Integer minute;
-	@Column
-	private Double cena;
+	@Column(unique = false, nullable = false)
+	private int sati;
+	@Column(unique = false, nullable = false)
+	private int minute;
+	@Column(unique = false, nullable = false)
+	private double cena;
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
@@ -56,27 +57,27 @@ public class TipPosete {
 		this.naziv = naziv;
 	}
 	
-	public Integer getSati() {
+	public int getSati() {
 		return sati;
 	}
 
-	public void setSati(Integer sati) {
+	public void setSati(int sati) {
 		this.sati = sati;
 	}
 
-	public Integer getMinute() {
+	public int getMinute() {
 		return minute;
 	}
 
-	public void setMinute(Integer minute) {
+	public void setMinute(int minute) {
 		this.minute = minute;
 	}
 
-	public Double getCena() {
+	public double getCena() {
 		return cena;
 	}
 
-	public void setCena(Double cena) {
+	public void setCena(double cena) {
 		this.cena = cena;
 	}
 

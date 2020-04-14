@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ public class Izvestaj {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = false, nullable = true)
 	private String opis;
 	@OneToOne
 	@JoinColumn(name="poseta")
@@ -28,7 +29,7 @@ public class Izvestaj {
 	@JoinTable(name = "izvestaj_dijagnoza",
     joinColumns = @JoinColumn(name = "izvestaj"),
     inverseJoinColumns = @JoinColumn(name = "dijagnoza"))
-	private Set<Dijagnoza> dijagnoze;
+	private Set<Dijagnoza> dijagnoze = new HashSet<>();
 	@OneToOne
 	@JoinColumn(name="terapija")
 	private Terapija terapija;

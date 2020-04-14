@@ -10,9 +10,9 @@ import javax.persistence.ManyToOne;
 @Entity
 public abstract class Zaposleni extends Korisnik{
 	
-	@Column
+	@Column(unique = false, nullable = true)
 	private Date pocetnoVreme;
-	@Column
+	@Column(unique = false, nullable = true)
 	private Date krajnjeVreme;
 	@ManyToOne
 	@JoinColumn(name="klinika")

@@ -17,8 +17,8 @@ public class Ocena {
 	@ManyToOne
 	@JoinColumn(name="pacijent")
 	private Pacijent pacijent;
-	@Column
-	private Integer vrednost;
+	@Column(unique = false, nullable = false)
+	private int vrednost;
 	
 	public Ocena() {
 		super();
@@ -40,11 +40,11 @@ public class Ocena {
 		this.pacijent = pacijent;
 	}
 
-	public Integer getVrednost() {
+	public int getVrednost() {
 		return vrednost;
 	}
 
-	public void setVrednost(Integer vrednost) {
+	public void setVrednost(int vrednost) {
 		this.vrednost = vrednost;
 	}
 	

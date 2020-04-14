@@ -1,5 +1,5 @@
-insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa) values 
-('pacijent', 'asd', 'asd', 'qwe', 'qwe', '123', '123', '123', '123');
+insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra) values 
+('pacijent', 'asd', 'asd', 'qwe', 'qwe', '123', '123', '123', '123', true, true);
 insert into karton (broj_osiguranika, visina, tezina, leva_dioptrija, desna_dioptrija, krvna_grupa, pacijent) 
 values ('123', 10, 10, 10, 10, 1, 1);
 update korisnik
@@ -18,10 +18,10 @@ insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
 values ('2020-04-21 12:00', 0.2, 1, 1, 1, 1);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
 values ('2020-04-22 12:00', 0.2, 1, 1, 1, 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd', 1,  '2020-04-20 10:00', '2020-04-20 20:00', 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', 'mama', 'tata', 'dragana.grbic.98@uns.ac.rs', 'asd', 1, '2020-04-20 10:00', '2020-04-20 20:00', 1);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra)
+values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd', 1,  '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra)
+values ('lekar', 'mama', 'tata', 'draganaasd@gmail.com', 'asd', 1, '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true);
 insert into lekar_poseta (lekar, poseta)
 values (2, 1);
 insert into lekar_poseta (lekar, poseta)
@@ -82,10 +82,10 @@ values ('lek2', 'sifra2');
 insert into lek ( naziv, sifra)
 values ( 'lek3', 'sifra3');
 ---------------------
-insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('sestra', 'baba', 'deda', 'asd1', 'asd');
-insert into korisnik (tip, ime, prezime, email, lozinka)
-values ('sestra', 'mama', 'tata', 'asd2', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra)
+values ('sestra', 'baba', 'deda', 'asd1', 'asd', 'asd', 'asd', 'asd', 'asd', true, true);
+insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra)
+values ('sestra', 'mama', 'tata', 'asd2', 'asd', 'asd', 'asd', 'asd', 'asd', true, true);
 -----------------
 insert into terapija (izvestaj, sestra)
 values (1, 4);
@@ -159,13 +159,13 @@ values (2, 8);
 insert into lekar_poseta (lekar, poseta)
 values (3, 9);
 -----------------
-insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa) values 
-('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123');
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika)
-values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija)
-values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1, 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija)
-values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1, 1);
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija)
-values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1, 1);
+insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra) values 
+('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true);
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, aktivan, promenjena_sifra,  telefon, drzava, grad, adresa)
+values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1, true, true, 'asd', 'asd', 'asd', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
+values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1, 1, true, true, 'asd', 'asd', 'asd', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
+values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1, 1, true, true, 'asd', 'asd', 'asd', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
+values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1, 1, true, true, 'asd', 'asd', 'asd', 'asd');

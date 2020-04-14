@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,23 +19,23 @@ public class Karton {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = true, nullable = false)
 	private String brojOsiguranika;
-	@Column
+	@Column(unique = false, nullable = true)
 	private Double visina;
-	@Column
+	@Column(unique = false, nullable = true)
 	private Double tezina;
-	@Column
+	@Column(unique = false, nullable = true)
 	private Double levaDioptrija;
-	@Column
+	@Column(unique = false, nullable = true)
 	private Double desnaDioptrija;
-	@Column
+	@Column(unique = false, nullable = true)
 	private KrvnaGrupa krvnaGrupa;
 	@OneToOne
 	@JoinColumn(name="pacijent")
 	private Pacijent pacijent;
 	@OneToMany(mappedBy="karton", fetch = FetchType.EAGER)
-	private Set<Poseta> posete;
+	private Set<Poseta> posete = new HashSet<>();
 	
 	public Karton() {
 		super();

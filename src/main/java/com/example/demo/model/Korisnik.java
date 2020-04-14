@@ -18,25 +18,25 @@ public abstract class Korisnik {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(unique = true, nullable = false)
 	private String email;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String lozinka;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String ime;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String prezime;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String telefon;
-	@Column
-	private Boolean aktivan;
-	@Column
-	private Boolean promenjenaSifra;
-	@Column
+	@Column(unique = false, nullable = false)
+	private boolean aktivan;
+	@Column(unique = false, nullable = false)
+	private boolean promenjenaSifra;
+	@Column(unique = false, nullable = false)
 	private String drzava;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String grad;
-	@Column
+	@Column(unique = false, nullable = false)
 	private String adresa;
 	
 	public Korisnik() {
@@ -91,19 +91,19 @@ public abstract class Korisnik {
 		this.telefon = telefon;
 	}
 
-	public Boolean getAktivan() {
+	public boolean getAktivan() {
 		return aktivan;
 	}
 
-	public void setAktivan(Boolean aktivan) {
+	public void setAktivan(boolean aktivan) {
 		this.aktivan = aktivan;
 	}
 
-	public Boolean getPromenjenaSifra() {
+	public boolean getPromenjenaSifra() {
 		return promenjenaSifra;
 	}
 
-	public void setPromenjenaSifra(Boolean promenjenaSifra) {
+	public void setPromenjenaSifra(boolean promenjenaSifra) {
 		this.promenjenaSifra = promenjenaSifra;
 	}
 
