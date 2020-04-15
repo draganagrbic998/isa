@@ -20,11 +20,17 @@ public class ZaposleniDTO extends KorisnikDTO{
 	
 	public ZaposleniDTO(Zaposleni zaposleni) {
 		super(zaposleni);
-		String pocetno = this.format.format(zaposleni.getPocetnoVreme());
-		String krajnje = this.format.format(zaposleni.getKrajnjeVreme());
+		
 		this.klinika = zaposleni.getKlinika().getId();
-		this.pocetnoVreme = pocetno.substring(pocetno.length() - 5);
-		this.krajnjeVreme = krajnje.substring(krajnje.length() - 5);
+		if (zaposleni.getPocetnoVreme()!=null && zaposleni.getKrajnjeVreme()!=null) {
+			String pocetno = this.format.format(zaposleni.getPocetnoVreme());
+			String krajnje = this.format.format(zaposleni.getKrajnjeVreme());
+			this.pocetnoVreme = pocetno.substring(pocetno.length() - 5);
+			this.krajnjeVreme = krajnje.substring(krajnje.length() - 5);
+		}else {
+			this.pocetnoVreme = null;
+			this.krajnjeVreme = null;
+		}
 	}
 
 	public String getPocetnoVreme() {
