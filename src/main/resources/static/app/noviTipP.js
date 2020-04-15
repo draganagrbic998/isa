@@ -9,18 +9,15 @@ Vue.component('noviTipPosete', {
 				'cena': null,
 				'klinika': null, 
 				'sati': null,  
-				'minuti': null
+				'minute': null
 			}, 
 			greskaNaziv: '', 
 			greskaPregled: '', 
 			greskaCena: '', 
-			greskaKlinika: '', 
 			greskaSati: '', 
 			greskaMinuti: '', 
 			greska: false,  
-			klinika: {},
-			klinike: [],
-			nazivKlinike: ''
+			klinika: null
 		}
 	}, 
 	
@@ -42,12 +39,8 @@ Vue.component('noviTipPosete', {
 						<option :value="false">Operacija</option>
 					</select></td><td>{{greskaPregled}}</td></tr>
 					<tr><td class="left">Sati: </td><td class="right"><input type="text" v-model="tipPosete.sati"></td><td>{{greskaSati}}</td></tr>
-					<tr><td class="left">Minuti: </td><td class="right"><input type="text" v-model="tipPosete.minuti"></td><td>{{greskaMinuti}}</td></tr>
+					<tr><td class="left">Minuti: </td><td class="right"><input type="text" v-model="tipPosete.minute"></td><td>{{greskaMinuti}}</td></tr>
 					<tr><td class="left">Cena: </td><td class="right"><input type="text" v-model="tipPosete.cena"></td><td>{{greskaCena}}</td></tr>
-					<tr><td class="left">Klinika: </td><td class="right"><select v-model="nazivKlinike">
-						<option v-for="k in klinike">{{k.naziv}}</option>
-					</select></td><td>{{greskaKlinika}}</td></tr>
-					<br>
 					<tr><td colspan="3"><button v-on:click="dodaj_tp()">DODAJ</button><br></td></tr>
 					
 				</table>
@@ -59,16 +52,6 @@ Vue.component('noviTipPosete', {
 	
 	`, 
 	
-	watch: {
-		nazivKlinike: function(){
-			for (let k of this.klinike){
-				if (k.naziv === this.nazivKlinike)
-					this.tipPosete.klinika = k.id;
-			}
-		}
-		
-	}, 
-	
 	methods: {
 	
 		osvezi: function(){
@@ -77,7 +60,6 @@ Vue.component('noviTipPosete', {
 			this.greskaCena = '';
 			this.greskaMinuti = '';
 			this.greskaSati = '';
-			this.greskaKlinika= '';
 			this.greska = false;
 		}, 
 		
@@ -101,7 +83,7 @@ Vue.component('noviTipPosete', {
 			}
 			
 			
-			if (this.tipPosete.minuti == '' || isNaN(parseInt(this.tipPosete.minuti)) || parseInt(this.tipPosete.minuti) < 0){
+			if (this.tipPosete.minute == '' || isNaN(parseInt(this.tipPosete.minute)) || parseInt(this.tipPosete.minute) < 0){
 				this.greskaMinuti = "Neispravan podatak. ";
 				this.greska = true;
 			}
@@ -112,11 +94,8 @@ Vue.component('noviTipPosete', {
 				this.greska = true;
 			}
 			
-			if (this.tipPosete.klinika == ''){
-				this.greskaKlinika = "Klinika ne sme biti prazna. ";
-				this.greska = true;
-			}
-			
+			this.tipPosete.klinika = this.klinika.id;
+			console.log(this.tipPosete.klinika+" ovo je klinika");
 			if (this.greska) return;
 			
 			axios.post("/tipPosete/kreiranje", this.tipPosete)
@@ -125,15 +104,16 @@ Vue.component('noviTipPosete', {
 				this.$router.push("/adminKlinikeHome");
 			})
 			.catch(error => {
-				alert("SERVER ERROR!");
+				//alert("SERVER ERROR!");
+				this.greskaNaziv = "Naziv mora biti jedinstven! "
 			});
 			
 		}
 	},
 	mounted () {
 		axios
-        .get("/klinika/pregled")
-        .then(response => (this.klinike = response.data));
+        .get("/klinika/vratiKliniku")
+		.then(response => (this.klinika = response.data));
 	},
 	
 });

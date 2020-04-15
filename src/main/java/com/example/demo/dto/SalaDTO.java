@@ -1,0 +1,55 @@
+package com.example.demo.dto;
+
+import com.example.demo.model.Sala;
+
+public class SalaDTO {
+
+	public Integer id; 
+	public String broj;
+	public String naziv;
+	public Integer klinika;
+	
+	public SalaDTO() {
+		super();
+	}
+	
+	public SalaDTO(Sala sala) {
+		this.id = sala.getId();
+		this.broj = sala.getBroj();
+		this.naziv = sala.getNaziv();
+		this.klinika = sala.getKlinika().getId();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getBroj() {
+		return broj;
+	}
+
+	public void setBroj(String broj) {
+		this.broj = broj;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public Integer getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Integer klinika) {
+		this.klinika = klinika;
+	}
+	
+}

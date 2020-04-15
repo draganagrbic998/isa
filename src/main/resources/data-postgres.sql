@@ -163,9 +163,9 @@ insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, 
 ('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, aktivan, promenjena_sifra,  telefon, drzava, grad, adresa)
 values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1, true, true, 'asd', 'asd', 'asd', 'asd');
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
-values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1, 1, true, true, 'asd', 'asd', 'asd', 'asd');
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
-values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1, 1, true, true, 'asd', 'asd', 'asd', 'asd');
-insert into korisnik (tip, ime, prezime, email, lozinka, klinika, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
-values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1, 1, true, true, 'asd', 'asd', 'asd', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika,pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
+values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika,pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
+values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1, '2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd');
+insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
+values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd');

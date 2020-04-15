@@ -12,12 +12,16 @@ Vue.component('registracijaLekara', {
 				'drzava': '', 
 				'adresa': '', 
 				'specijalizacija': '',
+				'pocetnoVreme': '',
+				'krajnjeVreme': '',
 				'klinika': '',
 				'grad': ''
 			}, 
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
 			greskaEmail: '', 
+			greskaPocetak: '',
+			greskaKraj: '',
 			greskaNovaLozinka: '', 
 			greskaPonovljenaLozinka: '', 
 			greskaIme: '', 
@@ -26,10 +30,13 @@ Vue.component('registracijaLekara', {
 			greskaDrzava: '', 
 			greskaAdresa: '', 
 			greskaGrad: '',
+			greskaSpec: '',
+			pocetak: '',
+			kraj: '',
 			greska: false, 
-			klinike: [], 
-			klinika: {},
-			nazivKlinike: ''
+			specijalizacije: [], 
+			klinika: null,
+			nazivSpecijalizacije: ''
 		}
 	}, 
 	
@@ -51,15 +58,14 @@ Vue.component('registracijaLekara', {
 					<tr><td class="left">Drzava: </td><td class="right"><input type="text" v-model="lekar.drzava"></td><td>{{greskaDrzava}}</td></tr>
 					<tr><td class="left">Grad: </td><td class="right"><input type="text" v-model="lekar.grad"></td><td>{{greskaGrad}}</td></tr>
 					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="lekar.adresa"></td><td>{{greskaAdresa}}</td></tr>
+					<tr><td class="left">Pocetak smene: </td><td class="right"><input type="text" v-model="pocetak"></td><td>{{greskaPocetak}}</td></tr>
+					<tr><td class="left">Kraj smene: </td><td class="right"><input type="text" v-model="kraj"></td><td>{{greskaKraj}}</td></tr>
 					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
 					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
-					<tr><td class="left">Specijalizacija: </td><td class="right"><select v-model="lekar.specijalizacija">
-						<option>Oftamolog</option>
-						<option>Dermatolog</option>
-					</select></td><td>{{greskaSpecijalizacija}}</td></tr>
-					<tr><td class="left">Klinika: </td><td class="right"><select v-model="nazivKlinike">
-						<option v-for="k in klinike">{{k.naziv}}</option>
-					</select></td><td>{{greskaKlinika}}</td></tr>
+					<tr><td class="left">Specijalizacija: </td><td class="right"><select v-model="nazivSpecijalizacije">
+						<option v-for="s in specijalizacije">{{s.naziv}}</option>
+					</select></td><td>{{greskaSpec}}</td></tr>
+					
 					<br>
 					<tr><td colspan="3"><button v-on:click="registruj_lekara()">KREIRAJ PROFIL</button><br></td></tr>
 					
@@ -76,20 +82,46 @@ Vue.component('registracijaLekara', {
 		novaLozinka: function(){
 			if (this.novaLozinka == '')
 				this.ponovljenaLozinka = '';
-		}, 
+		},
 		
-
-
-		nazivKlinike: function(){
-			for (let k of this.klinike){
-				if (k.naziv === this.nazivKlinike)
-					this.lekar.klinika = k.id;
-			}
-		}
-		
+		nazivSpecijalizacije: function(){
+					for (let s of this.specijalizacije){
+						if (s.naziv === this.nazivSpecijalizacije)
+							this.lekar.specijalizacija = s.id;
+					}
+				}
 	}, 
 	
 	methods: {
+		
+		pocetakF: function() {
+
+			if (!this.pocetak.includes(':') && (this.pocetak.length==2)) {
+				this.lekar.pocetnoVreme = this.pocetak.concat(":00"); 
+			}
+			if (!this.pocetak.includes(':') && (this.pocetak.length==1)) {
+				this.lekar.pocetnoVreme = '0'.concat(this.pocetak,":00"); 
+			}
+			if (this.pocetak.includes(':') && (this.pocetak.length==5)) {
+				this.lekar.pocetnoVreme=this.pocetak;
+			}
+			console.log(this.lekar.pocetnoVreme);
+			return this.lekar.pocetnoVreme; 
+		},
+			
+		krajF: function() {
+			if (!this.kraj.includes(':') && (this.kraj.length==2)) {
+				this.lekar.krajnjeVreme = this.kraj.concat(":00"); 
+			}
+			if (!this.kraj.includes(':') && (this.kraj.length==1)) {
+				this.lekar.krajnjeVreme = '0'.concat(this.kraj,":00");
+			}
+			if (this.kraj.includes(':') && (this.kraj.length==5)) {
+				this.lekar.krajnjeVreme=this.kraj;
+			}
+			console.log(this.lekar.krajnjeVreme);
+			return this.lekar.krajnjeVreme;
+		},
 		
 		emailProvera: function emailIsValid(email){
     		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -105,15 +137,37 @@ Vue.component('registracijaLekara', {
 			this.greskaDrzava = '';
 			this.greskaGrad = '';
 			this.greskaAdresa = '';
+			this.greskaSpec = '';
+			this.greskaPocetak = '';
+			this.greskaKraj = '';
 			this.greska = false;
 		}, 
 		
 		registruj_lekara: function(){
 			
 			this.osvezi();
+			this.pocetakF();
+			this.krajF();
 			this.lekar.lozinka = this.novaLozinka;
 			
-			console.log(this.lekar.klinika);
+			if (!this.pocetak.includes(':') && ((this.pocetak.length>2 || this.pocetak.length<1) || parseInt(this.pocetak)>25)) {
+				this.greskaPocetak = "Nespravan format";
+				this.greska = true;
+			}
+			if (this.pocetak.includes(':') && (this.pocetak.length != 5)) {
+				this.greskaPocetak = "Nespravan format";
+				this.greska = true;
+			}
+			
+			if (!this.kraj.includes(':') && ((this.kraj.length > 2 || this.kraj.length < 1) || parseInt(this.kraj)>25)) {
+				this.greskaKraj = "Nespravan format";
+				this.greska = true;
+			}
+			if (this.kraj.includes(':') && (this.kraj.length != 5)) {
+				this.greskaKraj = "Nespravan format";
+				this.greska = true;
+			}
+			
 			
 			if (!this.emailProvera(this.lekar.email)){
 				this.greskaEmail = "Email nije ispravan. ";
@@ -134,7 +188,6 @@ Vue.component('registracijaLekara', {
 				this.greskaTelefon = "Telefon nije ispravan. ";
 				this.greska = true;
 			}
-			
 			
 			if (this.lekar.drzava == ''){
 				this.greskaDrzava = "Drzava ne sme biti prazna. ";
@@ -160,24 +213,41 @@ Vue.component('registracijaLekara', {
 				this.greskaPonovljenaLozinka = "Lozinke se ne poklapaju. ";
 				this.greska = true;
 			}
+			if (this.lekar.specijalizacija == '') {
+				this.greskaSpec = "Specijalizacija na sme biti prazna. ";
+				this.greska = true;
+			}
 			
 			if (this.greska) return;
+			this.lekar.klinika = this.klinika.id;
 			
 			axios.post("/lekar/kreiranje", this.lekar)
 			.then(response => {
 				alert("Lekar uspesno kreiran!");
 				this.$router.push("/adminKlinikeHome");
 			})
-			.catch(error => {
-				alert("SERVER ERROR!");
+			.catch((error) => {
+				if (error.response.status == 404) {
+					this.greskaEmail = "Email mora biti jedinstven. ";
+				} else if (error.response.status = 500) {
+					this.greskaPocetak = "Nevalidan format";
+					this.greskaKraj = "Nevalidan format";
+				}
+				else {
+					alert("SERVER ERROR!");
+				}
 			});
 			
 		}
 	},
 	mounted () {
 		axios
-        .get("/klinika/pregled")
-		.then(response => (this.klinike = response.data));
+        .get("/klinika/vratiKliniku")
+		.then(response => (this.klinika = response.data));
+		
+		axios 
+		.get("/tipPosete/vratiTipPosete")
+		.then(response => (this.specijalizacije = response.data));
 	},
 	
 });

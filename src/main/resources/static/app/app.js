@@ -19,6 +19,7 @@ const lekarBrisanje = {template: '<lekarBrisanje></lekarBrisanje>'}
 const adminKlinikeHome = {template: '<adminKlinikeHome></adminKlinikeHome>'}
 const lekariPretraga = {template: '<lekariPretraga></lekariPretraga>'}
 const noviTipPosete = {template: '<noviTipPosete></noviTipPosete>'}
+const novaSala = {template: '<novaSala></novaSala>'}
 const router = new VueRouter({
 
 	mode: 'hash', 
@@ -43,7 +44,8 @@ const router = new VueRouter({
 		{path: '/lekarBrisanje', component: lekarBrisanje}, 
 		{path: '/adminKlinikeHome', component: adminKlinikeHome},
 		{path: '/lekariPretraga', component: lekariPretraga},
-		{path: '/dodajTipPosete', component: noviTipPosete}
+		{path: '/dodajTipPosete', component: noviTipPosete},
+		{path: '/dodajSalu', component: novaSala}
 		
 	]
 	

@@ -1,14 +1,18 @@
 package com.example.demo.dto.conversion;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.example.demo.dto.LekarDTO;
+import com.example.demo.model.Lekar;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.repository.TipPoseteRepository;
-import com.example.demo.model.Lekar;
 
 @Component
 public class LekarConversion {
@@ -18,9 +22,14 @@ public class LekarConversion {
 	
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
-
-	public Lekar get(LekarDTO lekarDTO) {
+	
+	public SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+	public String baseDate = "2020-04-20 ";
+	
+	public Lekar get(LekarDTO lekarDTO) throws ParseException {
 		Lekar lekar = new Lekar();
+		lekar.setPocetnoVreme(format.parse(baseDate+lekarDTO.getPocetnoVreme()));
+		lekar.setKrajnjeVreme(format.parse(baseDate+lekarDTO.getKrajnjeVreme()));
 		lekar.setId(lekarDTO.getId());
 		lekar.setEmail(lekarDTO.getEmail());
 		lekar.setLozinka(lekarDTO.getLozinka());

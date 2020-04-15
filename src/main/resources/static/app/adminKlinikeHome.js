@@ -50,7 +50,7 @@ Vue.component('adminKlinikeHome', {
           Sale
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Dodaj salu</a>
+          <a class="dropdown-item" href="#/dodajSalu">Dodaj salu</a>
           <a class="dropdown-item" href="#">Pretraga sala</a>
           <div class="dropdown-divider"></div>
         </div>

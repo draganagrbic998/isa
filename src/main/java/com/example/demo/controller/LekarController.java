@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.LekarDTO;
 import com.example.demo.dto.conversion.LekarConversion;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Lekar;
 import com.example.demo.service.LekarService;
 import com.example.demo.service.UserService;
 
@@ -48,8 +49,20 @@ public class LekarController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody LekarDTO lekarDTO) {
-		this.lekarService.save(this.lekarConversion.get(lekarDTO));
-		return new ResponseEntity<>(HttpStatus.OK);
+		try {
+			Lekar lekar = this.lekarConversion.get(lekarDTO);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		try {
+			this.lekarService.save(this.lekarConversion.get(lekarDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
