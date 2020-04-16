@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.LekarDTO;
 import com.example.demo.dto.conversion.LekarConversion;
+import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Pacijent;
 import com.example.demo.service.LekarService;
 import com.example.demo.service.UserService;
 
@@ -65,6 +68,14 @@ public class LekarController {
 			return new ResponseEntity<>(HttpStatus.OK);			
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Bolest oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+		Bolest bolest = new Bolest(this.lekarService.oceni(pacijent, param, posetaId));
+		return bolest;
 	}
 	
 }

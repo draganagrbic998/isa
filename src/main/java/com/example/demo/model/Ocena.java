@@ -24,6 +24,12 @@ public class Ocena {
 		super();
 	}
 
+	public Ocena(Pacijent pacijent, int vrednost) {
+		super();
+		this.pacijent = pacijent;
+		this.vrednost = vrednost;
+	}
+
 	public Integer getId() {
 		return id;
 	}

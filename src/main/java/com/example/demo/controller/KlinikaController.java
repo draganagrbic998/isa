@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.conversion.KlinikaConversion;
+import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Pacijent;
 import com.example.demo.service.KlinikaService;
 import com.example.demo.service.UserService;
 
@@ -54,4 +58,13 @@ public class KlinikaController {
 		this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Bolest oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+		Bolest bolest = new Bolest(this.klinikaService.oceni(pacijent, param, posetaId));
+		return bolest;
+	}
+	
 }

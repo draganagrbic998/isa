@@ -38,7 +38,7 @@ Vue.component('adminKCHome', {
           Administratori Klinike
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#/registracijaAdminaKlinike">Dodaj Administratora Klinike</a>
+          <a class="dropdown-item" href="#/registracijaAdmina">Dodaj Administratora Klinike</a>
           <a class="dropdown-item" href="#">Pretraga Administratora Klinike</a>
           <div class="dropdown-divider"></div>
         </div>

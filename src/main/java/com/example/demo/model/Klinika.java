@@ -14,7 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Klinika {
+public class Klinika implements Ocenjivanje{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,6 +129,21 @@ public class Klinika {
 
 	public void setZahteviOdmor(Set<ZahtevOdmor> zahteviOdmor) {
 		this.zahteviOdmor = zahteviOdmor;
+	}
+
+	@Override
+	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
+
+
+		for (Ocena o: this.ocene) {
+			if (o.getPacijent().getId().equals(pacijent.getId())) {
+				o.setVrednost(ocena);
+				return o;
+			}
+		}
+		Ocena o = new Ocena(pacijent, ocena);
+		this.ocene.add(o);
+		return o;
 	}
 	
 }

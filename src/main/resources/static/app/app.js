@@ -7,7 +7,7 @@ const karton = {template: '<karton></karton>'}
 const termini = {template: '<termini></termini>'}
 const bolesti = {template: '<bolesti></bolesti>'}
 const registracijaLekara = {template: '<registracijaLekara></registracijaLekara>'}
-const registracijaAdminaKlinike = {template: '<registracijaAdminaKlinike></registracijaAdminaKlinike>'}
+const registracijaAdmina = {template: '<registracijaAdmina></registracijaAdmina>'}
 const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlinike>'}
 const dodajDijagnozu = {template: '<dodajDijagnozu></dodajDijagnozu>'}
 const dijagnozePretraga = {template: '<dijagnozePretraga></dijagnozePretraga>'}
@@ -33,7 +33,7 @@ const router = new VueRouter({
 		{path: '/termini', component: termini}, 
 		{path: '/bolesti', component: bolesti}, 
 		{path: '/registracijaLekara', component: registracijaLekara},
-		{path: '/registracijaAdminaKlinike', component: registracijaAdminaKlinike},
+		{path: '/registracijaAdmina', component: registracijaAdmina},
 		{path: '/registracijaKlinike', component: registracijaKlinike},
 		{path: '/dodajDijagnozu', component: dodajDijagnozu},
 		{path: '/dijagnozePretraga', component: dijagnozePretraga},

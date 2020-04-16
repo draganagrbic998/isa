@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("lekar")
-public class Lekar extends Zaposleni{
+public class Lekar extends Zaposleni implements Ocenjivanje{
 
 	@ManyToOne
 	@JoinColumn(name="specijalizacija")
@@ -30,7 +30,9 @@ public class Lekar extends Zaposleni{
     inverseJoinColumns = @JoinColumn(name = "poseta"))
 	private Set<Poseta> posete = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
-	private Set<ZahtevOdmor> zahtevi = new HashSet<>();
+	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
+	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
+	private Set<ZahtevPregled> pregledZahtevi = new HashSet<>();
 	
 	public Lekar() {
 		super();
@@ -60,12 +62,36 @@ public class Lekar extends Zaposleni{
 		this.posete = posete;
 	}
 
-	public Set<ZahtevOdmor> getZahtevi() {
-		return zahtevi;
+	public Set<ZahtevOdmor> getOdmorZahtevi() {
+		return odmorZahtevi;
 	}
 
-	public void setZahtevi(Set<ZahtevOdmor> zahtevi) {
-		this.zahtevi = zahtevi;
+	public void setOdmorZahtevi(Set<ZahtevOdmor> odmorZahtevi) {
+		this.odmorZahtevi = odmorZahtevi;
+	}
+
+	public Set<ZahtevPregled> getPregledZahtevi() {
+		return pregledZahtevi;
+	}
+
+	public void setPregledZahtevi(Set<ZahtevPregled> pregledZahtevi) {
+		this.pregledZahtevi = pregledZahtevi;
+	}
+
+	@Override
+	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
+		// TODO Auto-generated method stub
+
+		for (Ocena o: this.ocene) {
+			if (o.getPacijent().getId().equals(pacijent.getId())) {
+				o.setVrednost(ocena);
+				return o;
+			}
+		}
+		Ocena o = new Ocena(pacijent, ocena);
+		this.ocene.add(o);
+		return o;
+		
 	}
 	
 }

@@ -6,11 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Lekar;
+import com.example.demo.model.Ocena;
+import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.LekarRepository;
+import com.example.demo.repository.OcenaRepository;
+import com.example.demo.repository.PosetaRepository;
 
 @Component
 public class LekarService {
@@ -18,6 +23,12 @@ public class LekarService {
 	
 	@Autowired
 	private LekarRepository lekarRepository;
+	
+	@Autowired
+	private OcenaRepository ocenaRepository;
+	
+	@Autowired
+	private PosetaRepository posetaRepository;
 	
 	
 	public boolean delete(Integer id) {
@@ -46,6 +57,16 @@ public class LekarService {
 				doctors.add(l);
 		}
 		return doctors;
+	}
+	
+	public Poseta oceni(Pacijent pacijent, OcenaParam param, Integer posetaId) {
+
+		Lekar l = this.lekarRepository.getOne(param.getId());
+		Ocena o = l.refreshOcena(pacijent, param.getOcena());
+		this.ocenaRepository.save(o);
+		this.lekarRepository.save(l);
+		return this.posetaRepository.getOne(posetaId);
+		
 	}
 
 }

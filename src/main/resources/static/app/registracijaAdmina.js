@@ -1,4 +1,4 @@
-Vue.component('registracijaAdminaKlinike', {
+Vue.component("registracijaAdmina", {
 
 	data: function(){
 		return {
@@ -10,9 +10,9 @@ Vue.component('registracijaAdminaKlinike', {
 				'prezime': '', 
 				'telefon': '',  
 				'drzava': '', 
-				'adresa': '', 
 				'grad': '', 
-				'klinika': ''
+				'adresa': '', 
+				'klinika': null
 			}, 
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
@@ -23,8 +23,9 @@ Vue.component('registracijaAdminaKlinike', {
 			greskaPrezime: '', 
 			greskaTelefon: '', 
 			greskaDrzava: '', 
-			greskaAdresa: '', 
 			greskaGrad: '',
+			greskaAdresa: '', 
+			greskaKlinika: '',
 			greska: false, 
 			klinike: [], 
 			nazivKlinike: ''
@@ -36,7 +37,6 @@ Vue.component('registracijaAdminaKlinike', {
 		<div class="registracija">
 		
 			<h1>Registracija novog administratora klinike</h1>
-			
 			
 			<div>
 			
@@ -100,6 +100,7 @@ Vue.component('registracijaAdminaKlinike', {
 			this.greskaDrzava = '';
 			this.greskaGrad = '';
 			this.greskaAdresa = '';
+			this.greskaKlinika = '';
 			this.greska = false;
 		}, 
 		
@@ -153,11 +154,15 @@ Vue.component('registracijaAdminaKlinike', {
 				this.greska = true;
 			}
 			
+			if (this.admin.klinika == null){
+				this.greskaKlinika = "Klinika ne sme biti prazna. ";
+				this.greska = true;
+			}
+			
 			if (this.greska) return;
 			
 			axios.post("/adminKlinike/kreiranje", this.admin)
 			.then(response => {
-				//ovde da obavesti da je kreiran profil
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
@@ -170,6 +175,7 @@ Vue.component('registracijaAdminaKlinike', {
 		axios
         .get("/klinika/pregled")
         .then(response => (this.klinike = response.data));
+
 	},
 	
 });
