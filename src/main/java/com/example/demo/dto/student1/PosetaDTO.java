@@ -29,7 +29,7 @@ public class PosetaDTO {
 		this.cena = poseta.getTipPosete().getCena();
 		this.naziv = poseta.getTipPosete().getNaziv();
 		this.sala = poseta.getSala().getBroj() + " " + poseta.getSala().getNaziv();
-		this.lekari = new ArrayList<String>();
+		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
 			this.lekari.add(l.getIme() + " " + l.getPrezime());
 

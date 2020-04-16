@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Poseta {
+public class Poseta implements Zauzetost{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,6 +116,30 @@ public class Poseta {
 
 	public void setIzvestaj(Izvestaj izvestaj) {
 		this.izvestaj = izvestaj;
+	}
+
+	@Override
+	public int compareTo(Zauzetost o) {
+		// TODO Auto-generated method stub
+		return this.datum.compareTo(o.datum());
+	}
+
+	@Override
+	public Date datum() {
+		// TODO Auto-generated method stub
+		return this.datum;
+	}
+
+	@Override
+	public int sati() {
+		// TODO Auto-generated method stub
+		return this.getTipPosete().getSati();
+	}
+
+	@Override
+	public int minute() {
+		// TODO Auto-generated method stub
+		return this.tipPosete.getMinute();
 	}
 	
 }

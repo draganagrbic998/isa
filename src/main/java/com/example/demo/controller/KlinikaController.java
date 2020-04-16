@@ -43,8 +43,6 @@ public class KlinikaController {
 	private EmailService emailService;
 	
 
-	//metoda vraca kliniku kojoj pripada ulogovani admin
-	//koristim je kod registracije lekara, i dodavanja novih tipova poseta
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/vratiKliniku", produces = MediaType.APPLICATION_JSON_VALUE)
 	public KlinikaDTO getClinic(){

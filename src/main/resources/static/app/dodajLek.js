@@ -60,7 +60,7 @@ Vue.component('dodajLek', {
 			
 			if (this.greska) return;
 			
-			axios.post("/lek/dodavanje", this.lek)
+			axios.post("/lek/kreiranje", this.lek)
 			.then(response => {
 				this.$router.push("/adminKCHome");
 			})

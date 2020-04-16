@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.AdministratorKlinikeDTO;
+import com.example.demo.dto.AdminDTO;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Klinika;
@@ -17,7 +17,7 @@ public class AdministratorKlinikeConversion {
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 
-	public Admin get(AdministratorKlinikeDTO lekarDTO) {
+	public Admin get(AdminDTO lekarDTO) {
 		Admin admin = new Admin();
 		admin.setId(lekarDTO.getId());
 		admin.setEmail(lekarDTO.getEmail());
@@ -33,15 +33,15 @@ public class AdministratorKlinikeConversion {
 		return admin;
 	}
 	
-	public AdministratorKlinikeDTO get(Admin admin) {
-		return new AdministratorKlinikeDTO(admin);
+	public AdminDTO get(Admin admin) {
+		return new AdminDTO(admin);
 	}
 	
-	public List<AdministratorKlinikeDTO> get(List<Admin> admini){
+	public List<AdminDTO> get(List<Admin> admini){
 		
-		List<AdministratorKlinikeDTO> adminiDTO = new ArrayList<>();
+		List<AdminDTO> adminiDTO = new ArrayList<>();
 		for (Admin a: admini)
-			adminiDTO.add(new AdministratorKlinikeDTO(a));
+			adminiDTO.add(new AdminDTO(a));
 		return adminiDTO;
 		
 	}

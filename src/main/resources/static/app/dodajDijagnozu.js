@@ -60,7 +60,7 @@ Vue.component('dodajDijagnozu', {
 			
 			if (this.greska) return;
 			
-			axios.post("/dijagnoza/dodavanje", this.dijagnoza)
+			axios.post("/dijagnoza/kreiranje", this.dijagnoza)
 			.then(response => {
 				this.$router.push("/adminKCHome");
 			})

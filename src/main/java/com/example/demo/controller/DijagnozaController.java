@@ -36,8 +36,8 @@ public class DijagnozaController {
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@PostMapping(value = "/dodavanje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> save(@RequestBody DijagnozaDTO dijagnozaDTO) {
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> create(@RequestBody DijagnozaDTO dijagnozaDTO) {
 		try {
 			this.dijagnozaService.save(this.dijagnozaConversion.get(dijagnozaDTO));
 			return new ResponseEntity<>(HttpStatus.OK);

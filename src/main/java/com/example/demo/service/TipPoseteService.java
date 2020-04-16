@@ -16,7 +16,6 @@ public class TipPoseteService {
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
 		
-	//da li je jedinstven u okviru klinike
 	public boolean isUnique(TipPosete tipPosete) {
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
 			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().equals(tipPosete.getKlinika().getId()))

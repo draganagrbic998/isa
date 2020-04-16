@@ -20,9 +20,9 @@ Vue.component("prijava", {
 			<h1>Prijava</h1><br>
 			Email: <input type="text" v-model="user.email" class="form-control" placeholder="Email...">{{greskaEmail}}<br><br>
 			Lozinka: <input type="password" v-model="user.lozinka" class="form-control" placeholder="Lozinka...">{{greskaLozinka}}<br><br>
-			<button v-on:click="prijava()" class="btn btn-primary">PRIJAVA</button><br><br>
+			<button v-on:click="prijava()" class="btn btn-primary">PRIJAVA</button><br>{{greskaPrijava}}<br><br>
 			Niste registrovani? <router-link to="/registracija">Registruj se</router-link><br><br>
-			{{greskaPrijava}}<br><br>
+			<br><br>
 		
 		</div>
 	

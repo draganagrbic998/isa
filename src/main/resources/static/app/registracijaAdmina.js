@@ -166,7 +166,7 @@ Vue.component("registracijaAdmina", {
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				alert("SERVER ERROR!");
+				alert("Unet email mora biti jedinstven!!");
 			});
 			
 		}

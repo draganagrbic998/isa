@@ -37,8 +37,8 @@ public class LekController {
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@PostMapping(value = "/dodavanje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> save(@RequestBody LekDTO lekDTO) {
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> create(@RequestBody LekDTO lekDTO) {
 		try {
 			this.lekService.save(this.lekConversion.get(lekDTO));
 			return new ResponseEntity<>(HttpStatus.OK);

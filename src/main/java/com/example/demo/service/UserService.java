@@ -49,7 +49,6 @@ public class UserService {
         Integer id = Integer.parseInt(prava.getName());
         Korisnik k = korisnikRepository.getOne(id);
         return (Korisnik) Hibernate.unproxy(k);
-        //dodaj proveru da li je k null (ako ga je neko u medjuvremenu obrisao
 	
 	}
 	

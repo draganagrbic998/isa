@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ZahtevPregled {
+public class ZahtevPregled implements Zauzetost{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,4 +61,28 @@ public class ZahtevPregled {
 		this.lekar = lekar;
 	}
 
+	@Override
+	public int compareTo(Zauzetost o) {
+		// TODO Auto-generated method stub
+		return this.datum.compareTo(o.datum());
+	}
+
+	@Override
+	public Date datum() {
+		// TODO Auto-generated method stub
+		return this.datum;
+	}
+
+	@Override
+	public int sati() {
+		// TODO Auto-generated method stub
+		return this.lekar.getSpecijalizacija().getSati();
+	}
+
+	@Override
+	public int minute() {
+		// TODO Auto-generated method stub
+		return this.lekar.getSpecijalizacija().getMinute();
+	}
+	
 }
