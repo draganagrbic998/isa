@@ -63,8 +63,7 @@ public class KlinikaController {
 	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Bolest oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		Bolest bolest = new Bolest(this.klinikaService.oceni(pacijent, param, posetaId));
-		return bolest;
+		return new Bolest(this.klinikaService.oceni(pacijent, param, posetaId));
 	}
 	
 }

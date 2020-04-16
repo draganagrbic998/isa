@@ -80,7 +80,6 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 
 	@Override
 	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
-		// TODO Auto-generated method stub
 
 		for (Ocena o: this.ocene) {
 			if (o.getPacijent().getId().equals(pacijent.getId())) {
