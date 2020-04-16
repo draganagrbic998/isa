@@ -21,6 +21,13 @@ public class Lek {
 		super();
 	}
 
+	public Lek(Integer id, String sifra, String naziv) {
+		super();
+		this.id = id;
+		this.sifra = sifra;
+		this.naziv = naziv;
+	}
+
 	public Integer getId() {
 		return id;
 	}

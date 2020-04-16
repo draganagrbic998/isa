@@ -12,11 +12,9 @@ import com.example.demo.model.Dijagnoza;
 public class DijagnozaConversion {
 
 	public Dijagnoza get(DijagnozaDTO dijagnozaDTO) {
-		Dijagnoza dijagnoza = new Dijagnoza();
-		dijagnoza.setId(dijagnozaDTO.getId());
-		dijagnoza.setSifra(dijagnozaDTO.getSifra());
-		dijagnoza.setNaziv(dijagnozaDTO.getNaziv());
-		return dijagnoza;
+		return new Dijagnoza(dijagnozaDTO.getId(), 
+				dijagnozaDTO.getSifra(), 
+				dijagnozaDTO.getNaziv());
 	}
 	
 	public DijagnozaDTO get(Dijagnoza dijagnoza) {

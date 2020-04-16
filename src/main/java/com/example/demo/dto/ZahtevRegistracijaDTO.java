@@ -1,4 +1,4 @@
-package com.example.demo.dto.student1;
+package com.example.demo.dto;
 
 import com.example.demo.model.ZahtevRegistracija;
 

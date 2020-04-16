@@ -15,23 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.TipPoseteDTO;
 import com.example.demo.dto.conversion.TipPoseteConversion;
+import com.example.demo.model.Admin;
 import com.example.demo.service.TipPoseteService;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping(value = "/tipPosete")
 public class TipPoseteController {
 
 	@Autowired
-	private TipPoseteService tipPService;
+	private TipPoseteService tipPoseteService;
 	
 	@Autowired
-	private TipPoseteConversion tipPConversion;
+	private TipPoseteConversion tipPoseteConversion;
+	
+	@Autowired
+	private UserService userService;
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody TipPoseteDTO tpDTO) {
-		if (this.tipPService.isUnique(this.tipPConversion.get(tpDTO))) {
-			this.tipPService.save(this.tipPConversion.get(tpDTO));
+	public ResponseEntity<HttpStatus> create(@RequestBody TipPoseteDTO tipPoseteDTO) {
+		if (this.tipPoseteService.isUnique(this.tipPoseteConversion.get(tipPoseteDTO))) {
+			this.tipPoseteService.save(this.tipPoseteConversion.get(tipPoseteDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -40,7 +45,8 @@ public class TipPoseteController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/vratiTipPosete", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<TipPoseteDTO> getType() {
-		return this.tipPConversion.get(this.tipPService.findForAdmin());
+		Admin admin = (Admin) this.userService.getSignedKorisnik();
+		return this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin));
 	}
 		
 }

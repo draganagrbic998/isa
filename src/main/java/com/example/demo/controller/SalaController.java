@@ -14,7 +14,6 @@ import com.example.demo.dto.SalaDTO;
 import com.example.demo.dto.conversion.SalaConversion;
 import com.example.demo.service.SalaService;
 
-
 @RestController
 @RequestMapping(value = "/sala")
 public class SalaController {

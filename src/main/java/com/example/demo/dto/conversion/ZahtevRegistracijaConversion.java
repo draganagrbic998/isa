@@ -1,8 +1,11 @@
 package com.example.demo.dto.conversion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.student1.ZahtevRegistracijaDTO;
+import com.example.demo.dto.ZahtevRegistracijaDTO;
 import com.example.demo.model.ZahtevRegistracija;
 
 @Component
@@ -10,23 +13,30 @@ public class ZahtevRegistracijaConversion {
 	
 	public ZahtevRegistracija get(ZahtevRegistracijaDTO zahtevDTO) {
 		
-		ZahtevRegistracija zahtev = new ZahtevRegistracija();
-		zahtev.setId(zahtevDTO.getId());
-		zahtev.setEmail(zahtevDTO.getEmail());
-		zahtev.setLozinka(zahtevDTO.getLozinka());
-		zahtev.setIme(zahtevDTO.getIme());
-		zahtev.setPrezime(zahtevDTO.getPrezime());
-		zahtev.setTelefon(zahtevDTO.getTelefon());
-		zahtev.setBrojOsiguranika(zahtevDTO.getBrojOsiguranika());
-		zahtev.setDrzava(zahtevDTO.getDrzava());
-		zahtev.setGrad(zahtevDTO.getGrad());
-		zahtev.setAdresa(zahtevDTO.getAdresa());
-		return zahtev;
+		return new ZahtevRegistracija(zahtevDTO.getId(), 
+				zahtevDTO.getEmail(), 
+				zahtevDTO.getLozinka(), 
+				zahtevDTO.getIme(), 
+				zahtevDTO.getPrezime(), 
+				zahtevDTO.getTelefon(), 
+				zahtevDTO.getBrojOsiguranika(), 
+				zahtevDTO.getDrzava(), 
+				zahtevDTO.getGrad(), 
+				zahtevDTO.getAdresa());
 		
 	}
 	
 	public ZahtevRegistracijaDTO get(ZahtevRegistracija zahtev) {
 		return new ZahtevRegistracijaDTO(zahtev);
+	}
+	
+	public List<ZahtevRegistracijaDTO> get(List<ZahtevRegistracija> zahtevi){
+		
+		List<ZahtevRegistracijaDTO> zahteviDTO = new ArrayList<>();
+		for (ZahtevRegistracija z: zahtevi)
+			zahteviDTO.add(new ZahtevRegistracijaDTO(z));
+		return zahteviDTO;
+		
 	}
 
 }

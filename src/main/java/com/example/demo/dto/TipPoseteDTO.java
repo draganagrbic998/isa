@@ -7,10 +7,10 @@ public class TipPoseteDTO {
 	private Integer id;
 	private Boolean pregled;
 	private String naziv;
-	private double cena;
-	private Integer klinika;
 	private Integer sati;
 	private Integer minute;
+	private double cena;
+	private Integer klinika;
 	
 	public TipPoseteDTO() {
 		super();
@@ -21,10 +21,10 @@ public class TipPoseteDTO {
 		this.id = tipPosete.getId();
 		this.pregled = tipPosete.getPregled();
 		this.naziv = tipPosete.getNaziv();
-		this.cena = tipPosete.getCena();
-		this.klinika = tipPosete.getKlinika().getId();
 		this.sati = tipPosete.getSati();
 		this.minute = tipPosete.getMinute();
+		this.cena = tipPosete.getCena();
+		this.klinika = tipPosete.getKlinika().getId();
 	}
 
 	public Integer getId() {
@@ -51,22 +51,6 @@ public class TipPoseteDTO {
 		this.naziv = naziv;
 	}
 
-	public double getCena() {
-		return cena;
-	}
-
-	public void setCena(double cena) {
-		this.cena = cena;
-	}
-
-	public Integer getKlinika() {
-		return klinika;
-	}
-
-	public void setKlinika(Integer klinika) {
-		this.klinika = klinika;
-	}
-
 	public Integer getSati() {
 		return sati;
 	}
@@ -81,6 +65,22 @@ public class TipPoseteDTO {
 
 	public void setMinute(Integer minute) {
 		this.minute = minute;
+	}
+
+	public double getCena() {
+		return cena;
+	}
+
+	public void setCena(double cena) {
+		this.cena = cena;
+	}
+
+	public Integer getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Integer klinika) {
+		this.klinika = klinika;
 	}
 
 }

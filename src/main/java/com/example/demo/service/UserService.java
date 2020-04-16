@@ -11,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.dto.User;
 import com.example.demo.model.Korisnik;
@@ -24,7 +23,7 @@ public class UserService {
 	private KorisnikRepository korisnikRepository;
 	
 	
-	public Korisnik prijava(@RequestBody User user) {
+	public Korisnik prijava(User user) {
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka())) {

@@ -26,6 +26,14 @@ public class Sala {
 		super();
 	}
 
+	public Sala(Integer id, String broj, String naziv, Klinika klinika) {
+		super();
+		this.id = id;
+		this.broj = broj;
+		this.naziv = naziv;
+		this.klinika = klinika;
+	}
+
 	public Integer getId() {
 		return id;
 	}

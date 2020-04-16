@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.TipPoseteDTO;
-import com.example.demo.model.Klinika;
 import com.example.demo.model.TipPosete;
 import com.example.demo.repository.KlinikaRepository;
 
@@ -17,29 +16,25 @@ public class TipPoseteConversion {
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 	
-	public TipPosete get(TipPoseteDTO tpDTO) {
-		TipPosete tipPosete = new TipPosete();
-		tipPosete.setId(tpDTO.getId());
-		tipPosete.setNaziv(tpDTO.getNaziv());
-		tipPosete.setCena(tpDTO.getCena());
-		tipPosete.setMinute(tpDTO.getMinute());
-		tipPosete.setSati(tpDTO.getSati());
-		tipPosete.setPregled(tpDTO.getPregled());
-		Klinika klinika = this.klinikaRepository.getOne(tpDTO.getKlinika());
-		tipPosete.setKlinika(klinika);
-		return tipPosete;
+	public TipPosete get(TipPoseteDTO tipPoseteDTO) {
+		return new TipPosete(tipPoseteDTO.getId(), 
+				tipPoseteDTO.getPregled(), 
+				tipPoseteDTO.getNaziv(), 
+				tipPoseteDTO.getSati(), 
+				tipPoseteDTO.getMinute(), 
+				tipPoseteDTO.getCena(), 
+				this.klinikaRepository.getOne(tipPoseteDTO.getKlinika()));
 	}
 	
 	public TipPoseteDTO get(TipPosete tipPosete) {
 		return new TipPoseteDTO(tipPosete);
 	}
 	
-	public List<TipPoseteDTO> get(List<TipPosete> tipoviPosete) {
-		List<TipPoseteDTO> tpDTO = new ArrayList<>();
-		for (TipPosete tp : tipoviPosete) {
-			tpDTO.add(new TipPoseteDTO(tp));
-		}
-		return tpDTO;
+	public List<TipPoseteDTO> get(List<TipPosete> tipoviPoseta) {
+		List<TipPoseteDTO> tipoviPosetaDTO = new ArrayList<>();
+		for (TipPosete tp : tipoviPoseta)
+			tipoviPosetaDTO.add(new TipPoseteDTO(tp));
+		return tipoviPosetaDTO;
 	}
 
 }

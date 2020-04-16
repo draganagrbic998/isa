@@ -9,8 +9,7 @@ Vue.component('dodajDijagnozu', {
 			}, 
 			greskaNaziv: '', 
 			greskaSifra: '', 
-			greska: false,
-			dijagnoze: []
+			greska: false
 		}
 	}, 
 	
@@ -23,11 +22,12 @@ Vue.component('dodajDijagnozu', {
 			<div>
 			
 				<table>
+				
 					<tr><td class="left">Sifra: </td><td class="right"><input type="text" v-model="dijagnoza.sifra"></td><td>{{greskaSifra}}</td></tr>				
 					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="dijagnoza.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<br>
 					<tr><td colspan="3"><button v-on:click="dodaj_dijagnozu()">DODAJ DIJAGNOZU</button><br></td></tr>
-					
+
 				</table>
 			
 			</div>
@@ -44,35 +44,12 @@ Vue.component('dodajDijagnozu', {
 			this.greska = false;
 		}, 
 		
-		proveri_sifru: function(){
-			axios.get("/dijagnoza/dobaviDijagnoze")
-			.then(response => {
-				this.dijagnoze = response.data;
-			})
-			.catch(error => {
-				alert("SERVER ERROR!");
-			});
-			
-			for (let d of this.dijagnoze) {
-				if (d.sifra === this.dijagnoza.sifra) {
-					return false;
-				}
-			}
-			
-			return true;
-		},
-		
 		dodaj_dijagnozu: function(){
 			
 			this.osvezi();
 
 			if (this.dijagnoza.sifra == ''){
 				this.greskaSifra = "Sifra ne sme biti prazna. ";
-				this.greska = true;
-			}
-			
-			if (!this.proveri_sifru()){
-				this.greskaSifra = "Dijagnoza sa ovom sifrom vec postoji. ";
 				this.greska = true;
 			}
 			
@@ -88,7 +65,7 @@ Vue.component('dodajDijagnozu', {
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				alert("SERVER ERROR!");
+				alert("Uneta sifra vec postoji!!");
 			});
 			
 		}

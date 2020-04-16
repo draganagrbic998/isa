@@ -1,9 +1,10 @@
 Vue.component('dijagnozePretraga', {
+	
 	data: function(){
-		return{
+		return {
 			dijagnoze: [],
-			pretraga: '',
 			backupDijagnoze: [],
+			pretraga: '',
 			nemaRezultata: ''
 		}
 	}, 
@@ -63,8 +64,10 @@ Vue.component('dijagnozePretraga', {
 		</div>
 	
 	`, 
+	
 	mounted(){
-		axios.get("/dijagnoza/dobaviDijagnoze")
+		
+		axios.get("/dijagnoza/pregled")
 		.then(response => {
 			this.dijagnoze = response.data;
 			this.backupDijagnoze = response.data;
@@ -102,12 +105,13 @@ Vue.component('dijagnozePretraga', {
 		},
 		
 		search: function(){
+			
 			this.nemaRezultata = '';
 			this.dijagnoze = [];
-			
             let lowerPretraga = (this.pretraga).toLowerCase();
             
             for (let d of this.backupDijagnoze){
+            	
             	let sifraNaziv = (d.sifra.concat(" ",d.naziv)).toLowerCase();
             	let nazivSifra = (d.naziv.concat(" ", d.sifra)).toLowerCase();
             	
@@ -116,6 +120,7 @@ Vue.component('dijagnozePretraga', {
                     let passedNazivSifra = (this.pretraga != '') ? (nazivSifra.includes(lowerPretraga) || nazivSifra === lowerPretraga) : true;
                     if (passedSifraNaziv || passedNazivSifra ) this.dijagnoze.push(d);
             	}
+            	
             	else { //ili sifra ili naziv
             		let passedSifra = (this.pretraga != '') ? (d.sifra.toLowerCase().includes(lowerPretraga)) : true;
                     let passedNaziv = (this.pretraga != '') ? (d.naziv.toLowerCase().includes(lowerPretraga)) : true;                    
@@ -123,24 +128,22 @@ Vue.component('dijagnozePretraga', {
             	}
                                 
             }
+            
             if (this.dijagnoze.length===0) {
             	this.nemaRezultata = "Nema rezultata pretrage."
             }
+            
 		},
 		
 		deleteDijagnoza: function(id, naziv) {
-			axios.delete("/dijagnoza/brisanje/" + id, id)
+			
+			axios.delete("/dijagnoza/brisanje/" + id)
 			.then(response => {
 				alert("Dijagnoza '" + naziv + "' uspesno obrisana!");
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				if (error.response.status === 404)
-					alert("Dijagnoza ne postoji u bazi podataka!");
-				else if (error.response.status === 409)
-					alert("Dijagnoza je u upotrebi i ne moze biti obrisana!");
-				else
-					alert("SERVER ERROR");
+				alert("Dijagnoza je u upotrebi i ne moze biti obrisana!");
 			});
 
 		}

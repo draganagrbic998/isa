@@ -13,15 +13,14 @@ import com.example.demo.repository.KlinikaRepository;
 @Component
 public class SalaConversion {
 	
-	@Autowired KlinikaRepository klinikaRepository;
+	@Autowired 
+	private KlinikaRepository klinikaRepository;
 	
 	public Sala get(SalaDTO salaDTO) {
-		Sala sala = new Sala();
-		sala.setId(salaDTO.getId());
-		sala.setBroj(salaDTO.getBroj());
-		sala.setKlinika(this.klinikaRepository.getOne(salaDTO.getKlinika()));
-		sala.setNaziv(salaDTO.getNaziv());
-		return sala;
+		return new Sala(salaDTO.getId(), 
+				salaDTO.getBroj(), 
+				salaDTO.getNaziv(), 
+				this.klinikaRepository.getOne(salaDTO.getKlinika()));
 	}
 	
 	public SalaDTO get(Sala sala) {
@@ -34,6 +33,5 @@ public class SalaConversion {
 			saleDTO.add(new SalaDTO(s));
 		return saleDTO;
  	}
-	
 
 }

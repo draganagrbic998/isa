@@ -9,8 +9,7 @@ Vue.component('dodajLek', {
 			}, 
 			greskaNaziv: '', 
 			greskaSifra: '', 
-			greska: false,
-			lekovi: []
+			greska: false
 		}
 	}, 
 	
@@ -23,6 +22,7 @@ Vue.component('dodajLek', {
 			<div>
 			
 				<table>
+				
 					<tr><td class="left">Sifra: </td><td class="right"><input type="text" v-model="lek.sifra"></td><td>{{greskaSifra}}</td></tr>				
 					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="lek.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<br>
@@ -44,35 +44,12 @@ Vue.component('dodajLek', {
 			this.greska = false;
 		}, 
 		
-		proveri_sifru: function(){
-			axios.get("/lek/dobaviLekove")
-			.then(response => {
-				this.dijagnoze = response.data;
-			})
-			.catch(error => {
-				alert("SERVER ERROR!");
-			});
-			
-			for (let l of this.lekovi) {
-				if (l.sifra === this.lek.sifra) {
-					return false;
-				}
-			}
-			
-			return true;
-		},
-		
 		dodaj_lek: function(){
 			
 			this.osvezi();
 
 			if (this.lek.sifra == ''){
 				this.greskaSifra = "Sifra ne sme biti prazna. ";
-				this.greska = true;
-			}
-			
-			if (!this.proveri_sifru()){
-				this.greskaSifra = "Lek sa ovom sifrom vec postoji. ";
 				this.greska = true;
 			}
 			
@@ -88,7 +65,7 @@ Vue.component('dodajLek', {
 				this.$router.push("/adminKCHome");
 			})
 			.catch(error => {
-				alert("SERVER ERROR!");
+				alert("Uneta sifra vec postoji!!");
 			});
 			
 		}

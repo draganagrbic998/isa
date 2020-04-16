@@ -39,10 +39,10 @@ public class AdministratorKlinikeConversion {
 	
 	public List<AdministratorKlinikeDTO> get(List<Admin> admini){
 		
-		List<AdministratorKlinikeDTO> adminKlinikeDTO = new ArrayList<>();
+		List<AdministratorKlinikeDTO> adminiDTO = new ArrayList<>();
 		for (Admin a: admini)
-			adminKlinikeDTO.add(new AdministratorKlinikeDTO(a));
-		return adminKlinikeDTO;
+			adminiDTO.add(new AdministratorKlinikeDTO(a));
+		return adminiDTO;
 		
 	}
 }

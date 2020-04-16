@@ -12,11 +12,9 @@ import com.example.demo.model.Lek;
 public class LekConversion {
 
 	public Lek get(LekDTO lekDTO) {
-		Lek lek = new Lek();
-		lek.setId(lekDTO.getId());
-		lek.setSifra(lekDTO.getSifra());
-		lek.setNaziv(lekDTO.getNaziv());
-		return lek;
+		return new Lek(lekDTO.getId(), 
+				lekDTO.getSifra(), 
+				lekDTO.getNaziv());
 	}
 	
 	public LekDTO get(Lek lek) {

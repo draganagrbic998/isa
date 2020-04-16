@@ -14,8 +14,8 @@ public class LekService {
 	@Autowired
 	private LekRepository lekRepository;
 
-	public void delete(Integer lekId) {
-		this.lekRepository.deleteById(lekId);
+	public void delete(Integer id) {
+		this.lekRepository.deleteById(id);
 	}
 
 	public List<Lek> findAll() {

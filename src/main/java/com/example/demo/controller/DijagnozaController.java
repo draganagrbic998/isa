@@ -23,23 +23,21 @@ import com.example.demo.service.DijagnozaService;
 @RequestMapping(value = "/dijagnoza")
 public class DijagnozaController {
 	
-
 	@Autowired
 	private DijagnozaService dijagnozaService;
 	
 	@Autowired
 	private DijagnozaConversion dijagnozaConversion;
-		
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@GetMapping(value = "/dobaviDijagnoze", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<DijagnozaDTO> getLekovi(){
+	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<DijagnozaDTO> pregled(){
 		return this.dijagnozaConversion.get(this.dijagnozaService.findAll());
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/dodavanje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody DijagnozaDTO dijagnozaDTO) {
+	public ResponseEntity<HttpStatus> save(@RequestBody DijagnozaDTO dijagnozaDTO) {
 		try {
 			this.dijagnozaService.save(this.dijagnozaConversion.get(dijagnozaDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -50,13 +48,14 @@ public class DijagnozaController {
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@DeleteMapping(value = "/brisanje/{dijagnozaId}")
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer dijagnozaId){
+	@DeleteMapping(value = "/brisanje/{id}")
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
 		try {
-			this.dijagnozaService.delete(dijagnozaId);
+			this.dijagnozaService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

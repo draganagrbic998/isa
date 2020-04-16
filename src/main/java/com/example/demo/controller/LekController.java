@@ -23,7 +23,6 @@ import com.example.demo.service.LekService;
 @RequestMapping(value = "/lek")
 public class LekController {
 	
-
 	@Autowired
 	private LekService lekService;
 	
@@ -32,14 +31,14 @@ public class LekController {
 		
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@GetMapping(value = "/dobaviLekove", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<LekDTO> getLekovi(){
+	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<LekDTO> pregled(){
 		return this.lekConversion.get(this.lekService.findAll());
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/dodavanje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody LekDTO lekDTO) {
+	public ResponseEntity<HttpStatus> save(@RequestBody LekDTO lekDTO) {
 		try {
 			this.lekService.save(this.lekConversion.get(lekDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -50,13 +49,14 @@ public class LekController {
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@DeleteMapping(value = "/brisanje/{lekId}")
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer lekId){
+	@DeleteMapping(value = "/brisanje/{id}")
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
 		try {
-			this.lekService.delete(lekId);
+			this.lekService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

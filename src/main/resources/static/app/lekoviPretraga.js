@@ -1,9 +1,10 @@
 Vue.component('lekoviPretraga', {
+	
 	data: function(){
 		return{
 			lekovi: [],
-			pretraga: '',
 			backupLekovi: [],
+			pretraga: '',
 			nemaRezultata: ''
 		}
 	}, 
@@ -63,8 +64,10 @@ Vue.component('lekoviPretraga', {
 		</div>
 	
 	`, 
+	
 	mounted(){
-		axios.get("/lek/dobaviLekove")
+		
+		axios.get("/lek/pregled")
 		.then(response => {
 			this.lekovi = response.data;
 			this.backupLekovi = response.data;
@@ -72,6 +75,7 @@ Vue.component('lekoviPretraga', {
 		.catch(response => {
 			this.$router.push("/");
 		});
+		
 	}, 
 	
 	methods: {
@@ -101,12 +105,13 @@ Vue.component('lekoviPretraga', {
 		},
 		
 		search: function(){
+			
 			this.nemaRezultata = '';
 			this.lekovi = [];
-			
-            let lowerPretraga = (this.pretraga).toLowerCase();
+            let lowerPretraga = this.pretraga.toLowerCase();
             
             for (let l of this.backupLekovi){
+            	
             	let sifraNaziv = (l.sifra.concat(" ",l.naziv)).toLowerCase();
             	let nazivSifra = (l.naziv.concat(" ", l.sifra)).toLowerCase();
             	
@@ -115,6 +120,7 @@ Vue.component('lekoviPretraga', {
                     let passedNazivSifra = (this.pretraga != '') ? (nazivSifra.includes(lowerPretraga) || nazivSifra === lowerPretraga) : true;
                     if (passedSifraNaziv || passedNazivSifra ) this.lekovi.push(l);
             	}
+            	
             	else { //ili sifra ili naziv
             		let passedSifra = (this.pretraga != '') ? (l.sifra.toLowerCase().includes(lowerPretraga)) : true;
                     let passedNaziv = (this.pretraga != '') ? (l.naziv.toLowerCase().includes(lowerPretraga)) : true;                    
@@ -122,24 +128,22 @@ Vue.component('lekoviPretraga', {
             	}
                                 
             }
+            
             if (this.lekovi.length===0) {
             	this.nemaRezultata = "Nema rezultata pretrage."
             }
 		},
 		
 		deleteLek: function(id, naziv) {
-			axios.delete("/lek/brisanje/" + id, id)
+			
+			axios.delete("/lek/brisanje/" + id)
 			.then(response => {
 				alert("Lek '" + naziv + "' uspesno obrisan!");
 				this.$router.push("/adminKCHome");
 			})
+			
 			.catch(error => {
-				if (error.response.status === 404)
-					alert("Lek ne postoji u bazi podataka!");
-				else if (error.response.status === 409)
-					alert("Lek je u upotrebi i ne moze biti obrisan!");
-				else
-					alert("SERVER ERROR");
+				alert("Lek je u upotrebi i ne moze biti obrisan!");
 			});
 		}
 		

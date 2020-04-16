@@ -49,12 +49,6 @@ public class LekarController {
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody LekarDTO lekarDTO) {
 		try {
-			this.lekarConversion.get(lekarDTO);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		try {
 			this.lekarService.save(this.lekarConversion.get(lekarDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

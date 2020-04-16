@@ -17,7 +17,6 @@ public class TipPosete {
 	@Column
 	private boolean pregled;
 	@Column(unique = false, nullable = false)
-	//ime tipa posete bice jedinstveno na nivou jedne klinike, a ne na nivou svih tipova poseta
 	private String naziv;
 	@Column(unique = false, nullable = false)
 	private int sati;
@@ -31,6 +30,17 @@ public class TipPosete {
 	
 	public TipPosete() {
 		super();
+	}
+
+	public TipPosete(Integer id, boolean pregled, String naziv, int sati, int minute, double cena, Klinika klinika) {
+		super();
+		this.id = id;
+		this.pregled = pregled;
+		this.naziv = naziv;
+		this.sati = sati;
+		this.minute = minute;
+		this.cena = cena;
+		this.klinika = klinika;
 	}
 
 	public Integer getId() {

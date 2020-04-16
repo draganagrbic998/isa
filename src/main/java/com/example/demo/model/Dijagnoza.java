@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Dijagnoza {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -18,6 +19,13 @@ public class Dijagnoza {
 	
 	public Dijagnoza() {
 		super();
+	}
+
+	public Dijagnoza(Integer id, String sifra, String naziv) {
+		super();
+		this.id = id;
+		this.sifra = sifra;
+		this.naziv = naziv;
 	}
 
 	public Integer getId() {

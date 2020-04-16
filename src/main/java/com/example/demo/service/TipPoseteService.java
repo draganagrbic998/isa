@@ -14,33 +14,26 @@ import com.example.demo.repository.TipPoseteRepository;
 public class TipPoseteService {
 
 	@Autowired
-	private TipPoseteRepository tpRepository;
-	
-	@Autowired 
-	private UserService userservice;
-	
-	
+	private TipPoseteRepository tipPoseteRepository;
+		
 	//da li je jedinstven u okviru klinike
 	public boolean isUnique(TipPosete tipPosete) {
-		for (TipPosete tp : tpRepository.findAll()) {
-			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika()==tipPosete.getKlinika()) {
+		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
+			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().equals(tipPosete.getKlinika().getId()))
 				return false;
-			}
 		}
 		return true;
 	}
 	
 	public void save(TipPosete tipPosete) {
-		this.tpRepository.save(tipPosete);
+		this.tipPoseteRepository.save(tipPosete);
 	}
 	
-	public List<TipPosete> findForAdmin() {
-		Admin admin = (Admin) userservice.getSignedKorisnik();
+	public List<TipPosete> findForAdmin(Admin admin) {
 		List<TipPosete> types = new ArrayList<TipPosete>();
-		for (TipPosete tp : this.tpRepository.findAll()) {
-				if (admin.getKlinika()==tp.getKlinika()) {
-					types.add(tp);
-				}
+		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
+			if (tp.getKlinika().getId().equals(admin.getKlinika().getId()))
+				types.add(tp);
 		}
 		return types;
 	}

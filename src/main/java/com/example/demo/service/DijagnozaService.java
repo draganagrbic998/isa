@@ -14,8 +14,8 @@ public class DijagnozaService {
 	@Autowired
 	private DijagnozaRepository dijagnozaRepository;
 
-	public void delete(Integer dijagnozaId) {
-		this.dijagnozaRepository.deleteById(dijagnozaId);
+	public void delete(Integer id) {
+		this.dijagnozaRepository.deleteById(id);
 	}
 
 	public List<Dijagnoza> findAll() {

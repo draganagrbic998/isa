@@ -31,9 +31,23 @@ public class ZahtevRegistracija {
 	@Column(unique = false, nullable = false)
 	private String adresa;
 	
-	
 	public ZahtevRegistracija() {
 		super();
+	}
+
+	public ZahtevRegistracija(Integer id, String email, String lozinka, String ime, String prezime, String telefon,
+			String brojOsiguranika, String drzava, String grad, String adresa) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.lozinka = lozinka;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.telefon = telefon;
+		this.brojOsiguranika = brojOsiguranika;
+		this.drzava = drzava;
+		this.grad = grad;
+		this.adresa = adresa;
 	}
 
 	public Integer getId() {

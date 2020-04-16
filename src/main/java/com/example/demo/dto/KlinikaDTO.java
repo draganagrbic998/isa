@@ -4,7 +4,6 @@ import com.example.demo.model.Klinika;
 
 public class KlinikaDTO {
 	
-	//treba prosiriti sa ostalim poljima klase Klinika, ali to cemo kasnije
 	private Integer id;
 	private String naziv;
 	private String opis;

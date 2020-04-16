@@ -1,19 +1,17 @@
-Vue.component('novaSala', {
+Vue.component("dodajSalu", {
 
 	data: function(){
 		return {
 			sala: {
 				'id': null,
-				'broj': null, 
+				'broj': '', 
 				'naziv': '', 
 				'klinika': null 
-							}, 
-			greskaNaziv: '', 
+			}, 
 			greskaBroj: '', 
+			greskaNaziv: '', 
 			greska: false,  
 			klinika: null
-			
-			
 		}
 	}, 
 	
@@ -23,18 +21,16 @@ Vue.component('novaSala', {
 		
 			<h1>Dodavanje tipa pregleda</h1>
 			
-			
 			<div>
 			
 				<table>
 				
-					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="sala.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<tr><td class="left">Broj: </td><td class="right"><input type="text" v-model="sala.broj"></td><td>{{greskaBroj}}</td></tr>
+					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="sala.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<br>
 					<tr><td colspan="3"><button v-on:click="dodaj_salu()">DODAJ</button><br></td></tr>
 					
 				</table>
-				
 			
 			</div>
 		
@@ -53,20 +49,19 @@ Vue.component('novaSala', {
 		dodaj_salu: function(){
 			
 			this.osvezi();
+	
+			if (this.sala.broj == ''){
+				this.greskaBroj= "Broj sale ne sme biti prazan. ";
+				this.greska = true;
+			}
 			
 			if (this.sala.naziv=='') {
 				this.greskaNaziv = "Naziv ne sme biti prazan.";
 				this.greska = true;
 			}
 			
-			if (this.sala.broj == null){
-				this.greskaBroj= "Broj sale ne sme biti prazan. ";
-				this.greska = true;
-			}
-			
-			this.sala.klinika = this.klinika.id;
-			
 			if (this.greska) return;
+			this.sala.klinika = this.klinika.id;
 			
 			axios.post("/sala/kreiranje", this.sala)
 			.then(response => {
@@ -74,8 +69,7 @@ Vue.component('novaSala', {
 				this.$router.push("/adminKlinikeHome");
 			})
 			.catch(error => {
-				//alert("SERVER ERROR!");
-				this.greskaBroj= "Broj sale mora biti jedinstven! ";
+				alert("Broj sale mora biti jedinstven!!");
 			});
 			
 		}
