@@ -1,5 +1,5 @@
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra) values 
-('pacijent', 'asd', 'asd', 'qwe', 'qwe', '123', '123', '123', '123', true, true);
+('pacijent', 'nasmejlservis@gmail.com', 'asd', 'qwe', 'qwe', '123', '123', '123', '123', true, true);
 insert into karton (broj_osiguranika, visina, tezina, leva_dioptrija, desna_dioptrija, krvna_grupa, pacijent) 
 values ('123', 10, 10, 10, 10, 1, 1);
 update korisnik

@@ -28,9 +28,7 @@ Vue.component("prijava", {
 	
 	`, 
 	
-	mounted(){
-		alert("PRIJAVI SE KAO (email='asd', lozinka='asd') DA BI TESTIRAO DOSADASNJE IMPLEMENTIRANE FUNKCIONALNOSTI VEZANE ZA PACIJENTA");
-	},
+	
 	
 	methods: {
 		

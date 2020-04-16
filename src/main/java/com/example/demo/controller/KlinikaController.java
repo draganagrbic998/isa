@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.conversion.KlinikaConversion;
 import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.KlinikaSlobodno;
 import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.KlinikaService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value = "/klinika")
@@ -35,6 +38,9 @@ public class KlinikaController {
 
 	@Autowired
 	private KlinikaConversion klinikaConversion;
+	
+	@Autowired
+	private EmailService emailService;
 	
 
 	//metoda vraca kliniku kojoj pripada ulogovani admin
@@ -64,6 +70,23 @@ public class KlinikaController {
 	public Bolest oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 		return new Bolest(this.klinikaService.oceni(pacijent, param, posetaId));
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value = "/slobodno" ,produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<KlinikaSlobodno> pregledSlobodno(){
+		return this.klinikaService.slobodno();
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value = "/zakazi/{posetaId}")
+	public KlinikaSlobodno zakaziSlobodno(@PathVariable Integer posetaId){
+
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+		this.klinikaService.zakazi(posetaId, pacijent.getKarton());
+		this.emailService.sendMessage(new Message(pacijent.getEmail(), "Termin zakazan", "Zatrazeni termin je zakazan. "));
+		return this.klinikaService.getKlinikaSlobodno(posetaId);
+
 	}
 	
 }

@@ -6,6 +6,28 @@ h1{
   	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 1px 1px 2px black, 0 0 25px #3737ff, 0 0 5px #0000b3;
 }
 
+#details{
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+	margin-left: 20px;
+	margin-top: 20px;
+	padding: 20px;
+	min-width: 60%;
+}
+
+#details th{
+	min-width: 80px;
+}
+
+#details textarea{
+	resize: horizontal;
+	max-width: 300px;
+	min-width: 100px;
+	min-height: 70px;
+}
+
 #box{
 	width: 40%;
 	margin-top: 2%;
