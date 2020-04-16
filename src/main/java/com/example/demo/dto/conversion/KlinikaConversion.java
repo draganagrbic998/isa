@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.KlinikaDTO;
+import com.example.demo.dto.student1.KlinikaPretraga;
 import com.example.demo.model.Klinika;
 
 @Component
@@ -29,6 +30,15 @@ public class KlinikaConversion {
 		List<KlinikaDTO> lista = new ArrayList<>();
 		for (Klinika k: klinike) 
 			lista.add(new KlinikaDTO(k));
+		return lista;
+		
+	}
+	
+	public List<KlinikaPretraga> getPretraga(List<Klinika> klinike) {
+
+		List<KlinikaPretraga> lista = new ArrayList<>();
+		for (Klinika k: klinike)
+			lista.add(new KlinikaPretraga(k));
 		return lista;
 		
 	}

@@ -11,20 +11,26 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.conversion.KartonConversion;
+import com.example.demo.dto.conversion.ZahtevPosetaConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.KartonDTO;
 import com.example.demo.dto.student1.Termin;
+import com.example.demo.dto.student1.ZahtevPosetaDTO;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
+import com.example.demo.model.ZahtevPregled;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.ZahtevPregledService;
 import com.example.demo.service.email.EmailService;
 import com.example.demo.service.email.Message;
 
@@ -43,6 +49,14 @@ public class PacijentController {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private ZahtevPosetaConversion zahtevPosetaConversion;
+	
+
+	@Autowired
+	private ZahtevPregledService zahtevPregledService;
+
 
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -89,6 +103,17 @@ public class PacijentController {
 		for (Lekar l: poseta.getLekari()) {
 			this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
 		}
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value="/individualan/termin", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> zakaziIndividualan(@RequestBody ZahtevPosetaDTO zahtevDTO){
+		
+		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+		ZahtevPregled zahtev = this.zahtevPosetaConversion.get(zahtevDTO, pacijent.getKarton());
+		this.zahtevPregledService.save(zahtev);
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}

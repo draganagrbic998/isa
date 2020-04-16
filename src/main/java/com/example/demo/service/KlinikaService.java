@@ -1,21 +1,30 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.dto.student1.KlinikaPretraga;
 import com.example.demo.dto.student1.KlinikaSlobodno;
+import com.example.demo.dto.student1.LekarSatnice;
 import com.example.demo.dto.student1.OcenaParam;
+import com.example.demo.dto.student1.PretragaParam;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Klinika;
+import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.Sala;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.KlinikaRepository;
+import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.OcenaRepository;
 import com.example.demo.repository.PosetaRepository;
 
@@ -30,6 +39,10 @@ public class KlinikaService {
 	
 	@Autowired
 	private PosetaRepository posetaRepository;
+	
+	@Autowired
+	private LekarRepository lekarRepository;
+
 		
 	public List<Klinika> findAll(){
 		return this.klinikaRepository.findAll();
@@ -86,6 +99,32 @@ public class KlinikaService {
 		Klinika k = p.getSala().getKlinika();
 		return new KlinikaSlobodno(k, this.getPosete(k));
 
+	}
+
+	public Collection<KlinikaPretraga> pretraga(PretragaParam param) {
+
+		Map<Integer, KlinikaPretraga> mapa = new HashMap<>();
+		for (Lekar l: this.lekarRepository.findAll()) {
+			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) && l.getSpecijalizacija().getPregled()) {
+				List<Date> satnica = l.getSatnica(param.getDatumPregleda());
+
+				if (satnica.size() > 0) {
+					LekarSatnice ls = new LekarSatnice(l, satnica);
+					KlinikaPretraga kp;
+					if (mapa.containsKey(l.getKlinika().getId())) {
+						kp = mapa.get(l.getKlinika().getId());
+					}
+					else {
+						kp = new KlinikaPretraga(l.getKlinika(), l.getSpecijalizacija().getCena(), l.getSpecijalizacija().getSati() + l.getSpecijalizacija().getMinute() / 60.0);
+						mapa.put(l.getKlinika().getId(), kp);
+					}
+					kp.dodaj(ls);
+				}
+			}
+			
+		}
+		return mapa.values();
+		
 	}
 
 	

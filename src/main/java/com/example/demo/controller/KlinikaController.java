@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.conversion.KlinikaConversion;
 import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.KlinikaPretraga;
 import com.example.demo.dto.student1.KlinikaSlobodno;
 import com.example.demo.dto.student1.OcenaParam;
+import com.example.demo.dto.student1.PretragaParam;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.KlinikaService;
@@ -85,6 +88,22 @@ public class KlinikaController {
 		this.emailService.sendMessage(new Message(pacijent.getEmail(), "Termin zakazan", "Zatrazeni termin je zakazan. "));
 		return this.klinikaService.getKlinikaSlobodno(posetaId);
 
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<KlinikaPretraga> pretraga(){
+		return this.klinikaConversion.getPretraga(this.klinikaService.findAll());
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Collection<KlinikaPretraga> pretragaParam(@RequestBody PretragaParam param){
+		
+
+		
+		return this.klinikaService.pretraga(param);
+		
 	}
 	
 }

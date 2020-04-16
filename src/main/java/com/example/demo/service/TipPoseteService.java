@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +37,15 @@ public class TipPoseteService {
 				types.add(tp);
 		}
 		return types;
+	}
+
+	public Set<String> sviTipovi(){
+		
+		Set<String> lista = new HashSet<>();
+		for (TipPosete tp: this.tipPoseteRepository.findAll())
+			lista.add(tp.getNaziv());
+		return lista;
+		
 	}
 	
 	

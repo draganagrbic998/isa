@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,14 @@ public class TipPoseteController {
 	public List<TipPoseteDTO> getType() {
 		Admin admin = (Admin) this.userService.getSignedKorisnik();
 		return this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin));
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value="/svi/nazivi", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Set<String> sviNazivi(){
+		
+		return this.tipPoseteService.sviTipovi();
+		
 	}
 		
 }

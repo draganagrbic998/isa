@@ -4,7 +4,8 @@ Vue.component("termini", {
 		return{
 			termini: [], 
 			selectedTermin: {}, 
-			selected: false
+			selected: false, 
+			datum: ''
 		}
 	}, 
 	
@@ -20,7 +21,7 @@ Vue.component("termini", {
 				
 					<tr>
 						<th scope="row">Datum: </th>
-						<td><input type="text" v-model="selectedTermin.datum" class="form-control" disabled></td>
+						<td><input type="text" v-model="datum" class="form-control" disabled></td>
 					</tr>
 				
 					<tr>
@@ -95,7 +96,7 @@ Vue.component("termini", {
 				
 					<tr v-for="t in termini" v-on:click="selectTermin(t)">
 				
-						<td>{{t.datum}}</td>
+						<td>{{formatiraj(t.datum)}}</td>
 						<td>{{t.klinika}}</td>
 						<td>{{t.tipPosete}}</td>
 						<td>{{t.novaCena}}</td>
@@ -129,9 +130,28 @@ Vue.component("termini", {
 	}, 
 	
 	methods: {
+		
+		formatiraj: function (date) {
+			  date = new Date(date);
+			  var year = date.getFullYear();
+
+			  var month = (1 + date.getMonth()).toString();
+			  month = month.length > 1 ? month : '0' + month;
+
+			  var day = date.getDate().toString();
+			  day = day.length > 1 ? day : '0' + day;
+			  var hours = date.getHours().toString();
+			  var minutes = date.getMinutes().toString();
+			  hours = hours.length > 1 ? hours : '0' + hours;
+			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+		},
+		
+		
 		selectTermin: function(termin){
 			this.selectedTermin = termin;
 			this.selected = true;
+			this.datum = this.formatiraj(this.selectedTermin.datum);
 		}, 
 		
 		otkazi: function(){
@@ -143,6 +163,8 @@ Vue.component("termini", {
 				alert("SERVER ERROR!!");
 			});
 		}
+		
+		
 	}
 	
 });

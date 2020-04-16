@@ -16,6 +16,7 @@ Vue.component("pacijentHome", {
 			<router-link to="/termini">ZAKAZANI TERMINI</router-link><br><br>
 			<router-link to="/bolesti">ISTORIJA BOLESTI</router-link><br><br>
 			<router-link to="/klinikeSlobodno">POVOLJNI TERMINI</router-link><br><br>
+			<router-link to="/klinikeLekari">ZAKAZI TERMIN</router-link><br><br>
 
 		</div>
 	
