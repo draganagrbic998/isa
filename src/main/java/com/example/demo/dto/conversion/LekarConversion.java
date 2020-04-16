@@ -3,7 +3,6 @@ package com.example.demo.dto.conversion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,11 @@ public class LekarConversion {
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
 	
-	public SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-	public String baseDate = "2020-04-20 ";
 	
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		String baseDate = "2020-04-20 ";
+
 		Lekar lekar = new Lekar();
 		lekar.setPocetnoVreme(format.parse(baseDate+lekarDTO.getPocetnoVreme()));
 		lekar.setKrajnjeVreme(format.parse(baseDate+lekarDTO.getKrajnjeVreme()));

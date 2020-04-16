@@ -7,7 +7,6 @@ import com.example.demo.model.Zaposleni;
 public class ZaposleniDTO extends KorisnikDTO{
 	
 	
-	public SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 	
 	private String pocetnoVreme;
 	private String krajnjeVreme;
@@ -20,11 +19,11 @@ public class ZaposleniDTO extends KorisnikDTO{
 	
 	public ZaposleniDTO(Zaposleni zaposleni) {
 		super(zaposleni);
-		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		this.klinika = zaposleni.getKlinika().getId();
 		if (zaposleni.getPocetnoVreme()!=null && zaposleni.getKrajnjeVreme()!=null) {
-			String pocetno = this.format.format(zaposleni.getPocetnoVreme());
-			String krajnje = this.format.format(zaposleni.getKrajnjeVreme());
+			String pocetno = format.format(zaposleni.getPocetnoVreme());
+			String krajnje = format.format(zaposleni.getKrajnjeVreme());
 			this.pocetnoVreme = pocetno.substring(pocetno.length() - 5);
 			this.krajnjeVreme = krajnje.substring(krajnje.length() - 5);
 		}else {

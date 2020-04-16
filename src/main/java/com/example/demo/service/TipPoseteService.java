@@ -14,10 +14,10 @@ import com.example.demo.repository.TipPoseteRepository;
 public class TipPoseteService {
 
 	@Autowired
-	TipPoseteRepository tpRepository;
+	private TipPoseteRepository tpRepository;
 	
 	@Autowired 
-	UserService userservice;
+	private UserService userservice;
 	
 	
 	//da li je jedinstven u okviru klinike

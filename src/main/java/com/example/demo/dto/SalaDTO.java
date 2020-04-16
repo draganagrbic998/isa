@@ -4,10 +4,10 @@ import com.example.demo.model.Sala;
 
 public class SalaDTO {
 
-	public Integer id; 
-	public String broj;
-	public String naziv;
-	public Integer klinika;
+	private Integer id; 
+	private String broj;
+	private String naziv;
+	private Integer klinika;
 	
 	public SalaDTO() {
 		super();

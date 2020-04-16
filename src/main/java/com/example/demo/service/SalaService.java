@@ -10,7 +10,7 @@ import com.example.demo.repository.SalaRepository;
 public class SalaService {
 
 	@Autowired 
-	SalaRepository salaRepository;
+	private SalaRepository salaRepository;
 	
 	public void save(Sala sala) {
 		this.salaRepository.save(sala);

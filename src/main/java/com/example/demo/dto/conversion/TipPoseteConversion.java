@@ -18,7 +18,6 @@ public class TipPoseteConversion {
 	private KlinikaRepository klinikaRepository;
 	
 	public TipPosete get(TipPoseteDTO tpDTO) {
-		System.out.println("OVDE SAM");
 		TipPosete tipPosete = new TipPosete();
 		tipPosete.setId(tpDTO.getId());
 		tipPosete.setNaziv(tpDTO.getNaziv());

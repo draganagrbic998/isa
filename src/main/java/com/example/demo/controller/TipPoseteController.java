@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.TipPoseteDTO;
 import com.example.demo.dto.conversion.TipPoseteConversion;
-import com.example.demo.model.Admin;
 import com.example.demo.service.TipPoseteService;
 
 @RestController
