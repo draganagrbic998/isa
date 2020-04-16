@@ -100,7 +100,6 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 	}
 	
 	public List<Date> getSatnica(Date datum) {
-		// TODO Auto-generated method stub
 
 		List<Date> satnica = new ArrayList<>();
 		if (datum == null)
