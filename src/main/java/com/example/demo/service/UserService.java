@@ -26,7 +26,7 @@ public class UserService {
 	public Korisnik prijava(User user) {
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
-			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka())) {
+			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka()) && k.getAktivan()) {
 				
 		        List<GrantedAuthority> lista = new ArrayList<>();
 		        lista.add(new SimpleGrantedAuthority(Hibernate.unproxy(k).getClass().getSimpleName()));

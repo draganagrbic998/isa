@@ -59,10 +59,12 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@DeleteMapping(value = "/brisanje/{lekarId}")
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer lekarId){
-		this.lekarService.delete(lekarId);
-		return new ResponseEntity<>(HttpStatus.OK);
+	@DeleteMapping(value = "/brisanje/{id}")
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+		if (this.lekarService.delete(id)) {
+			return new ResponseEntity<>(HttpStatus.OK);			
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 }

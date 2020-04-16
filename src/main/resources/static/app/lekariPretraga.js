@@ -125,13 +125,13 @@ Vue.component('lekariPretraga', {
             }
 		},
 		deleteDoctor: function(id) {
-			axios.delete("/lekar/brisanje/" + id, id)
+			axios.delete("/lekar/brisanje/" + id)
 			.then(response => {
 				alert("Lekar " + id + " uspesno obrisan!");
 				this.$router.push("/adminKlinikeHome");
 			})
 			.catch(error => {
-				alert("Lekar ne postoji u bazi podataka!");
+				alert("Lekar ima zakazane posete!! Nije moguce brisanje!!");
 			});
 
 		}

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.model.Admin;
 import com.example.demo.model.Lekar;
+import com.example.demo.model.Poseta;
+import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.LekarRepository;
 
 @Component
@@ -18,8 +20,15 @@ public class LekarService {
 	private LekarRepository lekarRepository;
 	
 	
-	public void delete(Integer lekarId) {
-		this.lekarRepository.deleteById(lekarId);
+	public boolean delete(Integer id) {
+		Lekar l = this.lekarRepository.getOne(id);
+		for (Poseta p: l.getPosete()) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
+				return false;
+		}
+		l.setAktivan(false);
+		this.lekarRepository.save(l);
+		return true;
 	}
 	
 	public void save(Lekar lekar) {
@@ -33,7 +42,7 @@ public class LekarService {
 	public List<Lekar> findAllOneClinic(Admin admin) {
 		List<Lekar> doctors = new ArrayList<>();
 		for (Lekar l : this.lekarRepository.findAll()) {
-			if (l.getKlinika().getId().equals(admin.getKlinika().getId()))
+			if (l.getKlinika().getId().equals(admin.getKlinika().getId()) && l.getAktivan())
 				doctors.add(l);
 		}
 		return doctors;
