@@ -16,16 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.KartonDTO;
 import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
-import com.example.demo.service.EmailService;
-import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value="/pacijent")
@@ -45,71 +46,49 @@ public class PacijentController {
 
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> karton(){
+	public ResponseEntity<KartonDTO> karton(){
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		//dodaj da se proveri jel pacijent null (ako ga je neko u medjuvremenu obrisao)
-		return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);
-		
+		return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);		
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/termini", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> termini(){
-		
+	public ResponseEntity<List<Termin>> termini(){
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-
-		Karton karton = pacijent.getKarton();
-		//kada budem otkazivala posete, moram da pazim da referencu POseta izbacim iz liste poseta kartona
-		//to cu proveravati kad budemo uradili kreiranje poseta
-		
+		Karton karton = pacijent.getKarton();		
 		List<Termin> termini = new ArrayList<>();
-
-		
-		
 		for (Poseta p: karton.getPosete()) {
 			if (p.getStanje().equals(StanjePosete.ZAUZETO))
 				termini.add(new Termin(p));
 			
 		}
 		return new ResponseEntity<>(termini, HttpStatus.OK);
-		
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> bolesti(){
+	public ResponseEntity<List<Bolest>> bolesti(){
 		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-
 		Karton karton = pacijent.getKarton();
-
 		List<Bolest> bolesti = new ArrayList<>();
 		for (Poseta p: karton.getPosete()) {
 			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
 				bolesti.add(new Bolest(p));
 		}
 		return new ResponseEntity<>(bolesti, HttpStatus.OK);
-		
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@DeleteMapping(value="/otkazi/termin/{posetaId}")
-	public ResponseEntity<?> otkaziTermin(@PathVariable Integer posetaId){
-
-		//mogla bih dodati da proverim da li je uneti id posete 
-		//poseta koja se nalazi u listi pacijentovih poseta
-		
+	public ResponseEntity<HttpStatus> otkaziTermin(@PathVariable Integer posetaId){		
 		Poseta poseta = this.posetaService.getOne(posetaId);
-		
-		
 		poseta.setKarton(null);
 		poseta.setStanje(StanjePosete.SLOBODNO);
 		this.posetaService.save(poseta);
-		
 		String obavestenje = "Poseta zakazana za " + poseta.getDatum() + " je otkazana od strane pacijenta. ";
 		for (Lekar l: poseta.getLekari()) {
 			this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
 		}
-				
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
