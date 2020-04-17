@@ -6,7 +6,8 @@ Vue.component("klinikeSlobodno", {
 			selectedKlinika: {}, 
 			klinikaSelected: false, 
 			selectedPoseta: {}, 
-			posetaSelected: false
+			posetaSelected: false, 
+			datum: ''
 		}
 	}, 
 	
@@ -25,7 +26,7 @@ Vue.component("klinikeSlobodno", {
 					</tr>
 					<tr>
 						<th scope="col">Datum: </th>
-						<td><input type="text" v-model="selectedPoseta.datum" class="form-control" disabled></td>
+						<td><input type="text" v-model="datum" class="form-control" disabled></td>
 					</td>
 					<tr>
 						<th scope="col">Originalna cena: </th>
@@ -112,7 +113,7 @@ Vue.component("klinikeSlobodno", {
 					</thead>
 					<tbody>
 						<tr v-for="p in selectedKlinika.posete" v-on:click="selectPoseta(p)">
-							<td>{{p.datum}}</td>
+							<td>{{formatiraj(p.datum)}}</td>
 							<td>{{p.naziv}}</td>
 							<td>{{p.popust}}</td>
 
@@ -163,9 +164,25 @@ Vue.component("klinikeSlobodno", {
 		
 	}, 
 	
+	
+	
 	methods: {
 		
-		
+		formatiraj: function (date) {
+			  date = new Date(date);
+			  var year = date.getFullYear();
+
+			  var month = (1 + date.getMonth()).toString();
+			  month = month.length > 1 ? month : '0' + month;
+
+			  var day = date.getDate().toString();
+			  day = day.length > 1 ? day : '0' + day;
+			  var hours = date.getHours().toString();
+			  var minutes = date.getMinutes().toString();
+			  hours = hours.length > 1 ? hours : '0' + hours;
+			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+		},
 		
 		selectKlinika: function(klinika){
 			this.selectedKlinika = klinika;
@@ -175,6 +192,7 @@ Vue.component("klinikeSlobodno", {
 		selectPoseta: function(poseta){
 			this.posetaSelected = true;
 			this.selectedPoseta = poseta;
+			this.datum = this.formatiraj(this.selectedPoseta.datum);
 		}, 
 		
 		zakazi: function(){
