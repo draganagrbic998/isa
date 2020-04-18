@@ -178,7 +178,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 						
 						satnica.add((Date) start.clone());
 						kalendar.setTime(start);
-						kalendar.add(Calendar.MINUTE, 30);
+						kalendar.add(Calendar.HOUR, this.specijalizacija.getSati());
+						kalendar.add(Calendar.MINUTE, this.specijalizacija.getMinute());
 						start = kalendar.getTime();
 						kalendar.setTime(start);
 						kalendar.add(Calendar.HOUR_OF_DAY, this.specijalizacija.getSati());
@@ -226,7 +227,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 			else {
 				satnica.add((Date) start.clone());
 				kalendar.setTime(start);
-				kalendar.add(Calendar.MINUTE, 30);
+				kalendar.add(Calendar.HOUR, this.specijalizacija.getSati());
+				kalendar.add(Calendar.MINUTE, this.specijalizacija.getMinute());
 				start = kalendar.getTime();
 				sledeci = false;
 			}	
