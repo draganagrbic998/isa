@@ -14,10 +14,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.formLogin().disable().httpBasic().disable()
              .rememberMe().and().csrf().disable();
         http.headers().frameOptions().disable();
-        
-		http.authorizeRequests().antMatchers("/**").permitAll().antMatchers("/h2/**").permitAll().antMatchers("/registracija").permitAll()
-		.anyRequest().authenticated();
-
 
     }
 }
