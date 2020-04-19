@@ -102,7 +102,7 @@ public class KlinikaController {
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaSlobodno>> slobodno(){
-		return new ResponseEntity<List<KlinikaSlobodno>>(this.klinikaService.slobodno(), HttpStatus.OK);
+		return new ResponseEntity<>(this.klinikaService.slobodno(), HttpStatus.OK);
 	}
 	
 }

@@ -98,7 +98,7 @@ public class KlinikaService {
 			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) && l.getSpecijalizacija().getPregled()) {
 				List<Date> satnica = l.getSatnica(param.getDatumPregleda());
 
-				if (satnica.size() > 0) {
+				if (!satnica.isEmpty()) {
 					LekarSatnica ls = new LekarSatnica(l, satnica);
 					KlinikaPretraga kp;
 					if (mapa.containsKey(l.getKlinika().getId())) {

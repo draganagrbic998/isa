@@ -68,7 +68,7 @@ public class UserController {
 	public ResponseEntity<HttpStatus> checkUloga(@PathVariable String uloga){
 		try {
 			Korisnik k = this.userService.getSignedKorisnik();
-			if (Hibernate.getClass(k).getSimpleName().toLowerCase().equals(uloga))
+			if (Hibernate.getClass(k).getSimpleName().equalsIgnoreCase(uloga))
 				return new ResponseEntity<>(HttpStatus.OK);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
 		}
