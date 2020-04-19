@@ -1,24 +1,28 @@
-package com.example.demo.dto.student1;
+package com.example.demo.dto;
 
 import java.util.Date;
 
-import com.example.demo.model.ZahtevPregled;
+import com.example.demo.model.ZahtevPoseta;
 
 public class ZahtevPosetaDTO {
 	
 	private Integer id;
 	private Date datum;
+	private Integer karton;
 	private Integer lekar;
+	private Integer tipPosete;
 	
 	public ZahtevPosetaDTO() {
 		super();
 	}
 
-	public ZahtevPosetaDTO(ZahtevPregled zahtev) {
+	public ZahtevPosetaDTO(ZahtevPoseta zahtev) {
 		super();
 		this.id = zahtev.getId();
 		this.datum = zahtev.getDatum();
+		this.karton = zahtev.getKarton().getId();
 		this.lekar = zahtev.getLekar().getId();
+		this.tipPosete = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getId() : null;
 	}
 
 	public Integer getId() {
@@ -37,12 +41,28 @@ public class ZahtevPosetaDTO {
 		this.datum = datum;
 	}
 
+	public Integer getKarton() {
+		return karton;
+	}
+
+	public void setKarton(Integer karton) {
+		this.karton = karton;
+	}
+
 	public Integer getLekar() {
 		return lekar;
 	}
 
 	public void setLekar(Integer lekar) {
 		this.lekar = lekar;
+	}
+
+	public Integer getTipPosete() {
+		return tipPosete;
+	}
+
+	public void setTipPosete(Integer tipPosete) {
+		this.tipPosete = tipPosete;
 	}
 
 }

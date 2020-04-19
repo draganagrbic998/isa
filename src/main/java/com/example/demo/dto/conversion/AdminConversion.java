@@ -9,28 +9,21 @@ import org.springframework.stereotype.Component;
 import com.example.demo.dto.AdminDTO;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.model.Admin;
-import com.example.demo.model.Klinika;
 
 @Component
-public class AdministratorKlinikeConversion {
-
+public class AdminConversion {
+		
 	@Autowired
 	private KlinikaRepository klinikaRepository;
-
-	public Admin get(AdminDTO lekarDTO) {
-		Admin admin = new Admin();
-		admin.setId(lekarDTO.getId());
-		admin.setEmail(lekarDTO.getEmail());
-		admin.setLozinka(lekarDTO.getLozinka());
-		admin.setIme(lekarDTO.getIme());
-		admin.setPrezime(lekarDTO.getPrezime());
-		admin.setTelefon(lekarDTO.getTelefon());
-		admin.setDrzava(lekarDTO.getDrzava());
-		admin.setAdresa(lekarDTO.getAdresa());
-		admin.setGrad(lekarDTO.getGrad());
-		Klinika klinika = this.klinikaRepository.getOne(lekarDTO.getKlinika());
-		admin.setKlinika(klinika);
-		return admin;
+	
+	public Admin get(AdminDTO adminDTO) {
+		
+		return new Admin(adminDTO.getId(), adminDTO.getEmail(), adminDTO.getLozinka(), 
+				adminDTO.getIme(), adminDTO.getPrezime(), adminDTO.getTelefon(), 
+				adminDTO.getDrzava(), adminDTO.getGrad(), adminDTO.getAdresa(), 
+				adminDTO.isAktivan(), adminDTO.isPromenjenaSifra(), 
+				null, null, this.klinikaRepository.getOne(adminDTO.getKlinika()));
+		
 	}
 	
 	public AdminDTO get(Admin admin) {

@@ -1,4 +1,4 @@
-Vue.component('dodajTipPosete', {
+Vue.component("dodajTipPosete", {
 
 	data: function(){
 		return {
@@ -15,7 +15,7 @@ Vue.component('dodajTipPosete', {
 			greskaNaziv: '', 
 			greskaCena: '', 
 			greskaSati: '', 
-			greskaMinuti: '', 
+			greskaMinute: '', 
 			greska: false,  
 			klinika: null
 		}
@@ -49,13 +49,14 @@ Vue.component('dodajTipPosete', {
 	
 	`, 
 	
+	
 	methods: {
 	
 		osvezi: function(){
 			this.greskaPregled = '';
 			this.greskaNaziv = '';
 			this.greskaCena = '';
-			this.greskaMinuti = '';
+			this.greskaMinute = '';
 			this.greskaSati = '';
 			this.greska = false;
 		}, 
@@ -74,16 +75,15 @@ Vue.component('dodajTipPosete', {
 				this.greska = true;
 			}
 			
-			if (isNaN(parseInt(this.tipPosete.cena)) || parseInt(this.tipPosete.cena) < 0){
+			if (isNaN(parseInt(this.tipPosete.cena)) || parseInt(this.tipPosete.cena) <= 0){
 				this.greskaCena = "Neispravan podatak. ";
 				this.greska = true;
 			}
 			
-			if (isNaN(parseInt(this.tipPosete.minute)) || parseInt(this.tipPosete.minute) < 0){
-				this.greskaMinuti = "Neispravan podatak. ";
+			if (isNaN(parseInt(this.tipPosete.minute)) || parseInt(this.tipPosete.minute) <= 0){
+				this.greskaMinute = "Neispravan podatak. ";
 				this.greska = true;
 			}
-			
 			
 			if (isNaN(parseInt(this.tipPosete.sati)) || parseInt(this.tipPosete.sati) < 0){
 				this.greskaSati = "Neispravan podatak. ";
@@ -96,10 +96,10 @@ Vue.component('dodajTipPosete', {
 			axios.post("/tipPosete/kreiranje", this.tipPosete)
 			.then(response => {
 				alert("Tip posete uspesno kreiran!");
-				this.$router.push("/adminKlinikeHome");
+				this.$router.push("/adminHome");
 			})
 			.catch(error => {
-				alert("Naziv tipa posete mora biti jedinstven!!");
+				this.greskaNaziv = "Naziv mora biti jedinstven!!";
 			});
 			
 		}
@@ -107,8 +107,11 @@ Vue.component('dodajTipPosete', {
 	
 	mounted () {
 		axios
-        .get("/klinika/vratiKliniku")
-		.then(response => this.klinika = response.data);
+        .get("/klinika/admin/pregled")
+		.then(response => this.klinika = response.data)
+		.catch(reponse => {
+			this.$router.push("/");
+		});
 	},
 	
 });

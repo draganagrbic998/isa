@@ -8,7 +8,7 @@ Vue.component("karton", {
 	
 	template: `
 	
-		<div class="card"  id="box">
+		<div class="card" id="box">
 		
 			<h1>Zdravstveni karton</h1><br>
 			
@@ -61,7 +61,7 @@ Vue.component("karton", {
 			this.karton = response.data
 		})
 		.catch(response => {
-			this.$router.push("/profil");
+			this.$router.push("/");
 		});
 		
 	}

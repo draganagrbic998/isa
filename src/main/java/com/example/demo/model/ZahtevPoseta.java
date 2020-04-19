@@ -11,38 +11,42 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ZahtevPregled implements Zauzetost{
+public class ZahtevPoseta implements Zauzetost{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@ManyToOne
-	@JoinColumn(name="karton")
-	private Karton karton;
 	@Column(unique = false, nullable = false)
 	private Date datum;
 	@ManyToOne
+	@JoinColumn(name="karton")
+	private Karton karton;
+	@ManyToOne
 	@JoinColumn(name="lekar")
 	private Lekar lekar;
+	@ManyToOne
+	@JoinColumn(name="tipPosete")
+	private TipPosete tipPosete;
 	
-	public ZahtevPregled() {
+	public ZahtevPoseta() {
 		super();
+	}
+
+	public ZahtevPoseta(Integer id, Date datum, Karton karton, Lekar lekar, TipPosete tipPosete) {
+		super();
+		this.id = id;
+		this.datum = datum;
+		this.karton = karton;
+		this.lekar = lekar;
+		this.tipPosete = tipPosete;
 	}
 
 	public Integer getId() {
 		return id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Karton getKarton() {
-		return karton;
-	}
-
-	public void setKarton(Karton karton) {
-		this.karton = karton;
 	}
 
 	public Date getDatum() {
@@ -53,12 +57,28 @@ public class ZahtevPregled implements Zauzetost{
 		this.datum = datum;
 	}
 
+	public Karton getKarton() {
+		return karton;
+	}
+
+	public void setKarton(Karton karton) {
+		this.karton = karton;
+	}
+	
 	public Lekar getLekar() {
 		return lekar;
 	}
 
 	public void setLekar(Lekar lekar) {
 		this.lekar = lekar;
+	}
+
+	public TipPosete getTipPosete() {
+		return tipPosete;
+	}
+
+	public void setTipPosete(TipPosete tipPosete) {
+		this.tipPosete = tipPosete;
 	}
 
 	@Override
@@ -75,14 +95,16 @@ public class ZahtevPregled implements Zauzetost{
 
 	@Override
 	public int sati() {
-
-		return this.lekar.getSpecijalizacija().getSati();
+		if (this.tipPosete == null)
+			return this.lekar.getSpecijalizacija().getSati();
+		return this.tipPosete.getSati();
 	}
 
 	@Override
 	public int minute() {
-
-		return this.lekar.getSpecijalizacija().getMinute();
+		if (this.tipPosete == null)
+			return this.lekar.getSpecijalizacija().getMinute();
+		return this.tipPosete.getMinute();
 	}
 	
 }

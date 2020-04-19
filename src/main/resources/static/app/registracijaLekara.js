@@ -1,4 +1,4 @@
-Vue.component('registracijaLekara', {
+Vue.component("registracijaLekara", {
 
 	data: function(){
 		return {
@@ -10,33 +10,35 @@ Vue.component('registracijaLekara', {
 				'prezime': '', 
 				'telefon': '',  
 				'drzava': '', 
+				'grad': '', 
 				'adresa': '', 
-				'specijalizacija': '',
 				'pocetnoVreme': '',
 				'krajnjeVreme': '',
 				'klinika': '',
-				'grad': ''
+				'specijalizacija': '',
+				"aktivan": true, 
+				"promenjenaSifra": false
 			}, 
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
 			greskaEmail: '', 
-			greskaPocetak: '',
-			greskaKraj: '',
 			greskaNovaLozinka: '', 
 			greskaPonovljenaLozinka: '', 
 			greskaIme: '', 
 			greskaPrezime: '', 
 			greskaTelefon: '', 
 			greskaDrzava: '', 
-			greskaAdresa: '', 
 			greskaGrad: '',
+			greskaAdresa: '', 
+			greskaPocetak: '',
+			greskaKraj: '',
 			greskaSpec: '',
+			greska: false, 
 			pocetak: '',
 			kraj: '',
-			greska: false, 
 			specijalizacije: [], 
-			klinika: null,
-			nazivSpecijalizacije: ''
+			nazivSpecijalizacije: '',
+			klinika: null
 		}
 	}, 
 	
@@ -45,7 +47,6 @@ Vue.component('registracijaLekara', {
 		<div class="registracija">
 		
 			<h1>Registracija novog lekara</h1>
-			
 			
 			<div>
 			
@@ -78,6 +79,23 @@ Vue.component('registracijaLekara', {
 	
 	`, 
 	
+	mounted () {
+		
+		axios
+        .get("/klinika/admin/pregled")
+		.then(response => (this.klinika = response.data))
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+		
+		axios 
+		.get("/tipPosete/admin/pregled")
+		.then(response => (this.specijalizacije = response.data))
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	},
+	
 	watch: {
 		novaLozinka: function(){
 			if (this.novaLozinka == '')
@@ -85,11 +103,11 @@ Vue.component('registracijaLekara', {
 		},
 		
 		nazivSpecijalizacije: function(){
-					for (let s of this.specijalizacije){
-						if (s.naziv === this.nazivSpecijalizacije)
-							this.lekar.specijalizacija = s.id;
-					}
-				}
+			for (let s of this.specijalizacije){
+				if (s.naziv === this.nazivSpecijalizacije)
+					this.lekar.specijalizacija = s.id;
+			}
+		}
 	}, 
 	
 	methods: {
@@ -137,9 +155,9 @@ Vue.component('registracijaLekara', {
 			this.greskaDrzava = '';
 			this.greskaGrad = '';
 			this.greskaAdresa = '';
-			this.greskaSpec = '';
 			this.greskaPocetak = '';
 			this.greskaKraj = '';
+			this.greskaSpec = '';
 			this.greska = false;
 		}, 
 		
@@ -213,6 +231,7 @@ Vue.component('registracijaLekara', {
 				this.greskaPonovljenaLozinka = "Lozinke se ne poklapaju. ";
 				this.greska = true;
 			}
+			
 			if (this.lekar.specijalizacija == '') {
 				this.greskaSpec = "Specijalizacija na sme biti prazna. ";
 				this.greska = true;
@@ -224,30 +243,13 @@ Vue.component('registracijaLekara', {
 			axios.post("/lekar/kreiranje", this.lekar)
 			.then(response => {
 				alert("Lekar uspesno kreiran!");
-				this.$router.push("/adminKlinikeHome");
+				this.$router.push("/adminHome");
 			})
 			.catch((error) => {
-				if (error.response.status == 404) {
-					this.greskaEmail = "Email mora biti jedinstven. ";
-				} else if (error.response.status = 500) {
-					this.greskaPocetak = "Nevalidan format";
-					this.greskaKraj = "Nevalidan format";
-				}
-				else {
-					alert("SERVER ERROR!");
-				}
+				this.greskaEmail = "Email mora biti jedinstven. ";
 			});
 			
 		}
-	},
-	mounted () {
-		axios
-        .get("/klinika/vratiKliniku")
-		.then(response => (this.klinika = response.data));
-		
-		axios 
-		.get("/tipPosete/vratiTipPosete")
-		.then(response => (this.specijalizacije = response.data));
-	},
+	}
 	
 });

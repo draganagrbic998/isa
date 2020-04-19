@@ -1,4 +1,4 @@
-Vue.component('registracijaKlinike', {
+Vue.component("registracijaKlinike", {
 
 	data: function(){
 		return {
@@ -9,9 +9,7 @@ Vue.component('registracijaKlinike', {
 				'adresa': '', 
 			}, 
 			greskaNaziv: '', 
-			greskaDrzava: '', 
 			greskaAdresa: '', 
-			greskaGrad: '',
 			greska: false
 		}
 	}, 
@@ -21,7 +19,6 @@ Vue.component('registracijaKlinike', {
 		<div class="registracija">
 		
 			<h1>Registracija nove klinike</h1>
-			
 			
 			<div>
 			
@@ -42,12 +39,17 @@ Vue.component('registracijaKlinike', {
 	
 	`, 
 	
+	mounted(){
+		axios.get("/user/check/superadmin")
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	},
+	
 	methods: {
 		
 		osvezi: function(){
 			this.greskaNaziv = '';
-			this.greskaDrzava = '';
-			this.greskaGrad = '';
 			this.greskaAdresa = '';
 			this.greska = false;
 		}, 
@@ -61,8 +63,6 @@ Vue.component('registracijaKlinike', {
 				this.greska = true;
 			}
 			
-
-			
 			if (this.klinika.adresa == ''){
 				this.greskaAdresa = "Adresa ne sme biti prazna. ";
 				this.greska = true;
@@ -72,8 +72,8 @@ Vue.component('registracijaKlinike', {
 			
 			axios.post("/klinika/kreiranje", this.klinika)
 			.then(response => {
-				//ovde da obavesti da je kreiran profil
-				this.$router.push("/adminKCHome");
+				alert("Profil uspesno kreiran!");
+				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {
 				alert("SERVER ERROR!");

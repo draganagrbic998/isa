@@ -9,23 +9,23 @@ Vue.component("registracija", {
 				"ime": '', 
 				"prezime": '', 
 				"telefon": '', 
-				"brojOsiguranika": '', 
 				"drzava": '', 
 				"grad": '', 
-				"adresa": ''
+				"adresa": '',
+				"brojOsiguranika": ''
 			}, 
 			novaLozinka: '',
 			ponovljenaLozinka: '',
 			greskaEmail: '', 
 			greskaLozinka: '', 
+			greskaPonovljenaLozinka: '', 
 			greskaIme: '', 
 			greskaPrezime: '', 
 			greskaTelefon: '',
-			greskaBrojOsiguranika: '', 
 			greskaDrzava: '', 
 			greskaGrad: '', 
 			greskaAdresa: '', 
-			greskaPonovljenaLozinka: '', 
+			greskaBrojOsiguranika: '', 
 			greska: false
 		}
 	}, 
@@ -65,12 +65,6 @@ Vue.component("registracija", {
 					</tr>
 					
 					<tr>
-						<th scope="row">Broj osiguranika: </th>
-						<td><input type="text" v-model="zahtev.brojOsiguranika" class="form-control"></td>
-						<td>{{greskaBrojOsiguranika}}</td>
-					</tr>
-					
-					<tr>
 						<th scope="row">Drzava: </th>
 						<td><input type="text" v-model="zahtev.drzava" class="form-control"></td>
 						<td>{{greskaDrzava}}</td>
@@ -86,6 +80,12 @@ Vue.component("registracija", {
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="zahtev.adresa" class="form-control"></td>
 						<td>{{greskaAdresa}}</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Broj osiguranika: </th>
+						<td><input type="text" v-model="zahtev.brojOsiguranika" class="form-control"></td>
+						<td>{{greskaBrojOsiguranika}}</td>
 					</tr>
 					
 					<tr>
@@ -129,14 +129,14 @@ Vue.component("registracija", {
 			
 			this.greskaEmail = '';
 			this.greskaLozinka = '';
+			this.greskaPonovljenaLozinka = '';
 			this.greskaIme = '';
 			this.greskaPrezime = '';
 			this.greskaTelefon = '';
-			this.greskaBrojOsiguranika = '';
 			this.greskaDrzava = '';
 			this.greskaGrad = '';
 			this.greskaAdresa = '';
-			this.greskaPonovljenaLozinka = '';
+			this.greskaBrojOsiguranika = '';
 			this.greska = false;
 			
 		}, 
@@ -166,11 +166,6 @@ Vue.component("registracija", {
 				this.greska = true;
 			}
 			
-			if (this.zahtev.brojOsiguranika == ''){
-				this.greskaBrojOsiguranika = "Broj osiguranika ne sme biti prazan. ";
-				this.greska = true;
-			}
-			
 			if (this.zahtev.drzava == ''){
 				this.greskaDrzava = "Drzava ne sme biti prazna. ";
 				this.greska = true;
@@ -186,6 +181,11 @@ Vue.component("registracija", {
 				this.greska = true;
 			}
 			
+			if (this.zahtev.brojOsiguranika == ''){
+				this.greskaBrojOsiguranika = "Broj osiguranika ne sme biti prazan. ";
+				this.greska = true;
+			}
+			
 			if (this.zahtev.lozinka == ''){
 				this.greskaLozinka = "Lozinka ne sme biti prazna. ";
 				this.greska = true;
@@ -198,7 +198,7 @@ Vue.component("registracija", {
 			
 			if (this.greska) return;
 			
-			axios.post("/zahtev/registracija/kreiranje", this.zahtev)
+			axios.post("/zahtevRegistracija/kreiranje", this.zahtev)
 			.then(response => {
 				this.$router.push("/poslatZahtev");
 			})

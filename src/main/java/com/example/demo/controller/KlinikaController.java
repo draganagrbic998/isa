@@ -21,13 +21,11 @@ import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.KlinikaPretraga;
 import com.example.demo.dto.student1.KlinikaSlobodno;
 import com.example.demo.dto.student1.OcenaParam;
-import com.example.demo.dto.student1.PretragaParam;
+import com.example.demo.dto.student1.Pretraga;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.KlinikaService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.email.EmailService;
-import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value = "/klinika")
@@ -42,68 +40,69 @@ public class KlinikaController {
 	@Autowired
 	private KlinikaConversion klinikaConversion;
 	
-	@Autowired
-	private EmailService emailService;
-	
-
 	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/vratiKliniku", produces = MediaType.APPLICATION_JSON_VALUE)
-	public KlinikaDTO getClinic(){
-		Admin loggedUser = (Admin) userService.getSignedKorisnik();
-		return this.klinikaConversion.get(loggedUser.getKlinika());
+	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<KlinikaDTO> getClinic(){
+		try {
+			Admin admin = (Admin) userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.klinikaConversion.get(admin.getKlinika()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<KlinikaDTO> review(){
-		return this.klinikaConversion.get(this.klinikaService.findAll());
+	@GetMapping(value = "/pregled",  produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<KlinikaDTO>> review(){
+		return new ResponseEntity<>(this.klinikaConversion.get(this.klinikaService.findAll()), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody KlinikaDTO klinikaDTO) {
-		this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
-		return new ResponseEntity<>(HttpStatus.OK);
+		try {
+			this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
-	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Bolest oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		return new Bolest(this.klinikaService.oceni(pacijent, param, posetaId));
+	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Bolest> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(new Bolest(this.klinikaService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@GetMapping(value = "/slobodno" ,produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<KlinikaSlobodno> pregledSlobodno(){
-		return this.klinikaService.slobodno();
-	}
 	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@GetMapping(value = "/zakazi/{posetaId}")
-	public KlinikaSlobodno zakaziSlobodno(@PathVariable Integer posetaId){
-
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		this.klinikaService.zakazi(posetaId, pacijent.getKarton());
-		this.emailService.sendMessage(new Message(pacijent.getEmail(), "Termin zakazan", "Zatrazeni termin je zakazan. "));
-		return this.klinikaService.getKlinikaSlobodno(posetaId);
-
-	}
+	
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<KlinikaPretraga> pretraga(){
-		return this.klinikaConversion.getPretraga(this.klinikaService.findAll());
+	public ResponseEntity<List<KlinikaPretraga>> pretraga(){
+		return new ResponseEntity<>(this.klinikaConversion.getPretraga(this.klinikaService.findAll()), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Collection<KlinikaPretraga> pretragaParam(@RequestBody PretragaParam param){
+	public ResponseEntity<Collection<KlinikaPretraga>> pretragaParam(@RequestBody Pretraga param){
+	
+		return new ResponseEntity<>(this.klinikaService.pretraga(param), HttpStatus.OK);
 		
-
-		
-		return this.klinikaService.pretraga(param);
-		
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<KlinikaSlobodno>> slobodno(){
+		return new ResponseEntity<List<KlinikaSlobodno>>(this.klinikaService.slobodno(), HttpStatus.OK);
 	}
 	
 }

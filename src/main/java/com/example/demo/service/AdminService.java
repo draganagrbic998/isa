@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.model.Admin;
-import com.example.demo.repository.KorisnikRepository;
+import com.example.demo.repository.AdminRepository;
 
 @Component
-public class AdministratorKlinikeService {
+public class AdminService {
 	
 	@Autowired
-	private KorisnikRepository korisnikRepository;
+	private AdminRepository adminRepository;
 	
 	public void save(Admin admin) {
-		this.korisnikRepository.save(admin);
+		this.adminRepository.save(admin);
 	}
 	
 }

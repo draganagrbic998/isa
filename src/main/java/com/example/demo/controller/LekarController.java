@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,10 @@ import com.example.demo.model.Pacijent;
 import com.example.demo.service.LekarService;
 import com.example.demo.service.UserService;
 
-
 @RestController
 @RequestMapping(value = "/lekar")
 public class LekarController {
 	
-
 	@Autowired
 	private LekarService lekarService;
 	
@@ -39,17 +36,16 @@ public class LekarController {
 	
 	@Autowired
 	private UserService userService;
-		
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/dobaviLekare", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<LekarDTO> getDoctors(){
+	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<LekarDTO>> getDoctors(){
 		Admin admin = (Admin) this.userService.getSignedKorisnik();
-		return this.lekarConversion.get(this.lekarService.findAllOneClinic(admin));
+		return new ResponseEntity<>(this.lekarConversion.get(this.lekarService.findAll(admin)), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody LekarDTO lekarDTO) {
 		try {
 			this.lekarService.save(this.lekarConversion.get(lekarDTO));
@@ -62,19 +58,27 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@DeleteMapping(value = "/brisanje/{id}")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
-		if (this.lekarService.delete(id)) {
+		try {
+			this.lekarService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);			
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
-	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Bolest oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		return new Bolest(this.lekarService.oceni(pacijent, param, posetaId));
+	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Bolest> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(new Bolest(this.lekarService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 }

@@ -4,7 +4,7 @@ import com.example.demo.dto.LekarDTO;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 
-public class LekarOcena extends LekarDTO{
+public class LekarOcena extends LekarDTO {
 	
 	private double ocena;
 

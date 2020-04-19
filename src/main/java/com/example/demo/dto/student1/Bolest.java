@@ -13,14 +13,14 @@ import com.example.demo.model.Poseta;
 
 public class Bolest {
 		
-	private Integer id;
+	private Integer posetaId;
 	private Integer klinikaId;
-	private double ocena;
 	private Date datum;
 	private String klinika;
 	private String tipPosete;
 	private String nazivPosete;
 	private String izvestaj;
+	private double ocenaKlinike;
 	private List<LekarOcena> lekari;
 	private List<DijagnozaDTO> dijagnoze;
 	private List<Recept> recepti;
@@ -31,20 +31,20 @@ public class Bolest {
 
 	public Bolest(Poseta poseta) {
 		super();
-		this.id = poseta.getId();
+		this.posetaId = poseta.getId();
 		this.klinikaId = poseta.getSala().getKlinika().getId();
+		this.datum = poseta.getDatum();
+		this.klinika = poseta.getSala().getKlinika().getNaziv();
+		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
+		this.nazivPosete = poseta.getTipPosete().getNaziv();
+		this.izvestaj = poseta.getIzvestaj().getOpis();
 		double suma = 0.0;
 		int counter = 0;
 		for (Ocena o: poseta.getSala().getKlinika().getOcene()) {
 			suma += o.getVrednost();
 			counter += 1;
 		}
-		this.ocena = counter != 0 ? suma / counter : 0.0;
-		this.datum = poseta.getDatum();
-		this.klinika = poseta.getSala().getKlinika().getNaziv();
-		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
-		this.nazivPosete = poseta.getTipPosete().getNaziv();
-		this.izvestaj = poseta.getIzvestaj().getOpis();
+		this.ocenaKlinike = counter != 0 ? suma / counter : 0.0;
 		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
 			this.lekari.add(new LekarOcena(l));
@@ -56,14 +56,14 @@ public class Bolest {
 			this.recepti.add(new Recept(l, poseta.getIzvestaj().getTerapija().getSestra()));
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getPosetaId() {
+		return posetaId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPosetaId(Integer posetaId) {
+		this.posetaId = posetaId;
 	}
-	
+
 	public Integer getKlinikaId() {
 		return klinikaId;
 	}
@@ -72,12 +72,12 @@ public class Bolest {
 		this.klinikaId = klinikaId;
 	}
 
-	public double getOcena() {
-		return ocena;
+	public Date getDatum() {
+		return datum;
 	}
 
-	public void setOcena(double ocena) {
-		this.ocena = ocena;
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 
 	public String getKlinika() {
@@ -86,14 +86,6 @@ public class Bolest {
 
 	public void setKlinika(String klinika) {
 		this.klinika = klinika;
-	}
-
-	public Date getDatum() {
-		return datum;
-	}
-
-	public void setDatum(Date datum) {
-		this.datum = datum;
 	}
 
 	public String getTipPosete() {
@@ -118,6 +110,14 @@ public class Bolest {
 
 	public void setIzvestaj(String izvestaj) {
 		this.izvestaj = izvestaj;
+	}
+
+	public double getOcenaKlinike() {
+		return ocenaKlinike;
+	}
+
+	public void setOcenaKlinike(double ocenaKlinike) {
+		this.ocenaKlinike = ocenaKlinike;
 	}
 
 	public List<LekarOcena> getLekari() {

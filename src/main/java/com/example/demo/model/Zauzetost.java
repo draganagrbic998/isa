@@ -7,6 +7,5 @@ public interface Zauzetost extends Comparable<Zauzetost>{
 	public Date datum();
 	public int sati();
 	public int minute();
-	
 
 }

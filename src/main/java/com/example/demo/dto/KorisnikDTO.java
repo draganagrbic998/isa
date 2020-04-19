@@ -13,6 +13,8 @@ public class KorisnikDTO {
 	private String drzava;
 	private String grad;
 	private String adresa;
+	private boolean aktivan;
+	private boolean promenjenaSifra;
 	
 	public KorisnikDTO() {
 		super();
@@ -29,7 +31,8 @@ public class KorisnikDTO {
 		this.drzava = korisnik.getDrzava();
 		this.grad = korisnik.getGrad();
 		this.adresa = korisnik.getAdresa();
-		
+		this.aktivan = korisnik.isAktivan();
+		this.promenjenaSifra = korisnik.isPromenjenaSifra();
 	}
 
 	public Integer getId() {
@@ -102,6 +105,22 @@ public class KorisnikDTO {
 
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
+	}
+
+	public boolean isPromenjenaSifra() {
+		return promenjenaSifra;
+	}
+
+	public void setPromenjenaSifra(boolean promenjenaSifra) {
+		this.promenjenaSifra = promenjenaSifra;
 	}
 
 }

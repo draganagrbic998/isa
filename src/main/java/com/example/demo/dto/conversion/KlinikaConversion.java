@@ -11,14 +11,10 @@ import com.example.demo.model.Klinika;
 
 @Component
 public class KlinikaConversion {
-
+	
 	public Klinika get(KlinikaDTO klinikaDTO) {
-		Klinika klinika = new Klinika();
-		klinika.setId(klinikaDTO.getId());
-		klinika.setNaziv(klinikaDTO.getNaziv());
-		klinika.setOpis(klinikaDTO.getOpis());
-		klinika.setAdresa(klinikaDTO.getAdresa());
-		return klinika;
+		return new Klinika(klinikaDTO.getId(), klinikaDTO.getNaziv(), 
+				klinikaDTO.getOpis(), klinikaDTO.getAdresa());
 	}
 	
 	public KlinikaDTO get(Klinika klinika) {
@@ -27,10 +23,10 @@ public class KlinikaConversion {
 	
 	public List<KlinikaDTO> get(List<Klinika> klinike){
 		
-		List<KlinikaDTO> lista = new ArrayList<>();
+		List<KlinikaDTO> klinikeDTO = new ArrayList<>();
 		for (Klinika k: klinike) 
-			lista.add(new KlinikaDTO(k));
-		return lista;
+			klinikeDTO.add(new KlinikaDTO(k));
+		return klinikeDTO;
 		
 	}
 	

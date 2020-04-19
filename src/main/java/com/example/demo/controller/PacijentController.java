@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,31 +7,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.KartonDTO;
 import com.example.demo.dto.conversion.KartonConversion;
-import com.example.demo.dto.conversion.ZahtevPosetaConversion;
 import com.example.demo.dto.student1.Bolest;
-import com.example.demo.dto.student1.KartonDTO;
 import com.example.demo.dto.student1.Termin;
-import com.example.demo.dto.student1.ZahtevPosetaDTO;
 import com.example.demo.model.Karton;
-import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
-import com.example.demo.model.Poseta;
-import com.example.demo.model.StanjePosete;
-import com.example.demo.model.ZahtevPregled;
-import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.ZahtevPregledService;
-import com.example.demo.service.email.EmailService;
-import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value="/pacijent")
@@ -43,79 +28,44 @@ public class PacijentController {
 	
 	@Autowired
 	private KartonConversion kartonConversion;
-	
-	@Autowired
-	private PosetaService posetaService;
-	
-	@Autowired
-	private EmailService emailService;
-	
-	@Autowired
-	private ZahtevPosetaConversion zahtevPosetaConversion;
-	
-
-	@Autowired
-	private ZahtevPregledService zahtevPregledService;
-
+		
 
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KartonDTO> karton(){
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);		
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);		
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/termini", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Termin>> termini(){
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		Karton karton = pacijent.getKarton();		
-		List<Termin> termini = new ArrayList<>();
-		for (Poseta p: karton.getPosete()) {
-			if (p.getStanje().equals(StanjePosete.ZAUZETO))
-				termini.add(new Termin(p));
-			
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			Karton karton = pacijent.getKarton();		
+			return new ResponseEntity<>(karton.getTermini(), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(termini, HttpStatus.OK);
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bolest>> bolesti(){
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		Karton karton = pacijent.getKarton();
-		List<Bolest> bolesti = new ArrayList<>();
-		for (Poseta p: karton.getPosete()) {
-			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
-				bolesti.add(new Bolest(p));
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			Karton karton = pacijent.getKarton();
+			return new ResponseEntity<>(karton.getBolesti(), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(bolesti, HttpStatus.OK);
-	}
-	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@DeleteMapping(value="/otkazi/termin/{posetaId}")
-	public ResponseEntity<HttpStatus> otkaziTermin(@PathVariable Integer posetaId){		
-		Poseta poseta = this.posetaService.getOne(posetaId);
-		poseta.setKarton(null);
-		poseta.setStanje(StanjePosete.SLOBODNO);
-		this.posetaService.save(poseta);
-		String obavestenje = "Poseta zakazana za " + poseta.getDatum() + " je otkazana od strane pacijenta. ";
-		for (Lekar l: poseta.getLekari()) {
-			this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
-		
-	}
-	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@PostMapping(value="/individualan/termin", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> zakaziIndividualan(@RequestBody ZahtevPosetaDTO zahtevDTO){
-		
-		Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-		ZahtevPregled zahtev = this.zahtevPosetaConversion.get(zahtevDTO, pacijent.getKarton());
-		this.zahtevPregledService.save(zahtev);
-		return new ResponseEntity<>(HttpStatus.OK);
-		
 	}
 	
 }

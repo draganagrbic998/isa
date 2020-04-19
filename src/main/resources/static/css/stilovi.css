@@ -6,108 +6,67 @@ h1{
   	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 1px 1px 2px black, 0 0 25px #3737ff, 0 0 5px #0000b3;
 }
 
+option {
+    padding: 5px 0;
+}
+
+textarea{
+	resize: vertical;
+	min-height: 100px;
+	width: 100%;
+}
+
+#cosak{
+	margin-left: 1%;
+	margin-top: 1%;
+}
+
+#prijava{
+	padding: 15px;
+	height: 30rem;
+	width: 25rem; 
+	margin-top: 3%;
+	margin-left: auto;
+	margin-right: auto;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
 #pretraga{
 	position: fixed;
 	right: 30px;	
-	margin-top: 10%;
 	padding: 10px;
 	width: 28%;
+	margin-top: 10%;
 	border-left: 2px inset lightgreen;
 	border-top: 2px inset lightgreen;
 	border-right: 2px outset green;
 	border-bottom: 2px outset green;
-	
-}
-
-#levo{
-	margin-top: 5%;
-	margin-left: 5%;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-	padding: 20px;	
-	min-width: 500px;
-	max-height: 400px;
-	
 }
 
 #satnica{
 	width: 30%;
-	margin-top: 30px;
-	margin-left: 100px;
-	
+	margin-top: 40px;
+	margin-left: 80px;
 }
 
 #satnica td{
 	min-width: 300px;
-	max-height: 10%;
 	text-align: center;
 }
 
 #satnica th{
 	text-align: center;
-	
-}
-
-
-#centar{
-	margin-top: 15%;
-	margin-left: 80%;
-	margin-right: 50%;
-	padding: 20px;	
-	min-width: 500px;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-	
-}
-
-#centar th{
-	min-width: 150px;
-}
-
-#details{
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-	margin-left: 20px;
-	margin-top: 20px;
-	padding: 20px;
-	min-width: 60%;
-}
-
-#details th{
-	min-width: 80px;
-}
-
-#details textarea{
-	resize: horizontal;
-	max-width: 300px;
-	min-width: 100px;
-	min-height: 70px;
 }
 
 #box{
+	padding: 15px;
 	width: 40%;
 	margin-top: 2%;
 	margin-left: 30%;
 	margin-right: 20%;
-	padding: 15px;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-}
-
-#left{
-	width: 30%;
-	margin-top: 3%;
-	margin-left: 5%;
-	margin-right: 10%;
-	padding: 15px;
 	border-left: 2px inset lightgreen;
 	border-top: 2px inset lightgreen;
 	border-right: 2px outset green;
@@ -115,11 +74,11 @@ h1{
 }
 
 #tableBox{
+	padding: 15px;
 	width: 55%;
 	margin-top: 2%;
 	margin-left: 25%;
 	margin-right: 20%;
-	padding: 15px;
 	border-left: 2px inset lightgreen;
 	border-top: 2px inset lightgreen;
 	border-right: 2px outset green;
@@ -130,13 +89,76 @@ h1{
 	min-width: 200px;
 }
 
-textarea{
-	width: 100%;
-	min-height: 100px;
-	resize: vertical;
+#details{
+	padding: 20px;
+	min-width: 70%;
+	margin-left: 2%;
+	margin-top: 2%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
 }
 
-option {
-    padding: 5px 0;
+#details th{
+	min-width: 80px;
 }
+
+#details textarea{
+	resize: horizontal;
+	min-width: 100px;
+	max-width: 300px;
+	min-height: 70px;
+}
+
+#left{
+	padding: 15px;
+	width: 35%;
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-right: 5%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
+#levo{
+	padding: 20px;	
+	max-height: 500px;
+	min-width: 500px;
+	margin-top: 5%;
+	margin-left: 10%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
+#centar{
+	padding: 20px;	
+	min-width: 500px;
+	margin-top: 15%;
+	margin-left: 80%;
+	margin-right: 50%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
+#centar th{
+	min-width: 150px;
+}
+
+
+
+
+
+
+
+
+
+
+
 

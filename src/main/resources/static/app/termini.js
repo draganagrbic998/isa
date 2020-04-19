@@ -11,7 +11,7 @@ Vue.component("termini", {
 	
 	template: `
 	
-		<div class="card" style="width: 40rem;" id="box" v-if="selected">
+		<div v-if="selected" class="card" id="box">
 		
 			<h1>Detalji termina</h1><br>
 			
@@ -36,7 +36,7 @@ Vue.component("termini", {
 				
 					<tr>
 						<th scope="row">Originalna cena: </th>
-						<td><input type="text" v-model="selectedTermin.originalnaCena" class="form-control" disabled></td>
+						<td><input type="text" v-model="selectedTermin.cena" class="form-control" disabled></td>
 					</tr>
 				
 					<tr>
@@ -46,7 +46,12 @@ Vue.component("termini", {
 				
 					<tr>
 						<th scope="row">Naziv termina: </th>
-						<td><input type="text" v-model="selectedTermin.nazivPosete" class="form-control" disabled></td>
+						<td><input type="text" v-model="selectedTermin.naziv" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Trajanje termina: </th>
+						<td><input type="text" v-model="selectedTermin.trajanje" class="form-control" disabled></td>
 					</tr>
 				
 					<tr>
@@ -56,7 +61,7 @@ Vue.component("termini", {
 				
 					<tr>
 						<th scope="row">Lekari: </th>
-						<td><select class="form-control"  v-bind:size="selectedTermin.lekari.length" disabled multiple>
+						<td><select class="form-control" v-bind:size="selectedTermin.lekari.length" disabled multiple>
 							<option v-for="l in selectedTermin.lekari">
 								{{l}}
 							</option>
@@ -73,9 +78,9 @@ Vue.component("termini", {
 		
 		</div>
 	
-		<div v-else class="container">
+		<div v-else class="container" id="cosak">
 		
-			<h1>Zakazani termini</h1>
+			<h1>Zakazani termini</h1><br>
 			
 			<table class="table table-hover">
 			
@@ -117,34 +122,32 @@ Vue.component("termini", {
 			this.termini = response.data;
 		})
 		.catch(response => {
-			this.$router.push("/profil");
+			this.$router.push("/");
 		});
 		
 		Date.prototype.addHours = function(h){
 		    this.setHours(this.getHours()+h);
 		    return this;
 		}
-
-
 		
 	}, 
 	
 	methods: {
 		
 		formatiraj: function (date) {
+			
 			  date = new Date(date);
-			  var year = date.getFullYear();
-
-			  var month = (1 + date.getMonth()).toString();
+			  let year = date.getFullYear();
+			  let month = (1 + date.getMonth()).toString();
 			  month = month.length > 1 ? month : '0' + month;
-
-			  var day = date.getDate().toString();
+			  let day = date.getDate().toString();
 			  day = day.length > 1 ? day : '0' + day;
-			  var hours = date.getHours().toString();
-			  var minutes = date.getMinutes().toString();
+			  let hours = date.getHours().toString();
 			  hours = hours.length > 1 ? hours : '0' + hours;
+			  let minutes = date.getMinutes().toString();
 			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
 			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  
 		},
 		
 		
@@ -155,7 +158,7 @@ Vue.component("termini", {
 		}, 
 		
 		otkazi: function(){
-			axios.delete("/pacijent/otkazi/termin/" + this.selectedTermin.id)
+			axios.delete("/poseta/otkazi/" + this.selectedTermin.id)
 			.then(response => {
 				location.reload();
 			})
@@ -163,7 +166,6 @@ Vue.component("termini", {
 				alert("SERVER ERROR!!");
 			});
 		}
-		
 		
 	}
 	

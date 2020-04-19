@@ -28,16 +28,15 @@ public class LekController {
 	
 	@Autowired
 	private LekConversion lekConversion;
-		
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<LekDTO> pregled(){
-		return this.lekConversion.get(this.lekService.findAll());
+	public ResponseEntity<List<LekDTO>> pregled(){
+		return new ResponseEntity<>(this.lekConversion.get(this.lekService.findAll()), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody LekDTO lekDTO) {
 		try {
 			this.lekService.save(this.lekConversion.get(lekDTO));
@@ -49,7 +48,7 @@ public class LekController {
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@DeleteMapping(value = "/brisanje/{id}")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
 		try {
 			this.lekService.delete(id);

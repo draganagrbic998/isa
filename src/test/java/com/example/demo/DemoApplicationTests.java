@@ -10,7 +10,6 @@ class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
-		//samo da mi sonar cloud ne bi ispisivao upozorenja
 		assertTrue(true);
 	}
 

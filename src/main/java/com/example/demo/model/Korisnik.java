@@ -29,18 +29,34 @@ public abstract class Korisnik {
 	@Column(unique = false, nullable = false)
 	private String telefon;
 	@Column(unique = false, nullable = false)
-	private boolean aktivan;
-	@Column(unique = false, nullable = false)
-	private boolean promenjenaSifra;
-	@Column(unique = false, nullable = false)
 	private String drzava;
 	@Column(unique = false, nullable = false)
 	private String grad;
 	@Column(unique = false, nullable = false)
 	private String adresa;
+	@Column(unique = false, nullable = false)
+	private boolean aktivan;
+	@Column(unique = false, nullable = false)
+	private boolean promenjenaSifra;
 	
 	public Korisnik() {
 		super();
+	}
+
+	public Korisnik(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
+			String grad, String adresa, boolean aktivan, boolean promenjenaSifra) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.lozinka = lozinka;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.telefon = telefon;
+		this.drzava = drzava;
+		this.grad = grad;
+		this.adresa = adresa;
+		this.aktivan = aktivan;
+		this.promenjenaSifra = promenjenaSifra;
 	}
 
 	public Integer getId() {
@@ -91,22 +107,6 @@ public abstract class Korisnik {
 		this.telefon = telefon;
 	}
 
-	public boolean getAktivan() {
-		return aktivan;
-	}
-
-	public void setAktivan(boolean aktivan) {
-		this.aktivan = aktivan;
-	}
-
-	public boolean getPromenjenaSifra() {
-		return promenjenaSifra;
-	}
-
-	public void setPromenjenaSifra(boolean promenjenaSifra) {
-		this.promenjenaSifra = promenjenaSifra;
-	}
-
 	public String getDrzava() {
 		return drzava;
 	}
@@ -129,6 +129,22 @@ public abstract class Korisnik {
 
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
+	}
+
+	public boolean isPromenjenaSifra() {
+		return promenjenaSifra;
+	}
+
+	public void setPromenjenaSifra(boolean promenjenaSifra) {
+		this.promenjenaSifra = promenjenaSifra;
 	}
 
 }

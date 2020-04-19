@@ -1,4 +1,4 @@
-Vue.component('dodajDijagnozu', {
+Vue.component("dodajDijagnozu", {
 
 	data: function(){
 		return {
@@ -7,8 +7,8 @@ Vue.component('dodajDijagnozu', {
 				'sifra': '', 
 				'naziv': ''
 			}, 
-			greskaNaziv: '', 
 			greskaSifra: '', 
+			greskaNaziv: '', 
 			greska: false
 		}
 	}, 
@@ -36,11 +36,18 @@ Vue.component('dodajDijagnozu', {
 	
 	`, 
 	
+	mounted(){
+		axios.get("/user/check/superadmin")
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	},
+	
 	methods: {
 		
 		osvezi: function(){
-			this.greskaNaziv = '';
 			this.greskaSifra = '';
+			this.greskaNaziv = '';
 			this.greska = false;
 		}, 
 		
@@ -62,10 +69,11 @@ Vue.component('dodajDijagnozu', {
 			
 			axios.post("/dijagnoza/kreiranje", this.dijagnoza)
 			.then(response => {
-				this.$router.push("/adminKCHome");
+				alert("Dijagnoza uspesno kreirana!");
+				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {
-				alert("Uneta sifra vec postoji!!");
+				this.greskaSifra = "Uneta sifra vec postoji!!";
 			});
 			
 		}

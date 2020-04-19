@@ -169,15 +169,15 @@ Vue.component("profil", {
 			axios.post("/user/izmena", this.korisnik)
 			.then(response => {
 				if (response.data == "pacijent")
-					this.$router.push("pacijentHome");
+					this.$router.push("/pacijentHome");
 				else if (response.data == "lekar")
-					this.$router.push("lekarHome");
+					this.$router.push("/lekarHome");
 				else if (response.data == "sestra")
-					this.$router.push("sestraHome")
+					this.$router.push("/sestraHome")
 				else if (response.data == "admin")
-					this.$router.push("adminHome");
+					this.$router.push("/adminHome");
 				else
-					this.$router.push("superHome");
+					this.$router.push("/superAdminHome");
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

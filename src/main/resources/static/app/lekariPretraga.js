@@ -1,9 +1,10 @@
 Vue.component('lekariPretraga', {
+	
 	data: function(){
 		return{
 			lekari: {},
-			pretraga: '',
 			backupLekari: {},
+			pretraga: '',
 			nemaRezultata: ''
 		}
 	}, 
@@ -88,8 +89,10 @@ Vue.component('lekariPretraga', {
 		</div>
 	
 	`, 
+	
 	mounted(){
-		axios.get("/lekar/dobaviLekare")
+		
+		axios.get("/lekar/admin/pregled")
 		.then(response => {
 			this.lekari = response.data;
 			this.backupLekari = response.data;
@@ -101,10 +104,13 @@ Vue.component('lekariPretraga', {
 	}, 
 	
 	methods: {
+		
 		search: function(){
-			this.nemaRezultata = '';
+			
 			this.lekari = [];
+			this.nemaRezultata = '';
             let lowerPretraga = (this.pretraga).toLowerCase();
+            
             for (let l of this.backupLekari){
             	let imePrezime = (l.ime.concat(" ",l.prezime)).toLowerCase();
             	let prezimeIme = (l.prezime.concat(" ", l.ime)).toLowerCase();
@@ -120,15 +126,17 @@ Vue.component('lekariPretraga', {
             	}
                                 
             }
+            
             if (this.lekari.length===0) {
             	this.nemaRezultata = "Nema rezultata pretrage."
             }
 		},
+		
 		deleteDoctor: function(id) {
 			axios.delete("/lekar/brisanje/" + id)
 			.then(response => {
 				alert("Lekar " + id + " uspesno obrisan!");
-				this.$router.push("/adminKlinikeHome");
+				this.$router.push("/adminHome");
 			})
 			.catch(error => {
 				alert("Lekar ima zakazane posete!! Nije moguce brisanje!!");

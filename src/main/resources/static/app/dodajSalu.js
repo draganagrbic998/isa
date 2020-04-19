@@ -37,6 +37,17 @@ Vue.component("dodajSalu", {
 		</div>
 	
 	`, 
+	
+	mounted () {
+		
+		axios
+        .get("/klinika/admin/pregled")
+        .then(response => (this.klinika = response.data))
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+		
+	},
 		
 	methods: {
 	
@@ -51,7 +62,7 @@ Vue.component("dodajSalu", {
 			this.osvezi();
 	
 			if (this.sala.broj == ''){
-				this.greskaBroj= "Broj sale ne sme biti prazan. ";
+				this.greskaBroj= "Broj ne sme biti prazan. ";
 				this.greska = true;
 			}
 			
@@ -66,18 +77,13 @@ Vue.component("dodajSalu", {
 			axios.post("/sala/kreiranje", this.sala)
 			.then(response => {
 				alert("Sala uspesno kreirana!");
-				this.$router.push("/adminKlinikeHome");
+				this.$router.push("/adminHome");
 			})
 			.catch(error => {
-				alert("Broj sale mora biti jedinstven!!");
+				this.greskaBroj = "Broj mora biti jedinstven!!";
 			});
 			
 		}
-	},
-	mounted () {
-		axios
-        .get("/klinika/vratiKliniku")
-        .then(response => (this.klinika = response.data));
-	},
+	}
 	
 });

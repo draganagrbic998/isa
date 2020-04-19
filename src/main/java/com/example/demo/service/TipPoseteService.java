@@ -17,16 +17,12 @@ public class TipPoseteService {
 
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
-		
-	public boolean isUnique(TipPosete tipPosete) {
+	
+	public void save(TipPosete tipPosete) throws Exception {
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
 			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().equals(tipPosete.getKlinika().getId()))
-				return false;
+				throw new RuntimeException();
 		}
-		return true;
-	}
-	
-	public void save(TipPosete tipPosete) {
 		this.tipPoseteRepository.save(tipPosete);
 	}
 	

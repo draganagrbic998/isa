@@ -14,6 +14,7 @@ public class PosetaDTO {
 	private Double popust;
 	private double cena;
 	private String naziv;
+	private double trajanje;
 	private String sala;
 	private List<String> lekari;
 	
@@ -28,6 +29,7 @@ public class PosetaDTO {
 		this.popust = poseta.getPopust();
 		this.cena = poseta.getTipPosete().getCena();
 		this.naziv = poseta.getTipPosete().getNaziv();
+		this.trajanje = poseta.getTipPosete().getSati() + poseta.getTipPosete().getMinute() / 60.0;
 		this.sala = poseta.getSala().getBroj() + " " + poseta.getSala().getNaziv();
 		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
@@ -58,7 +60,7 @@ public class PosetaDTO {
 	public void setPopust(Double popust) {
 		this.popust = popust;
 	}
-	
+
 	public double getCena() {
 		return cena;
 	}
@@ -73,6 +75,14 @@ public class PosetaDTO {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	public double getTrajanje() {
+		return trajanje;
+	}
+
+	public void setTrajanje(double trajanje) {
+		this.trajanje = trajanje;
 	}
 
 	public String getSala() {

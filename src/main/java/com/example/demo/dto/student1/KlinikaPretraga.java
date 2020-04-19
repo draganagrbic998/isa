@@ -5,44 +5,37 @@ import java.util.List;
 
 import org.hibernate.Hibernate;
 
+import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 import com.example.demo.model.Zaposleni;
 
-public class KlinikaPretraga {
+public class KlinikaPretraga extends KlinikaDTO{
 	
-	private Integer id;
-	private String naziv;
-	private String opis;
-	private String adresa;
 	private double ocena;
 	private double cena;
 	private double trajanje;
-	private List<LekarSatnice> lekari;
+	private List<LekarSatnica> lekari;
 	
 	public KlinikaPretraga() {
 		super();
 	}
 
 	public KlinikaPretraga(Klinika klinika) {
-		super();
-		this.id = klinika.getId();
-		this.naziv = klinika.getNaziv();
-		this.opis = klinika.getOpis();
-		this.adresa = klinika.getAdresa();
+		super(klinika);
 		double suma = 0;
 		int counter = 0;
 		for (Ocena o: klinika.getOcene()) {
 			suma += o.getVrednost();
 			counter += 1;
 		}
-		this.ocena = counter != 0 ? suma / counter : 0;
+		this.ocena = counter != 0 ? suma / counter : 0.0;
 		this.lekari = new ArrayList<>();
 		for (Zaposleni z: klinika.getZaposleni()) {
 			z = (Zaposleni) Hibernate.unproxy(z);
 			if (z instanceof Lekar)
-				this.lekari.add(new LekarSatnice((Lekar) z));
+				this.lekari.add(new LekarSatnica((Lekar) z));
 		}
 		
 	}
@@ -51,38 +44,6 @@ public class KlinikaPretraga {
 		this(klinika);
 		this.cena = cena;
 		this.trajanje = trajanje;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNaziv() {
-		return naziv;
-	}
-
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
-	}
-
-	public String getOpis() {
-		return opis;
-	}
-
-	public void setOpis(String opis) {
-		this.opis = opis;
-	}
-
-	public String getAdresa() {
-		return adresa;
-	}
-
-	public void setAdresa(String adresa) {
-		this.adresa = adresa;
 	}
 
 	public double getOcena() {
@@ -109,16 +70,15 @@ public class KlinikaPretraga {
 		this.trajanje = trajanje;
 	}
 
-	public List<LekarSatnice> getLekari() {
+	public List<LekarSatnica> getLekari() {
 		return lekari;
 	}
 
-	public void setLekari(List<LekarSatnice> lekari) {
+	public void setLekari(List<LekarSatnica> lekari) {
 		this.lekari = lekari;
 	}
 
-	public void dodaj(LekarSatnice ls) {
-		// TODO Auto-generated method stub
+	public void dodaj(LekarSatnica ls) {
 		this.lekari.add(ls);
 	}
 	

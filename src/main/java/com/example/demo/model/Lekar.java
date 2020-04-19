@@ -38,10 +38,18 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
 	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
-	private Set<ZahtevPregled> pregledZahtevi = new HashSet<>();
+	private Set<ZahtevPoseta> pregledZahtevi = new HashSet<>();
 	
 	public Lekar() {
 		super();
+	}
+
+	public Lekar(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
+			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, Date pocetnoVreme, Date krajnjeVreme,
+			Klinika klinika, TipPosete specijalizacija) {
+		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra, pocetnoVreme,
+				krajnjeVreme, klinika);
+		this.specijalizacija = specijalizacija;
 	}
 
 	public TipPosete getSpecijalizacija() {
@@ -76,11 +84,11 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		this.odmorZahtevi = odmorZahtevi;
 	}
 
-	public Set<ZahtevPregled> getPregledZahtevi() {
+	public Set<ZahtevPoseta> getPregledZahtevi() {
 		return pregledZahtevi;
 	}
 
-	public void setPregledZahtevi(Set<ZahtevPregled> pregledZahtevi) {
+	public void setPregledZahtevi(Set<ZahtevPoseta> pregledZahtevi) {
 		this.pregledZahtevi = pregledZahtevi;
 	}
 
@@ -125,7 +133,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 			if (kalendar.getTime().equals(compareDate) && !p.getStanje().equals(StanjePosete.OBAVLJENO))
 				lista.add(p);
 		}
-		for (ZahtevPregled zp: this.pregledZahtevi) {
+		for (ZahtevPoseta zp: this.pregledZahtevi) {
 			kalendar.setTime(zp.datum());
 			kalendar.set(Calendar.HOUR_OF_DAY, 0);
 			kalendar.set(Calendar.MINUTE, 0);

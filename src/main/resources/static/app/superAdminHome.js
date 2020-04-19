@@ -1,4 +1,4 @@
-Vue.component('adminKCHome', {
+Vue.component("superAdminHome", {
 	
 	template: `
 	
@@ -108,5 +108,12 @@ Vue.component('adminKCHome', {
 		</div>
 	
 	`, 
+	
+	mounted(){
+		axios.get("/user/check/superadmin")
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	}
 	
 });

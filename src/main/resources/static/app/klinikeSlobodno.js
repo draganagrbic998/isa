@@ -21,10 +21,6 @@ Vue.component("klinikeSlobodno", {
 				
 				<tbody>
 					<tr>
-						<th scope="col">Naziv: </th>
-						<td><input type="text" v-model="selectedPoseta.naziv" class="form-control" disabled></td>
-					</tr>
-					<tr>
 						<th scope="col">Datum: </th>
 						<td><input type="text" v-model="datum" class="form-control" disabled></td>
 					</td>
@@ -37,12 +33,20 @@ Vue.component("klinikeSlobodno", {
 						<td><input type="text" v-model="selectedPoseta.popust" class="form-control" disabled></td>
 					</tr>
 					<tr>
+						<th scope="col">Tip pregleda: </th>
+						<td><input type="text" v-model="selectedPoseta.naziv" class="form-control" disabled></td>
+					</tr>
+					<tr>
+						<th scope="col">Trajanje: </th>
+						<td><input type="text" v-model="selectedPoseta.trajanje" class="form-control" disabled></td>
+					</tr>
+					<tr>
 						<th scope="col">Sala: </th>
 						<td><input type="text" v-model="selectedPoseta.sala" class="form-control" disabled></td>
 					</tr>
 					<tr>
 						<th scope="col">Lekari: </th>
-						<td><select class="form-control" v-bind:size="selectedPoseta.lekari.length" disabled multiple>
+						<td><select v-bind:size="selectedPoseta.lekari.length" class="form-control" disabled multiple>
 							<option v-for="l in selectedPoseta.lekari">
 								{{l}}
 							</option>
@@ -57,7 +61,7 @@ Vue.component("klinikeSlobodno", {
 		
 		</div>
 	
-		<div v-else-if="klinikaSelected" class="form-row">
+		<div v-else-if="klinikaSelected" class="row">
 		
 			<div id="details">
 			
@@ -81,7 +85,7 @@ Vue.component("klinikeSlobodno", {
 						<th scope="row">Opis: </th>
 					</tr>
 					<tr>
-						<td rowspan="2"><textarea disabled id="slobodno">{{selectedKlinika.opis}}</textarea></td>
+						<td rowspan="2"><textarea disabled>{{selectedKlinika.opis}}</textarea></td>
 					</tr>
 				
 				</span>
@@ -98,7 +102,7 @@ Vue.component("klinikeSlobodno", {
 			
 			</div>
 			
-			<div class="form-group col-md-7" style="margin-left: 30px; margin-top: 30px">
+			<div class="container col-md-8" style="margin-left: 30px; margin-top: 30px">
 			
 				<h2>Slobodni termini</h2><br>
 				
@@ -107,7 +111,7 @@ Vue.component("klinikeSlobodno", {
 					<thead>
 						<tr>
 							<th scope="col">Datum</th>
-							<th scope="col">Naziv</th>
+							<th scope="col">Tip pregleda</th>
 							<th scope="col">Popust</th>
 						</tr>
 					</thead>
@@ -116,7 +120,6 @@ Vue.component("klinikeSlobodno", {
 							<td>{{formatiraj(p.datum)}}</td>
 							<td>{{p.naziv}}</td>
 							<td>{{p.popust}}</td>
-
 						</tr>
 					</tbody>
 				</table>
@@ -125,9 +128,9 @@ Vue.component("klinikeSlobodno", {
 		
 		</div>
 	
-		<div v-else class="container">
+		<div v-else class="container" id="cosak">
 		
-			<h1>Klinike</h1>
+			<h1>Klinike</h1><br>
 			
 			<table class="table table-hover">
 			
@@ -151,7 +154,6 @@ Vue.component("klinikeSlobodno", {
 	
 	`, 
 	
-	
 	mounted(){
 		
 		axios.get("/klinika/slobodno")
@@ -159,49 +161,47 @@ Vue.component("klinikeSlobodno", {
 			this.klinike = response.data;
 		})
 		.catch(response => {
-			this.$router.push("/profil");
+			this.$router.push("/");
 		});
 		
 	}, 
 	
-	
-	
 	methods: {
 		
 		formatiraj: function (date) {
+			
 			  date = new Date(date);
-			  var year = date.getFullYear();
-
-			  var month = (1 + date.getMonth()).toString();
+			  let year = date.getFullYear();
+			  let month = (1 + date.getMonth()).toString();
 			  month = month.length > 1 ? month : '0' + month;
-
-			  var day = date.getDate().toString();
+			  let day = date.getDate().toString();
 			  day = day.length > 1 ? day : '0' + day;
-			  var hours = date.getHours().toString();
-			  var minutes = date.getMinutes().toString();
+			  let hours = date.getHours().toString();
 			  hours = hours.length > 1 ? hours : '0' + hours;
+			  let minutes = date.getMinutes().toString();
 			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
 			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  
 		},
 		
 		selectKlinika: function(klinika){
 			this.selectedKlinika = klinika;
 			this.klinikaSelected = true;
+			this.posetaSelected = false;
 		}, 
 		
 		selectPoseta: function(poseta){
-			this.posetaSelected = true;
 			this.selectedPoseta = poseta;
+			this.posetaSelected = true;
+			this.klinikaSelected = false;
 			this.datum = this.formatiraj(this.selectedPoseta.datum);
 		}, 
 		
 		zakazi: function(){
 			
-			axios.get("/klinika/zakazi/" + this.selectedPoseta.id)
+			axios.get("/poseta/zakazi/" + this.selectedPoseta.id)
 			.then(response => {
-				this.selectedKlinika = response.data;
-				this.klinikaSelected = true;
-				this.posetaSelected = false;
+				this.selectKlinika(response.data);
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

@@ -13,6 +13,10 @@ public class LekService {
 
 	@Autowired
 	private LekRepository lekRepository;
+	
+	public void save(Lek lek) {
+		this.lekRepository.save(lek);
+	}
 
 	public void delete(Integer id) {
 		this.lekRepository.deleteById(id);
@@ -20,10 +24,6 @@ public class LekService {
 
 	public List<Lek> findAll() {
 		return this.lekRepository.findAll();
-	}
-
-	public void save(Lek lek) {
-		this.lekRepository.save(lek);
 	}
 
 }

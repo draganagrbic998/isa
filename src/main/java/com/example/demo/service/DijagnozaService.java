@@ -14,16 +14,16 @@ public class DijagnozaService {
 	@Autowired
 	private DijagnozaRepository dijagnozaRepository;
 
+	public void save(Dijagnoza dijagnoza) {
+		this.dijagnozaRepository.save(dijagnoza);
+	}
+	
 	public void delete(Integer id) {
 		this.dijagnozaRepository.deleteById(id);
 	}
 
 	public List<Dijagnoza> findAll() {
 		return this.dijagnozaRepository.findAll();
-	}
-
-	public void save(Dijagnoza dijagnoza) {
-		this.dijagnozaRepository.save(dijagnoza);
 	}
 
 }

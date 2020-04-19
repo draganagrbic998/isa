@@ -21,27 +21,19 @@ public class LekarConversion {
 	
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
-	
-	
+		
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		String baseDate = "2020-04-20 ";
-
-		Lekar lekar = new Lekar();
-		lekar.setPocetnoVreme(format.parse(baseDate+lekarDTO.getPocetnoVreme()));
-		lekar.setKrajnjeVreme(format.parse(baseDate+lekarDTO.getKrajnjeVreme()));
-		lekar.setId(lekarDTO.getId());
-		lekar.setEmail(lekarDTO.getEmail());
-		lekar.setLozinka(lekarDTO.getLozinka());
-		lekar.setIme(lekarDTO.getIme());
-		lekar.setPrezime(lekarDTO.getPrezime());
-		lekar.setTelefon(lekarDTO.getTelefon());
-		lekar.setSpecijalizacija(this.tipPoseteRepository.getOne(lekarDTO.getSpecijalizacija()));
-		lekar.setDrzava(lekarDTO.getDrzava());
-		lekar.setAdresa(lekarDTO.getAdresa());
-		lekar.setGrad(lekarDTO.getGrad());
-		lekar.setKlinika(this.klinikaRepository.getOne(lekarDTO.getKlinika()));
-		return lekar;
+		
+		return new Lekar(lekarDTO.getId(), lekarDTO.getEmail(), lekarDTO.getLozinka(), 
+				lekarDTO.getIme(), lekarDTO.getPrezime(), lekarDTO.getTelefon(), 
+				lekarDTO.getDrzava(), lekarDTO.getGrad(), lekarDTO.getAdresa(), 
+				lekarDTO.isAktivan(), lekarDTO.isPromenjenaSifra(), 
+				f.parse(baseDate + lekarDTO.getPocetnoVreme()), f.parse(baseDate + lekarDTO.getKrajnjeVreme()), 
+				this.klinikaRepository.getOne(lekarDTO.getKlinika()), this.tipPoseteRepository.getOne(lekarDTO.getSpecijalizacija()));
+		
 	}
 	
 	public LekarDTO get(Lekar lekar) {

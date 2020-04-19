@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.AdminDTO;
-import com.example.demo.dto.conversion.AdministratorKlinikeConversion;
-import com.example.demo.service.AdministratorKlinikeService;
+import com.example.demo.dto.conversion.AdminConversion;
+import com.example.demo.service.AdminService;
 
 @RestController
-@RequestMapping(value = "/adminKlinike")
-public class AdministratorKlinikeController {
+@RequestMapping(value = "/admin")
+public class AdminController {
 
 	@Autowired
-	private AdministratorKlinikeService adminKlinikeService;
+	private AdminService adminService;
 	
 	@Autowired
-	private AdministratorKlinikeConversion adminKlinikeConversion;
+	private AdminConversion adminConversion;
 		
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody AdminDTO adminKlinikeDTO) {
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> create(@RequestBody AdminDTO adminDTO) {
 		try {
-			this.adminKlinikeService.save(this.adminKlinikeConversion.get(adminKlinikeDTO));
+			this.adminService.save(this.adminConversion.get(adminDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

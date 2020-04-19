@@ -10,7 +10,7 @@ import com.example.demo.model.Ocena;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 
-public class KlinikaSlobodno extends KlinikaDTO{
+public class KlinikaSlobodno extends KlinikaDTO {
 	
 	private double ocena;
 	private List<PosetaDTO> posete;

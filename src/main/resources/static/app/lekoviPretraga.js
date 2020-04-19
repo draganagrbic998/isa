@@ -106,8 +106,8 @@ Vue.component('lekoviPretraga', {
 		
 		search: function(){
 			
-			this.nemaRezultata = '';
 			this.lekovi = [];
+			this.nemaRezultata = '';
             let lowerPretraga = this.pretraga.toLowerCase();
             
             for (let l of this.backupLekovi){
@@ -132,6 +132,7 @@ Vue.component('lekoviPretraga', {
             if (this.lekovi.length===0) {
             	this.nemaRezultata = "Nema rezultata pretrage."
             }
+            
 		},
 		
 		deleteLek: function(id, naziv) {
@@ -139,7 +140,7 @@ Vue.component('lekoviPretraga', {
 			axios.delete("/lek/brisanje/" + id)
 			.then(response => {
 				alert("Lek '" + naziv + "' uspesno obrisan!");
-				this.$router.push("/adminKCHome");
+				this.$router.push("/superAdminHome");
 			})
 			
 			.catch(error => {

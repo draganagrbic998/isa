@@ -1,4 +1,4 @@
-Vue.component('adminKlinikeHome', {
+Vue.component("adminHome", {
 	
 	template: `
 	
@@ -84,5 +84,12 @@ Vue.component('adminKlinikeHome', {
 		</div>
 	
 	`, 
+	
+	mounted(){
+		axios.get("/user/check/admin")
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	}
 	
 });

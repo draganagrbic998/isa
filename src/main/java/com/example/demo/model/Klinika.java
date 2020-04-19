@@ -40,15 +40,23 @@ public class Klinika implements Ocenjivanje{
 	@JoinTable(name = "klinika_pregled",
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "pregled"))
-	private Set<ZahtevPregled> zahteviPregled = new HashSet<>();
+	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "klinika_odmor",
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "odmor"))
-	private Set<ZahtevOdmor> zahteviOdmor = new HashSet<>();
+	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
 	
 	public Klinika() {
 		super();
+	}
+
+	public Klinika(Integer id, String naziv, String opis, String adresa) {
+		super();
+		this.id = id;
+		this.naziv = naziv;
+		this.opis = opis;
+		this.adresa = adresa;
 	}
 
 	public Integer getId() {
@@ -115,20 +123,20 @@ public class Klinika implements Ocenjivanje{
 		this.sale = sale;
 	}
 
-	public Set<ZahtevPregled> getZahteviPregled() {
-		return zahteviPregled;
+	public Set<ZahtevPoseta> getPosetaZahtevi() {
+		return posetaZahtevi;
 	}
 
-	public void setZahteviPregled(Set<ZahtevPregled> zahteviPregled) {
-		this.zahteviPregled = zahteviPregled;
+	public void setPosetaZahtevi(Set<ZahtevPoseta> posetaZahtevi) {
+		this.posetaZahtevi = posetaZahtevi;
 	}
 
-	public Set<ZahtevOdmor> getZahteviOdmor() {
-		return zahteviOdmor;
+	public Set<ZahtevOdmor> getOdmorZahtevi() {
+		return odmorZahtevi;
 	}
 
-	public void setZahteviOdmor(Set<ZahtevOdmor> zahteviOdmor) {
-		this.zahteviOdmor = zahteviOdmor;
+	public void setOdmorZahtevi(Set<ZahtevOdmor> odmorZahtevi) {
+		this.odmorZahtevi = odmorZahtevi;
 	}
 
 	@Override

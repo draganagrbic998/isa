@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Zaposleni;
+import com.example.demo.model.Admin;
 
 public class AdminDTO extends ZaposleniDTO{
 
@@ -8,8 +8,8 @@ public class AdminDTO extends ZaposleniDTO{
 		super();
 	}
 
-	public AdminDTO(Zaposleni zaposleni) {
-		super(zaposleni);
+	public AdminDTO(Admin admin) {
+		super(admin);
 	}
 
 }

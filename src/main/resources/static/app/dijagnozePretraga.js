@@ -1,4 +1,4 @@
-Vue.component('dijagnozePretraga', {
+Vue.component("dijagnozePretraga", {
 	
 	data: function(){
 		return {
@@ -105,10 +105,10 @@ Vue.component('dijagnozePretraga', {
 		},
 		
 		search: function(){
-			
-			this.nemaRezultata = '';
+
 			this.dijagnoze = [];
-            let lowerPretraga = (this.pretraga).toLowerCase();
+			this.nemaRezultata = '';
+            let lowerPretraga = this.pretraga.toLowerCase();
             
             for (let d of this.backupDijagnoze){
             	
@@ -140,7 +140,7 @@ Vue.component('dijagnozePretraga', {
 			axios.delete("/dijagnoza/brisanje/" + id)
 			.then(response => {
 				alert("Dijagnoza '" + naziv + "' uspesno obrisana!");
-				this.$router.push("/adminKCHome");
+				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {
 				alert("Dijagnoza je u upotrebi i ne moze biti obrisana!");

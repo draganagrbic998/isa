@@ -6,11 +6,8 @@ import com.example.demo.model.Zaposleni;
 
 public class ZaposleniDTO extends KorisnikDTO{
 	
-	
-	
 	private String pocetnoVreme;
 	private String krajnjeVreme;
-	
 	private Integer klinika;
 	
 	public ZaposleniDTO() {
@@ -19,16 +16,13 @@ public class ZaposleniDTO extends KorisnikDTO{
 	
 	public ZaposleniDTO(Zaposleni zaposleni) {
 		super(zaposleni);
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		this.klinika = zaposleni.getKlinika().getId();
-		if (zaposleni.getPocetnoVreme()!=null && zaposleni.getKrajnjeVreme()!=null) {
-			String pocetno = format.format(zaposleni.getPocetnoVreme());
-			String krajnje = format.format(zaposleni.getKrajnjeVreme());
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		if (zaposleni.getPocetnoVreme() != null && zaposleni.getKrajnjeVreme() != null) {
+			String pocetno = f.format(zaposleni.getPocetnoVreme());
+			String krajnje = f.format(zaposleni.getKrajnjeVreme());
 			this.pocetnoVreme = pocetno.substring(pocetno.length() - 5);
 			this.krajnjeVreme = krajnje.substring(krajnje.length() - 5);
-		}else {
-			this.pocetnoVreme = null;
-			this.krajnjeVreme = null;
 		}
 	}
 
@@ -47,7 +41,7 @@ public class ZaposleniDTO extends KorisnikDTO{
 	public void setKrajnjeVreme(String krajnjeVreme) {
 		this.krajnjeVreme = krajnjeVreme;
 	}
-	
+
 	public Integer getKlinika() {
 		return klinika;
 	}

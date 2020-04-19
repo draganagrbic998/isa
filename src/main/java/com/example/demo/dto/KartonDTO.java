@@ -1,4 +1,4 @@
-package com.example.demo.dto.student1;
+package com.example.demo.dto;
 
 import com.example.demo.model.Karton;
 import com.example.demo.model.KrvnaGrupa;
@@ -12,6 +12,7 @@ public class KartonDTO {
 	private double levaDioptrija;
 	private double desnaDioptrija;
 	private KrvnaGrupa krvnaGrupa;
+	private Integer pacijent;
 	
 	public KartonDTO() {
 		super();
@@ -26,6 +27,7 @@ public class KartonDTO {
 		this.levaDioptrija = karton.getLevaDioptrija();
 		this.desnaDioptrija = karton.getDesnaDioptrija();
 		this.krvnaGrupa = karton.getKrvnaGrupa();
+		this.pacijent = karton.getPacijent().getId();
 	}
 
 	public Integer getId() {
@@ -82,6 +84,14 @@ public class KartonDTO {
 
 	public void setKrvnaGrupa(KrvnaGrupa krvnaGrupa) {
 		this.krvnaGrupa = krvnaGrupa;
+	}
+
+	public Integer getPacijent() {
+		return pacijent;
+	}
+
+	public void setPacijent(Integer pacijent) {
+		this.pacijent = pacijent;
 	}
 
 }

@@ -4,10 +4,10 @@ Vue.component("bolesti", {
 		return{
 			bolesti: [], 
 			selectedBolest: {}, 
-			selected: false, 
-			klinikaOcena: 0, 
+			bolestSelected: false, 
 			selectedLekar: {}, 
 			lekarSelected: false, 
+			klinikaOcena: 0, 
 			lekarOcena: 0, 
 			datum: ''
 		}
@@ -15,7 +15,7 @@ Vue.component("bolesti", {
 	
 	template: `
 	
-		<div class="card" v-if="lekarSelected" id="box">
+		<div v-if="lekarSelected" class="card" id="box">
 		
 			<h1>Detalji lekara</h1><br>
 			
@@ -49,7 +49,7 @@ Vue.component("bolesti", {
 					</tr>
 					
 					<tr>
-						<th scope="row"><button class="btn btn-primary" v-on:click="oceniLekar()">OCENI</button></th>
+						<th scope="row"><button class="btn btn-primary" v-on:click="oceniLekar()">OCENI LEKARA</button></th>
 						<td><input type="number" min="0" max="10" v-model="lekarOcena" class="form-control" disable onKeyDown="return false"></td>
 					</tr>
 				
@@ -59,9 +59,9 @@ Vue.component("bolesti", {
 		
 		</div>
 	
-		<div class="form-row" v-else-if="selected">
+		<div v-else-if="bolestSelected" class="row">
 		
-			<div class="card" style="width: 30rem;" id="left">
+			<div class="card" id="left">
 			
 				<h1>Detalji bolesti</h1><br>
 				
@@ -70,18 +70,13 @@ Vue.component("bolesti", {
 					<tbody>
 					
 						<tr>
-							<th scope="row">Klinika: </th>
-							<td><input type="text" v-model="selectedBolest.klinika" class="form-control" disabled></td>
-						</tr>
-						
-						<tr>
-							<th scope="row">Ocena: </th>
-							<td><input type="text" v-model="selectedBolest.ocena" class="form-control" disabled></td>
+							<th scope="row">Datum: </th>
+							<td><input type="text" v-model="datum" class="form-control" disabled></td>
 						</tr>
 					
 						<tr>
-							<th scope="row">Datum: </th>
-							<td><input type="text" v-model="datum" class="form-control" disabled></td>
+							<th scope="row">Klinika: </th>
+							<td><input type="text" v-model="selectedBolest.klinika" class="form-control" disabled></td>
 						</tr>
 						
 						<tr>
@@ -95,7 +90,12 @@ Vue.component("bolesti", {
 						</tr>
 						
 						<tr>
-							<th scope="row"><button class="btn btn-primary" v-on:click="oceniKlinika()">OCENI</button></th>
+							<th scope="row">Ocena klinike: </th>
+							<td><input type="text" v-model="selectedBolest.ocenaKlinike" class="form-control" disabled></td>
+						</tr>
+						
+						<tr>
+							<th scope="row"><button class="btn btn-primary" v-on:click="oceniKlinika()">OCENI KLINIKU</button></th>
 							<td><input type="number" min="0" max="10" v-model="klinikaOcena" class="form-control" disable onKeyDown="return false"></td>
 						</tr>
 					
@@ -108,10 +108,9 @@ Vue.component("bolesti", {
 			
 			</div>
 			
-			<div class="form-group col-md-5" style="margin-top: 3%">
+			<div class="col" style="margin-top: 3%">
 				
 				<h1>Lekari</h1><br>
-				
 				
 				<table class="table table-hover">
 					
@@ -195,9 +194,9 @@ Vue.component("bolesti", {
 		
 		</div>
 	
-		<div v-else class="container">
+		<div v-else class="container" id="cosak">
 		
-			<h1>Istorija bolesti</h1>
+			<h1>Istorija bolesti</h1><br>
 			
 			<table class="table table-hover">
 			
@@ -242,7 +241,7 @@ Vue.component("bolesti", {
 			this.bolesti = response.data;
 		})
 		.catch(response => {
-			this.$router.push("/profil");
+			this.$router.push("/");
 		});
 		
 	}, 
@@ -250,47 +249,39 @@ Vue.component("bolesti", {
 	methods: {
 		
 		formatiraj: function (date) {
+			
 			  date = new Date(date);
-			  var year = date.getFullYear();
-
-			  var month = (1 + date.getMonth()).toString();
+			  let year = date.getFullYear();
+			  let month = (1 + date.getMonth()).toString();
 			  month = month.length > 1 ? month : '0' + month;
-
-			  var day = date.getDate().toString();
+			  let day = date.getDate().toString();
 			  day = day.length > 1 ? day : '0' + day;
-			  var hours = date.getHours().toString();
-			  var minutes = date.getMinutes().toString();
+			  let hours = date.getHours().toString();
 			  hours = hours.length > 1 ? hours : '0' + hours;
+			  let minutes = date.getMinutes().toString();
 			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
 			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  
 		},
 		
 		selectBolest: function(bolest){
 			this.selectedBolest = bolest;
-			this.selected = true;
+			this.bolestSelected = true;
+			this.lekarSelected = false;
 			this.datum = this.formatiraj(this.selectedBolest.datum);
 		}, 
 		
-		oceniLekar: function(){
-			
-			axios.post("/lekar/ocenjivanje/" + this.selectedBolest.id, {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
-			.then(response => {
-				this.selectedBolest = response.data;
-				this.selected = true;
-				this.lekarSelected = false;
-			})
-			.catch(response => {
-				alert("SERVER ERROR!!");
-			});
-			
+		selectLekar: function(lekar){
+			this.selectedLekar = lekar;
+			this.lekarSelected = true;
+			this.bolestSelected = false;
 		},
 		
 		oceniKlinika: function(){
 			
-			axios.post("/klinika/ocenjivanje/" + this.selectedBolest.id, {"id": this.selectedBolest.klinikaId, "ocena": this.klinikaOcena})
+			axios.post("/klinika/ocenjivanje/" + this.selectedBolest.posetaId, {"id": this.selectedBolest.klinikaId, "ocena": this.klinikaOcena})
 			.then(response => {
-				this.selectedBolest = response.data;
-				this.selected = true;
+				this.selectBolest(response.data);
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");
@@ -298,12 +289,18 @@ Vue.component("bolesti", {
 			
 		},
 		
-		selectLekar: function(lekar){
+		oceniLekar: function(){
 			
-			this.selectedLekar = lekar;
-			this.lekarSelected = true;
+			axios.post("/lekar/ocenjivanje/" + this.selectedBolest.posetaId, {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
+			.then(response => {
+				this.selectBolest(response.data);
+			})
+			.catch(response => {
+				alert("SERVER ERROR!!");
+			});
 			
 		}
+		
 	}
 	
 });

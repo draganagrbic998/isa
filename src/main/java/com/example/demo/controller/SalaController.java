@@ -25,7 +25,7 @@ public class SalaController {
 	private SalaConversion salaConversion;
 		
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody SalaDTO salaDTO) {
 		try {
 			this.salaService.save(this.salaConversion.get(salaDTO));

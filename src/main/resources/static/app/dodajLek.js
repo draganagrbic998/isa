@@ -1,4 +1,4 @@
-Vue.component('dodajLek', {
+Vue.component("dodajLek", {
 
 	data: function(){
 		return {
@@ -7,8 +7,8 @@ Vue.component('dodajLek', {
 				'sifra': '', 
 				'naziv': ''
 			}, 
-			greskaNaziv: '', 
 			greskaSifra: '', 
+			greskaNaziv: '', 
 			greska: false
 		}
 	}, 
@@ -36,11 +36,18 @@ Vue.component('dodajLek', {
 	
 	`, 
 	
+	mounted(){
+		axios.get("/user/check/superadmin")
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	},
+	
 	methods: {
 		
 		osvezi: function(){
-			this.greskaNaziv = '';
 			this.greskaSifra = '';
+			this.greskaNaziv = '';
 			this.greska = false;
 		}, 
 		
@@ -62,10 +69,11 @@ Vue.component('dodajLek', {
 			
 			axios.post("/lek/kreiranje", this.lek)
 			.then(response => {
-				this.$router.push("/adminKCHome");
+				alert("Lek uspesno kreiran!");
+				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {
-				alert("Uneta sifra vec postoji!!");
+				this.greskaSifra = "Uneta sifra vec postoji!!";
 			});
 			
 		}

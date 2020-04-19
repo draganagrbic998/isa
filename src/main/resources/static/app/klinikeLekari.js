@@ -3,6 +3,9 @@ Vue.component("klinikeLekari", {
 	data: function(){
 		return{
 			klinike: [], 
+			klinikeBackup: [], 
+			lekariBackup: [], 
+			tipovi: [], 
 			selectedKlinika: {}, 
 			klinikaSelected: false, 
 			selectedLekar: {}, 
@@ -13,22 +16,20 @@ Vue.component("klinikeLekari", {
 			ocenaKlinike: 0, 
 			imeLekara: '', 
 			prezimeLekara: '', 
+			ocenaLekara: 0, 
 			greskaPretraga: '', 
 			pretraga: false, 
 			zakazivanje: false, 
-			klinikeBackup: [], 
-			lekariBackup: [], 
 			zahtev: {}, 
-			id: '', 
 			imePrezime: '', 
-			ocenaLekara: 0, 
-			tipovi: []
+			datum: '',
+			id: ''
 		}
 	}, 
 	
 	template: `
 	
-		<div class="form-row">
+		<div class="row">
 		
 			<div v-if="zakazivanje" class="card" id="box">
 			
@@ -40,7 +41,7 @@ Vue.component("klinikeLekari", {
 					
 						<tr>
 							<th scope="row">Datum pregleda: </th>
-							<td><input type="text" v-model="zahtev.datum" class="form-control" disabled></td>
+							<td><input type="text" v-model="datum" class="form-control" disabled></td>
 						</tr>
 						<tr>
 							<th scope="row">Lekar: </th>
@@ -71,7 +72,7 @@ Vue.component("klinikeLekari", {
 			
 				<div class="card col" v-bind:id="id">
 					
-					<h1>Detalji lekara</h1>
+					<h1>Detalji lekara</h1><br>
 					
 					<table class="table">
 					
@@ -88,17 +89,16 @@ Vue.component("klinikeLekari", {
 						</tr>
 						
 						<tr>
+							<th scope="row">Telefon: </th>
+							<td><input type="text" v-model="selectedLekar.telefon" class="form-control" disabled></td>
+						</tr>
+						
+						<tr>
 							<th scope="row">Email: </th>
 							<td><input type="text" v-model="selectedLekar.email" class="form-control" disabled></td>
 						</tr>
 					
 						<tr>
-							<th scope="row">Telefon: </th>
-							<td><input type="text" v-model="selectedLekar.telefon" class="form-control" disabled></td>
-						</tr>
-					
-						<tr>
-						
 							<th scope="row">Ocena: </th>
 							<td><input type="text" v-model="selectedLekar.ocena" class="form-control" disabled></td>
 						</tr>
@@ -109,7 +109,7 @@ Vue.component("klinikeLekari", {
 				
 				</div>
 				
-				<div class="container col" v-if="selectedLekar.satnica.length>0" id="satnica">
+				<div v-if="selectedLekar.satnica.length>0" class="container col" id="satnica">
 				
 					<h2>Satnica</h2><br>
 					
@@ -140,13 +140,13 @@ Vue.component("klinikeLekari", {
 			
 			</div>
 			
-			<div v-else-if="klinikaSelected">
+			<div v-else-if="klinikaSelected" class="col-md-7">
 			
-				<div id="details">
+				<div id="details" style="min-width: 900px">
 			
 				<h2>Detalji klinike</h2>
 				
-				<span style="margin-right: 40px">
+				<span style="margin-right: 40px;">
 					
 					<tr></tr>
 					<tr>
@@ -164,7 +164,7 @@ Vue.component("klinikeLekari", {
 						<th scope="row">Opis: </th>
 					</tr>
 					<tr>
-						<td rowspan="2"><textarea disabled id="slobodno">{{selectedKlinika.opis}}</textarea></td>
+						<td rowspan="2"><textarea disabled>{{selectedKlinika.opis}}</textarea></td>
 					</tr>
 				
 				</span>
@@ -181,7 +181,7 @@ Vue.component("klinikeLekari", {
 			
 			</div>
 			
-			<div class="container" style="margin-left: 30px; margin-top: 30px;">
+			<div class="container" id="cosak" style="margin-top: 2%">
 			
 				<h2>Zaposleni lekari</h2><br>
 				
@@ -209,9 +209,9 @@ Vue.component("klinikeLekari", {
 			
 			</div>
 		
-			<div v-else class="container form-group col-md-7" style="margin-left: 20px; margin-top: 20px;">
+			<div v-else class="container col-md-7" id="cosak">
 				
-				<h1>Klinike</h1>
+				<h1>Klinike</h1><br>
 				
 				<table class="table table-hover">
 					
@@ -244,7 +244,7 @@ Vue.component("klinikeLekari", {
 			
 			</div>
 			
-			<div class="card form-group col-md-5" id="pretraga" v-if="!lekarSelected">
+			<div v-if="!lekarSelected && !zakazivanje" class="card form-group col-md-5" id="pretraga">
 			
 				<h3>Pretraga</h3>
 				
@@ -255,11 +255,9 @@ Vue.component("klinikeLekari", {
 						<tr>
 							<th scope="row">Tip pregleda: </th>
 							<td><select v-model="tipPregleda" class="form-control">
-							
 							<option v-for="t in tipovi">
 								{{t}}
 							</option>
-							
 							</select></td>
 						</tr>
 						<tr>
@@ -271,7 +269,7 @@ Vue.component("klinikeLekari", {
 							<td>{{greskaPretraga}}</td>
 						</tr>
 						<tr v-if="!klinikaSelected">
-							<th scope="row">Lokacija klinike: </th>
+							<th scope="row">Adresa klinike: </th>
 							<td><input type="text" v-model="lokacijaKlinike" class="form-control"></td>
 						</tr>
 						<tr v-if="!klinikaSelected">
@@ -314,21 +312,37 @@ Vue.component("klinikeLekari", {
 			this.klinikeBackup = response.data;
 		})
 		.catch(response => {
-			this.$router.push("/profil");
+			this.$router.push("/");
 		});
 		
-		axios.get("/tipPosete/svi/nazivi")
+		axios.get("/tipPosete/nazivi")
 		.then(response => {
 			this.tipovi = response.data
 		})
 		.catch(response => {
-			this.$router.push("/profil");
+			this.$router.push("/");
 
 		});
 		
 	}, 
 	
 	methods: {
+		
+		formatiraj: function (date) {
+			
+			  date = new Date(date);
+			  let year = date.getFullYear();
+			  let month = (1 + date.getMonth()).toString();
+			  month = month.length > 1 ? month : '0' + month;
+			  let day = date.getDate().toString();
+			  day = day.length > 1 ? day : '0' + day;
+			  let hours = date.getHours().toString();
+			  hours = hours.length > 1 ? hours : '0' + hours;
+			  let minutes = date.getMinutes().toString();
+			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  
+		},
 		
 		osvezi: function(){
 			this.greskaPretraga = '';
@@ -337,15 +351,18 @@ Vue.component("klinikeLekari", {
 		selectKlinika: function(klinika){
 			this.osvezi();
 			this.klinikaSelected = true;
+			this.lekarSelected = false;
+			this.zakazivanje = false;
 			this.selectedKlinika = klinika;
 			this.lekariBackup = this.selectedKlinika.lekari;
 		}, 
 		
 		selectLekar: function(lekar){
 			this.osvezi();
-			this.selectedLekar = lekar;
-			this.lekarSelected = true;
 			this.klinikaSelected = false;
+			this.lekarSelected = true;
+			this.zakazivanje = false;
+			this.selectedLekar = lekar;
 			this.id = this.selectedLekar.satnica.length == 0 ? "centar" : "levo";
 			
 		}, 
@@ -364,9 +381,9 @@ Vue.component("klinikeLekari", {
 				
 				this.klinike = response.data;
 				this.klinikeBackup = response.data;
-				
 				this.pretraga = true;
 				let found = false;
+				
 				for (let i of this.klinike){
 					if (i.id == this.selectedKlinika.id){
 						this.selectedKlinika = i;
@@ -387,26 +404,6 @@ Vue.component("klinikeLekari", {
 			
 		},
 		
-		zakazi: function(vreme){
-			this.zakazivanje = true;
-			this.zahtev = {"lekar": this.selectedLekar.id, "datum": vreme, "id": null};
-			//uradi tooglovanje ostalih flegova
-			this.imePrezime = this.selectedLekar.ime + " " + this.selectedLekar.prezime;
-
-		}, 
-		
-		zakaziPregled: function(){
-			
-			axios.post("/pacijent/individualan/termin", this.zahtev)
-			.then(response => {
-				location.reload();
-			})
-			.catch(response => {
-				alert("SERVER ERROR!!");
-			});
-			
-		}, 
-		
 		filtriraj: function(){
 			
 			if (!this.klinikaSelected){
@@ -416,7 +413,7 @@ Vue.component("klinikeLekari", {
 						this.klinike.push(i);
 				}
 			}
-			else{
+			else {
 				this.selectedKlinika.lekari = [];
 				for (let i of this.lekariBackup){
 					if ((i.ime == this.imeLekara || this.imeLekara == '') && (i.prezime == this.prezimeLekara || this.prezimeLekara == '') && i.ocena >= this.ocenaLekara)
@@ -426,20 +423,25 @@ Vue.component("klinikeLekari", {
 			
 		}, 
 		
-		formatiraj: function (date) {
-			  date = new Date(date);
-			  var year = date.getFullYear();
-
-			  var month = (1 + date.getMonth()).toString();
-			  month = month.length > 1 ? month : '0' + month;
-
-			  var day = date.getDate().toString();
-			  day = day.length > 1 ? day : '0' + day;
-			  var hours = date.getHours().toString();
-			  var minutes = date.getMinutes().toString();
-			  hours = hours.length > 1 ? hours : '0' + hours;
-			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
-			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+		zakazi: function(vreme){
+			this.klinikaSelected = false;
+			this.lekarSelected = false;
+			this.zakazivanje = true;
+			this.zahtev = {"lekar": this.selectedLekar.id, "datum": vreme, "id": null};
+			this.imePrezime = this.selectedLekar.ime + " " + this.selectedLekar.prezime;
+			this.datum = this.formatiraj(this.zahtev.datum);
+		}, 
+		
+		zakaziPregled: function(){
+			
+			axios.post("/zahtevPoseta/kreiraj", this.zahtev)
+			.then(response => {
+				location.reload();
+			})
+			.catch(response => {
+				alert("SERVER ERROR!!");
+			});
+			
 		}
 		
 	}, 

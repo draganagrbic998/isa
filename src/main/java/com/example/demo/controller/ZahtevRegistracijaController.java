@@ -14,19 +14,19 @@ import com.example.demo.dto.conversion.ZahtevRegistracijaConversion;
 import com.example.demo.service.ZahtevRegistracijaService;
 
 @RestController
-@RequestMapping(value = "/zahtev/registracija")
+@RequestMapping(value = "/zahtevRegistracija")
 public class ZahtevRegistracijaController {
 	
 	@Autowired
-	private ZahtevRegistracijaService zahtevService;
+	private ZahtevRegistracijaService zahtevRegistracijaService;
 	
 	@Autowired
-	private ZahtevRegistracijaConversion zahtevConversion;
+	private ZahtevRegistracijaConversion zahtevRegistracijaConversion;
 		
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
 
-		this.zahtevService.save(this.zahtevConversion.get(zahtevDTO));
+		this.zahtevRegistracijaService.save(this.zahtevRegistracijaConversion.get(zahtevDTO));
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}	

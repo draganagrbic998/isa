@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.Termin;
 
 @Entity
 public class Karton {
@@ -39,6 +44,19 @@ public class Karton {
 	
 	public Karton() {
 		super();
+	}
+	
+	public Karton(Integer id, String brojOsiguranika, double visina, double tezina, double levaDioptrija,
+			double desnaDioptrija, KrvnaGrupa krvnaGrupa, Pacijent pacijent) {
+		super();
+		this.id = id;
+		this.brojOsiguranika = brojOsiguranika;
+		this.visina = visina;
+		this.tezina = tezina;
+		this.levaDioptrija = levaDioptrija;
+		this.desnaDioptrija = desnaDioptrija;
+		this.krvnaGrupa = krvnaGrupa;
+		this.pacijent = pacijent;
 	}
 
 	public Integer getId() {
@@ -111,6 +129,28 @@ public class Karton {
 
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
+	}
+	
+	public List<Termin> getTermini(){
+		
+		List<Termin> termini = new ArrayList<>();
+		for (Poseta p: this.posete) {
+			if (p.getStanje().equals(StanjePosete.ZAUZETO))
+				termini.add(new Termin(p));
+		}
+		return termini;
+		
+	}
+	
+	public List<Bolest> getBolesti(){
+		
+		List<Bolest> bolesti = new ArrayList<>();
+		for (Poseta p: this.posete) {
+			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
+				bolesti.add(new Bolest(p));
+		}
+		return bolesti;
+		
 	}
 	
 }

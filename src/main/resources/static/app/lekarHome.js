@@ -1,4 +1,4 @@
-Vue.component('lekarHome', {
+Vue.component("lekarHome", {
 	
 	template: `
 	
@@ -17,5 +17,12 @@ Vue.component('lekarHome', {
 		</div>
 	
 	`, 
+	
+	mounted(){
+		axios.get("/user/check/lekar")
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+	}
 	
 });

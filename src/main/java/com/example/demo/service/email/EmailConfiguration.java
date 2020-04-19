@@ -14,6 +14,11 @@ public class EmailConfiguration {
 	private String username;
 	@Value("${spring.mail.password}")
 	private String password;
+	
+	public EmailConfiguration() {
+		super();
+	}
+	
 	public String getHost() {
 		return host;
 	}

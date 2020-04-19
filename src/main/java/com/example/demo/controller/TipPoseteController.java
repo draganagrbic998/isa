@@ -34,27 +34,29 @@ public class TipPoseteController {
 	private UserService userService;
 		
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody TipPoseteDTO tipPoseteDTO) {
-		if (this.tipPoseteService.isUnique(this.tipPoseteConversion.get(tipPoseteDTO))) {
+		try {
 			this.tipPoseteService.save(this.tipPoseteConversion.get(tipPoseteDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/vratiTipPosete", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<TipPoseteDTO> getType() {
+	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TipPoseteDTO>> pregled() {
 		Admin admin = (Admin) this.userService.getSignedKorisnik();
-		return this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin));
+		return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin)), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
-	@GetMapping(value="/svi/nazivi", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Set<String> sviNazivi(){
+	@GetMapping(value="/nazivi", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<String>> nazivi(){
 		
-		return this.tipPoseteService.sviTipovi();
+		return new ResponseEntity<>(this.tipPoseteService.sviTipovi(), HttpStatus.OK);
 		
 	}
 		

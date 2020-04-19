@@ -12,7 +12,9 @@ Vue.component("registracijaAdmina", {
 				'drzava': '', 
 				'grad': '', 
 				'adresa': '', 
-				'klinika': null
+				'klinika': '', 
+				"aktivan": true, 
+				"promenjenaSifra": false
 			}, 
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
@@ -68,6 +70,16 @@ Vue.component("registracijaAdmina", {
 		</div>
 	
 	`, 
+	
+	mounted () {
+		axios
+        .get("/klinika/pregled")
+        .then(response => (this.klinike = response.data))
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+
+	},
 	
 	watch: {
 		novaLozinka: function(){
@@ -154,28 +166,22 @@ Vue.component("registracijaAdmina", {
 				this.greska = true;
 			}
 			
-			if (this.admin.klinika == null){
+			if (this.admin.klinika == ''){
 				this.greskaKlinika = "Klinika ne sme biti prazna. ";
 				this.greska = true;
 			}
 			
 			if (this.greska) return;
 			
-			axios.post("/adminKlinike/kreiranje", this.admin)
+			axios.post("/admin/kreiranje", this.admin)
 			.then(response => {
-				this.$router.push("/adminKCHome");
+				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {
 				alert("Unet email mora biti jedinstven!!");
 			});
 			
 		}
-	},
-	mounted () {
-		axios
-        .get("/klinika/pregled")
-        .then(response => (this.klinike = response.data));
-
-	},
+	}
 	
 });

@@ -26,7 +26,7 @@ public class UserService {
 	public Korisnik prijava(User user) {
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
-			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka()) && k.getAktivan()) {
+			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka()) && k.isAktivan()) {
 				
 		        List<GrantedAuthority> lista = new ArrayList<>();
 		        lista.add(new SimpleGrantedAuthority(Hibernate.unproxy(k).getClass().getSimpleName()));
@@ -37,7 +37,7 @@ public class UserService {
 			}
 		}
 		
-		return null;
+		throw new RuntimeException();
 
 	}
 	
@@ -47,7 +47,7 @@ public class UserService {
 		
 		Authentication prava = SecurityContextHolder.getContext().getAuthentication();
         Integer id = Integer.parseInt(prava.getName());
-        Korisnik k = korisnikRepository.getOne(id);
+        Korisnik k = this.korisnikRepository.getOne(id);	
         return (Korisnik) Hibernate.unproxy(k);
 	
 	}

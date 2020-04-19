@@ -30,30 +30,24 @@ public class LekarService {
 	@Autowired
 	private PosetaRepository posetaRepository;
 	
-	
-	public boolean delete(Integer id) {
-		Lekar l = this.lekarRepository.getOne(id);
-		for (Poseta p: l.getPosete()) {
-			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
-				return false;
-		}
-		l.setAktivan(false);
-		this.lekarRepository.save(l);
-		return true;
-	}
-	
 	public void save(Lekar lekar) {
 		this.lekarRepository.save(lekar);
 	}
 	
-	public List<Lekar> findAll(){
-		return this.lekarRepository.findAll();
+	public void delete(Integer id) {
+		Lekar l = this.lekarRepository.getOne(id);
+		for (Poseta p: l.getPosete()) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
+				throw new RuntimeException();
+		}
+		l.setAktivan(false);
+		this.lekarRepository.save(l);
 	}
 	
-	public List<Lekar> findAllOneClinic(Admin admin) {
+	public List<Lekar> findAll(Admin admin) {
 		List<Lekar> doctors = new ArrayList<>();
 		for (Lekar l : this.lekarRepository.findAll()) {
-			if (l.getKlinika().getId().equals(admin.getKlinika().getId()) && l.getAktivan())
+			if (l.getKlinika().getId().equals(admin.getKlinika().getId()) && l.isAktivan())
 				doctors.add(l);
 		}
 		return doctors;
