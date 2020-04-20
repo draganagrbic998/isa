@@ -26,7 +26,7 @@ Vue.component("superAdminHome", {
           Administratori Klinickog Centra
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Dodaj Administratora Klinickog Centra</a>
+          <a class="dropdown-item" href="#/registracijaSuperAdmina">Dodaj Administratora Klinickog Centra</a>
           <a class="dropdown-item" href="#">Pretraga Administratora Klinickog Centra</a>
           <div class="dropdown-divider"></div>
         </div>
