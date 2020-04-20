@@ -76,7 +76,7 @@ public class ZahtevRegistracijaService {
 		this.pacijentRepository.save(pacijent);
 
 		Message message = new Message(pacijent.getEmail(), "Registracija Uspesna!",
-				"Molimo Vas da aktivirate svoj nalog klikom na link:\n" + LINK_LOCAL + pacijent.getId());
+				"Molimo Vas da aktivirate svoj nalog klikom na link:\n" + LINK_HEROKU + pacijent.getId());
 
 		emailService.sendMessage(message);
 	}
