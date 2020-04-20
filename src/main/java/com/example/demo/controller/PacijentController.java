@@ -106,8 +106,12 @@ public class PacijentController {
 	@PostMapping(value="/aktiviraj/{pacijentId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable Integer pacijentId){
 		try {
-			this.pacijentService.aktiviraj(pacijentId);
-			return new ResponseEntity<>(HttpStatus.OK);
+			boolean retval = this.pacijentService.aktiviraj(pacijentId);
+			
+			if (retval)
+				return new ResponseEntity<>(HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

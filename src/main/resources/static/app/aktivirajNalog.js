@@ -23,8 +23,11 @@ Vue.component("aktivirajNalog", {
 		axios.post("/pacijent/aktiviraj/" + id, {})
 		.then(response => {
 		})
-		.catch(response => {
-			alert("SERVER ERROR!");
+		.catch(error => {
+			if (error.response.status === 409)
+				alert("Vas nalog je vec aktiviran!");
+			else
+				alert("SERVER ERROR!");
 		});
 
 	},
