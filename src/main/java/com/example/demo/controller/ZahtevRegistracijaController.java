@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +27,12 @@ public class ZahtevRegistracijaController {
 	@Autowired
 	private ZahtevRegistracijaConversion zahtevRegistracijaConversion;
 		
+	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ZahtevRegistracijaDTO>> getZahteviRegistracija(){
+		return new ResponseEntity<>(this.zahtevRegistracijaConversion.get(this.zahtevRegistracijaService.findAll()), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
 

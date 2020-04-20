@@ -67,29 +67,19 @@ Vue.component("superAdminHome", {
           <div class="dropdown-divider"></div>
         </div>
       </li>
-    </ul>
-    <ul class="navbar-nav ">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fa fa-bell">
-            <span class="badge badge-info">11</span>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-line-chart">
           </i>
-          Test
+          Zahtevi
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fa fa-globe">
-            <span class="badge badge-success">11</span>
-          </i>
-          Test
-        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#/zahteviPacijenti">Za Registraciju Pacijenata</a>
+          <a class="dropdown-item" href="#/zahteviPosete">Za Zakazivanje Poseta</a>
+          <div class="dropdown-divider"></div>
+        </div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
 </nav>
 		

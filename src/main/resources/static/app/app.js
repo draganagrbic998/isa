@@ -22,6 +22,7 @@ const dodajTipPosete = {template: '<dodajTipPosete></dodajTipPosete>'}
 const dodajSalu = {template: '<dodajSalu></dodajSalu>'}
 const klinikeSlobodno = {template: '<klinikeSlobodno></klinikeSlobodno>'}
 const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
+const zahteviPacijenti = {template: '<zahteviPacijenti></zahteviPacijenti>'}
 
 const router = new VueRouter({
 
@@ -50,7 +51,8 @@ const router = new VueRouter({
 		{path: '/dodajTipPosete', component: dodajTipPosete},
 		{path: '/dodajSalu', component: dodajSalu},
 		{path: '/klinikeSlobodno', component: klinikeSlobodno}, 
-		{path: '/klinikeLekari', component: klinikeLekari}
+		{path: '/klinikeLekari', component: klinikeLekari},
+		{path: '/zahteviPacijenti', component: zahteviPacijenti}
 	]
 	
 });

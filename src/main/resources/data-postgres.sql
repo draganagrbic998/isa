@@ -172,6 +172,11 @@ values (2, 8);
 insert into lekar_poseta (lekar, poseta)
 values (3, 9);
 
+---------ZAHTEVI ZA REGISTRACIJU PACIJENATA---------
+insert into zahtev_registracija (broj_osiguranika, lozinka, email, telefon, ime, prezime, drzava, grad, adresa)
+values ('1', '1', 'nikolicpetar91@gmail.com', '123', 'Perica', 'Peric','Srbija','Pirot', 'Negde Tamo');
+insert into zahtev_registracija (broj_osiguranika, lozinka, email, telefon, ime, prezime, drzava, grad, adresa)
+values ('2', '1', 'nikolicpetar91@yahoo.com', '123', 'Zikica', 'Zikic','Srbija','Pirot', 'Negde Tamo');
 ----------SUPER ADMIN, ADMIN i NOVI LEKARI----------------------------------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra) values 
 ('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true);
