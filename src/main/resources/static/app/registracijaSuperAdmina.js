@@ -146,7 +146,7 @@ Vue.component("registracijaSuperAdmina", {
 			
 			axios.post("/superAdmin/kreiranje", this.admin)
 			.then(response => {
-				alert("Admin uspesno kreiran!");
+				alert("Admin klinickog centra uspesno kreiran!");
 				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {

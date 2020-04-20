@@ -23,23 +23,11 @@ Vue.component("superAdminHome", {
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-address-book">
           </i>
-          Administratori Klinickog Centra
+          Administratori
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/registracijaSuperAdmina">Dodaj Administratora Klinickog Centra</a>
-          <a class="dropdown-item" href="#">Pretraga Administratora Klinickog Centra</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-address-book">
-          </i>
-          Administratori Klinike
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/registracijaAdmina">Dodaj Administratora Klinike</a>
-          <a class="dropdown-item" href="#">Pretraga Administratora Klinike</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>
