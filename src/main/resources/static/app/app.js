@@ -1,6 +1,7 @@
 const prijava = {template: '<prijava></prijava>'}
 const registracija = {template: '<registracija></registracija>'}
 const poslatZahtev = {template: '<poslatZahtev></poslatZahtev>'}
+const aktivirajNalog = {template: '<aktivirajNalog></aktivirajNalog>'}
 const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
 const superAdminHome = {template: '<superAdminHome></superAdminHome>'}
 const adminHome = {template: '<adminHome></adminHome>'}
@@ -31,6 +32,7 @@ const router = new VueRouter({
 		{path: '/', component: prijava},
 		{path: '/registracija', component: registracija}, 
 		{path: '/poslatZahtev', component: poslatZahtev}, 
+		{path: '/aktivirajNalog', component: aktivirajNalog}, 
 		{path: '/pacijentHome', component: pacijentHome}, 
 		{path: '/superAdminHome', component: superAdminHome},
 		{path: '/adminHome', component: adminHome},

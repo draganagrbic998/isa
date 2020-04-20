@@ -15,5 +15,11 @@ public class PacijentService {
 	public void save(Pacijent pacijent) {
 		this.pacijentRepository.save(pacijent);
 	}
+
+	public void aktiviraj(Integer pacijentId) {
+		Pacijent pacijent = this.pacijentRepository.getOne(pacijentId);
+		pacijent.setAktivan(true);
+		pacijentRepository.save(pacijent);
+	}
 	
 }

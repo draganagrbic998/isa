@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.ObradaZahtevRegistracijaDTO;
 import com.example.demo.dto.ZahtevRegistracijaDTO;
 import com.example.demo.dto.conversion.ZahtevRegistracijaConversion;
+import com.example.demo.model.ZahtevRegistracija;
 import com.example.demo.service.ZahtevRegistracijaService;
 
 @RestController
@@ -40,5 +42,40 @@ public class ZahtevRegistracijaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}	
+	
+	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@PostMapping(value = "/potvrda", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> potvrda(@RequestBody ObradaZahtevRegistracijaDTO obradaZahtevDTO) {
+		ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahtevDTO);
+		
+		if (zahtev == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		this.zahtevRegistracijaService.potvrdi(zahtev);
 
+		try {
+			this.zahtevRegistracijaService.delete(zahtev);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@PostMapping(value = "/odbijanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ObradaZahtevRegistracijaDTO obradaZahtevDTO) {
+		ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahtevDTO);
+		
+		if (zahtev == null)
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		this.zahtevRegistracijaService.odbij(zahtev, obradaZahtevDTO.getRazlog());
+
+		try {
+			this.zahtevRegistracijaService.delete(zahtev);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+	}
 }

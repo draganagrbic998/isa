@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,6 +96,17 @@ public class PacijentController {
 	public ResponseEntity<HttpStatus> izmena(@RequestBody PacijentDTO pacijentDTO){
 		try {
 			this.pacijentService.save(this.pacijentConversion.get(pacijentDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PostMapping(value="/aktiviraj/{pacijentId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable Integer pacijentId){
+		try {
+			this.pacijentService.aktiviraj(pacijentId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

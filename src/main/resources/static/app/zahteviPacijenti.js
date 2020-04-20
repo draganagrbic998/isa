@@ -3,8 +3,10 @@ Vue.component("zahteviPacijenti", {
 	data: function(){
 		return {
 			zahtevi: [],
-			selectedID: '',
-			razlog: '',
+			selected: {
+				id: '',
+				razlog: ''
+			},
 			error: false
 		}
 	}, 
@@ -37,12 +39,12 @@ Vue.component("zahteviPacijenti", {
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-	  <select v-model="selectedID">
+	  <select v-model="selected.id">
        	<option v-for="z in zahtevi">{{z.id}}</option>
 	  </select>
-	  <input class="form-control mr-sm-2" type="text" v-model="razlog" placeholder="Razlog Odbijanja" aria-label="Razlog Odbijanja">
-      <button class="btn btn-outline-success my-2 my-sm-0" onclick="potvrdi()">Potvrdi</button>
-      <button class="btn btn-outline-success my-2 my-sm-0" onclick="odbij()">Odbij</button>
+	  <input class="form-control mr-sm-2" type="text" v-model="selected.razlog" placeholder="Razlog Odbijanja" aria-label="Razlog Odbijanja">
+      <button class="btn btn-outline-success my-2 my-sm-0" v-on:click="potvrdi()">Potvrdi</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" v-on:click="odbij()">Odbij</button>
     </form>
   </div>
 </nav>
@@ -95,8 +97,9 @@ Vue.component("zahteviPacijenti", {
 			
 			let errorMessage = '';
 			
-			if (this.selectedID === "") {
-				errorMessage.concat("Morate odabrati zahtev!");
+			if (this.selected.id === "") {
+				errorMessage = "Morate odabrati zahtev!";
+				this.error = true;
 			}
 			
 			if (this.error) {
@@ -104,7 +107,7 @@ Vue.component("zahteviPacijenti", {
 				return;
 			}
 			
-			axios.post("/zahtevRegistracija/potvrda", this.selectedID)
+			axios.post("/zahtevRegistracija/potvrda", this.selected)
 			.then(response => {
 				alert("Zahtev uspesno odobren!");
 				location.reload();
@@ -119,12 +122,14 @@ Vue.component("zahteviPacijenti", {
 			
 			let errorMessage = '';
 			
-			if (this.selectedID === "") {
-				errorMessage.concat("Morate odabrati zahtev!");
+			if (this.selected.id === "") {
+				errorMessage = "Morate odabrati zahtev!";
+				this.error = true;
 			}
 			
-			if (this.razlog === "") {
-				errorMessage.concat("Morate uneti razlog odbijanja!");
+			if (this.selected.razlog === "") {
+				errorMessage += "\nMorate uneti razlog odbijanja!";
+				this.error = true;
 			}
 			
 			if (this.error) {
@@ -132,7 +137,7 @@ Vue.component("zahteviPacijenti", {
 				return;
 			}
 			
-			axios.post("/zahtevRegistracija/odbijanje", this.selectedID, this.razlog)
+			axios.post("/zahtevRegistracija/odbijanje", this.selected)
 			.then(response => {
 				alert("Zahtev uspesno odbijen!");
 				location.reload();
