@@ -33,9 +33,7 @@ public class PosetaService {
 
 	public Poseta otkazi(Integer id) {
 		Poseta poseta = this.posetaRepository.getOne(id);
-		poseta.setKarton(null);
-		poseta.setStanje(StanjePosete.SLOBODNO);
-		this.posetaRepository.save(poseta);
+		this.posetaRepository.deleteById(id);
 		return poseta;
 		
 	}

@@ -21,17 +21,20 @@ public class Sala {
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
+	@Column(unique = false, nullable = false)
+	private boolean aktivan;
 	
 	public Sala() {
 		super();
 	}
 
-	public Sala(Integer id, String broj, String naziv, Klinika klinika) {
+	public Sala(Integer id, String broj, String naziv, Klinika klinika, boolean aktivan) {
 		super();
 		this.id = id;
 		this.broj = broj;
 		this.naziv = naziv;
 		this.klinika = klinika;
+		this.aktivan = aktivan;
 	}
 
 	public Integer getId() {
@@ -64,6 +67,14 @@ public class Sala {
 
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 	
 }

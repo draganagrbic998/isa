@@ -9,7 +9,8 @@ Vue.component("dodajTipPosete", {
 				'sati': 0,  
 				'minute': 0,
 				'cena': 0,
-				'klinika': null
+				'klinika': null, 
+				'aktivan': true
 			}, 
 			greskaPregled: '',
 			greskaNaziv: '', 

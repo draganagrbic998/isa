@@ -94,7 +94,7 @@ Vue.component("profil", {
 	
 	mounted(){
 		
-		axios.get("/user/profil")
+		axios.get("/pacijent/profil")
 		.then(response => {
 			this.korisnik = response.data;
 		})
@@ -166,18 +166,9 @@ Vue.component("profil", {
 			if (this.greska) return;
 			this.korisnik.lozinka = this.novaLozinka != '' ? this.novaLozinka : this.korisnik.lozinka;
 			
-			axios.post("/user/izmena", this.korisnik)
+			axios.post("/pacijent/izmena", this.korisnik)
 			.then(response => {
-				if (response.data == "pacijent")
-					this.$router.push("/pacijentHome");
-				else if (response.data == "lekar")
-					this.$router.push("/lekarHome");
-				else if (response.data == "sestra")
-					this.$router.push("/sestraHome")
-				else if (response.data == "admin")
-					this.$router.push("/adminHome");
-				else
-					this.$router.push("/superAdminHome");
+				this.$router.push("/pacijentHome");
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

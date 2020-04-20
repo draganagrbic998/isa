@@ -11,6 +11,7 @@ public class TipPoseteDTO {
 	private Integer minute;
 	private double cena;
 	private Integer klinika;
+	private boolean aktivan;
 	
 	public TipPoseteDTO() {
 		super();
@@ -25,6 +26,7 @@ public class TipPoseteDTO {
 		this.minute = tipPosete.getMinute();
 		this.cena = tipPosete.getCena();
 		this.klinika = tipPosete.getKlinika().getId();
+		this.aktivan = tipPosete.isAktivan();
 	}
 
 	public Integer getId() {
@@ -81,6 +83,14 @@ public class TipPoseteDTO {
 
 	public void setKlinika(Integer klinika) {
 		this.klinika = klinika;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 
 }

@@ -8,6 +8,7 @@ public class SalaDTO {
 	private String broj;
 	private String naziv;
 	private Integer klinika;
+	private boolean aktivan;
 	
 	public SalaDTO() {
 		super();
@@ -18,6 +19,7 @@ public class SalaDTO {
 		this.broj = sala.getBroj();
 		this.naziv = sala.getNaziv();
 		this.klinika = sala.getKlinika().getId();
+		this.aktivan = sala.isAktivan();
 	}
 
 	public Integer getId() {
@@ -50,6 +52,14 @@ public class SalaDTO {
 
 	public void setKlinika(Integer klinika) {
 		this.klinika = klinika;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 	
 }

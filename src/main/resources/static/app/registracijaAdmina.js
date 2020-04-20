@@ -175,6 +175,7 @@ Vue.component("registracijaAdmina", {
 			
 			axios.post("/admin/kreiranje", this.admin)
 			.then(response => {
+				alert("Admin uspesno kreiran!");
 				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {

@@ -375,6 +375,10 @@ Vue.component("klinikeLekari", {
 				this.greskaPretraga = "Unesite tip pregleda i datum. ";
 				return;
 			}
+			if (new Date(this.datumPregleda) <= new Date()){
+				this.greskaPretraga = "Datum mora biti veci od trenutnog. ";
+				return;
+			}
 			
 			axios.post("/klinika/pretraga", {"tipPregleda": this.tipPregleda, "datumPregleda": this.datumPregleda})
 			.then(response => {

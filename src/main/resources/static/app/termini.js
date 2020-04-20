@@ -69,7 +69,7 @@ Vue.component("termini", {
 					</tr>
 				
 					<tr>
-						<td colspan="2"><button v-on:click="otkazi()" class="btn btn-primary" v-bind:disabled="new Date().addHours(24) >= selectedTermin.datum">OTKAZI</button></td>
+						<td colspan="2"><button v-on:click="otkazi()" class="btn btn-primary" v-bind:hidden="new Date().addHours(24) >= new Date(selectedTermin.datum)">OTKAZI</button></td>
 					</tr>
 					
 				</tbody>

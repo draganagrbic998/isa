@@ -6,7 +6,8 @@ Vue.component("dodajSalu", {
 				'id': null,
 				'broj': '', 
 				'naziv': '', 
-				'klinika': null 
+				'klinika': null, 
+				'aktivan': true
 			}, 
 			greskaBroj: '', 
 			greskaNaziv: '', 

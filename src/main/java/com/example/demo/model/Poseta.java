@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -33,7 +34,10 @@ public class Poseta implements Zauzetost{
 	@ManyToOne
 	@JoinColumn(name="sala")
 	private Sala sala;
-	@ManyToMany(mappedBy = "posete", fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "lekar_poseta",
+    joinColumns = @JoinColumn(name = "poseta"),
+    inverseJoinColumns = @JoinColumn(name = "lekar"))
 	private Set<Lekar> lekari = new HashSet<>();
 	@ManyToOne
 	@JoinColumn(name="karton")

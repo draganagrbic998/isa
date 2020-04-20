@@ -10,10 +10,10 @@ where id = 1;
 -------------GLAVNA KLINIKA, SALA I TIP POSETE KOJE KORISTIM-----------------------
 insert into klinika (naziv, opis, adresa)
 values ('moja klinika', 'super klinika', 'moja adresa');
-insert into tip_posete (pregled, naziv, klinika, cena, sati, minute)
-values (true, 'super pregled', 1, 200, 1, 30);
-insert into sala (broj, naziv, klinika)
-values ('21', 'sala jedna mala', 1);
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
+values (true, 'super pregled', 1, 200, 1, 30, true);
+insert into sala (broj, naziv, klinika, aktivan)
+values ('21', 'sala jedna mala', 1, true);
 
 -----------ZAKAZANE POSETE ZA GLAVNOG PACIJENTA------------------------
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
@@ -176,7 +176,7 @@ values (3, 9);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra) values 
 ('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, aktivan, promenjena_sifra,  telefon, drzava, grad, adresa)
-values ('admin', 'm', 't', 'milica@gmail.com', 'aaa', 1, true, true, 'asd', 'asd', 'asd', 'asd');
+values ('admin', 'm', 't', 'malinavojvodic123@gmail.com', 'aaa', 1, true, true, 'asd', 'asd', 'asd', 'asd');
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika,pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)
 values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd');
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika,pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa)

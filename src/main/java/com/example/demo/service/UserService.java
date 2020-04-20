@@ -29,11 +29,11 @@ public class UserService {
 			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka()) && k.isAktivan()) {
 				
 		        List<GrantedAuthority> lista = new ArrayList<>();
-		        lista.add(new SimpleGrantedAuthority(Hibernate.unproxy(k).getClass().getSimpleName()));
+		        lista.add(new SimpleGrantedAuthority(k.isPromenjenaSifra() ? Hibernate.unproxy(k).getClass().getSimpleName() : "SIFRA"));
 		        PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(k.getId(), null, lista);
 		        SecurityContextHolder.getContext().setAuthentication(token);
-
 				return k;
+				
 			}
 		}
 		

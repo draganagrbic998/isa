@@ -72,7 +72,7 @@ Vue.component("registracijaKlinike", {
 			
 			axios.post("/klinika/kreiranje", this.klinika)
 			.then(response => {
-				alert("Profil uspesno kreiran!");
+				alert("Klinika uspesno kreirana!");
 				this.$router.push("/superAdminHome");
 			})
 			.catch(error => {

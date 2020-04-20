@@ -8,15 +8,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.KartonDTO;
+import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.conversion.KartonConversion;
+import com.example.demo.dto.conversion.PacijentConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Pacijent;
+import com.example.demo.service.PacijentService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -29,6 +34,11 @@ public class PacijentController {
 	@Autowired
 	private KartonConversion kartonConversion;
 		
+	@Autowired
+	private PacijentConversion pacijentConversion;
+	
+	@Autowired
+	private PacijentService pacijentService;
 
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,6 +72,30 @@ public class PacijentController {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			Karton karton = pacijent.getKarton();
 			return new ResponseEntity<>(karton.getBolesti(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PacijentDTO> profil(){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.pacijentConversion.get(pacijent), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody PacijentDTO pacijentDTO){
+		try {
+			this.pacijentService.save(this.pacijentConversion.get(pacijentDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

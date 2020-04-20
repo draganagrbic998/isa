@@ -30,10 +30,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
     joinColumns = @JoinColumn(name = "lekar"),
     inverseJoinColumns = @JoinColumn(name = "ocena"))
 	private Set<Ocena> ocene = new HashSet<>();
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "lekar_poseta",
-    joinColumns = @JoinColumn(name = "lekar"),
-    inverseJoinColumns = @JoinColumn(name = "poseta"))
+	@ManyToMany(mappedBy = "lekari", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
 	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
@@ -101,7 +98,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 				return o;
 			}
 		}
-		Ocena o = new Ocena(pacijent, ocena);
+		Ocena o = new Ocena(pacijent, ocena, this.getId());
 		this.ocene.add(o);
 		return o;
 		

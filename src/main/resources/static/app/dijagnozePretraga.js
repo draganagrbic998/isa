@@ -22,7 +22,7 @@ Vue.component("dijagnozePretraga", {
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#/adminKCHome">
+        <a class="nav-link" href="#/superAdminHome">
           <i class="fa fa-home"></i>
           Home
           <span class="sr-only">(current)</span>

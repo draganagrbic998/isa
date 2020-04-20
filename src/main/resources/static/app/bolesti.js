@@ -108,7 +108,7 @@ Vue.component("bolesti", {
 			
 			</div>
 			
-			<div class="col" style="margin-top: 3%">
+			<div class="col-md-5" style="margin-top: 3%">
 				
 				<h1>Lekari</h1><br>
 				

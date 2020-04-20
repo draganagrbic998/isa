@@ -29,7 +29,7 @@ public class TipPoseteService {
 	public List<TipPosete> findForAdmin(Admin admin) {
 		List<TipPosete> types = new ArrayList<>();
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
-			if (tp.getKlinika().getId().equals(admin.getKlinika().getId()))
+			if (tp.getKlinika().getId().equals(admin.getKlinika().getId()) && tp.isAktivan())
 				types.add(tp);
 		}
 		return types;

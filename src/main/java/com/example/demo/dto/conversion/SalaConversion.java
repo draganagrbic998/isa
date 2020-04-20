@@ -20,7 +20,7 @@ public class SalaConversion {
 		return new Sala(salaDTO.getId(), 
 				salaDTO.getBroj(), 
 				salaDTO.getNaziv(), 
-				this.klinikaRepository.getOne(salaDTO.getKlinika()));
+				this.klinikaRepository.getOne(salaDTO.getKlinika()), salaDTO.isAktivan());
 	}
 	
 	public SalaDTO get(Sala sala) {

@@ -27,12 +27,14 @@ public class TipPosete {
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
+	@Column
+	private boolean aktivan;
 	
 	public TipPosete() {
 		super();
 	}
 
-	public TipPosete(Integer id, boolean pregled, String naziv, int sati, int minute, double cena, Klinika klinika) {
+	public TipPosete(Integer id, boolean pregled, String naziv, int sati, int minute, double cena, Klinika klinika, boolean aktivan) {
 		super();
 		this.id = id;
 		this.pregled = pregled;
@@ -41,6 +43,7 @@ public class TipPosete {
 		this.minute = minute;
 		this.cena = cena;
 		this.klinika = klinika;
+		this.aktivan = aktivan;
 	}
 
 	public Integer getId() {
@@ -97,6 +100,14 @@ public class TipPosete {
 
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 	
 }

@@ -11,7 +11,7 @@ public class ZahtevPosetaService {
 
 	@Autowired
 	private ZahtevPosetaRepository zahtevPosetaRepository;
-	
+		
 	public void save(ZahtevPoseta zahtev) {
 		this.zahtevPosetaRepository.save(zahtev);
 	}

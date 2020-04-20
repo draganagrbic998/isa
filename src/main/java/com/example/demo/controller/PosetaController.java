@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -75,7 +77,8 @@ public class PosetaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			String obavestenje = "Poseta zakazana za " + poseta.getDatum() + " je otkazana od strane pacijenta. ";
+			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
+			String obavestenje = "Poseta zakazana za " + f.format(poseta.getDatum()) + " je otkazana od strane pacijenta. ";
 			for (Lekar l: poseta.getLekari())
 				this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
 			return new ResponseEntity<>(HttpStatus.OK);

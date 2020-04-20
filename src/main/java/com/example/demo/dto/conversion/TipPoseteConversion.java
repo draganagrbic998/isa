@@ -23,7 +23,8 @@ public class TipPoseteConversion {
 				tipPoseteDTO.getSati(), 
 				tipPoseteDTO.getMinute(), 
 				tipPoseteDTO.getCena(), 
-				this.klinikaRepository.getOne(tipPoseteDTO.getKlinika()));
+				this.klinikaRepository.getOne(tipPoseteDTO.getKlinika()), 
+				tipPoseteDTO.isAktivan());
 	}
 	
 	public TipPoseteDTO get(TipPosete tipPosete) {

@@ -7,8 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"pacijent", "provera"})})
 public class Ocena {
 
 	@Id
@@ -19,15 +22,18 @@ public class Ocena {
 	private Pacijent pacijent;
 	@Column(unique = false, nullable = false)
 	private int vrednost;
+	@Column(unique = false, nullable = false)
+	private int provera;
 	
 	public Ocena() {
 		super();
 	}
 
-	public Ocena(Pacijent pacijent, int vrednost) {
+	public Ocena(Pacijent pacijent, int vrednost, int provera) {
 		super();
 		this.pacijent = pacijent;
 		this.vrednost = vrednost;
+		this.provera = provera;
 	}
 
 	public Integer getId() {
@@ -52,6 +58,14 @@ public class Ocena {
 
 	public void setVrednost(int vrednost) {
 		this.vrednost = vrednost;
+	}
+
+	public int getProvera() {
+		return provera;
+	}
+
+	public void setProvera(int provera) {
+		this.provera = provera;
 	}
 	
 }
