@@ -23,13 +23,13 @@ public class Ocena {
 	@Column(unique = false, nullable = false)
 	private int vrednost;
 	@Column(unique = false, nullable = false)
-	private int provera;
+	private String provera;
 	
 	public Ocena() {
 		super();
 	}
 
-	public Ocena(Pacijent pacijent, int vrednost, int provera) {
+	public Ocena(Pacijent pacijent, int vrednost, String provera) {
 		super();
 		this.pacijent = pacijent;
 		this.vrednost = vrednost;
@@ -60,11 +60,11 @@ public class Ocena {
 		this.vrednost = vrednost;
 	}
 
-	public int getProvera() {
+	public String getProvera() {
 		return provera;
 	}
 
-	public void setProvera(int provera) {
+	public void setProvera(String provera) {
 		this.provera = provera;
 	}
 	

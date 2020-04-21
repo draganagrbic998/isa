@@ -149,7 +149,7 @@ public class Klinika implements Ocenjivanje{
 				return o;
 			}
 		}
-		Ocena o = new Ocena(pacijent, ocena, this.id);
+		Ocena o = new Ocena(pacijent, ocena, this.id + "K");
 		this.ocene.add(o);
 		return o;
 	}

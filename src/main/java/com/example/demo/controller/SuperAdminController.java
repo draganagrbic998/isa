@@ -32,7 +32,7 @@ public class SuperAdminController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}	
 	

@@ -16,16 +16,18 @@ public class PacijentService {
 		this.pacijentRepository.save(pacijent);
 	}
 
-	public boolean aktiviraj(Integer pacijentId) {
-		Pacijent pacijent = this.pacijentRepository.getOne(pacijentId);
+	public boolean aktiviraj(Integer id) {
+		
+		Pacijent pacijent = this.pacijentRepository.getOne(id);
 		
 		if (pacijent.isAktivan())
 			return false;
 		
 		pacijent.setAktivan(true);
-		pacijentRepository.save(pacijent);
+		this.pacijentRepository.save(pacijent);
 		
 		return true;
+		
 	}
 	
 }

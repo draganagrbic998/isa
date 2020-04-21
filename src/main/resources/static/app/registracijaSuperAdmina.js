@@ -62,9 +62,8 @@ Vue.component("registracijaSuperAdmina", {
 		</div>
 	
 	`, 
-	
-	mounted () {
-	},
+
+
 	
 	watch: {
 		novaLozinka: function(){

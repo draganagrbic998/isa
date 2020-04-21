@@ -103,11 +103,10 @@ public class PacijentController {
 		}
 	}
 	
-	@PostMapping(value="/aktiviraj/{pacijentId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable Integer pacijentId){
+	@GetMapping(value="/aktiviraj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable Integer id){
 		try {
-			boolean retval = this.pacijentService.aktiviraj(pacijentId);
-			
+			boolean retval = this.pacijentService.aktiviraj(id);
 			if (retval)
 				return new ResponseEntity<>(HttpStatus.OK);
 			else

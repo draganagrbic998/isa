@@ -1,11 +1,11 @@
 package com.example.demo.dto;
 
-public class ObradaZahtevRegistracijaDTO {
+public class ObradaZahtevRegistracija {
 
 	private Integer id;
 	private String razlog;
 
-	public ObradaZahtevRegistracijaDTO() {
+	public ObradaZahtevRegistracija() {
 		super();
 	}
 

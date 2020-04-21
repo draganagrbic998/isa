@@ -6,13 +6,14 @@ Vue.component("aktivirajNalog", {
 		
 			<h1>Nalog aktiviran</h1><br>
 			Vas nalog je uspesno aktiviran!\nKliknite na sledeci link da bi ste se ulogovali: <br><br>
-			<router-link to="/">Prijava</router-link><br><br>
+			<router-link to="/">PRIJAVA</router-link><br><br>
 		
 		</div>	
 	
 	`,
 	
 	mounted() {
+		
 		let id = this.$route.query.id;
 		
 		if (id === "") {
@@ -20,9 +21,7 @@ Vue.component("aktivirajNalog", {
 			return;
 		}
 				
-		axios.post("/pacijent/aktiviraj/" + id, {})
-		.then(response => {
-		})
+		axios.get("/pacijent/aktiviraj/" + id)
 		.catch(error => {
 			if (error.response.status === 409)
 				alert("Vas nalog je vec aktiviran!");

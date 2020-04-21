@@ -98,7 +98,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 				return o;
 			}
 		}
-		Ocena o = new Ocena(pacijent, ocena, this.getId());
+		Ocena o = new Ocena(pacijent, ocena, this.getId() + "L");
 		this.ocene.add(o);
 		return o;
 		
@@ -111,7 +111,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 			return satnica;
 		
 		for  (ZahtevOdmor z: this.odmorZahtevi) {
-			if (z.getOdobren() && (z.getPocetak().equals(datum) || z.getPocetak().before(datum)) && (z.getKraj().equals(datum) || z.getKraj().after(datum)))
+			if ((z.getPocetak().equals(datum) || z.getPocetak().before(datum)) && (z.getKraj().equals(datum) || z.getKraj().after(datum)))
 				return satnica;
 		}
 		

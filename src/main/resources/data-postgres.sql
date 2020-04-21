@@ -17,11 +17,11 @@ values ('21', 'sala jedna mala', 1, true);
 
 -----------ZAKAZANE POSETE ZA GLAVNOG PACIJENTA------------------------
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
-values ('2020-04-20 12:00', null, 1, 1, 1, 1);
+values ('2020-04-28 12:00', null, 1, 1, 1, 1);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
-values ('2020-04-21 12:00', 0.2, 1, 1, 1, 1);
+values ('2020-04-29 12:00', 0.2, 1, 1, 1, 1);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete)
-values ('2020-04-22 12:00', 0.2, 1, 1, 1, 1);
+values ('2020-04-30 12:00', 0.2, 1, 1, 1, 1);
 
 --------------LEKARI ANGAZOVANI NA ZAKAZANIM POSETAMA GLAVNOG PACIJENTA-----------------------
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra)
@@ -163,20 +163,15 @@ values (4, 3);
 
 -------------NOVI SLOBODNI TERMINI-------------------------------
 insert into poseta (datum, popust, stanje, sala, tip_posete)
-values ('2020-04-20 12:00:00', 0.2, 0, 1, 1);
+values ('2020-04-26 12:00:00', 0.2, 0, 1, 1);
 insert into poseta (datum, popust, stanje, sala, tip_posete)
-values ('2020-04-22 12:00:00', 0.2, 0, 1, 1);
+values ('2020-04-27 12:00:00', 0.2, 0, 1, 1);
 ----------------------
 insert into lekar_poseta (lekar, poseta)
 values (2, 8);
 insert into lekar_poseta (lekar, poseta)
 values (3, 9);
 
----------ZAHTEVI ZA REGISTRACIJU PACIJENATA---------
-insert into zahtev_registracija (broj_osiguranika, lozinka, email, telefon, ime, prezime, drzava, grad, adresa)
-values ('1', '1', 'nikolicpetar91@gmail.com', '123', 'Perica', 'Peric','Srbija','Pirot', 'Negde Tamo');
-insert into zahtev_registracija (broj_osiguranika, lozinka, email, telefon, ime, prezime, drzava, grad, adresa)
-values ('2', '1', 'nikolicpetar91@yahoo.com', '123', 'Zikica', 'Zikic','Srbija','Pirot', 'Negde Tamo');
 ----------SUPER ADMIN, ADMIN i NOVI LEKARI----------------------------------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra) values 
 ('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true);
