@@ -68,4 +68,23 @@ public class Terapija {
 		this.lekovi = lekovi;
 	}
 	
+	public Set<String> getDijagnozeSifre() {
+		Set<String> sifre = new HashSet<>();
+		
+		for (Dijagnoza d : this.izvestaj.getDijagnoze()) {
+			sifre.add(d.getSifra());
+		}
+		
+		return sifre;
+	}
+	
+	public Set<String> getLekoviSifre() {
+		Set<String> sifre = new HashSet<>();
+		
+		for (Lek l : this.lekovi) {
+			sifre.add(l.getSifra());
+		}
+		
+		return sifre;
+	}
 }
