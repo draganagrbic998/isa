@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.KlinikaDTO;
+import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.conversion.KlinikaConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.KlinikaPretraga;
@@ -46,6 +47,17 @@ public class KlinikaController {
 		try {
 			Admin admin = (Admin) userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.klinikaConversion.get(admin.getKlinika()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody KlinikaDTO klinikaDTO){
+		try {
+			this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

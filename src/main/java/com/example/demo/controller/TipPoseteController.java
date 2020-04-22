@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.TipPoseteDTO;
 import com.example.demo.dto.conversion.TipPoseteConversion;
 import com.example.demo.model.Admin;
+import com.example.demo.service.LekarService;
 import com.example.demo.service.TipPoseteService;
 import com.example.demo.service.UserService;
 
@@ -32,6 +35,9 @@ public class TipPoseteController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LekarService lekarService;
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +45,19 @@ public class TipPoseteController {
 		try {
 			this.tipPoseteService.save(this.tipPoseteConversion.get(tipPoseteDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
+	}
+	@PreAuthorize("hasAuthority('Admin')")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+		Admin admin = (Admin) this.userService.getSignedKorisnik();
+		try {
+			
+			this.tipPoseteService.delete(id, lekarService.findAll(admin));
+			return new ResponseEntity<>(HttpStatus.OK);			
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			

@@ -10,11 +10,10 @@ Vue.component('lekariPretraga', {
 	}, 
 
 	template: `
-	
-		<div>
+	<div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">PRETRAGA LEKARA</a>
+  <a class="navbar-brand" href="#">PRETRAGA LEKARSKOG OSOBLJA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -24,53 +23,14 @@ Vue.component('lekariPretraga', {
       <li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Home
+          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-address-book">
-          </i>
-          Adresa
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#/registracijaLekara">Dodaj lekara</a>
-          <a class="dropdown-item" href="#">Pretraga lekara</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-line-chart">
-          </i>
-          Specijalizacija
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Dodaj tip pregleda</a>
-          <a class="dropdown-item" href="#">Pretraga tipova</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-hotel">
-          </i>
-          Radno vreme
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Dodaj salu</a>
-          <a class="dropdown-item" href="#">Pretraga sala</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-    </ul>
+      </ul>
        <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Search</button>
+      <input class="form-control mr-sm-2" type="text" placeholder="Pretrazite" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
     </form>
   </div>
 </nav>
@@ -86,7 +46,7 @@ Vue.component('lekariPretraga', {
 			<td><button v-on:click="deleteDoctor(l.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
-		</div>
+	</div>
 	
 	`, 
 	

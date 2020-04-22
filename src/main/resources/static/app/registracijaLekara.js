@@ -19,6 +19,7 @@ Vue.component("registracijaLekara", {
 				"aktivan": true, 
 				"promenjenaSifra": false
 			}, 
+			tip: 'lekar',
 			novaLozinka: '',
 			ponovljenaLozinka: '', 
 			greskaEmail: '', 
@@ -51,7 +52,10 @@ Vue.component("registracijaLekara", {
 			<div>
 			
 				<table>
-				
+					<tr><td class="left">Profesija: </td><td class="right"><select v-model="tip">
+						<option>lekar</option>
+						<option>medicinska sestra</option>
+					</select></td><td></td></tr>
 					<tr><td class="left">Email: </td><td class="right"><input type="text" v-model="lekar.email"></td><td>{{greskaEmail}}</td></tr>
 					<tr><td class="left">Ime: </td><td class="right"><input type="text" v-model="lekar.ime"></td><td>{{greskaIme}}</td></tr>
 					<tr><td class="left">Prezime: </td><td class="right"><input type="text" v-model="lekar.prezime"></td><td>{{greskaPrezime}}</td></tr>
@@ -63,12 +67,12 @@ Vue.component("registracijaLekara", {
 					<tr><td class="left">Kraj smene: </td><td class="right"><input type="text" v-model="kraj"></td><td>{{greskaKraj}}</td></tr>
 					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
 					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
-					<tr><td class="left">Specijalizacija: </td><td class="right"><select v-model="nazivSpecijalizacije">
+					<tr v-if="this.tip==='lekar'" ><td class="left">Specijalizacija: </td><td class="right"><select v-model="nazivSpecijalizacije">
 						<option v-for="s in specijalizacije">{{s.naziv}}</option>
 					</select></td><td>{{greskaSpec}}</td></tr>
 					
 					<br>
-					<tr><td colspan="3"><button v-on:click="registruj_lekara()">KREIRAJ PROFIL</button><br></td></tr>
+					<tr><td colspan="3"><button v-on:click="registracija()">KREIRAJ PROFIL</button><br></td></tr>
 					
 				</table>
 				
@@ -160,8 +164,28 @@ Vue.component("registracijaLekara", {
 			this.greskaSpec = '';
 			this.greska = false;
 		}, 
+		registruj_sestru() {
+			axios.post("/sestra/kreiranje", this.lekar)
+			.then(response => {
+				alert("Medicinska sestra uspesno kreirana!");
+				this.$router.push("/adminHome");
+			})
+			.catch((error) => {
+				this.greskaEmail = "Email mora biti jedinstven. ";
+			});
+		}, 
+		registruj_lekara() {
+			axios.post("/lekar/kreiranje", this.lekar)
+			.then(response => {
+				alert("Lekar uspesno kreiran!");
+				this.$router.push("/adminHome");
+			})
+			.catch((error) => {
+				this.greskaEmail = "Email mora biti jedinstven. ";
+			});
+		},
 		
-		registruj_lekara: function(){
+		registracija: function(){
 			
 			this.osvezi();
 			this.pocetakF();
@@ -232,7 +256,7 @@ Vue.component("registracijaLekara", {
 				this.greska = true;
 			}
 			
-			if (this.lekar.specijalizacija == '') {
+			if (this.tip==='lekar' && this.lekar.specijalizacija == '') {
 				this.greskaSpec = "Specijalizacija na sme biti prazna. ";
 				this.greska = true;
 			}
@@ -240,14 +264,14 @@ Vue.component("registracijaLekara", {
 			if (this.greska) return;
 			this.lekar.klinika = this.klinika.id;
 			
-			axios.post("/lekar/kreiranje", this.lekar)
-			.then(response => {
-				alert("Lekar uspesno kreiran!");
-				this.$router.push("/adminHome");
-			})
-			.catch((error) => {
-				this.greskaEmail = "Email mora biti jedinstven. ";
-			});
+			if (this.tip === "lekar") {
+				this.registruj_lekara();
+			}
+			else {
+				this.registruj_sestru();
+			}
+				
+			
 			
 		}
 	}
