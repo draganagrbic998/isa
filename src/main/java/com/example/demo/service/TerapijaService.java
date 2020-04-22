@@ -32,4 +32,18 @@ public class TerapijaService {
 		return terapije;
 	}
 
+	public boolean overi(Integer id, Sestra sestra) {
+		
+		Terapija terapija = this.terapijaRepository.getOne(id);
+		
+		if (terapija.getSestra() != null)
+			return false;
+		
+		terapija.setSestra(sestra);
+		this.terapijaRepository.save(terapija);
+		
+		return true;
+		
+	}
+
 }

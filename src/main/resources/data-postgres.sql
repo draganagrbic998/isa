@@ -104,9 +104,9 @@ values (1, 4);
 insert into terapija (izvestaj, sestra)
 values (2, 5);
 insert into terapija (izvestaj, sestra)
-values (3, 4);
+values (3, null);
 insert into terapija (izvestaj, sestra)
-values (4, 5);
+values (4, null);
 -------------
 insert into terapija_lek (terapija, lek)
 values (1, 1);

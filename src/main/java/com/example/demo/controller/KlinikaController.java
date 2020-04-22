@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.KlinikaDTO;
-import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.conversion.KlinikaConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.KlinikaPretraga;

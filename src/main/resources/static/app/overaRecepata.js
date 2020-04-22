@@ -74,22 +74,22 @@ Vue.component("overaRecepata", {
 	},
 	
 	methods: {
-		this.error = false;
-		
-		let errorMessage = '';
-		
-		if (this.selectedId === "") {
-			errorMessage = "Morate odabrati recept!";
-			this.error = true;
-		}
-		
-		if (this.error) {
-			alert(errorMessage);
-			return;
-		}
-		
 		overi: function() {
-			axios.post("/terapija/overi/" + this.selectedId, {})
+			this.error = false;
+			
+			let errorMessage = '';
+			
+			if (this.selectedId === "") {
+				errorMessage = "Morate odabrati recept!";
+				this.error = true;
+			}
+			
+			if (this.error) {
+				alert(errorMessage);
+				return;
+			}
+			
+			axios.get("/terapija/overi/" + this.selectedId)
 			.then(response => {
 				alert("Recept uspesno overen!");
 				location.reload();
