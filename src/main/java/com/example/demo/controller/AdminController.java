@@ -43,6 +43,18 @@ public class AdminController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody AdminDTO adminDTO){
+		try {
+			this.adminService.save(this.adminConversion.get(adminDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AdminDTO> profil(){
 		try {
