@@ -22,36 +22,42 @@ import com.example.demo.service.UserService;
 @RequestMapping(value = "/terapija")
 public class TerapijaController {
 	
-		
-		@Autowired
-		private TerapijaService terapijaService;
-		
-		@Autowired
-		private TerapijaConversion terapijaConversion;
-		
-		@Autowired
-		private UserService userService;
-		
-		@PreAuthorize("hasAuthority('Sestra')")
-		@GetMapping(value = "/getNeoverene", produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<List<TerapijaDTO>> getNeovereneTerapije(){
+	
+	@Autowired
+	private TerapijaService terapijaService;
+	
+	@Autowired
+	private TerapijaConversion terapijaConversion;
+	
+	@Autowired
+	private UserService userService;
+	
+	@PreAuthorize("hasAuthority('Sestra')")
+	@GetMapping(value = "/getNeoverene", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TerapijaDTO>> getNeovereneTerapije(){
+		try {
 			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.terapijaConversion.get(this.terapijaService.nadjiNeoverene(sestra)), HttpStatus.OK);
 		}
-
-		@PreAuthorize("hasAuthority('Sestra')")
-		@GetMapping(value="/overi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<HttpStatus> overi(@PathVariable Integer id){
-			try {
-				Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
-				boolean retval = this.terapijaService.overi(id, sestra);
-				if (retval)
-					return new ResponseEntity<>(HttpStatus.OK);
-				else
-					return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-			catch(Exception e) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@PreAuthorize("hasAuthority('Sestra')")
+	@GetMapping(value="/overi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> overi(@PathVariable Integer id){
+		try {
+			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
+			boolean retval = this.terapijaService.overi(id, sestra);
+			if (retval)
+				return new ResponseEntity<>(HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 }

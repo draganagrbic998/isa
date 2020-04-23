@@ -26,45 +26,50 @@ import com.example.demo.service.UserService;
 public class SestraController {
 	
 		
-		@Autowired
-		private SestraService sestraService;
-		
-		@Autowired
-		private SestraConversion sestraConversion;
-		
-		@Autowired
-		private UserService userService;
-		
-		@PreAuthorize("hasAuthority('Admin')")
-		@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<List<SestraDTO>> getMedSisters(){
+	@Autowired
+	private SestraService sestraService;
+	
+	@Autowired
+	private SestraConversion sestraConversion;
+	
+	@Autowired
+	private UserService userService;
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SestraDTO>> pregled(){
+		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.sestraConversion.get(this.sestraService.findAll(admin)), HttpStatus.OK);
 		}
-		
-		@PreAuthorize("hasAuthority('Admin')")
-		@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<HttpStatus> create(@RequestBody SestraDTO sestraDTO) {
-			try {
-				this.sestraService.save(this.sestraConversion.get(sestraDTO));
-				return new ResponseEntity<>(HttpStatus.OK);
-			}
-			catch(Exception e) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-			
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> create(@RequestBody SestraDTO sestraDTO) {
+		try {
+			this.sestraService.save(this.sestraConversion.get(sestraDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		@PreAuthorize("hasAuthority('Admin')")
-		@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
-			try {
-				this.sestraService.delete(id);
-				return new ResponseEntity<>(HttpStatus.OK);			
-			}
-			catch(Exception e) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
-			}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+		try {
+			this.sestraService.delete(id);
+			return new ResponseEntity<>(HttpStatus.OK);			
 		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
+	}
 
 }

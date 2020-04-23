@@ -71,9 +71,8 @@ public class Terapija {
 	public Set<String> getDijagnozeSifre() {
 		Set<String> sifre = new HashSet<>();
 		
-		for (Dijagnoza d : this.izvestaj.getDijagnoze()) {
+		for (Dijagnoza d : this.izvestaj.getDijagnoze())
 			sifre.add(d.getSifra());
-		}
 		
 		return sifre;
 	}
@@ -81,9 +80,9 @@ public class Terapija {
 	public Set<String> getLekoviSifre() {
 		Set<String> sifre = new HashSet<>();
 		
-		for (Lek l : this.lekovi) {
+		for (Lek l : this.lekovi)
 			sifre.add(l.getSifra());
-		}
+
 		
 		return sifre;
 	}

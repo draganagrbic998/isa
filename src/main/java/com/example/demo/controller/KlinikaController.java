@@ -66,7 +66,12 @@ public class KlinikaController {
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled",  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaDTO>> review(){
-		return new ResponseEntity<>(this.klinikaConversion.get(this.klinikaService.findAll()), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(this.klinikaConversion.get(this.klinikaService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
@@ -99,21 +104,34 @@ public class KlinikaController {
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaPretraga>> pretraga(){
-		return new ResponseEntity<>(this.klinikaConversion.getPretraga(this.klinikaService.findAll()), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(this.klinikaConversion.getPretraga(this.klinikaService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<KlinikaPretraga>> pretragaParam(@RequestBody Pretraga param){
-	
-		return new ResponseEntity<>(this.klinikaService.pretraga(param), HttpStatus.OK);
-		
+		try {
+			return new ResponseEntity<>(this.klinikaService.pretraga(param), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaSlobodno>> slobodno(){
-		return new ResponseEntity<>(this.klinikaService.slobodno(), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(this.klinikaService.slobodno(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 }

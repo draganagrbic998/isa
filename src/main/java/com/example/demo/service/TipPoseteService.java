@@ -20,10 +20,7 @@ public class TipPoseteService {
 
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
-	
-	@Autowired
-	private LekarService lekarService;
-	
+		
 	public void save(TipPosete tipPosete) throws Exception {
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
 			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().equals(tipPosete.getKlinika().getId()))
@@ -50,17 +47,16 @@ public class TipPoseteService {
 		
 	}
 	
-	//logicko brisanje tipa pregleda
 	public void delete(Integer id, List<Lekar> lekari) {
-		TipPosete tp = this.tipPoseteRepository.getOne(id);
+		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
 		for (Lekar l : lekari) {
 			for (Poseta p : l.getPosete()) {
-				if ((p.getStanje().equals(StanjePosete.U_TOKU) || p.getStanje().equals(StanjePosete.ZAUZETO)) && p.getTipPosete().equals(tp)) {
+				if (!p.getStanje().equals(StanjePosete.OBAVLJENO) && p.getTipPosete().getId().equals(tipPosete.getId())) {
 					throw new RuntimeException();
 				}
 			}
 		}
-		tp.setAktivan(false);
-		this.tipPoseteRepository.save(tp);
+		tipPosete.setAktivan(false);
+		this.tipPoseteRepository.save(tipPosete);
 	}
 }

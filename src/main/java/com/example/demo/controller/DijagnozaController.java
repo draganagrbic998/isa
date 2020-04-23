@@ -32,7 +32,12 @@ public class DijagnozaController {
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<DijagnozaDTO>> pregled(){
-		return new ResponseEntity<>(this.dijagnozaConversion.get(this.dijagnozaService.findAll()), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(this.dijagnozaConversion.get(this.dijagnozaService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")

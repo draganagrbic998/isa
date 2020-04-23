@@ -40,8 +40,13 @@ public class LekarController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<LekarDTO>> getDoctors(){
-		Admin admin = (Admin) this.userService.getSignedKorisnik();
-		return new ResponseEntity<>(this.lekarConversion.get(this.lekarService.findAll(admin)), HttpStatus.OK);
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.lekarConversion.get(this.lekarService.findAll(admin)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")

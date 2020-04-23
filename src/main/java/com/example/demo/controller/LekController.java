@@ -32,7 +32,12 @@ public class LekController {
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<LekDTO>> pregled(){
-		return new ResponseEntity<>(this.lekConversion.get(this.lekService.findAll()), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(this.lekConversion.get(this.lekService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")

@@ -53,10 +53,9 @@ public class TipPoseteController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
-		Admin admin = (Admin) this.userService.getSignedKorisnik();
 		try {
-			
-			this.tipPoseteService.delete(id, lekarService.findAll(admin));
+			Admin admin = (Admin) this.userService.getSignedKorisnik();			
+			this.tipPoseteService.delete(id, this.lekarService.findAll(admin));
 			return new ResponseEntity<>(HttpStatus.OK);			
 		}
 		catch(Exception e) {
@@ -67,16 +66,25 @@ public class TipPoseteController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TipPoseteDTO>> pregled() {
-		Admin admin = (Admin) this.userService.getSignedKorisnik();
-		return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin)), HttpStatus.OK);
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/nazivi", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Set<String>> nazivi(){
 		
-		return new ResponseEntity<>(this.tipPoseteService.sviTipovi(), HttpStatus.OK);
-		
+		try {
+			return new ResponseEntity<>(this.tipPoseteService.sviTipovi(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 		
 }

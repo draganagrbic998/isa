@@ -41,7 +41,17 @@ public class UserService {
 
 	}
 	
-
+	public void promenaSifre(Korisnik k, String sifra) {
+		
+		k.setLozinka(sifra);
+		k.setPromenjenaSifra(true);
+		this.korisnikRepository.save(k);
+        List<GrantedAuthority> lista = new ArrayList<>();
+        lista.add(new SimpleGrantedAuthority(Hibernate.unproxy(k).getClass().getSimpleName()));
+        PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(k.getId(), null, lista);
+        SecurityContextHolder.getContext().setAuthentication(token);
+        
+	}
 	
 	public Korisnik getSignedKorisnik() {
 		

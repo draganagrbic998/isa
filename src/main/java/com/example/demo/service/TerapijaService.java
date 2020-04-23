@@ -21,12 +21,12 @@ public class TerapijaService {
 	}
 
 	public List<Terapija> nadjiNeoverene(Sestra sestra) {
-		List<Terapija> terapije = new ArrayList<Terapija>();
+		List<Terapija> terapije = new ArrayList<>();
 		
-		for (Terapija t : terapijaRepository.findAll()) {
-			if (t.getSestra() == null && t.getIzvestaj().getPoseta().getSala().getKlinika().equals(sestra.getKlinika())) {
+		for (Terapija t : this.terapijaRepository.findAll()) {
+			if (t.getSestra() == null && t.getIzvestaj().getPoseta().getSala().getKlinika().equals(sestra.getKlinika())) 
 				terapije.add(t);
-			}
+
 		}
 		
 		return terapije;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.PromenaSifre;
 import com.example.demo.dto.User;
 import com.example.demo.model.Korisnik;
 import com.example.demo.service.UserService;
@@ -28,7 +29,7 @@ public class UserController {
 	public ResponseEntity<String> prijava(@RequestBody User user) {
 		try {
 			Korisnik k = this.userService.prijava(user);
-			return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
+			return new ResponseEntity<>(k.isPromenjenaSifra() ? Hibernate.getClass(k).getSimpleName().toLowerCase() : "sifra", HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -40,9 +41,24 @@ public class UserController {
 	public ResponseEntity<HttpStatus> checkUloga(@PathVariable String uloga){
 		try {
 			Korisnik k = this.userService.getSignedKorisnik();
+			if (uloga.equalsIgnoreCase("sifra") && !k.isPromenjenaSifra())
+				return new ResponseEntity<>(HttpStatus.OK);
 			if (Hibernate.getClass(k).getSimpleName().equalsIgnoreCase(uloga))
 				return new ResponseEntity<>(HttpStatus.OK);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('SIFRA')")
+	@PostMapping(value="/lozinka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> promenaSifre(@RequestBody PromenaSifre promenaSifre){
+		try {
+			Korisnik k = this.userService.getSignedKorisnik();
+			this.userService.promenaSifre(k, promenaSifre.getNovaLozinka());
+			return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

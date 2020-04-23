@@ -21,6 +21,7 @@ const profilAdmin = {template: '<profilAdmin></profilAdmin>'}
 const klinikeSlobodno = {template: '<klinikeSlobodno></klinikeSlobodno>'}
 const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
 const overaRecepata = {template: '<overaRecepata></overaRecepata>'}
+const promenaSifre = {template: '<promenaSifre></promenaSifre>'}
 
 //Dodavanja:
 const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlinike>'}
@@ -74,7 +75,8 @@ const router = new VueRouter({
 		{path: '/profilAdmin', component: profilAdmin},
 		{path: '/tipPregledaPretraga', component: tipPregledaPretraga},
 		{path: '/sestrePretraga', component: sestrePretraga},
-		{path: '/overaRecepata', component: overaRecepata}
+		{path: '/overaRecepata', component: overaRecepata}, 
+		{path: '/promenaSifre', component: promenaSifre}
 	]
 	
 });
