@@ -10,8 +10,10 @@ import com.example.demo.model.Dijagnoza;
 
 @Component
 public class DijagnozaConversion {
+	
 
 	public Dijagnoza get(DijagnozaDTO dijagnozaDTO) {
+				
 		return new Dijagnoza(dijagnozaDTO.getId(), 
 				dijagnozaDTO.getSifra(), 
 				dijagnozaDTO.getNaziv());

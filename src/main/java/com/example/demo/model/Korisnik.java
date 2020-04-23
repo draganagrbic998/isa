@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Version;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -38,13 +39,15 @@ public abstract class Korisnik {
 	private boolean aktivan;
 	@Column(unique = false, nullable = false)
 	private boolean promenjenaSifra;
+	@Version
+	private long version;
 	
 	public Korisnik() {
 		super();
 	}
 
 	public Korisnik(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
-			String grad, String adresa, boolean aktivan, boolean promenjenaSifra) {
+			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, long version) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -57,6 +60,7 @@ public abstract class Korisnik {
 		this.adresa = adresa;
 		this.aktivan = aktivan;
 		this.promenjenaSifra = promenjenaSifra;
+		this.version = version;
 	}
 
 	public Integer getId() {
@@ -145,6 +149,14 @@ public abstract class Korisnik {
 
 	public void setPromenjenaSifra(boolean promenjenaSifra) {
 		this.promenjenaSifra = promenjenaSifra;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 }

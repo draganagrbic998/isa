@@ -7,23 +7,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Lekar;
-import com.example.demo.model.ZahtevPoseta;
+import com.example.demo.model.ZahtevOdmor;
 import com.example.demo.repository.LekarRepository;
-import com.example.demo.repository.ZahtevPosetaRepository;
+import com.example.demo.repository.ZahtevOdmorRepository;
 
 @Component
 @Transactional(readOnly = true)
-public class ZahtevPosetaService {
+public class ZahtevOdmorService {
 
 	@Autowired
-	private ZahtevPosetaRepository zahtevPosetaRepository;
+	private LekarRepository lekarRepository;
 	
 	@Autowired
-	private LekarRepository lekarRepository;
-		
+	private ZahtevOdmorRepository zahtevOdmorRepository;
+	
 	@Transactional(readOnly = false)
-	public void save(ZahtevPoseta zahtev) {
-		this.zahtevPosetaRepository.save(zahtev);
+	public void save(ZahtevOdmor zahtev) {
+		this.zahtevOdmorRepository.save(zahtev);
 		Lekar l = zahtev.getLekar();
 		l.setPoslednjaIzmena(new Date());
 		this.lekarRepository.save(l);

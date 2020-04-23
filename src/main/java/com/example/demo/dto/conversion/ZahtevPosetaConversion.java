@@ -23,9 +23,9 @@ public class ZahtevPosetaConversion {
 	
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
-	
-	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) {
 		
+	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) {
+				
 		return new ZahtevPoseta(zahtevDTO.getId(), zahtevDTO.getDatum(), 
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 

@@ -5,21 +5,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Sestra;
 import com.example.demo.model.Terapija;
 import com.example.demo.repository.TerapijaRepository;
 
 @Component
+@Transactional(readOnly = true)
 public class TerapijaService {
 
 	@Autowired
 	private TerapijaRepository terapijaRepository;
 	
+	@Transactional(readOnly = false)
 	public void save(Terapija terapija) {
 		this.terapijaRepository.save(terapija);
 	}
 
+	@Transactional(readOnly = true)
 	public List<Terapija> nadjiNeoverene(Sestra sestra) {
 		List<Terapija> terapije = new ArrayList<>();
 		
@@ -32,6 +36,7 @@ public class TerapijaService {
 		return terapije;
 	}
 
+	@Transactional(readOnly = false)
 	public boolean overi(Integer id, Sestra sestra) {
 		
 		Terapija terapija = this.terapijaRepository.getOne(id);

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.dto.LekarDTO;
 import com.example.demo.model.Lekar;
 import com.example.demo.repository.KlinikaRepository;
+import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.TipPoseteRepository;
 
 @Component
@@ -21,8 +22,18 @@ public class LekarConversion {
 	
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
+	
+	@Autowired
+	private LekarRepository lekarRepository;
 		
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
+		
+		long version;
+		if (lekarDTO.getId() != null)
+			version = this.lekarRepository.getOne(lekarDTO.getId()).getVersion();
+		else
+			version = 0l;
+		
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		String baseDate = "2020-04-20 ";
@@ -32,7 +43,8 @@ public class LekarConversion {
 				lekarDTO.getDrzava(), lekarDTO.getGrad(), lekarDTO.getAdresa(), 
 				lekarDTO.isAktivan(), lekarDTO.isPromenjenaSifra(), 
 				f.parse(baseDate + lekarDTO.getPocetnoVreme()), f.parse(baseDate + lekarDTO.getKrajnjeVreme()), 
-				this.klinikaRepository.getOne(lekarDTO.getKlinika()), this.tipPoseteRepository.getOne(lekarDTO.getSpecijalizacija()));
+				this.klinikaRepository.getOne(lekarDTO.getKlinika()), 
+				this.tipPoseteRepository.getOne(lekarDTO.getSpecijalizacija()), version);
 		
 	}
 	
@@ -48,4 +60,5 @@ public class LekarConversion {
 		return lekariDTO;
 		
 	}
+	
 }

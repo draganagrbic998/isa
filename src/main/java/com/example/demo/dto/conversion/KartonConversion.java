@@ -16,7 +16,10 @@ public class KartonConversion {
 	@Autowired
 	private PacijentRepository pacijentRepository;
 	
+	
 	public Karton get(KartonDTO kartonDTO) {
+		
+		
 		return new Karton(kartonDTO.getId(), kartonDTO.getBrojOsiguranika(), 
 				kartonDTO.getVisina(), kartonDTO.getTezina(), 
 				kartonDTO.getLevaDioptrija(), kartonDTO.getDesnaDioptrija(), 

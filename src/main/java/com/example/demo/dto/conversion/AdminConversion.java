@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.AdminDTO;
+import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.model.Admin;
 
@@ -16,13 +17,22 @@ public class AdminConversion {
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 	
+	@Autowired
+	private AdminRepository adminRepository;
+		
 	public Admin get(AdminDTO adminDTO) {
+		
+		long version;
+		if (adminDTO.getId() != null)
+			version = this.adminRepository.getOne(adminDTO.getId()).getVersion();
+		else
+			version = 0l;
 		
 		return new Admin(adminDTO.getId(), adminDTO.getEmail(), adminDTO.getLozinka(), 
 				adminDTO.getIme(), adminDTO.getPrezime(), adminDTO.getTelefon(), 
 				adminDTO.getDrzava(), adminDTO.getGrad(), adminDTO.getAdresa(), 
 				adminDTO.isAktivan(), adminDTO.isPromenjenaSifra(), 
-				null, null, this.klinikaRepository.getOne(adminDTO.getKlinika()));
+				null, null, this.klinikaRepository.getOne(adminDTO.getKlinika()), version);
 		
 	}
 	

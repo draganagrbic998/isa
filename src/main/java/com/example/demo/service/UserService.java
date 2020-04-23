@@ -11,18 +11,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.User;
 import com.example.demo.model.Korisnik;
 import com.example.demo.repository.KorisnikRepository;
 
 @Component
+@Transactional(readOnly = true)
 public class UserService {
 		
 	@Autowired
 	private KorisnikRepository korisnikRepository;
 	
 	
+	@Transactional(readOnly = true)
 	public Korisnik prijava(User user) {
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
@@ -41,6 +44,7 @@ public class UserService {
 
 	}
 	
+	@Transactional(readOnly = false)
 	public void promenaSifre(Korisnik k, String sifra) {
 		
 		k.setLozinka(sifra);
@@ -53,6 +57,7 @@ public class UserService {
         
 	}
 	
+	@Transactional(readOnly = true)
 	public Korisnik getSignedKorisnik() {
 		
 		Authentication prava = SecurityContextHolder.getContext().getAuthentication();

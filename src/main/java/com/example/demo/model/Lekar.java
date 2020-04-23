@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,6 +38,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
 	private Set<ZahtevPoseta> pregledZahtevi = new HashSet<>();
+	@Column
+	private Date poslednjaIzmena;
 	
 	public Lekar() {
 		super();
@@ -43,9 +47,9 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 
 	public Lekar(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
 			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, Date pocetnoVreme, Date krajnjeVreme,
-			Klinika klinika, TipPosete specijalizacija) {
+			Klinika klinika, TipPosete specijalizacija, long version) {
 		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra, pocetnoVreme,
-				krajnjeVreme, klinika);
+				krajnjeVreme, klinika, version);
 		this.specijalizacija = specijalizacija;
 	}
 
@@ -89,6 +93,14 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		this.pregledZahtevi = pregledZahtevi;
 	}
 
+	public Date getPoslednjaIzmena() {
+		return poslednjaIzmena;
+	}
+
+	public void setPoslednjaIzmena(Date poslednjaIzmena) {
+		this.poslednjaIzmena = poslednjaIzmena;
+	}
+
 	@Override
 	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
 
@@ -116,7 +128,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		}
 		
 
-		Calendar kalendar = Calendar.getInstance();
+		GregorianCalendar kalendar = new GregorianCalendar();
 		kalendar.setTime(datum);
 		kalendar.set(Calendar.HOUR_OF_DAY, 0);
 		kalendar.set(Calendar.MINUTE, 0);
@@ -124,14 +136,14 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		
 		List<Zauzetost> lista = new ArrayList<>();
 		for (Poseta p: this.posete) {
-			kalendar.setTime(p.datum());
+			kalendar.setTime(p.pocetak());
 			kalendar.set(Calendar.HOUR_OF_DAY, 0);
 			kalendar.set(Calendar.MINUTE, 0);
 			if (kalendar.getTime().equals(compareDate) && !p.getStanje().equals(StanjePosete.OBAVLJENO))
 				lista.add(p);
 		}
 		for (ZahtevPoseta zp: this.pregledZahtevi) {
-			kalendar.setTime(zp.datum());
+			kalendar.setTime(zp.pocetak());
 			kalendar.set(Calendar.HOUR_OF_DAY, 0);
 			kalendar.set(Calendar.MINUTE, 0);
 			if (kalendar.getTime().equals(compareDate))
@@ -200,26 +212,26 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 				
 			}
 			
-			kalendar.setTime(p.datum());
+			kalendar.setTime(p.pocetak());
 			kalendar.add(Calendar.HOUR_OF_DAY, p.sati());
 			kalendar.add(Calendar.MINUTE, p.minute());
 			Date temp2 = kalendar.getTime();
 			
-			if ((start.after(p.datum()) || start.equals(p.datum())) && (start.before(temp2))) {
+			if ((start.after(p.pocetak()) || start.equals(p.pocetak())) && (start.before(temp2))) {
 				kalendar.setTime(temp2);
 				start = kalendar.getTime();
 				sledeci = true;
 
 			}
 			
-			else if ((temp1.after(p.datum())) && (temp1.before(temp2) || temp1.equals(temp2))) {
+			else if ((temp1.after(p.pocetak())) && (temp1.before(temp2) || temp1.equals(temp2))) {
 				kalendar.setTime(temp2);
 				start = kalendar.getTime();
 				sledeci = true;
 
 			}
 			
-			else if (start.before(p.datum()) && temp1.after(temp2)) {
+			else if (start.before(p.pocetak()) && temp1.after(temp2)) {
 				kalendar.setTime(temp2);
 				start = kalendar.getTime();
 				sledeci = true;
@@ -240,6 +252,47 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		}
 
 		return satnica;
+		
+	}
+	
+	public boolean slobodan(Date pocetak, Date kraj) {
+		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(pocetak);
+		gc.set(Calendar.HOUR, 0);
+		gc.set(Calendar.MINUTE, 0);
+		Date pocetakDatum = gc.getTime();
+		gc.setTime(kraj);
+		gc.set(Calendar.HOUR, 0);
+		gc.set(Calendar.MINUTE, 0);
+		Date krajDatum = gc.getTime();
+		
+		for (ZahtevOdmor zo: this.odmorZahtevi) {
+			if (zo.getPocetak().equals(pocetakDatum) || zo.getKraj().equals(krajDatum))
+				return false;
+		}
+		
+		for (Poseta p: this.posete) {
+			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+					&&  pocetak.before(p.kraj()))
+				return false;
+			if ((kraj.after(p.pocetak()))
+					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+				return false;
+			
+
+		}
+		
+		for (ZahtevPoseta p: this.pregledZahtevi) {
+			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+					&&  pocetak.before(p.kraj()))
+				return false;
+			if ((kraj.after(p.pocetak()))
+					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+				return false;
+		}
+		
+		return true;
 		
 	}
 	

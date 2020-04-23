@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -84,11 +86,11 @@ public class ZahtevPoseta implements Zauzetost{
 	@Override
 	public int compareTo(Zauzetost o) {
 
-		return this.datum.compareTo(o.datum());
+		return this.datum.compareTo(o.pocetak());
 	}
 
 	@Override
-	public Date datum() {
+	public Date pocetak() {
 
 		return this.datum;
 	}
@@ -105,6 +107,15 @@ public class ZahtevPoseta implements Zauzetost{
 		if (this.tipPosete == null)
 			return this.lekar.getSpecijalizacija().getMinute();
 		return this.tipPosete.getMinute();
+	}
+
+	@Override
+	public Date kraj() {
+		GregorianCalendar gs = new GregorianCalendar();
+		gs.setTime(this.pocetak());
+		gs.add(Calendar.HOUR_OF_DAY, this.sati());
+		gs.add(Calendar.MINUTE, this.minute());
+		return gs.getTime();
 	}
 	
 }

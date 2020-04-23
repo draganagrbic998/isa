@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.student1.KlinikaPretraga;
 import com.example.demo.dto.student1.KlinikaSlobodno;
@@ -27,6 +28,7 @@ import com.example.demo.repository.OcenaRepository;
 import com.example.demo.repository.PosetaRepository;
 
 @Component
+@Transactional(readOnly = true)
 public class KlinikaService {
 
 	@Autowired
@@ -41,24 +43,27 @@ public class KlinikaService {
 	@Autowired
 	private LekarRepository lekarRepository;
 
+	@Transactional(readOnly = false)
 	public void save(Klinika klinika) {
 		this.klinikaRepository.save(klinika);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Klinika> findAll(){
 		return this.klinikaRepository.findAll();
 	}
 	
+	@Transactional(readOnly = false)
 	public Poseta oceni(Pacijent pacijent, OcenaParam param, Integer posetaId) {
 		
 		Klinika k = this.klinikaRepository.getOne(param.getId());
 		Ocena o = k.refreshOcena(pacijent, param.getOcena());
 		this.ocenaRepository.save(o);
-		this.klinikaRepository.save(k);
 		return this.posetaRepository.getOne(posetaId);
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Poseta> getPosete(Klinika klinika){
 		
 		List<Poseta> lista = new ArrayList<>();
@@ -72,6 +77,7 @@ public class KlinikaService {
 		
 	}
 
+	@Transactional(readOnly = true)
 	public List<KlinikaSlobodno> slobodno() {
 		
 		List<KlinikaSlobodno> lista = new ArrayList<>();
@@ -83,6 +89,7 @@ public class KlinikaService {
 
 	
 
+	@Transactional(readOnly = true)
 	public KlinikaSlobodno getKlinikaSlobodno(Integer posetaId) {
 
 		Poseta p = this.posetaRepository.getOne(posetaId);
@@ -91,6 +98,7 @@ public class KlinikaService {
 
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<KlinikaPretraga> pretraga(Pretraga param) {
 
 		Map<Integer, KlinikaPretraga> mapa = new HashMap<>();

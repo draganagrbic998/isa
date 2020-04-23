@@ -16,7 +16,9 @@ public class SalaConversion {
 	@Autowired 
 	private KlinikaRepository klinikaRepository;
 	
+	
 	public Sala get(SalaDTO salaDTO) {
+				
 		return new Sala(salaDTO.getId(), 
 				salaDTO.getBroj(), 
 				salaDTO.getNaziv(), 

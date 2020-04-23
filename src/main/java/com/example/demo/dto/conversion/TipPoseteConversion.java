@@ -16,7 +16,9 @@ public class TipPoseteConversion {
 	@Autowired
 	private KlinikaRepository klinikaRepository;
 	
+	
 	public TipPosete get(TipPoseteDTO tipPoseteDTO) {
+				
 		return new TipPosete(tipPoseteDTO.getId(), 
 				tipPoseteDTO.getPregled(), 
 				tipPoseteDTO.getNaziv(), 

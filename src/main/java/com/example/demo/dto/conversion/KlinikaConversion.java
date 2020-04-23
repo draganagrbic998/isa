@@ -12,7 +12,10 @@ import com.example.demo.model.Klinika;
 @Component
 public class KlinikaConversion {
 	
+	
 	public Klinika get(KlinikaDTO klinikaDTO) {
+		
+		
 		return new Klinika(klinikaDTO.getId(), klinikaDTO.getNaziv(), 
 				klinikaDTO.getOpis(), klinikaDTO.getAdresa());
 	}

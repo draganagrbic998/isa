@@ -11,15 +11,24 @@ import org.springframework.stereotype.Component;
 import com.example.demo.dto.SestraDTO;
 import com.example.demo.model.Sestra;
 import com.example.demo.repository.KlinikaRepository;
+import com.example.demo.repository.SestraRepository;
 
 @Component
 public class SestraConversion {
 
 	@Autowired
 	private KlinikaRepository klinikaRepository;
-	
+		
+	@Autowired
+	private SestraRepository sestraRepository;
 	
 	public Sestra get(SestraDTO sestraDTO) throws ParseException {
+				
+		long version;
+		if (sestraDTO.getId() != null)
+			version = this.sestraRepository.getOne(sestraDTO.getId()).getVersion();
+		else
+			version = 0l;
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		String baseDate = "2020-04-20 ";
@@ -29,7 +38,7 @@ public class SestraConversion {
 				sestraDTO.getDrzava(), sestraDTO.getGrad(), sestraDTO.getAdresa(), 
 				sestraDTO.isAktivan(), sestraDTO.isPromenjenaSifra(), 
 				f.parse(baseDate + sestraDTO.getPocetnoVreme()), f.parse(baseDate + sestraDTO.getKrajnjeVreme()), 
-				this.klinikaRepository.getOne(sestraDTO.getKlinika()));
+				this.klinikaRepository.getOne(sestraDTO.getKlinika()), version);
 		
 	}
 	

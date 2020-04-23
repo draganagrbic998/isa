@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 @Entity
 public class Poseta implements Zauzetost{
@@ -45,6 +48,8 @@ public class Poseta implements Zauzetost{
 	@OneToOne
 	@JoinColumn(name="izvestaj")
 	private Izvestaj izvestaj;
+	@Version
+	private long version;
 	
 	public Poseta() {
 		super();
@@ -122,14 +127,22 @@ public class Poseta implements Zauzetost{
 		this.izvestaj = izvestaj;
 	}
 
-	@Override
-	public int compareTo(Zauzetost o) {
+	public long getVersion() {
+		return version;
+	}
 
-		return this.datum.compareTo(o.datum());
+	public void setVersion(long version) {
+		this.version = version;
 	}
 
 	@Override
-	public Date datum() {
+	public int compareTo(Zauzetost o) {
+
+		return this.datum.compareTo(o.pocetak());
+	}
+
+	@Override
+	public Date pocetak() {
 
 		return this.datum;
 	}
@@ -144,6 +157,15 @@ public class Poseta implements Zauzetost{
 	public int minute() {
 
 		return this.tipPosete.getMinute();
+	}
+
+	@Override
+	public Date kraj() {
+		GregorianCalendar gs = new GregorianCalendar();
+		gs.setTime(this.pocetak());
+		gs.add(Calendar.HOUR_OF_DAY, this.sati());
+		gs.add(Calendar.MINUTE, this.minute());
+		return gs.getTime();
 	}
 	
 }

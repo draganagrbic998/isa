@@ -12,8 +12,8 @@ public class SuperAdmin extends Korisnik{
 	}
 
 	public SuperAdmin(Integer id, String email, String lozinka, String ime, String prezime, String telefon,
-			String drzava, String grad, String adresa, boolean aktivan, boolean promenjenaSifra) {
-		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra);
+			String drzava, String grad, String adresa, boolean aktivan, boolean promenjenaSifra, long version) {
+		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra, version);
 	}
 
 }

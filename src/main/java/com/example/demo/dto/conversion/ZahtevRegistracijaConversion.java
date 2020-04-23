@@ -11,8 +11,9 @@ import com.example.demo.model.ZahtevRegistracija;
 @Component
 public class ZahtevRegistracijaConversion {
 	
+
 	public ZahtevRegistracija get(ZahtevRegistracijaDTO zahtevDTO) {
-		
+				
 		return new ZahtevRegistracija(zahtevDTO.getId(), 
 				zahtevDTO.getEmail(), 
 				zahtevDTO.getLozinka(), 
