@@ -129,13 +129,5 @@ public class KorisnikDTO implements Comparable<KorisnikDTO>{
 			return this.ime.compareTo(k.ime);
 		return this.prezime.compareTo(k.prezime);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof KorisnikDTO))
-			return false;
-		KorisnikDTO k = (KorisnikDTO) obj;
-		return this.id.equals(k.id);
-	}
 	
 }

@@ -48,12 +48,4 @@ public class LekDTO implements Comparable<LekDTO>{
 		return this.sifra.compareTo(l.sifra);
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof LekDTO))
-			return false;
-		LekDTO l = (LekDTO) obj;
-		return this.id.equals(l.id);
-	}
-	
 }

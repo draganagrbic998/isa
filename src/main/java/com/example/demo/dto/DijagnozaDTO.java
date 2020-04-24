@@ -47,13 +47,5 @@ public class DijagnozaDTO implements Comparable<DijagnozaDTO>{
 	public int compareTo(DijagnozaDTO d) {
 		return this.sifra.compareTo(d.sifra);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof DijagnozaDTO))
-			return false;
-		DijagnozaDTO d = (DijagnozaDTO) obj;
-		return this.id.equals(d.id);
-	}
 	
 }

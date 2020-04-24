@@ -69,13 +69,5 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 	public int compareTo(ZahtevPosetaDTO z) {
 		return this.datum.compareTo(z.datum);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof ZahtevPosetaDTO))
-			return false;
-		ZahtevPosetaDTO z = (ZahtevPosetaDTO) obj;
-		return this.id.equals(z.id);
-	}
 	
 }

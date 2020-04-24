@@ -152,13 +152,5 @@ public class Bolest implements Comparable<Bolest>{
 	public int compareTo(Bolest b) {
 		return this.datum.compareTo(b.datum);
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Bolest))
-			return false;
-		Bolest b = (Bolest) obj;
-		return this.posetaId.equals(b.posetaId);
-	}
 
 }

@@ -57,13 +57,5 @@ public class KlinikaDTO implements Comparable<KlinikaDTO>{
 	public int compareTo(KlinikaDTO k) {
 		return this.naziv.compareTo(k.naziv);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof KlinikaDTO))
-			return false;
-		KlinikaDTO k = (KlinikaDTO) obj;
-		return this.id.equals(k.id);
-	}
 	
 }

@@ -99,12 +99,4 @@ public class KartonDTO implements Comparable<KartonDTO>{
 		return this.brojOsiguranika.compareTo(k.brojOsiguranika);
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof KartonDTO))
-			return false;
-		KartonDTO k = (KartonDTO) obj;
-		return this.id.equals(k.id);
-	}
-
 }

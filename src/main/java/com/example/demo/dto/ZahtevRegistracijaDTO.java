@@ -118,12 +118,4 @@ public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 		return this.brojOsiguranika.compareTo(z.brojOsiguranika);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof ZahtevRegistracijaDTO))
-			return false;
-		ZahtevRegistracijaDTO z = (ZahtevRegistracijaDTO) obj;
-		return this.id.equals(z.id);
-	}
-	
 }

@@ -48,13 +48,5 @@ public class Recept implements Comparable<Recept>{
 	public int compareTo(Recept r) {
 		return this.sifra.compareTo(r.sifra);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Recept))
-			return false;
-		Recept r = (Recept) obj;
-		return this.sifra.equals(r.sifra);
-	}
 	
 }

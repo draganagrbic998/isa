@@ -66,13 +66,5 @@ public class SalaDTO implements Comparable<SalaDTO>{
 	public int compareTo(SalaDTO s) {
 		return this.broj.compareTo(s.broj);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof SalaDTO))
-			return false;
-		SalaDTO s = (SalaDTO) obj;
-		return this.id.equals(s.id);
-	}
 	
 }
