@@ -57,8 +57,15 @@ public class TerapijaDTO implements Comparable<TerapijaDTO>{
 
 	@Override
 	public int compareTo(TerapijaDTO o) {
-		// TODO Auto-generated method stub
 		return this.brOsiguranika.compareTo(o.brOsiguranika);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof TerapijaDTO))
+			return false;
+		TerapijaDTO t = (TerapijaDTO) obj;
+		return this.id.equals(t.id);
 	}
 	
 }

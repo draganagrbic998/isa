@@ -108,4 +108,12 @@ public class PosetaDTO implements Comparable<PosetaDTO>{
 		return this.datum.compareTo(p.datum);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof PosetaDTO))
+			return false;
+		PosetaDTO p = (PosetaDTO) obj;
+		return this.id.equals(p.id);
+	}
+	
 }

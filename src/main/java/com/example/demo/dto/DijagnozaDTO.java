@@ -45,9 +45,15 @@ public class DijagnozaDTO implements Comparable<DijagnozaDTO>{
 
 	@Override
 	public int compareTo(DijagnozaDTO d) {
-		// TODO Auto-generated method stub
 		return this.sifra.compareTo(d.sifra);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DijagnozaDTO))
+			return false;
+		DijagnozaDTO d = (DijagnozaDTO) obj;
+		return this.id.equals(d.id);
+	}
 	
 }

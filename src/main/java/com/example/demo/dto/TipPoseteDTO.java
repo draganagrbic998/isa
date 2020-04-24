@@ -95,8 +95,15 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 
 	@Override
 	public int compareTo(TipPoseteDTO t) {
-		// TODO Auto-generated method stub
 		return this.naziv.compareTo(t.naziv);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof TipPoseteDTO))
+			return false;
+		TipPoseteDTO t = (TipPoseteDTO) obj;
+		return this.id.equals(t.id);
 	}
 
 }

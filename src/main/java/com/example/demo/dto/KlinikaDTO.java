@@ -55,10 +55,15 @@ public class KlinikaDTO implements Comparable<KlinikaDTO>{
 
 	@Override
 	public int compareTo(KlinikaDTO k) {
-		// TODO Auto-generated method stub
 		return this.naziv.compareTo(k.naziv);
 	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof KlinikaDTO))
+			return false;
+		KlinikaDTO k = (KlinikaDTO) obj;
+		return this.id.equals(k.id);
+	}
 	
 }
