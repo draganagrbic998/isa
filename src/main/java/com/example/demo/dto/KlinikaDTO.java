@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Klinika;
 
-public class KlinikaDTO {
+public class KlinikaDTO implements Comparable<KlinikaDTO>{
 	
 	private Integer id;
 	private String naziv;
@@ -51,6 +51,12 @@ public class KlinikaDTO {
 
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
+	}
+
+	@Override
+	public int compareTo(KlinikaDTO k) {
+		// TODO Auto-generated method stub
+		return this.naziv.compareTo(k.naziv);
 	}
 
 	

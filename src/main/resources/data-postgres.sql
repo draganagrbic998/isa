@@ -94,9 +94,9 @@ values ( 'lek3', 'sifra3');
 
 ---------------SESTRE---------------------
 insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version)
-values ('sestra', 'baba', 'deda', 'asd1', 'asd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0);
+values ('sestra', 'baba', 'deda', 'asd1@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version)
-values ('sestra', 'mama', 'tata', 'asd2', 'asd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0);
+values ('sestra', 'mama', 'tata', 'asd2@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0);
 
 --------------TERAPIJE ZA GLAVNOG PACIJENTA-----------------------
 insert into terapija (izvestaj, sestra)
@@ -161,11 +161,17 @@ values (4, 2);
 insert into izvestaj_dijagnoza (izvestaj, dijagnoza)
 values (4, 3);
 
--------------NOVI SLOBODNI TERMINI-------------------------------
+-------------SLOBODNI TERMINI-------------------------------
 insert into poseta (datum, popust, stanje, sala, tip_posete, version)
 values ('2020-04-26 12:00:00', 0.2, 0, 1, 1, 0);
 insert into poseta (datum, popust, stanje, sala, tip_posete, version)
 values ('2020-04-27 12:00:00', 0.2, 0, 1, 1, 0);
+insert into poseta (datum, popust, stanje, sala, tip_posete, version)
+values ('2020-04-28 12:00:00', 0.2, 0, 1, 1, 0);
+insert into poseta (datum, popust, stanje, sala, tip_posete, version)
+values ('2020-04-29 12:00:00', 0.2, 0, 1, 1, 0);
+insert into poseta (datum, popust, stanje, sala, tip_posete, version)
+values ('2020-04-30 12:00:00', 0.2, 0, 1, 1, 0);
 ----------------------
 insert into lekar_poseta (lekar, poseta)
 values (2, 8);

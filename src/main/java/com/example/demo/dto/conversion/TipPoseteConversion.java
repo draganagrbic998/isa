@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class TipPoseteConversion {
 		List<TipPoseteDTO> tipoviPosetaDTO = new ArrayList<>();
 		for (TipPosete tp : tipoviPoseta)
 			tipoviPosetaDTO.add(new TipPoseteDTO(tp));
+		Collections.sort(tipoviPosetaDTO);
 		return tipoviPosetaDTO;
 	}
 

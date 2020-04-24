@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class PacijentConversion {
 		List<PacijentDTO> pacijentiDTO = new ArrayList<>();
 		for (Pacijent p: pacijenti)
 			pacijentiDTO.add(new PacijentDTO(p));
+		Collections.sort(pacijentiDTO);
 		return pacijentiDTO;
 		
 	}

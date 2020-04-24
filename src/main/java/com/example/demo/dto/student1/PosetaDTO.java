@@ -1,13 +1,14 @@
 package com.example.demo.dto.student1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Poseta;
 
-public class PosetaDTO {
+public class PosetaDTO implements Comparable<PosetaDTO>{
 	
 	private Integer id;
 	private Date datum;
@@ -34,6 +35,7 @@ public class PosetaDTO {
 		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
 			this.lekari.add(l.getIme() + " " + l.getPrezime());
+		Collections.sort(this.lekari);
 
 	}
 
@@ -99,6 +101,11 @@ public class PosetaDTO {
 
 	public void setLekari(List<String> lekari) {
 		this.lekari = lekari;
+	}
+
+	@Override
+	public int compareTo(PosetaDTO p) {
+		return this.datum.compareTo(p.datum);
 	}
 
 }

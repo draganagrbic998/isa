@@ -1,6 +1,7 @@
 package com.example.demo.dto.student1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class KlinikaSlobodno extends KlinikaDTO {
 			if (p.getTipPosete().getPregled() && p.getStanje().equals(StanjePosete.SLOBODNO) && p.getDatum().after(new Date()))
 				this.posete.add(new PosetaDTO(p));
 		}
+		Collections.sort(this.posete);
 	}
 
 	public double getOcena() {

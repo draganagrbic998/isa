@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -130,7 +131,7 @@ public class Karton {
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
 	}
-	
+
 	public List<Termin> getTermini(){
 		
 		List<Termin> termini = new ArrayList<>();
@@ -138,6 +139,7 @@ public class Karton {
 			if (p.getStanje().equals(StanjePosete.ZAUZETO))
 				termini.add(new Termin(p));
 		}
+		Collections.sort(termini);
 		return termini;
 		
 	}
@@ -149,6 +151,7 @@ public class Karton {
 			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
 				bolesti.add(new Bolest(p));
 		}
+		Collections.sort(bolesti);
 		return bolesti;
 		
 	}

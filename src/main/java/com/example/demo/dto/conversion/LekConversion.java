@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ public class LekConversion {
 		List<LekDTO> lekoviDTO = new ArrayList<>();
 		for (Lek l: lekovi)
 			lekoviDTO.add(new LekDTO(l));
+		Collections.sort(lekoviDTO);
 		return lekoviDTO;
 	}
 }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +84,7 @@ public class KlinikaService {
 		List<KlinikaSlobodno> lista = new ArrayList<>();
 		for (Klinika k: this.klinikaRepository.findAll())
 			lista.add(new KlinikaSlobodno(k, this.getPosete(k)));
+		Collections.sort(lista);
 		return lista;
 
 	}

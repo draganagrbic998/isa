@@ -1,6 +1,7 @@
 package com.example.demo.dto.student1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 import com.example.demo.model.Poseta;
 
-public class Bolest {
+public class Bolest implements Comparable<Bolest>{
 		
 	private Integer posetaId;
 	private Integer klinikaId;
@@ -54,6 +55,9 @@ public class Bolest {
 		this.recepti = new ArrayList<>();
 		for (Lek l: poseta.getIzvestaj().getTerapija().getLekovi())
 			this.recepti.add(new Recept(l, poseta.getIzvestaj().getTerapija().getSestra()));
+		Collections.sort(this.lekari);
+		Collections.sort(this.dijagnoze);
+		Collections.sort(this.recepti);
 	}
 
 	public Integer getPosetaId() {
@@ -142,6 +146,11 @@ public class Bolest {
 
 	public void setRecepti(List<Recept> recepti) {
 		this.recepti = recepti;
+	}
+
+	@Override
+	public int compareTo(Bolest b) {
+		return this.datum.compareTo(b.datum);
 	}
 
 }

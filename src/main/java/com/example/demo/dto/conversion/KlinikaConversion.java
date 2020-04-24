@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ public class KlinikaConversion {
 		List<KlinikaDTO> klinikeDTO = new ArrayList<>();
 		for (Klinika k: klinike) 
 			klinikeDTO.add(new KlinikaDTO(k));
+		Collections.sort(klinikeDTO);
 		return klinikeDTO;
 		
 	}
@@ -38,6 +40,7 @@ public class KlinikaConversion {
 		List<KlinikaPretraga> lista = new ArrayList<>();
 		for (Klinika k: klinike)
 			lista.add(new KlinikaPretraga(k));
+		Collections.sort(lista);
 		return lista;
 		
 	}

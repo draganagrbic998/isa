@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Sala;
 
-public class SalaDTO {
+public class SalaDTO implements Comparable<SalaDTO>{
 
 	private Integer id; 
 	private String broj;
@@ -60,6 +60,12 @@ public class SalaDTO {
 
 	public void setAktivan(boolean aktivan) {
 		this.aktivan = aktivan;
+	}
+
+	@Override
+	public int compareTo(SalaDTO s) {
+		// TODO Auto-generated method stub
+		return this.broj.compareTo(s.broj);
 	}
 	
 }

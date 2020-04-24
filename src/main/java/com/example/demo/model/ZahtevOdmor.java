@@ -23,8 +23,8 @@ public class ZahtevOdmor {
 	@Column(unique = false, nullable = false)
 	private boolean odobren;
 	@ManyToOne
-	@JoinColumn(name="lekar")
-	private Lekar lekar;
+	@JoinColumn(name="zaposleni")
+	private Zaposleni zaposleni;
 	
 	public ZahtevOdmor() {
 		super();
@@ -54,12 +54,20 @@ public class ZahtevOdmor {
 		this.odobren = odobren;
 	}
 
-	public Lekar getLekar() {
-		return lekar;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setLekar(Lekar lekar) {
-		this.lekar = lekar;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Zaposleni getZaposleni() {
+		return zaposleni;
+	}
+
+	public void setZaposleni(Zaposleni zaposleni) {
+		this.zaposleni = zaposleni;
 	}
 	
 }

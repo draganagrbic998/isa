@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -67,9 +69,9 @@ public class Terapija {
 	public void setLekovi(Set<Lek> lekovi) {
 		this.lekovi = lekovi;
 	}
-	
-	public Set<String> getDijagnozeSifre() {
-		Set<String> sifre = new HashSet<>();
+
+	public List<String> getDijagnozeSifre() {
+		List<String> sifre = new ArrayList<>();
 		
 		for (Dijagnoza d : this.izvestaj.getDijagnoze())
 			sifre.add(d.getSifra());
@@ -77,8 +79,8 @@ public class Terapija {
 		return sifre;
 	}
 	
-	public Set<String> getLekoviSifre() {
-		Set<String> sifre = new HashSet<>();
+	public List<String> getLekoviSifre() {
+		List<String> sifre = new ArrayList<>();
 		
 		for (Lek l : this.lekovi)
 			sifre.add(l.getSifra());

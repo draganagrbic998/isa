@@ -1,11 +1,15 @@
 package com.example.demo.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public abstract class Zaposleni extends Korisnik{
@@ -17,7 +21,9 @@ public abstract class Zaposleni extends Korisnik{
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
-	
+	@OneToMany(mappedBy = "zaposleni", fetch = FetchType.EAGER)
+	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
+
 	public Zaposleni() {
 		super();
 	}
@@ -53,6 +59,14 @@ public abstract class Zaposleni extends Korisnik{
 
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
+	}
+
+	public Set<ZahtevOdmor> getOdmorZahtevi() {
+		return odmorZahtevi;
+	}
+
+	public void setOdmorZahtevi(Set<ZahtevOdmor> odmorZahtevi) {
+		this.odmorZahtevi = odmorZahtevi;
 	}
 
 }

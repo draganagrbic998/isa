@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class KartonConversion {
 		List<KartonDTO> kartoniDTO = new ArrayList<>();
 		for (Karton k: kartoni)
 			kartoniDTO.add(new KartonDTO(k));
+		Collections.sort(kartoniDTO);
 		return kartoniDTO;
 		
 	}

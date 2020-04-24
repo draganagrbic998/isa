@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Lek;
 
-public class LekDTO {
+public class LekDTO implements Comparable<LekDTO>{
 
 	private Integer id;
 	private String sifra;
@@ -41,6 +41,12 @@ public class LekDTO {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	@Override
+	public int compareTo(LekDTO l) {
+		// TODO Auto-generated method stub
+		return this.sifra.compareTo(l.sifra);
 	}
 	
 }

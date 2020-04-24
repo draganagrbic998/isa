@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class SalaConversion {
 		List<SalaDTO> saleDTO = new ArrayList<>();
 		for (Sala s : sale) 
 			saleDTO.add(new SalaDTO(s));
+		Collections.sort(saleDTO);
 		return saleDTO;
  	}
 

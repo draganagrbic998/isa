@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Lekar;
 
-public class LekarDTO extends ZaposleniDTO{
+public class LekarDTO extends ZaposleniDTO {
 
 	private Integer specijalizacija;
 

@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.TipPosete;
 
-public class TipPoseteDTO {
+public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 	
 	private Integer id;
 	private Boolean pregled;
@@ -91,6 +91,12 @@ public class TipPoseteDTO {
 
 	public void setAktivan(boolean aktivan) {
 		this.aktivan = aktivan;
+	}
+
+	@Override
+	public int compareTo(TipPoseteDTO t) {
+		// TODO Auto-generated method stub
+		return this.naziv.compareTo(t.naziv);
 	}
 
 }

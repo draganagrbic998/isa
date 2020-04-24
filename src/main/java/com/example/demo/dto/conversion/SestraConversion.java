@@ -3,6 +3,7 @@ package com.example.demo.dto.conversion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class SestraConversion {
 		List<SestraDTO> sestreDTO = new ArrayList<>();
 		for (Sestra s: sestre)
 			sestreDTO.add(new SestraDTO(s));
+		Collections.sort(sestreDTO);
 		return sestreDTO;
 		
 	}

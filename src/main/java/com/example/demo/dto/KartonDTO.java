@@ -3,7 +3,7 @@ package com.example.demo.dto;
 import com.example.demo.model.Karton;
 import com.example.demo.model.KrvnaGrupa;
 
-public class KartonDTO {
+public class KartonDTO implements Comparable<KartonDTO>{
 	
 	private Integer id;
 	private String brojOsiguranika;
@@ -92,6 +92,12 @@ public class KartonDTO {
 
 	public void setPacijent(Integer pacijent) {
 		this.pacijent = pacijent;
+	}
+
+	@Override
+	public int compareTo(KartonDTO k) {
+		// TODO Auto-generated method stub
+		return this.brojOsiguranika.compareTo(k.brojOsiguranika);
 	}
 
 }

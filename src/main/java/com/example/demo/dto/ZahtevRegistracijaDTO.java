@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.ZahtevRegistracija;
 
-public class ZahtevRegistracijaDTO {
+public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 	
 	private Integer id;
 	private String email;
@@ -111,6 +111,12 @@ public class ZahtevRegistracijaDTO {
 
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
+	}
+
+	@Override
+	public int compareTo(ZahtevRegistracijaDTO z) {
+		// TODO Auto-generated method stub
+		return this.brojOsiguranika.compareTo(z.brojOsiguranika);
 	}
 
 }

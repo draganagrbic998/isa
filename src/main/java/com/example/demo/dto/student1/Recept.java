@@ -3,7 +3,7 @@ package com.example.demo.dto.student1;
 import com.example.demo.model.Lek;
 import com.example.demo.model.Sestra;
 
-public class Recept {
+public class Recept implements Comparable<Recept>{
 	
 	private String sifra;
 	private String naziv;
@@ -42,6 +42,12 @@ public class Recept {
 
 	public void setSestra(String sestra) {
 		this.sestra = sestra;
+	}
+
+	@Override
+	public int compareTo(Recept r) {
+		// TODO Auto-generated method stub
+		return this.sifra.compareTo(r.sifra);
 	}
 
 }

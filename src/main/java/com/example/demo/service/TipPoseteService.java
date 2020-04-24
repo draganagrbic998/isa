@@ -55,12 +55,9 @@ public class TipPoseteService {
 	@Transactional(readOnly = false)
 	public void delete(Integer id, List<Lekar> lekari) {
 		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
-		for (Lekar l : lekari) {
-			for (Poseta p : l.getPosete()) {
-				if (!p.getStanje().equals(StanjePosete.OBAVLJENO) && p.getTipPosete().getId().equals(tipPosete.getId())) {
-					throw new RuntimeException();
-				}
-			}
+		for (Poseta p: tipPosete.getPosete()) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
+				throw new RuntimeException();
 		}
 		tipPosete.setAktivan(false);
 		this.tipPoseteRepository.save(tipPosete);

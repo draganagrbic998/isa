@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class AdminConversion {
 		List<AdminDTO> adminiDTO = new ArrayList<>();
 		for (Admin a: admini)
 			adminiDTO.add(new AdminDTO(a));
+		Collections.sort(adminiDTO);
 		return adminiDTO;
 		
 	}

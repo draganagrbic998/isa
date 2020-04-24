@@ -1,12 +1,17 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class TipPosete {
@@ -29,6 +34,8 @@ public class TipPosete {
 	private Klinika klinika;
 	@Column
 	private boolean aktivan;
+	@OneToMany(mappedBy = "tipPosete", fetch = FetchType.EAGER)
+	private Set<Poseta> posete = new HashSet<>();
 	
 	public TipPosete() {
 		super();
@@ -108,6 +115,14 @@ public class TipPosete {
 
 	public void setAktivan(boolean aktivan) {
 		this.aktivan = aktivan;
+	}
+
+	public Set<Poseta> getPosete() {
+		return posete;
+	}
+
+	public void setPosete(Set<Poseta> posete) {
+		this.posete = posete;
 	}
 	
 }

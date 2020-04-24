@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -36,6 +37,7 @@ public class ZahtevRegistracijaConversion {
 		List<ZahtevRegistracijaDTO> zahteviDTO = new ArrayList<>();
 		for (ZahtevRegistracija z: zahtevi)
 			zahteviDTO.add(new ZahtevRegistracijaDTO(z));
+		Collections.sort(zahteviDTO);
 		return zahteviDTO;
 		
 	}

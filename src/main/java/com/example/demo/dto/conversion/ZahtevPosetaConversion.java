@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,9 @@ public class ZahtevPosetaConversion {
 	public List<ZahtevPosetaDTO> get(List<ZahtevPoseta> zahtevi){
 		
 		List<ZahtevPosetaDTO> zahteviDTO = new ArrayList<>();
-		for (ZahtevPoseta zp: zahtevi)
-			zahteviDTO.add(new ZahtevPosetaDTO(zp));
+		for (ZahtevPoseta z: zahtevi)
+			zahteviDTO.add(new ZahtevPosetaDTO(z));
+		Collections.sort(zahteviDTO);
 		return zahteviDTO;
 	}
 	

@@ -1,6 +1,7 @@
 package com.example.demo.dto.conversion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -27,6 +28,7 @@ public class DijagnozaConversion {
 		List<DijagnozaDTO> dijagnozeDTO = new ArrayList<>();
 		for (Dijagnoza d: dijagnoze)
 			dijagnozeDTO.add(new DijagnozaDTO(d));
+		Collections.sort(dijagnozeDTO);
 		return dijagnozeDTO;
 	}
 }

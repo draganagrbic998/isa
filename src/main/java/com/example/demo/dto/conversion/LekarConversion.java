@@ -3,6 +3,7 @@ package com.example.demo.dto.conversion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ public class LekarConversion {
 		List<LekarDTO> lekariDTO = new ArrayList<>();
 		for (Lekar l: lekari)
 			lekariDTO.add(new LekarDTO(l));
+		Collections.sort(lekariDTO);
 		return lekariDTO;
 		
 	}

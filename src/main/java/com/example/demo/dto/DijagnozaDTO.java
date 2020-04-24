@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Dijagnoza;
 
-public class DijagnozaDTO {
+public class DijagnozaDTO implements Comparable<DijagnozaDTO>{
 
 	private Integer id;
 	private String sifra;
@@ -41,6 +41,12 @@ public class DijagnozaDTO {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	@Override
+	public int compareTo(DijagnozaDTO d) {
+		// TODO Auto-generated method stub
+		return this.sifra.compareTo(d.sifra);
 	}
 
 	

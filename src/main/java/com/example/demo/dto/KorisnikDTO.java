@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Korisnik;
 
-public class KorisnikDTO {
+public class KorisnikDTO implements Comparable<KorisnikDTO>{
 	
 	private Integer id;
 	private String email;
@@ -121,6 +121,14 @@ public class KorisnikDTO {
 
 	public void setPromenjenaSifra(boolean promenjenaSifra) {
 		this.promenjenaSifra = promenjenaSifra;
+	}
+
+	@Override
+	public int compareTo(KorisnikDTO k) {
+		// TODO Auto-generated method stub
+		if (this.ime.compareTo(k.ime) != 0)
+			return this.ime.compareTo(k.ime);
+		return this.prezime.compareTo(k.prezime);
 	}
 
 }

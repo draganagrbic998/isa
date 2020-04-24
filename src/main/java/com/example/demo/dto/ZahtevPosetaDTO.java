@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.example.demo.model.ZahtevPoseta;
 
-public class ZahtevPosetaDTO {
+public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 	
 	private Integer id;
 	private Date datum;
@@ -63,6 +63,12 @@ public class ZahtevPosetaDTO {
 
 	public void setTipPosete(Integer tipPosete) {
 		this.tipPosete = tipPosete;
+	}
+
+	@Override
+	public int compareTo(ZahtevPosetaDTO z) {
+		// TODO Auto-generated method stub
+		return this.datum.compareTo(z.datum);
 	}
 
 }

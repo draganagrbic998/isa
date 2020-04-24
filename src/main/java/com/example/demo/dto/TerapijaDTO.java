@@ -1,15 +1,15 @@
 package com.example.demo.dto;
 
-import java.util.Set;
+import java.util.List;
 
 import com.example.demo.model.Terapija;
 
-public class TerapijaDTO {
+public class TerapijaDTO implements Comparable<TerapijaDTO>{
 
 	private Integer id;
 	private String brOsiguranika;
-	private Set<String> dijagnoze;
-	private Set<String> lekovi;
+	private List<String> dijagnoze;
+	private List<String> lekovi;
 	
 	public TerapijaDTO() {
 		super();
@@ -39,20 +39,26 @@ public class TerapijaDTO {
 		this.brOsiguranika = brOsiguranika;
 	}
 
-	public Set<String> getDijagnoze() {
+	public List<String> getDijagnoze() {
 		return dijagnoze;
 	}
 
-	public void setDijagnoze(Set<String> dijagnoze) {
+	public void setDijagnoze(List<String> dijagnoze) {
 		this.dijagnoze = dijagnoze;
 	}
 
-	public Set<String> getLekovi() {
+	public List<String> getLekovi() {
 		return lekovi;
 	}
 
-	public void setLekovi(Set<String> lekovi) {
+	public void setLekovi(List<String> lekovi) {
 		this.lekovi = lekovi;
+	}
+
+	@Override
+	public int compareTo(TerapijaDTO o) {
+		// TODO Auto-generated method stub
+		return this.brOsiguranika.compareTo(o.brOsiguranika);
 	}
 	
 }

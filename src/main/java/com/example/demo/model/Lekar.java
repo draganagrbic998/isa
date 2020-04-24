@@ -19,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("lekar")
@@ -35,11 +36,12 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 	@ManyToMany(mappedBy = "lekari", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
-	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
-	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
 	private Set<ZahtevPoseta> pregledZahtevi = new HashSet<>();
 	@Column
 	private Date poslednjaIzmena;
+	@OneToOne
+	@JoinColumn(name="zapocetaPoseta")
+	private Poseta zapocetaPoseta;
 	
 	public Lekar() {
 		super();
@@ -77,14 +79,6 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		this.posete = posete;
 	}
 
-	public Set<ZahtevOdmor> getOdmorZahtevi() {
-		return odmorZahtevi;
-	}
-
-	public void setOdmorZahtevi(Set<ZahtevOdmor> odmorZahtevi) {
-		this.odmorZahtevi = odmorZahtevi;
-	}
-
 	public Set<ZahtevPoseta> getPregledZahtevi() {
 		return pregledZahtevi;
 	}
@@ -99,6 +93,14 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 
 	public void setPoslednjaIzmena(Date poslednjaIzmena) {
 		this.poslednjaIzmena = poslednjaIzmena;
+	}
+
+	public Poseta getZapocetaPoseta() {
+		return zapocetaPoseta;
+	}
+
+	public void setZapocetaPoseta(Poseta zapocetaPoseta) {
+		this.zapocetaPoseta = zapocetaPoseta;
 	}
 
 	@Override
@@ -122,7 +124,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		if (datum == null)
 			return satnica;
 		
-		for  (ZahtevOdmor z: this.odmorZahtevi) {
+		for  (ZahtevOdmor z: this.getOdmorZahtevi()) {
 			if ((z.getPocetak().equals(datum) || z.getPocetak().before(datum)) && (z.getKraj().equals(datum) || z.getKraj().after(datum)))
 				return satnica;
 		}
@@ -267,7 +269,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		gc.set(Calendar.MINUTE, 0);
 		Date krajDatum = gc.getTime();
 		
-		for (ZahtevOdmor zo: this.odmorZahtevi) {
+		for (ZahtevOdmor zo: this.getOdmorZahtevi()) {
 			if (zo.getPocetak().equals(pocetakDatum) || zo.getKraj().equals(krajDatum))
 				return false;
 		}

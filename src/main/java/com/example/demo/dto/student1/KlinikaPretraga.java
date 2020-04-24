@@ -1,6 +1,7 @@
 package com.example.demo.dto.student1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -37,6 +38,7 @@ public class KlinikaPretraga extends KlinikaDTO{
 			if (z instanceof Lekar)
 				this.lekari.add(new LekarSatnica((Lekar) z));
 		}
+		Collections.sort(this.lekari);
 		
 	}
 
