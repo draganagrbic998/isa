@@ -13,67 +13,66 @@ Vue.component("karton", {
 		<div>
 		
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#/pacijentHome">POCETNA STRANICA</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
-          Home page
+          Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/profil">
-          <i class="fa fa-address-book"></i>
-          Profil pacijenta
+          <i class="fa fa-user"></i>
+          Profil 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/karton">
           <i class="fa fa-address-book"></i>
-          Karton pacijenta
+          Karton 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/termini">
-          <i class="fa fa-line-chart"></i>
-          Zakazani termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active">
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 130px;">
         <a class="nav-link" href="#/bolesti">
-          <i class="fa fa-globe"></i>
+          <i class="fa fa-line-chart"></i>
           Istorija bolesti
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/klinikeSlobodno">
-          <i class="fa fa-bell"></i>
-          Predefinisani termini
+      <li class="nav-item active" style="min-width: 130px;">
+        <a class="nav-link" href="#/termini">
+          <i class="fa fa-calendar"></i>
+          Zakazani termini
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 140px;">
+        <a class="nav-link" href="#/klinikeSlobodno">
+          <i class="fa fa-bell"></i>
+          Povoljni termini
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item active" style="min-width: 140px;">
         <a class="nav-link" href="#/klinikeLekari">
           <i class="fa fa-hotel"></i>
-          Individualni termin
+          Klinike centra
           <span class="sr-only">(current)</span>
           </a>
       </li>
     </ul>
     
   </div>
-</nav>
-		
+</nav>		
 		</div>
 	
 		<div class="card" id="box">

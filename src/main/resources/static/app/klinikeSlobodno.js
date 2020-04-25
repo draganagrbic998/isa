@@ -18,67 +18,53 @@ Vue.component("klinikeSlobodno", {
 		<div>
 		
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#/pacijentHome">POCETNA STRANICA</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+    <ul class="navbar-nav" style="margin-left: 100px;">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
-          Home page
+          Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/profil">
-          <i class="fa fa-address-book"></i>
-          Profil pacijenta
+    </ul>    
+    
+    <ul class="navbar-nav mr-auto" style="margin-left: 150px;">
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="/#/klinikeSlobodno" v-on:click="naziv_sort()">
+          <i class="fa fa-coffee"></i>
+          Naziv 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/karton">
-          <i class="fa fa-address-book"></i>
-          Karton pacijenta
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/termini">
-          <i class="fa fa-line-chart"></i>
-          Zakazani termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/bolesti">
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="/#/klinikeSlobodno" v-on:click="adresa_sort()">
           <i class="fa fa-globe"></i>
-          Istorija bolesti
+          Adresa 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="/#/klinikeSlobodno" v-on:click="ocena_sort()">
+          <i class="fa fa-star"></i>
+          Ocena 
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+    </ul> 
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 140px;">
         <a class="nav-link" href="#/klinikeSlobodno" v-on:click="refresh()">
           <i class="fa fa-bell"></i>
-          Predefinisani termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/klinikeLekari">
-          <i class="fa fa-hotel"></i>
-          Individualni termin
+          Povoljni termini
           <span class="sr-only">(current)</span>
           </a>
       </li>
     </ul>
-    
+
   </div>
-</nav>
-		
+</nav>		
 		</div>
 	
 		<div v-if="posetaSelected" class="card" id="box">
@@ -281,6 +267,51 @@ Vue.component("klinikeSlobodno", {
 		
 		refresh: function(){
 			location.reload();
+		}, 
+		
+		naziv_sort(){
+			let lista = this.klinike;
+			this.klinike = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].naziv > lista[i].naziv) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.klinike = lista;
+		}, 
+		
+		adresa_sort(){
+			let lista = this.klinike;
+			this.klinike = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].adresa > lista[i].adresa) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.klinike = lista;
+		}, 
+		
+		ocena_sort(){
+			let lista = this.klinike;
+			this.klinike = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].ocena < lista[i].ocena) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.klinike = lista;
 		}
 	}
 	

@@ -55,7 +55,7 @@ Vue.component("dodajTipPosete", {
 						<option value="false">operacija</option>
 					</select></td><td>{{greskaPregled}}</td></tr>
 					<tr><td class="left">Sati: </td><td class="right"><input type="text" v-model="tipPosete.sati"></td><td>{{greskaSati}}</td></tr>
-					<tr><td class="left">Minuti: </td><td class="right"><input type="text" v-model="tipPosete.minute"></td><td>{{greskaMinuti}}</td></tr>
+					<tr><td class="left">Minute: </td><td class="right"><input type="text" v-model="tipPosete.minute"></td><td>{{greskaMinute}}</td></tr>
 					<tr><td class="left">Cena: </td><td class="right"><input type="text" v-model="tipPosete.cena"></td><td>{{greskaCena}}</td></tr>
 					<tr><td colspan="3"><button v-on:click="dodaj_tp()">DODAJ</button><br></td></tr>
 					
