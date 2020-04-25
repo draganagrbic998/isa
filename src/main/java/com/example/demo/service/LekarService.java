@@ -40,6 +40,8 @@ public class LekarService {
 	@Transactional(readOnly = false)
 	public void delete(Integer id) {
 		Lekar l = this.lekarRepository.getOne(id);
+		if (!l.getPosetaZahtevi().isEmpty())
+			throw new RuntimeException();
 		for (Poseta p: l.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
 				throw new RuntimeException();

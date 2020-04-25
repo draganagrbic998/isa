@@ -97,15 +97,11 @@ public class ZahtevPoseta implements Zauzetost{
 
 	@Override
 	public int sati() {
-		if (this.tipPosete == null)
-			return this.lekar.getSpecijalizacija().getSati();
 		return this.tipPosete.getSati();
 	}
 
 	@Override
 	public int minute() {
-		if (this.tipPosete == null)
-			return this.lekar.getSpecijalizacija().getMinute();
 		return this.tipPosete.getMinute();
 	}
 

@@ -36,7 +36,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 	@ManyToMany(mappedBy = "lekari", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
 	@OneToMany(mappedBy = "lekar", fetch = FetchType.EAGER)
-	private Set<ZahtevPoseta> pregledZahtevi = new HashSet<>();
+	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
 	@Column
 	private Date poslednjaIzmena;
 	@OneToOne
@@ -79,12 +79,12 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		this.posete = posete;
 	}
 
-	public Set<ZahtevPoseta> getPregledZahtevi() {
-		return pregledZahtevi;
+	public Set<ZahtevPoseta> getPosetaZahtevi() {
+		return posetaZahtevi;
 	}
 
-	public void setPregledZahtevi(Set<ZahtevPoseta> pregledZahtevi) {
-		this.pregledZahtevi = pregledZahtevi;
+	public void setPosetaZahtevi(Set<ZahtevPoseta> posetaZahtevi) {
+		this.posetaZahtevi = posetaZahtevi;
 	}
 
 	public Date getPoslednjaIzmena() {
@@ -144,7 +144,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 			if (kalendar.getTime().equals(compareDate) && !p.getStanje().equals(StanjePosete.OBAVLJENO))
 				lista.add(p);
 		}
-		for (ZahtevPoseta zp: this.pregledZahtevi) {
+		for (ZahtevPoseta zp: this.posetaZahtevi) {
 			kalendar.setTime(zp.pocetak());
 			kalendar.set(Calendar.HOUR_OF_DAY, 0);
 			kalendar.set(Calendar.MINUTE, 0);
@@ -285,7 +285,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 
 		}
 		
-		for (ZahtevPoseta p: this.pregledZahtevi) {
+		for (ZahtevPoseta p: this.posetaZahtevi) {
 			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
 					&&  pocetak.before(p.kraj()))
 				return false;

@@ -30,7 +30,8 @@ public class ZahtevPosetaConversion {
 		return new ZahtevPoseta(zahtevDTO.getId(), zahtevDTO.getDatum(), 
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 
-				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : null);
+				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : 
+					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija());
 		
 	}
 	
