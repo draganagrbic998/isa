@@ -23,6 +23,15 @@ const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
 const overaRecepata = {template: '<overaRecepata></overaRecepata>'}
 const promenaSifre = {template: '<promenaSifre></promenaSifre>'}
 
+//Lekar home-page
+const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
+const zakaziPregled = {template: '<zakaziPregled></zakaziPregled>'}
+const zapocniPregled = {template: '<zapocniPregled></zapocniPregled>'}
+const zahtevGodisnji = {template: '<zahtevGodisnji></zahtevGodisnji>'}
+const profilLekar = {template: '<profilLekar></profilLekar>'}
+
+
+
 //Dodavanja:
 const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlinike>'}
 const registracijaSuperAdmina = {template: '<registracijaSuperAdmina></registracijaSuperAdmina>'}
@@ -39,6 +48,8 @@ const lekoviPretraga = {template: '<lekoviPretraga></lekoviPretraga>'}
 const tipPregledaPretraga = {template: '<tipPregledaPretraga></tipPregledaPretraga>'}
 const lekariPretraga = {template: '<lekariPretraga></lekariPretraga>'}
 const sestrePretraga = {template: '<sestrePretraga></sestrePretraga>'}
+
+const obradaZahtevGodisnji = {template: '<obradaZahtevGodisnji></obradaZahtevGodisnji>'}
 
 
 const router = new VueRouter({
@@ -76,7 +87,14 @@ const router = new VueRouter({
 		{path: '/tipPregledaPretraga', component: tipPregledaPretraga},
 		{path: '/sestrePretraga', component: sestrePretraga},
 		{path: '/overaRecepata', component: overaRecepata}, 
-		{path: '/promenaSifre', component: promenaSifre}
+		{path: '/promenaSifre', component: promenaSifre},
+		{path: '/lekarPacijenti', component: lekarPacijenti},
+		{path: '/zakaziPregled', component: zakaziPregled},
+		{path: '/zapocniPregled', component: zapocniPregled},
+		{path: '/zahtevGodisnji', component: zahtevGodisnji},
+		{path: '/profilLekar', component: profilLekar},
+		{path: '/obradaZahtevGodisnji', component: obradaZahtevGodisnji}
+		
 	]
 	
 });

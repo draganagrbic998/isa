@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.LekarDTO;
+import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.conversion.LekarConversion;
+import com.example.demo.dto.conversion.PacijentConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.LekarService;
+import com.example.demo.service.PacijentService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -33,6 +37,12 @@ public class LekarController {
 	
 	@Autowired
 	private LekarConversion lekarConversion;
+	
+	@Autowired
+	private PacijentService pacijentService;
+	
+	@Autowired
+	private PacijentConversion pacijentConversion;
 	
 	@Autowired
 	private UserService userService;
@@ -80,6 +90,42 @@ public class LekarController {
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(new Bolest(this.lekarService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<LekarDTO> profil(){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.lekarConversion.get(lekar), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody LekarDTO lekarDTO){
+		try {
+			this.lekarService.save(this.lekarConversion.get(lekarDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/pacijenti", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PacijentDTO>> getPatients(){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			List<Lekar> lekari = this.lekarService.findAll(lekar); 
+			return new ResponseEntity<>(this.pacijentConversion.get(this.pacijentService.findAll(lekari)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

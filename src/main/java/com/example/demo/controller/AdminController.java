@@ -29,6 +29,8 @@ public class AdminController {
 	
 	@Autowired
 	private AdminConversion adminConversion;
+	
+	
 		
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

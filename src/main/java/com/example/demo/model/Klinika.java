@@ -41,10 +41,7 @@ public class Klinika implements Ocenjivanje{
     joinColumns = @JoinColumn(name = "klinika"),
     inverseJoinColumns = @JoinColumn(name = "pregled"))
 	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "klinika_odmor",
-    joinColumns = @JoinColumn(name = "klinika"),
-    inverseJoinColumns = @JoinColumn(name = "odmor"))
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="klinika")
 	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();
 	
 	public Klinika() {

@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.student1.OcenaParam;
-import com.example.demo.model.Admin;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
+import com.example.demo.model.Zaposleni;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.OcenaRepository;
 import com.example.demo.repository.PosetaRepository;
@@ -52,10 +52,10 @@ public class LekarService {
 	
 	
 	@Transactional(readOnly = true)
-	public List<Lekar> findAll(Admin admin) {
+	public List<Lekar> findAll(Zaposleni zaposleni) {
 		List<Lekar> doctors = new ArrayList<>();
 		for (Lekar l : this.lekarRepository.findAll()) {
-			if (l.getKlinika().getId().equals(admin.getKlinika().getId()) && l.isAktivan())
+			if (l.getKlinika().getId().equals(zaposleni.getKlinika().getId()) && l.isAktivan())
 				doctors.add(l);
 		}
 		return doctors;
@@ -72,5 +72,3 @@ public class LekarService {
 	}
 
 }
-
-

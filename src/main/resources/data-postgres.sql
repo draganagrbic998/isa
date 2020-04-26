@@ -197,3 +197,8 @@ insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
 values (true, 'super pregled', 2, 300, 2, 45, true);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
 values ('lekar', 'prababa', 'pradeda', 'isanalog7@gmail.com', 'asd', 2,  '2020-04-20 10:00', '2020-04-20 20:00', 2, 'asd', 'asd', 'asd', 'asd', true, true, 0);
+
+
+-------ZAHTEV GODISNJI ODMOR, LEKAR IRINA------------
+insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
+values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', false, 2, 1)

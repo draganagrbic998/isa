@@ -25,9 +25,20 @@ public class ZahtevOdmor {
 	@ManyToOne
 	@JoinColumn(name="zaposleni")
 	private Zaposleni zaposleni;
+	@ManyToOne
+	@JoinColumn(name="klinika")
+	private Klinika klinika;
 	
 	public ZahtevOdmor() {
 		super();
+	}
+	public ZahtevOdmor(Integer id, Date pocetak, Date kraj, boolean odobren, Zaposleni zaposleni, Klinika klinika) {
+		this.id = id;
+		this.pocetak = pocetak;
+		this.kraj = kraj;
+		this.odobren = odobren;
+		this.zaposleni = zaposleni;
+		this.klinika = klinika;
 	}
 
 	public Date getPocetak() {
@@ -68,6 +79,14 @@ public class ZahtevOdmor {
 
 	public void setZaposleni(Zaposleni zaposleni) {
 		this.zaposleni = zaposleni;
+	}
+
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
 	}
 	
 }
