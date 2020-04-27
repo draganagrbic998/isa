@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class ObavezaDTO {
 
+	private Integer id;
 	private String datum;
 	private String pocetak;
 	private Integer trajanje;
@@ -16,7 +17,8 @@ public class ObavezaDTO {
 		super();
 	}
 
-	public ObavezaDTO(Date pocetak, int trajanje, String tip, boolean pregled) {
+	public ObavezaDTO(Integer id, Date pocetak, int trajanje, String tip, boolean pregled) {
+		this.id = id;
 		this.datum = format.format(pocetak);
 		this.pocetak = format.format(pocetak);
 		this.trajanje = trajanje;
@@ -24,6 +26,14 @@ public class ObavezaDTO {
 		this.setPregled(pregled);
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public String getDatum() {
 		return datum;
 	}

@@ -27,6 +27,8 @@ Vue.component("lekarKalendar", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/lekarKalendar" v-on:click="prikaziDnevni()">
           <i class="fa fa-calendar"></i>
