@@ -14,7 +14,6 @@ import com.example.demo.dto.ZahtevOdmorObrada;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.ZahtevOdmor;
-import com.example.demo.model.ZahtevPoseta;
 import com.example.demo.model.Zaposleni;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.ZahtevOdmorRepository;
@@ -96,7 +95,7 @@ public class ZahtevOdmorService {
 
 	public boolean proveriDatume(Date pocetak, Date kraj) {
 		Date danas = new Date();
-		if (pocetak.before(danas) || kraj.before(danas) || kraj.before(danas)) {
+		if (pocetak.before(danas) || kraj.before(danas) || kraj.before(pocetak)) {
 			return false;
 		}
 		
