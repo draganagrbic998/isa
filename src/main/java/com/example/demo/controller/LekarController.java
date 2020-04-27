@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.LekarDTO;
+import com.example.demo.dto.ObavezaDTO;
 import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.conversion.LekarConversion;
 import com.example.demo.dto.conversion.PacijentConversion;
@@ -132,4 +133,15 @@ public class LekarController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/getObaveze", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ObavezaDTO>> getObaveze(){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.lekarService.getObaveze(lekar), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

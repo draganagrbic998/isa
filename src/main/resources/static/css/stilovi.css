@@ -151,8 +151,15 @@ textarea{
 	min-width: 150px;
 }
 
+.radniKalendarLevaTabelaDiv{
+	float: left;
+	width: 49%;
+}
 
-
+.radniKalendarDesnaTabelaDiv{
+	float: right;
+	width: 49%;
+}
 
 
 

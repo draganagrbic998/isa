@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dto.ObavezaDTO;
 import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
@@ -69,6 +70,16 @@ public class LekarService {
 		this.ocenaRepository.save(o);
 		return this.posetaRepository.getOne(posetaId);
 		
+	}
+
+	public List<ObavezaDTO> getObaveze(Lekar lekar) {
+		List<ObavezaDTO> obaveze = new ArrayList<ObavezaDTO>();
+		
+		for (Poseta p : lekar.getPosete()) {
+			obaveze.add(new ObavezaDTO(p.pocetak(), p.getTrajanje(), p.getTipPosete().getNaziv(), p.getTipPosete().getPregled()));
+		}
+		
+		return obaveze;
 	}
 
 }

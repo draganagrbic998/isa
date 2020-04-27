@@ -168,4 +168,7 @@ public class Poseta implements Zauzetost{
 		return gs.getTime();
 	}
 	
+	public int getTrajanje() {
+		return this.sati()*60 + this.minute();
+	}
 }

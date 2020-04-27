@@ -39,7 +39,7 @@ Vue.component("lekarHome", {
           </a>
       </li>
       <li class="nav-item active" style="min-width: 130px;">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="#/lekarKalendar">
           <i class="fa fa-calendar"></i>
           Radni kalendar
           <span class="sr-only">(current)</span>
