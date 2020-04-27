@@ -76,7 +76,8 @@ public class LekarService {
 		List<ObavezaDTO> obaveze = new ArrayList<ObavezaDTO>();
 		
 		for (Poseta p : lekar.getPosete()) {
-			obaveze.add(new ObavezaDTO(p.pocetak(), p.getTrajanje(), p.getTipPosete().getNaziv(), p.getTipPosete().getPregled()));
+			if (p.getStanje() == StanjePosete.ZAUZETO)
+				obaveze.add(new ObavezaDTO(p.pocetak(), p.getTrajanje(), p.getTipPosete().getNaziv(), p.getTipPosete().getPregled()));
 		}
 		
 		return obaveze;
