@@ -3,7 +3,11 @@ Vue.component('obradaZahtevGodisnji', {
 	data: function(){
 		return{
 			zahtevi: {},
+			odbijanje: false,
 			backup: {},
+			razlog: '',
+			greskaRazlog: '',
+			zahtevBrisanje: {},
 			pretraga: '',
 			nemaRezultata: ''
 		}
@@ -51,6 +55,8 @@ Vue.component('obradaZahtevGodisnji', {
 			<td> {{z.kraj}} </td>
 			<td><button v-on:click="potvrdiZahtev(z)" class="btn"><i class="fa fa-check"></i></button></td>
 			<td><button v-on:click="odbijZahtev(z)" class="btn"><i class="fa fa-ban"></i></button></td></tr>
+		<tr v-if="this.odbijanje"><td>Razlog za odbijanje:</td> <td><input type="text" v-model="razlog" name="name"></td><td>{{this.greskaRazlog}}</td> 
+		<td><button v-on:click="posalji()" class="btn"><i class="fa fa-paper-plane"></i>Posalji</button></td></tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
 	</div>
@@ -69,6 +75,12 @@ Vue.component('obradaZahtevGodisnji', {
 	}, 
 	
 	methods: {
+		
+		osvezi: function(){
+			this.greskaRazlog = "";
+			this.greska = false;
+		}, 
+		
 		potvrdiZahtev: function(z) {
 			axios.post("/zahtevOdmor/potvrda/", z)
 			.then(response => {
@@ -80,11 +92,24 @@ Vue.component('obradaZahtevGodisnji', {
 			});
 
 		},
-		//ne bi trebalo da ide na home page mora da moze jos da odbija
 		odbijZahtev: function(z) {
-			axios.post("/zahtevOdmor/odbijanje/",z)
+			this.odbijanje = true;
+			this.zahtevBrisanje = z;
+		},
+		posalji: function() {
+			this.osvezi();
+			if (this.razlog === '') {
+				this.greskaRazlog = "Morate uneti razlog!";
+				this.greska = true;
+			}
+			if (this.greska) {return;}
+			
+			this.zahtevBrisanje.razlog = this.razlog;
+			
+			axios.post("/zahtevOdmor/odbijanje/", this.zahtevBrisanje)
 			.then(response => {
 				alert("Zahtev odbijen!");
+				this.odbijanje = false;
 				this.$router.push("/obradaZahtevGodisnji");
 			})
 			.catch(error => {

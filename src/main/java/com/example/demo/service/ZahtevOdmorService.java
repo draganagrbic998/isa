@@ -33,6 +33,7 @@ public class ZahtevOdmorService {
 	@Autowired
 	private ZahtevOdmorRepository zahtevOdmorRepository;
 	
+	
 	@Transactional(readOnly = false)
 	public void save(ZahtevOdmor zahtev) {
 		this.zahtevOdmorRepository.save(zahtev);
@@ -63,34 +64,43 @@ public class ZahtevOdmorService {
 	
 	
 	
-	//pronalazi sve zahteve jedne klinike
+	//pronalazi sve zahteve jedne klinike, neodobrene (ne koristim nigde za sad)
 	@Transactional(readOnly = false)
 	public List<ZahtevOdmor> findForClinic(Klinika klinika) {
 		List<ZahtevOdmor> zahtevi = new ArrayList<ZahtevOdmor>();
 			for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
-				if (z.getKlinika() == klinika) {
+				if (z.getKlinika() == klinika && !z.getOdobren()) {
 					zahtevi.add(z);
 				}
 			}
 		return zahtevi;
 	}
 	
-	//pomocna metoda, nalazi sve zahtev odmor obrade za kliniku
+	//pomocna metoda, nalazi sve zahtev odmor obrade(neodobrene) za kliniku
 	//hocu da znam da li je zaposleni lekar 
 	public List<ZahtevOdmorObrada> zaObradu(Klinika klinika) {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		List<ZahtevOdmorObrada> zahtevi = new ArrayList<ZahtevOdmorObrada>();
 			for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
-				if (z.getKlinika() == klinika) {
+				if (z.getKlinika() == klinika && !z.getOdobren()) {
 					if (z.getZaposleni() instanceof Lekar) {
-						zahtevi.add(new ZahtevOdmorObrada(z.getId(), z.getZaposleni().getIme(), z.getZaposleni().getPrezime(), "Lekar", f.format(z.getPocetak()), f.format(z.getKraj()), z.getZaposleni().getId()));
+						zahtevi.add(new ZahtevOdmorObrada(z.getId(), z.getZaposleni().getIme(), z.getZaposleni().getPrezime(), "Lekar", f.format(z.getPocetak()), f.format(z.getKraj()), z.getZaposleni().getId(), ""));
 					}
 					else {
-						zahtevi.add(new ZahtevOdmorObrada(z.getId(), z.getZaposleni().getIme(), z.getZaposleni().getPrezime(), "Sestra", f.format(z.getPocetak()), f.format(z.getKraj()),z.getZaposleni().getId()));
+						zahtevi.add(new ZahtevOdmorObrada(z.getId(), z.getZaposleni().getIme(), z.getZaposleni().getPrezime(), "Sestra", f.format(z.getPocetak()), f.format(z.getKraj()),z.getZaposleni().getId(), ""));
 					}
 				}
 			}
 		return zahtevi;
+	}
+
+	public boolean proveriDatume(Date pocetak, Date kraj) {
+		Date danas = new Date();
+		if (pocetak.before(danas) || kraj.before(danas) || kraj.before(danas)) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	

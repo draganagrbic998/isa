@@ -11,8 +11,9 @@ public class ZahtevOdmorObrada {
 	private String profesija;
 	private String pocetak;
 	private String kraj;
+	private String razlog;
 	
-	public ZahtevOdmorObrada(Integer id, String ime, String prezime, String profesija, String pocetak, String kraj, Integer zaposleniId) {
+	public ZahtevOdmorObrada(Integer id, String ime, String prezime, String profesija, String pocetak, String kraj, Integer zaposleniId, String razlog) {
 		super();
 		this.id = id;
 		this.ime = ime;
@@ -21,6 +22,7 @@ public class ZahtevOdmorObrada {
 		this.pocetak = pocetak;
 		this.kraj = kraj;
 		this.zaposleniId = zaposleniId;
+		this.razlog = razlog;
 	}
 
 	public Integer getId() {
@@ -78,6 +80,12 @@ public class ZahtevOdmorObrada {
 	public void setZaposleniId(Integer zaposleniId) {
 		this.zaposleniId = zaposleniId;
 	}
-	
-	
+
+	public String getRazlog() {
+		return razlog;
+	}
+
+	public void setRazlog(String razlog) {
+		this.razlog = razlog;
+	}
 }
