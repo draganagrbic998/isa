@@ -11,7 +11,8 @@ public class ObavezaDTO {
 	private Integer trajanje;
 	private String tip;
 	private boolean pregled;
-	private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	private final SimpleDateFormat formatDatum = new SimpleDateFormat("yyyy-MM-dd");
+	private final SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public ObavezaDTO() {
 		super();
@@ -19,8 +20,8 @@ public class ObavezaDTO {
 
 	public ObavezaDTO(Integer id, Date pocetak, int trajanje, String tip, boolean pregled) {
 		this.id = id;
-		this.datum = format.format(pocetak);
-		this.pocetak = format.format(pocetak);
+		this.datum = formatDatum.format(pocetak);
+		this.pocetak = formatPocetak.format(pocetak);
 		this.trajanje = trajanje;
 		this.tip = tip;
 		this.setPregled(pregled);
