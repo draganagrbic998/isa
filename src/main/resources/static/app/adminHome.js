@@ -59,6 +59,13 @@ Vue.component("adminHome", {
           <div class="dropdown-divider"></div>
         </div>
       </li>
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="#/kreirajPregled">
+          <i class="fa fa-newspaper-o"></i>
+          Kreiraj pregled
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
     </ul>
     <ul class="navbar-nav ">
       <li class="nav-item">

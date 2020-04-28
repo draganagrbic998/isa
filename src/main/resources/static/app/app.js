@@ -51,7 +51,7 @@ const lekariPretraga = {template: '<lekariPretraga></lekariPretraga>'}
 const sestrePretraga = {template: '<sestrePretraga></sestrePretraga>'}
 
 const obradaZahtevGodisnji = {template: '<obradaZahtevGodisnji></obradaZahtevGodisnji>'}
-
+const kreirajPregled = {template: '<kreirajPregled></kreirajPregled>'}
 
 const router = new VueRouter({
 
@@ -95,7 +95,9 @@ const router = new VueRouter({
 		{path: '/zapocniPregled', component: zapocniPregled},
 		{path: '/zahtevGodisnji', component: zahtevGodisnji},
 		{path: '/profilLekar', component: profilLekar},
-		{path: '/obradaZahtevGodisnji', component: obradaZahtevGodisnji}
+		{path: '/obradaZahtevGodisnji', component: obradaZahtevGodisnji},
+		{path: '/kreirajPregled', component: kreirajPregled}
+
 		
 	]
 	
