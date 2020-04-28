@@ -40,7 +40,7 @@ public class PacijentService {
 	
 	//pronalazim pacijente klinike
 	//za sve lekare klinike, iz njihovih poseta uzimam karton i iz kartona uzimam pacijenta!
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public List<Pacijent> findAll(List<Lekar> lekari) {
 		List<Pacijent> pacijenti = new ArrayList<>();
 		for (Lekar l : lekari) {
@@ -55,6 +55,24 @@ public class PacijentService {
 			}
 		}
 		return pacijenti;
+	}*/
+	//lista pacijenata za lekara!
+	@Transactional(readOnly = false)
+	public List<Pacijent> nadjiPacijente(Lekar lekar) {
+		List<Pacijent> pacijenti = new ArrayList<Pacijent>();
+		for (Pacijent pacijent : this.pacijentRepository.findAll()) {
+			for (Poseta poseta : pacijent.getKarton().getPosete()) {
+				for (Lekar l : poseta.getLekari()) {
+					if (l==lekar) {
+						if (!pacijenti.contains(pacijent)) {
+							pacijenti.add(pacijent);
+						}
+					}
+				}
+			}
+		}
+		return pacijenti;
 	}
+	
 	
 }

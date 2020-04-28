@@ -1,16 +1,21 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.model.Izvestaj;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Lekar;
+import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.LekarRepository;
+import com.example.demo.repository.PacijentRepository;
 import com.example.demo.repository.PosetaRepository;
 
 @Component
@@ -19,6 +24,10 @@ public class PosetaService {
 	
 	@Autowired
 	private PosetaRepository posetaRepository;
+	
+
+	@Autowired
+	private PacijentRepository pacijentRepository;
 	
 	@Autowired
 	private LekarRepository lekarRepository;
@@ -67,7 +76,29 @@ public class PosetaService {
 		}
 		return null;
 	}
-	
-	
 
+	//vraca listu izvestaja za poseta pacijenta
+	@Transactional(readOnly = false)
+	public List<Izvestaj> nadjiIzvestaje(Integer id) {
+		List<Izvestaj> izvestaji = new ArrayList<Izvestaj>();
+		Pacijent pacijent =this.pacijentRepository.getOne(id);
+		for (Poseta poseta : pacijent.getKarton().getPosete()) {
+			if (!izvestaji.contains(poseta.getIzvestaj()) && poseta.getStanje().equals(StanjePosete.OBAVLJENO)){
+				izvestaji.add(poseta.getIzvestaj());
+			}
+		}
+		return izvestaji;
+	}
+	
+	//nalazi zakazanu posetu lekara
+	@Transactional(readOnly = false)
+	public Poseta nadjiZakazanu(Lekar lekar) {
+		Date danas = new Date();
+		for (Poseta p : lekar.getPosete()) {
+			if (p.getDatum().after(danas) && p.getStanje().equals(StanjePosete.ZAUZETO) ) {
+				return p;
+			}
+		}
+		return null;
+	}
 }

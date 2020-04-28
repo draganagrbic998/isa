@@ -16,13 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.KartonDTO;
 import com.example.demo.dto.PacijentDTO;
+import com.example.demo.dto.PacijentPretragaDTO;
+import com.example.demo.dto.conversion.IzvestajConversion;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.dto.conversion.PacijentConversion;
+import com.example.demo.dto.conversion.PosetaConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
+import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.PacijentService;
+import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -38,8 +43,16 @@ public class PacijentController {
 	@Autowired
 	private PacijentConversion pacijentConversion;
 	
+	
+	@Autowired
+	private IzvestajConversion izvestajConversion;
+	
 	@Autowired
 	private PacijentService pacijentService;
+	
+	
+	@Autowired
+	private PosetaService posetaService;
 
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -117,4 +130,23 @@ public class PacijentController {
 		}
 	}
 	
+
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/lekar/pacijenti", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PacijentPretragaDTO>> getPacijenteLekara(){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			List<PacijentPretragaDTO> pacijenti = this.pacijentConversion.get2(this.pacijentService.nadjiPacijente(lekar)); 
+			for (PacijentPretragaDTO p : pacijenti) {
+				p.setStariIzvestaji(this.izvestajConversion.get(this.posetaService.nadjiIzvestaje(p.getId())));
+				if (this.posetaService.nadjiZakazanu(lekar)!=null) {
+					p.setZakazanaPoseta(this.posetaService.nadjiZakazanu(lekar).getId());
+				}
+			}
+			return new ResponseEntity<>(pacijenti, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

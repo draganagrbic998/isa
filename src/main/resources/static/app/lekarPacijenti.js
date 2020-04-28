@@ -2,6 +2,8 @@ Vue.component("lekarPacijenti", {
 	data: function(){
 		return{
 			pacijenti: {},
+			selectedPacijent: {}, 
+			selected: false, 
 			backup: {},
 			pomocna: {},
 			nemaRezultata: '',
@@ -51,21 +53,99 @@ Vue.component("lekarPacijenti", {
     </form>
 
 </nav>	
+		<div v-if="selected" class="row">
+		
+			<div class="card" id="left">
+			
+				<h1>Karton</h1><br>
+				
+				<table class="table">
+				
+				<tbody>
+				
+					<tr>
+						<th scope="row">Broj osiguranika: </th>
+						<td><input type="text" v-model="selectedPacijent.kartonObj.brojOsiguranika" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Visina: </th>
+						<td><input type="text" v-model="selectedPacijent.kartonObj.visina" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Tezina: </th>
+						<td><input type="text" v-model="selectedPacijent.kartonObj.tezina" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Leva dioptrija: </th>
+						<td><input type="text" v-model="selectedPacijent.kartonObj.levaDioptrija" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Desna dioptrija: </th>
+						<td><input type="text" v-model="selectedPacijent.kartonObj.desnaDioptrija" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Krvna grupa: </th>
+						<td><input type="text" v-model="selectedPacijent.kartonObj.krvnaGrupa" class="form-control" disabled></td>
+					</tr>
+				</tbody>
+			</table>		
+		</div>
+		
+			<div class="col-md-5" style="margin-top: 3%">
+				
+				<h1>Izvestaji</h1><br>
+				
+				<table class="table table-hover">
+					
+					<thead>
+						<tr>
+							<th scope="col">Opis</th>
+							<th scope="col">Terapija</th>
+							<th scope="col">Poseta</th>
+						</tr>
+					
+					</thead>
+					
+					<tbody>
+						
+						<tr v-for="i in selectedPacijent.stariIzvestaji" >
+							<td>{{i.opis}}</td>
+							<td>{{i.terapija}}</td>
+							<td>{{i.posetaNaziv}}</td>
+						</tr>
+					
+					</tbody>
+				
+				</table>
+				</div>
+	</div>
+	<div v-else class="row">
 		<table class="table">
 		<tr bgcolor="#f2f2f2">
 			<th> Ime </th>
 			<th> Prezime </th>
 		</tr>
 		
-		<tr v-for="p in pacijenti">
+		<tr v-for="p in pacijenti" v-on:click="selektovanPacijent(p)">
 			<td>{{p.ime}}</td>
 			<td>{{p.prezime}}</td>
+			
 		</tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
 	</div>
+	</div>
 	`, 
 	methods: {
+		selektovanPacijent: function(p) {
+			this.selectedPacijent = p;
+			this.selected = true;
+		},
 		search: function(){
 			
 			this.pacijenti = [];
@@ -146,7 +226,7 @@ Vue.component("lekarPacijenti", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/lekar/pacijenti") 
+		axios.get("/pacijent/lekar/pacijenti") 
 		.then(response => {
 			this.pacijenti = response.data;
 			this.backup = response.data;
