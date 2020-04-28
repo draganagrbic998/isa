@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Admin;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.model.TipPosete;
+import com.example.demo.model.Zaposleni;
 import com.example.demo.repository.TipPoseteRepository;
 
 @Component
@@ -33,7 +33,7 @@ public class TipPoseteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<TipPosete> findForAdmin(Admin admin) {
+	public List<TipPosete> findForAdmin(Zaposleni admin) {
 		List<TipPosete> types = new ArrayList<>();
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
 			if (tp.getKlinika().getId().equals(admin.getKlinika().getId()) && tp.isAktivan())

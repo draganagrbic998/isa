@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.TipPoseteDTO;
 import com.example.demo.dto.conversion.TipPoseteConversion;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Lekar;
 import com.example.demo.service.LekarService;
 import com.example.demo.service.TipPoseteService;
 import com.example.demo.service.UserService;
@@ -69,6 +70,18 @@ public class TipPoseteController {
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value = "/lekar/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TipPoseteDTO>> pregledLekar() {
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(lekar)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

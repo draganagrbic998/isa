@@ -9,10 +9,13 @@ Vue.component("zakaziPregled", {
 				'karton': '',
 				'tip': ''
 			}, 
+			tipovi: {},
+			nazivTipa: '',
 			trenutni: {},
 			lekar: {},
 			greskaDatum: '', 
-			greskaVreme: '', 
+			greskaVreme: '',
+			greskaTip: '',
 			greska: false,  
 			vreme: ''
 		}
@@ -55,6 +58,12 @@ Vue.component("zakaziPregled", {
 						<td><input type="text" v-model="vreme" name="name"></td>
 						<td>{{greskaVreme}}</td>
 					</tr>
+					
+					<tr><th scope="row">Tip pregleda: </th>
+						<td><select v-model="nazivTipa">
+						<option v-for="t in tipovi">{{t.naziv}}</option>
+					</select></td><td>{{greskaTip}}</td></tr>
+					
 						<td colspan="3"><button v-on:click="zakazi()" class="btn btn-primary">ZAKAZI</button></td>
 					</tr>
 				</tbody>
@@ -64,6 +73,15 @@ Vue.component("zakaziPregled", {
 		</div>
 	
 	`, 
+	watch: {
+		nazivTipa : function(){
+			for (let t of this.tipovi){
+				if (t.naziv === this.nazivTipa)
+					this.pregled.tip = t.id;
+			}
+		}
+	}, 
+	
 		methods: {
 		
 		vremePromena: function() {
@@ -82,12 +100,18 @@ Vue.component("zakaziPregled", {
 		osvezi: function(){
 			this.greskaVreme = '';
 			this.greskaDatum = '';
+			this.greskaTip = '';
 			this.greska = false;
 		},
 		
 		zakazi : function() {
 			this.osvezi();
 			this.vremePromena();
+			
+			if (this.pregled.tip == '') {
+				this.greskaTip = "Odaberite tip pregleda!";
+				this.greska = true;
+			}
 			
 			if (this.pregled.datum == '') {
 				this.greskaDatum = "Unesite datum!";
@@ -105,8 +129,7 @@ Vue.component("zakaziPregled", {
 			if (this.greska) {return;}
 			
 			this.pregled.lekar = this.lekar.id;
-			this.pregled.karton = this.trenutni.karton;
-			this.pregled.tip = this.trenutni.tip;
+			this.pregled.karton = this.trenutni.karton; 
 			
 			axios.post("/zahtevPoseta/lekar/zakazi", this.pregled)
 			.then(response => {
@@ -135,6 +158,14 @@ Vue.component("zakaziPregled", {
 		axios.get("/lekar/profil")
 		.then(response => {
 			this.lekar = response.data;
+		})
+		.catch(response => {
+			this.$router.push("/");
+		});
+		//dobavi tipove pregleda
+		axios.get("/tipPosete/lekar/pregled")
+		.then(response => {
+			this.tipovi = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
