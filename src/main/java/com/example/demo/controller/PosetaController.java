@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.PosetaDTOS2;
 import com.example.demo.dto.PregledAdmin;
 import com.example.demo.dto.conversion.PosetaConversion;
 import com.example.demo.dto.student1.KlinikaSlobodno;
@@ -67,9 +68,7 @@ public class PosetaController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
 		}
-
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
@@ -108,6 +107,21 @@ public class PosetaController {
 		}
 	}
 
-	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value = "/proveriUToku", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PosetaDTOS2> provera() {
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			if (this.posetaService.nadjiUToku(lekar)!=null) {
+				return new ResponseEntity<>(this.posetaConversion.getS2(this.posetaService.nadjiUToku(lekar)),HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 }

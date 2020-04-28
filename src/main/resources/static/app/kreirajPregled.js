@@ -140,6 +140,7 @@ Vue.component("kreirajPregled", {
 			this.greskaLekar= '';
 			this.greskaTip= '';
 			this.greskaSala= '';
+			this.greskaDatum = '';
 			this.greska = false;
 		},
 		kreiraj : function() {

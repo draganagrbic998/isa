@@ -198,7 +198,18 @@ values (true, 'super pregled', 2, 300, 2, 45, true);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
 values ('lekar', 'prababa', 'pradeda', 'isanalog7@gmail.com', 'asd', 2,  '2020-04-20 10:00', '2020-04-20 20:00', 2, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 
+------POSETA U TOKU ZA GLAVNOG PACIJENTA--------
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
+values ('2020-04-30 19:00', 0.2, 2, 1, 1, 1, 0);
+
+------ANGAZOVANJE LEKARA--------------
+insert into lekar_poseta (lekar, poseta)
+values (2, 13);
 
 -------ZAHTEV GODISNJI ODMOR, LEKAR IRINA------------
 insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
 values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', false, 2, 1)
+
+
+
+

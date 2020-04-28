@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Admin;
+import com.example.demo.model.Klinika;
 import com.example.demo.repository.AdminRepository;
 
 @Component
@@ -17,6 +18,16 @@ public class AdminService {
 	@Transactional(readOnly = false)
 	public void save(Admin admin) {
 		this.adminRepository.save(admin);
+	}
+	
+	@Transactional(readOnly = false)
+	public Admin nadjiAdminaKlinike(Klinika klinika) {
+		for (Admin a : this.adminRepository.findAll()) {
+			if (a.getKlinika()==klinika) {
+				return a;
+			}
+		}
+		return null;
 	}
 	
 }

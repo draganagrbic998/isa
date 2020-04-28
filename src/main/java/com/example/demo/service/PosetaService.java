@@ -54,8 +54,20 @@ public class PosetaService {
 	public Poseta otkazi(Integer id) {
 		Poseta poseta = this.posetaRepository.getOne(id);
 		this.posetaRepository.deleteById(id);
-		return poseta;
-		
+		return poseta;	
 	}
+	
+	//lekar u toku moze imati samo 1 posetu! to je pretpostavka
+	@Transactional(readOnly = false)
+	public Poseta nadjiUToku(Lekar lekar) {
+		for (Poseta p : this.posetaRepository.findAll()) {
+			if (p.getLekari().contains(this.lekarRepository.getOne(lekar.getId())) && p.getStanje().equals(StanjePosete.U_TOKU)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	
 
 }

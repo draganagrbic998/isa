@@ -7,7 +7,9 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.dto.PosetaDTOS2;
 import com.example.demo.dto.PregledAdmin;
+import com.example.demo.dto.student1.PosetaDTO;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.LekarRepository;
@@ -41,5 +43,14 @@ public class PosetaConversion {
 		mojaPoseta.setStanje(StanjePosete.SLOBODNO);
 		mojaPoseta.getLekari().add(this.lekarRepository.getOne(poseta.getLekar()));
 		return mojaPoseta;
+	}
+	
+
+	public PosetaDTO get(Poseta poseta) {
+		return new PosetaDTO(poseta);
+	}
+	
+	public PosetaDTOS2 getS2(Poseta poseta) {
+		return new PosetaDTOS2(poseta.getId(), poseta.getKarton().getId(), poseta.getTipPosete().getId());
 	}
 }
