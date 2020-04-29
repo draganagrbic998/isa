@@ -82,7 +82,7 @@ public class ZahtevPosetaController {
 			this.zahtevPosetaService.save(this.zahtevPosetaConversion.get(pregled)); 
 			Admin admin = this.adminService.nadjiAdminaKlinike(lekar.getKlinika());
 			String obavestenje = "Lekar " + lekar.getIme()+ " " + lekar.getPrezime() + " zatrazio je pregled/operaciju datuma " + pregled.getDatum() + " u " + pregled.getVreme() + " sati.";
-			//this.emailService.sendMessage(new Message(admin.getEmail(), "Zahtev za pregled kod lekara", obavestenje));
+			this.emailService.sendMessage(new Message(admin.getEmail(), "Zahtev za pregled kod lekara", obavestenje));
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 		}

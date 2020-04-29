@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -117,8 +118,14 @@ public class PosetaService {
 	@Transactional(readOnly = false)
 	public Poseta nadjiZakazanu(Lekar lekar) {
 		Date danas = new Date();
+		
 		for (Poseta p : lekar.getPosete()) {
-			if (p.getDatum().after(danas) && p.getStanje().equals(StanjePosete.ZAUZETO)) {
+			Date datumPosete = p.getDatum();
+			long diff = datumPosete.getTime() - danas.getTime();
+	        long diffMinutes = diff / (60 * 1000) % 60;
+	        int diffInDays = (int) ((datumPosete.getTime() - danas.getTime()) / (1000 * 60 * 60 * 24));
+	        if (diffInDays==0 && (-15 <= diffMinutes) && (diffMinutes <= 5) && p.getStanje().equals(StanjePosete.ZAUZETO)){
+			//if (p.getDatum().equals(danas) && p.getStanje().equals(StanjePosete.ZAUZETO)) {
 				return p;
 			}
 		}

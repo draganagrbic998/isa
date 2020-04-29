@@ -214,7 +214,7 @@ values ('2020-04-30 19:00', 0.2, 2, 1, 1, 1, 0);
 
 ------ANGAZOVANJE LEKARA--------------
 insert into lekar_poseta (lekar, poseta)
-values (2, 13);
+values (2, 15);
 
 -------ZAHTEV GODISNJI ODMOR, LEKAR IRINA------------
 insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)

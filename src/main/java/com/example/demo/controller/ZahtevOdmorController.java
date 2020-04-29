@@ -18,10 +18,12 @@ import com.example.demo.dto.ZahtevOdmorObrada;
 import com.example.demo.dto.conversion.ZahtevOdmorConversion;
 import com.example.demo.model.Admin;
 import com.example.demo.model.ZahtevOdmor;
+import com.example.demo.model.Zaposleni;
 //import com.example.demo.model.Zaposleni;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevOdmorService;
-//import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value="/zahtevOdmor")
@@ -30,8 +32,8 @@ public class ZahtevOdmorController {
 	@Autowired
 	private UserService userService;
 
-	//@Autowired 
-//	private EmailService emailService;
+	@Autowired 
+	private EmailService emailService;
 	
 	@Autowired 
 	private  ZahtevOdmorService zahtevOdmorService;
@@ -76,10 +78,11 @@ public class ZahtevOdmorController {
 			ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
 			zahtev.setOdobren(true);
 			this.zahtevOdmorService.save(zahtev);
-			//Zaposleni zaposleni = this.zahtevOdmorService.nadjiZaposlenog(zahtevObrada.getZaposleniId());
-			//Message message = new Message(zaposleni.getEmail(), "Zahtev odobren!",
-			//		"Vas zahtev za godisnji odmor/odsustvo je odobren!");
-			//this.emailService.sendMessage(message);
+			Zaposleni zaposleni = this.zahtevOdmorService.nadjiZaposlenog(zahtevObrada.getZaposleniId());
+			Message message = new Message(zaposleni.getEmail(), "Zahtev odobren!",
+					"Vas zahtev za godisnji odmor/odsustvo je odobren!");
+			System.out.println(message+ "ovo je poruka");
+			this.emailService.sendMessage(message);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 
 		catch (Exception e) {
@@ -92,12 +95,11 @@ public class ZahtevOdmorController {
 	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevOdmorObrada zahtevObrada){
 		try {
 			//ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
-			//Zaposleni zaposleni = this.zahtevOdmorService.nadjiZaposlenog(zahtevObrada.getZaposleniId());
+			Zaposleni zaposleni = this.zahtevOdmorService.nadjiZaposlenog(zahtevObrada.getZaposleniId());
 			this.zahtevOdmorService.delete(zahtevObrada.getId());
-			//Message message = new Message(zaposleni.getEmail(), "Zahtev odbijen!",
-				//	"Vas zahtev za godisnji odmor/odsustvo je odbijen!\n Razlozi: ...");
-			//this.emailService.sendMessage(message);
-			
+			Message message = new Message(zaposleni.getEmail(), "Zahtev odbijen!",
+				"Vas zahtev za godisnji odmor/odsustvo je odbijen!\n Razlog: "+zahtevObrada.getRazlog()+".");
+			this.emailService.sendMessage(message);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 
 		catch (Exception e) {
