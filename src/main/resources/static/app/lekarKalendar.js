@@ -143,8 +143,11 @@ Vue.component("lekarKalendar", {
 	methods: {
 		can_start: function(pocetak) {
 			let datum = Date.parse(pocetak);
+			let danas = Date.now();
 			
-			if (datum >= Date.now() && ((datum - Date.now()) / 1000 / 60 / 60) < 24)
+			if (datum.getFullYear() === danas.getFullYear() &&
+					datum.getMonth() === danas.getMonth() &&
+					datum.getDate() === danas.getDate())
 				return true;
 			
 			return false;
