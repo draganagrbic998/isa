@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.KartonDTO;
-import com.example.demo.dto.PacijentDTO;
-import com.example.demo.dto.conversion.KartonConversion;
-import com.example.demo.dto.conversion.PacijentConversion;
-import com.example.demo.dto.student1.BolestDTO;
-import com.example.demo.dto.student1.Termin;
+import com.example.conversion.KartonConversion;
+import com.example.conversion.PacijentConversion;
+import com.example.demo.dto.model.KartonDTO;
+import com.example.demo.dto.model.PacijentDTO;
+import com.example.demo.dto.pretraga.BolestDTO;
+import com.example.demo.dto.pretraga.TerminDTO;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.PacijentService;
@@ -56,7 +56,7 @@ public class PacijentController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/termini", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Termin>> termini(){
+	public ResponseEntity<List<TerminDTO>> termini(){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			Karton karton = pacijent.getKarton();		

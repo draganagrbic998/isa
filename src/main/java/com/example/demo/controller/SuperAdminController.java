@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.SuperAdminDTO;
-import com.example.demo.dto.conversion.SuperAdminConversion;
+import com.example.conversion.all.SuperAdminConversion;
+import com.example.demo.dto.model.SuperAdminDTO;
 import com.example.demo.service.SuperAdminService;
 
 @RestController

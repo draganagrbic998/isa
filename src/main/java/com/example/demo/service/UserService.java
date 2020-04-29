@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.unos.UserDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.repository.KorisnikRepository;
 

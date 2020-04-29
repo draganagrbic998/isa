@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.TerapijaDTO;
-import com.example.demo.dto.conversion.TerapijaConversion;
+import com.example.conversion.TerapijaConversion;
+import com.example.demo.dto.model.TerapijaDTO;
 import com.example.demo.model.Sestra;
 import com.example.demo.service.TerapijaService;
 import com.example.demo.service.UserService;

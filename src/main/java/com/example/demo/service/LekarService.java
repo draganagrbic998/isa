@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.student1.OcenaParamDTO;
+import com.example.demo.dto.unos.OcenaParamDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;

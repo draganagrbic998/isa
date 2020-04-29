@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.student1.KlinikaPretragaDTO;
-import com.example.demo.dto.student1.KlinikaSlobodnoDTO;
-import com.example.demo.dto.student1.LekarSatnicaDTO;
-import com.example.demo.dto.student1.OcenaParamDTO;
-import com.example.demo.dto.student1.PretragaDTO;
+import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
+import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
+import com.example.demo.dto.pretraga.LekarSatnicaDTO;
+import com.example.demo.dto.unos.OcenaParamDTO;
+import com.example.demo.dto.unos.PretragaDTO;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;

@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.example.demo.dto.ObavezaDTO;
+import com.example.demo.dto.pretraga.ObavezaDTO;
 
 @Entity
 @DiscriminatorValue("lekar")

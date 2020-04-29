@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.ZahtevPosetaDTO;
-import com.example.demo.dto.conversion.ZahtevPosetaConversion;
+import com.example.conversion.all.ZahtevPosetaConversion;
+import com.example.demo.dto.model.ZahtevPosetaDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.ZahtevPoseta;
 import com.example.demo.model.Zaposleni;
+import com.example.demo.service.EmailService;
+import com.example.demo.service.Message;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevPosetaService;
-import com.example.demo.service.email.EmailService;
-import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value="/zahtevPoseta")

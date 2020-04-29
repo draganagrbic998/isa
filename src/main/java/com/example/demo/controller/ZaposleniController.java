@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.GodisnjiDTO;
-import com.example.demo.dto.conversion.ZahtevOdmorConversion;
+import com.example.conversion.all.ZahtevOdmorConversion;
+import com.example.demo.dto.pretraga.GodisnjiDTO;
 import com.example.demo.model.Zaposleni;
 import com.example.demo.service.UserService;
 

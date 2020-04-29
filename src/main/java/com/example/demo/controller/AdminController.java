@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.AdminDTO;
-import com.example.demo.dto.conversion.AdminConversion;
+import com.example.conversion.all.AdminConversion;
+import com.example.demo.dto.model.AdminDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.service.AdminService;
 import com.example.demo.service.UserService;

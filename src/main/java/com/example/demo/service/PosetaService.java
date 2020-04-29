@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.IzvestajDTO;
-import com.example.demo.dto.IzvestajUnosDTO;
+import com.example.demo.dto.model.IzvestajDTO;
+import com.example.demo.dto.unos.IzvestajUnosDTO;
 import com.example.demo.model.Dijagnoza;
 import com.example.demo.model.Izvestaj;
 import com.example.demo.model.Karton;

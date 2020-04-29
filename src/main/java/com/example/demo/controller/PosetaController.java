@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.IzvestajUnosDTO;
-import com.example.demo.dto.PredefinisanaPosetaDTO;
-import com.example.demo.dto.conversion.IzvestajConversion;
-import com.example.demo.dto.conversion.PosetaConversion;
-import com.example.demo.dto.student1.KlinikaSlobodnoDTO;
+import com.example.conversion.IzvestajConversion;
+import com.example.conversion.PosetaConversion;
+import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
+import com.example.demo.dto.unos.IzvestajUnosDTO;
+import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.KlinikaService;
+import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.email.EmailService;
-import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value="/poseta")

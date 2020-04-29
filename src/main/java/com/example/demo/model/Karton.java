@@ -16,8 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.example.demo.dto.student1.BolestDTO;
-import com.example.demo.dto.student1.Termin;
+import com.example.demo.dto.pretraga.BolestDTO;
+import com.example.demo.dto.pretraga.TerminDTO;
 
 @Entity
 public class Karton {
@@ -132,12 +132,12 @@ public class Karton {
 		this.posete = posete;
 	}
 
-	public List<Termin> getTermini(){
+	public List<TerminDTO> getTermini(){
 		
-		List<Termin> termini = new ArrayList<>();
+		List<TerminDTO> termini = new ArrayList<>();
 		for (Poseta p: this.posete) {
 			if (p.getStanje().equals(StanjePosete.ZAUZETO))
-				termini.add(new Termin(p));
+				termini.add(new TerminDTO(p));
 		}
 		Collections.sort(termini);
 		return termini;

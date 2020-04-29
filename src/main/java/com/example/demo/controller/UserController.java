@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.PromenaSifreDTO;
-import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.unos.PromenaSifreDTO;
+import com.example.demo.dto.unos.UserDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.service.UserService;
 

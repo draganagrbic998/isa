@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.ZahtevOdmorDTO;
-import com.example.demo.dto.ZahtevOdmorObradaDTO;
-import com.example.demo.dto.conversion.ZahtevOdmorConversion;
+import com.example.conversion.all.ZahtevOdmorConversion;
+import com.example.demo.dto.model.ZahtevOdmorDTO;
+import com.example.demo.dto.unos.ZahtevOdmorObradaDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.model.ZahtevOdmor;
 import com.example.demo.service.UserService;
