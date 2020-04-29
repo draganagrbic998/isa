@@ -2,7 +2,7 @@ package com.example.demo.dto.model;
 
 import java.util.List;
 
-import com.example.demo.model.Terapija;
+import com.example.demo.model.posete.Terapija;
 
 public class TerapijaDTO implements Comparable<TerapijaDTO>{
 

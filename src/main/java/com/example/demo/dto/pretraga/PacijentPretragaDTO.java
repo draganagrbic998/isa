@@ -10,10 +10,10 @@ import java.util.List;
 import com.example.demo.dto.model.IzvestajDTO;
 import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.PacijentDTO;
-import com.example.demo.model.Lekar;
-import com.example.demo.model.Pacijent;
-import com.example.demo.model.Poseta;
-import com.example.demo.model.StanjePosete;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.posete.StanjePosete;
 
 public class PacijentPretragaDTO extends PacijentDTO {
 	

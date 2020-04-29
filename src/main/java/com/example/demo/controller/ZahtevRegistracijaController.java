@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.conversion.all.ZahtevRegistracijaConversion;
+import com.example.demo.conversion.all.ZahtevRegistracijaConversion;
 import com.example.demo.dto.model.ZahtevRegistracijaDTO;
 import com.example.demo.dto.unos.ZahtevRegistracijaObradaDTO;
-import com.example.demo.model.Pacijent;
-import com.example.demo.model.ZahtevRegistracija;
+import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.zahtevi.ZahtevRegistracija;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.Message;
 import com.example.demo.service.ZahtevRegistracijaService;

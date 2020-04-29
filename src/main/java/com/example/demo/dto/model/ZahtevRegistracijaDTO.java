@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.ZahtevRegistracija;
+import com.example.demo.model.zahtevi.ZahtevRegistracija;
 
 public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 	

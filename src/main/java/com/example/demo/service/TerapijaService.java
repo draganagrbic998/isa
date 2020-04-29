@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Sestra;
-import com.example.demo.model.Terapija;
+import com.example.demo.model.korisnici.Sestra;
+import com.example.demo.model.posete.Terapija;
 import com.example.demo.repository.TerapijaRepository;
 
 @Component

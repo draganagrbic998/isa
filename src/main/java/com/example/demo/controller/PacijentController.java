@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.conversion.KartonConversion;
-import com.example.conversion.PacijentConversion;
+import com.example.demo.conversion.KartonConversion;
+import com.example.demo.conversion.PacijentConversion;
 import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.TerminDTO;
-import com.example.demo.model.Karton;
-import com.example.demo.model.Pacijent;
+import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.posete.Karton;
 import com.example.demo.service.PacijentService;
 import com.example.demo.service.UserService;
 

@@ -1,7 +1,7 @@
 package com.example.demo.dto.pretraga;
 
 import com.example.demo.dto.model.ZahtevOdmorDTO;
-import com.example.demo.model.ZahtevOdmor;
+import com.example.demo.model.zahtevi.ZahtevOdmor;
 
 public class GodisnjiDTO extends ZahtevOdmorDTO{
 

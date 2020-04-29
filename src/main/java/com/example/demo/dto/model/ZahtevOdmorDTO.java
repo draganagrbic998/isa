@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.hibernate.Hibernate;
 
-import com.example.demo.model.ZahtevOdmor;
-import com.example.demo.model.Zaposleni;
+import com.example.demo.model.korisnici.Zaposleni;
+import com.example.demo.model.zahtevi.ZahtevOdmor;
 
 public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 

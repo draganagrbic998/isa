@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.SuperAdmin;
+import com.example.demo.model.korisnici.SuperAdmin;
 import com.example.demo.repository.SuperAdminRepository;
 
 @Component

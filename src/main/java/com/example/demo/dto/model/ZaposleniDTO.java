@@ -2,7 +2,7 @@ package com.example.demo.dto.model;
 
 import java.text.SimpleDateFormat;
 
-import com.example.demo.model.Zaposleni;
+import com.example.demo.model.korisnici.Zaposleni;
 
 public class ZaposleniDTO extends KorisnikDTO{
 	

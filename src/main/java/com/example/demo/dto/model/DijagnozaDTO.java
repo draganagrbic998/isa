@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Dijagnoza;
+import com.example.demo.model.resursi.Dijagnoza;
 
 public class DijagnozaDTO implements Comparable<DijagnozaDTO>{
 

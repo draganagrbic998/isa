@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.conversion.all.TipPoseteConversion;
+import com.example.demo.conversion.all.TipPoseteConversion;
 import com.example.demo.dto.model.TipPoseteDTO;
-import com.example.demo.model.Admin;
-import com.example.demo.model.Lekar;
+import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.service.LekarService;
 import com.example.demo.service.TipPoseteService;
 import com.example.demo.service.UserService;

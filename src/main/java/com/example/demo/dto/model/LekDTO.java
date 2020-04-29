@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Lek;
+import com.example.demo.model.resursi.Lek;
 
 public class LekDTO implements Comparable<LekDTO>{
 

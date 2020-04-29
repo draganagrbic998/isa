@@ -1,6 +1,6 @@
 package com.example.demo.dto.pretraga;
 
-import com.example.demo.model.Poseta;
+import com.example.demo.model.posete.Poseta;
 
 public class TerminDTO extends PosetaPretragaDTO {
 	

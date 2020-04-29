@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.conversion.all.KlinikaConversion;
+import com.example.demo.conversion.all.KlinikaConversion;
 import com.example.demo.dto.model.KlinikaDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
 import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
 import com.example.demo.dto.unos.PretragaDTO;
-import com.example.demo.model.Admin;
-import com.example.demo.model.Pacijent;
+import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.service.KlinikaService;
 import com.example.demo.service.UserService;
 

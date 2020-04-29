@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.example.demo.model.Dijagnoza;
-import com.example.demo.model.Izvestaj;
-import com.example.demo.model.Lek;
+import com.example.demo.model.posete.Izvestaj;
+import com.example.demo.model.resursi.Dijagnoza;
+import com.example.demo.model.resursi.Lek;
 
 public class IzvestajDTO implements Comparable<IzvestajDTO>{
 	

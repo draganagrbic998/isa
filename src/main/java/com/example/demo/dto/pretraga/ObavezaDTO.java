@@ -3,7 +3,7 @@ package com.example.demo.dto.pretraga;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.example.demo.model.Poseta;
+import com.example.demo.model.posete.Poseta;
 
 public class ObavezaDTO implements Comparable<ObavezaDTO>{
 

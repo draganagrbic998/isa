@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Lekar;
-import com.example.demo.model.Poseta;
-import com.example.demo.model.StanjePosete;
-import com.example.demo.model.TipPosete;
-import com.example.demo.model.Zaposleni;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.korisnici.Zaposleni;
+import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.posete.StanjePosete;
+import com.example.demo.model.resursi.TipPosete;
 import com.example.demo.repository.TipPoseteRepository;
 
 @Component

@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.TipPosete;
+import com.example.demo.model.resursi.TipPosete;
 
 public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 	

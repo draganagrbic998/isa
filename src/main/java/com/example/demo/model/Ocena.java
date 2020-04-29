@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.example.demo.model.korisnici.Pacijent;
+
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"pacijent", "provera"})})
 public class Ocena {

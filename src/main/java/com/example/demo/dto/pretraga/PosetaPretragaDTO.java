@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import com.example.demo.model.Lekar;
-import com.example.demo.model.Poseta;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.posete.Poseta;
 
 public class PosetaPretragaDTO implements Comparable<PosetaPretragaDTO>{
 	

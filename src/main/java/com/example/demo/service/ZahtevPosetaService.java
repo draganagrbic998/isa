@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Lekar;
-import com.example.demo.model.ZahtevPoseta;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.ZahtevPosetaRepository;
 

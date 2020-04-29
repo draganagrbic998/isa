@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.demo.dto.model.KlinikaDTO;
-import com.example.demo.model.Klinika;
 import com.example.demo.model.Ocena;
-import com.example.demo.model.Poseta;
-import com.example.demo.model.StanjePosete;
+import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.posete.StanjePosete;
+import com.example.demo.model.resursi.Klinika;
 
 public class KlinikaSlobodnoDTO extends KlinikaDTO {
 	

@@ -1,7 +1,7 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Karton;
-import com.example.demo.model.KrvnaGrupa;
+import com.example.demo.model.posete.Karton;
+import com.example.demo.model.posete.KrvnaGrupa;
 
 public class KartonDTO implements Comparable<KartonDTO>{
 	

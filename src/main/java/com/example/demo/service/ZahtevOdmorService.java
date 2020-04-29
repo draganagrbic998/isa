@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevOdmorDTO;
-import com.example.demo.model.Klinika;
-import com.example.demo.model.Lekar;
-import com.example.demo.model.ZahtevOdmor;
-import com.example.demo.model.Zaposleni;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.korisnici.Zaposleni;
+import com.example.demo.model.resursi.Klinika;
+import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.ZahtevOdmorRepository;
 

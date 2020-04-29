@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Admin;
+import com.example.demo.model.korisnici.Admin;
 
 public class AdminDTO extends ZaposleniDTO{
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.conversion.all.DijagnozaConversion;
+import com.example.demo.conversion.all.DijagnozaConversion;
 import com.example.demo.dto.model.DijagnozaDTO;
 import com.example.demo.service.DijagnozaService;
 

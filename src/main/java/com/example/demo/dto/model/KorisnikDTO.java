@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Korisnik;
+import com.example.demo.model.korisnici.Korisnik;
 
 public class KorisnikDTO implements Comparable<KorisnikDTO>{
 	

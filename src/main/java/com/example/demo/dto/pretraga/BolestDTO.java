@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.demo.dto.model.DijagnozaDTO;
-import com.example.demo.model.Dijagnoza;
-import com.example.demo.model.Lek;
-import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
-import com.example.demo.model.Poseta;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.resursi.Dijagnoza;
+import com.example.demo.model.resursi.Lek;
 
 public class BolestDTO implements Comparable<BolestDTO>{
 		

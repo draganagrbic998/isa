@@ -2,7 +2,7 @@ package com.example.demo.dto.model;
 
 import java.util.Date;
 
-import com.example.demo.model.ZahtevPoseta;
+import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 	

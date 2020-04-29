@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Pacijent;
+import com.example.demo.model.korisnici.Pacijent;
 
 public class PacijentDTO extends KorisnikDTO{
 

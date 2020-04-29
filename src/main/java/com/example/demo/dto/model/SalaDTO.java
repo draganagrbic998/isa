@@ -1,6 +1,6 @@
 package com.example.demo.dto.model;
 
-import com.example.demo.model.Sala;
+import com.example.demo.model.resursi.Sala;
 
 public class SalaDTO implements Comparable<SalaDTO>{
 

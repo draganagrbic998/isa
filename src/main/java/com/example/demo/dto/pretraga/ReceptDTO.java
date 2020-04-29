@@ -1,7 +1,7 @@
 package com.example.demo.dto.pretraga;
 
-import com.example.demo.model.Lek;
-import com.example.demo.model.Sestra;
+import com.example.demo.model.korisnici.Sestra;
+import com.example.demo.model.resursi.Lek;
 
 public class ReceptDTO implements Comparable<ReceptDTO>{
 	
