@@ -12,7 +12,7 @@ public class ObavezaDTO {
 	private String tip;
 	private boolean pregled;
 	private final SimpleDateFormat formatDatum = new SimpleDateFormat("yyyy-MM-dd");
-	private final SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	public ObavezaDTO() {
 		super();

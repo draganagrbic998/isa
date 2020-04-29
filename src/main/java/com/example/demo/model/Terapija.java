@@ -38,6 +38,13 @@ public class Terapija {
 		super();
 	}
 
+	public Terapija(Integer id, Izvestaj izvestaj, Sestra sestra) {
+		super();
+		this.id = id;
+		this.izvestaj = izvestaj;
+		this.sestra = sestra;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

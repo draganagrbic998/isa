@@ -122,4 +122,20 @@ public class LekarController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/proveriTrenutnuPosetu", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ObavezaDTO>> proveriTrenutnuPosetu(){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			
+			if (lekar.getZapocetaPoseta() != null)
+				return new ResponseEntity<>(HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

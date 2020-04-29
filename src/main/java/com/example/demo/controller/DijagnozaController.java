@@ -64,4 +64,15 @@ public class DijagnozaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value = "/dobavi", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<DijagnozaDTO>> dobavi(){
+		try {
+			return new ResponseEntity<>(this.dijagnozaConversion.get(this.dijagnozaService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 }

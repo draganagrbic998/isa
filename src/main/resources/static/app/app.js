@@ -23,6 +23,7 @@ const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
 const overaRecepata = {template: '<overaRecepata></overaRecepata>'}
 const promenaSifre = {template: '<promenaSifre></promenaSifre>'}
 const lekarKalendar = {template: '<lekarKalendar></lekarKalendar>'}
+const unosIzvestaja = {template: '<unosIzvestaja></unosIzvestaja>'}
 
 //Lekar home-page
 const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
@@ -30,8 +31,6 @@ const zakaziPregled = {template: '<zakaziPregled></zakaziPregled>'}
 const zapocniPregled = {template: '<zapocniPregled></zapocniPregled>'}
 const zahtevGodisnji = {template: '<zahtevGodisnji></zahtevGodisnji>'}
 const profilLekar = {template: '<profilLekar></profilLekar>'}
-
-
 
 //Dodavanja:
 const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlinike>'}
@@ -66,6 +65,7 @@ const router = new VueRouter({
 		{path: '/adminHome', component: adminHome},
 		{path: '/lekarHome', component: lekarHome},
 		{path: '/lekarKalendar', component: lekarKalendar},
+		{path: '/unosIzvestaja', component: unosIzvestaja},
 		{path: '/sestraHome', component: sestraHome},
 		{path: '/profil', component: profil}, 
 		{path: '/karton', component: karton}, 

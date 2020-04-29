@@ -8,7 +8,8 @@ Vue.component("lekarKalendar", {
 			mesecni: {},
 			godisnji: {},
 			trenutni: {},
-			selectedObaveze: []
+			selectedObaveze: [],
+			trenutnaPostoji: false
 		}
 	}, 
 	
@@ -58,6 +59,15 @@ Vue.component("lekarKalendar", {
           </a>
       </li>
     </ul>
+    <ul v-if="trenutnaPostoji" class="navbar-nav mr-auto" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="#/unosIzvestaja">
+          <i class="fa fa-stethoscope"></i>
+          Trenutni Pregled
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+    </ul>
   </div>
 </nav>
 		
@@ -84,12 +94,17 @@ Vue.component("lekarKalendar", {
 					<th> Pocetak </th>
 					<th> Trajanje </th>
 					<th> Tip </th>
+					<th> Akcija </th>
 				</tr>
 				
 				<tr v-for="obaveza in selectedObaveze" bgcolor="white">
 				    <td>{{obaveza.pocetak}}</td>
 					<td>{{obaveza.trajanje}}</td>
 					<td>{{obaveza.tip}}</td>
+					<td>
+						<button v-if="can_start(obaveza.pocetak)" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni(obaveza.id)">Zapocni</button>
+					    <button v-if="can_cancel(obaveza.pocetak)" class="btn btn-outline-success my-2 my-sm-0" v-on:click="otkazi(obaveza.id)">Otkazi</button>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -107,6 +122,14 @@ Vue.component("lekarKalendar", {
 			this.$router.push("/");
 		});
 		
+		axios.get("/lekar/proveriTrenutnuPosetu")
+		.then(response => {
+			this.trenutnaPostoji = true;
+		})
+		.catch(response => {
+			this.trenutnaPostoji = false;
+		});
+		
 		axios.get("/lekar/getObaveze")
 		.then(response => {
 			this.obaveze = response.data;
@@ -118,6 +141,54 @@ Vue.component("lekarKalendar", {
 	},
 	
 	methods: {
+		can_start: function(pocetak) {
+			let datum = Date.parse(pocetak);
+			
+			if (datum >= Date.now() && ((datum - Date.now()) / 1000 / 60 / 60) < 24)
+				return true;
+			
+			return false;
+		},
+		
+		can_cancel: function(pocetak) {
+			let datum = Date.parse(pocetak);
+			
+			if (datum < Date.now())
+				return false;
+			
+			if (((datum - Date.now()) / 1000 / 60 / 60) >= 24)
+				return true;
+			
+			return false;
+		},
+		
+		zapocni: function(id) {
+			if (id === "")
+				return;
+			
+			axios.get("/poseta/zapocniPosetu/" + id)
+			.then(response => {
+				this.$router.push("/unosIzvestaja");
+			})
+			.catch(error => {
+				alert("SERVER ERROR!");
+			});
+		},
+		
+		otkazi: function(id) {
+			if (id === "")
+				return;
+			
+			axios.delete("/poseta/otkaziPosetuLekar/" + id)
+			.then(response => {
+				alert("Poseta uspesno otkazana!");
+				location.reload();
+			})
+			.catch(error => {
+				alert("SERVER ERROR!");
+			});
+		},
+		
 		prikaziDetalje: function(obaveze) {
 			this.selectedObaveze = obaveze;
 		},

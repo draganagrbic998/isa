@@ -20,7 +20,6 @@ import com.example.demo.dto.PacijentPretragaDTO;
 import com.example.demo.dto.conversion.IzvestajConversion;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.dto.conversion.PacijentConversion;
-import com.example.demo.dto.conversion.PosetaConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
@@ -82,14 +81,14 @@ public class PacijentController {
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bolest>> bolesti(){
-		try {
+		//try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			Karton karton = pacijent.getKarton();
 			return new ResponseEntity<>(karton.getBolesti(), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		//}
+		//catch(Exception e) {
+		//	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		//}
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")

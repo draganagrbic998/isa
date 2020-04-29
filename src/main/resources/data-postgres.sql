@@ -178,6 +178,16 @@ values (2, 8);
 insert into lekar_poseta (lekar, poseta)
 values (3, 9);
 
+----------PETROVI TERMINI ZA TESTIRANJA----------------------------------
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
+values ('2020-05-01 12:00', 0.2, 1, 1, 1, 1, 0);
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
+values ('2020-05-02 12:00', 0.2, 1, 1, 1, 1, 0);
+insert into lekar_poseta (lekar, poseta)
+values (3, 13);
+insert into lekar_poseta (lekar, poseta)
+values (2, 14);
+
 ----------SUPER ADMIN, ADMIN i NOVI LEKARI----------------------------------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version) values 
 ('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true, 0);

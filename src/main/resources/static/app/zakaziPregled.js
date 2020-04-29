@@ -134,7 +134,7 @@ Vue.component("zakaziPregled", {
 			axios.post("/zahtevPoseta/lekar/zakazi", this.pregled)
 			.then(response => {
 				alert("Vas zahtev je poslat");
-				this.$router.push("/lekarHome");
+				this.$router.push("/unosIzvestaja");
 			})
 			.catch((error) => {
 				alert("SERVER ERROR!");

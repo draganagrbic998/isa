@@ -72,6 +72,7 @@ public class LekarService {
 		
 	}
 
+	@Transactional(readOnly = true)
 	public List<ObavezaDTO> getObaveze(Lekar lekar) {
 		List<ObavezaDTO> obaveze = new ArrayList<ObavezaDTO>();
 		
