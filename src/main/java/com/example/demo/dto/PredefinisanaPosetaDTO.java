@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import java.util.Date;
 
-public class PredefinisanaPoseta {
+public class PredefinisanaPosetaDTO {
 	
 	private Integer id;
 	private Date datum;
@@ -12,7 +12,7 @@ public class PredefinisanaPoseta {
 	private Integer lekar;
 	private Double popust;
 	
-	public PredefinisanaPoseta() {
+	public PredefinisanaPosetaDTO() {
 		super();
 	}
 

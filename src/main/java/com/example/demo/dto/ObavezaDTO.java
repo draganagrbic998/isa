@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.example.demo.model.Poseta;
 
-public class Obaveza implements Comparable<Obaveza>{
+public class ObavezaDTO implements Comparable<ObavezaDTO>{
 
 	private Integer id;
 	private String datum;
@@ -15,11 +15,11 @@ public class Obaveza implements Comparable<Obaveza>{
 	private boolean pregled;
 	private Date datumSortiranje;
 
-	public Obaveza() {
+	public ObavezaDTO() {
 		super();
 	}
 
-	public Obaveza(Poseta poseta) {
+	public ObavezaDTO(Poseta poseta) {
 		SimpleDateFormat formatDatum = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		this.id = poseta.getId();
@@ -88,7 +88,7 @@ public class Obaveza implements Comparable<Obaveza>{
 	}
 
 	@Override
-	public int compareTo(Obaveza o) {
+	public int compareTo(ObavezaDTO o) {
 		return this.datumSortiranje.compareTo(o.datumSortiranje);
 	}
 

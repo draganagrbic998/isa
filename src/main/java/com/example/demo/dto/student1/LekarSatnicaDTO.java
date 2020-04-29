@@ -6,20 +6,20 @@ import java.util.List;
 
 import com.example.demo.model.Lekar;
 
-public class LekarSatnica extends LekarOcena {
+public class LekarSatnicaDTO extends LekarOcenaDTO {
 	
 	private List<Date> satnica;
 
-	public LekarSatnica() {
+	public LekarSatnicaDTO() {
 		super();
 	}
 
-	public LekarSatnica(Lekar lekar) {
+	public LekarSatnicaDTO(Lekar lekar) {
 		super(lekar);
 		this.satnica = new ArrayList<>();
 	}
 
-	public LekarSatnica(Lekar l, List<Date> satnica) {
+	public LekarSatnicaDTO(Lekar l, List<Date> satnica) {
 		super(l);
 		this.satnica = satnica;
 	}

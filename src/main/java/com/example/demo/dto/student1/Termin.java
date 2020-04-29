@@ -2,7 +2,7 @@ package com.example.demo.dto.student1;
 
 import com.example.demo.model.Poseta;
 
-public class Termin extends PosetaPretraga {
+public class Termin extends PosetaPretragaDTO {
 	
 	private String klinika;
 	private String adresa;

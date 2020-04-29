@@ -1,11 +1,11 @@
 package com.example.demo.dto.student1;
 
-public class OcenaParam {
+public class OcenaParamDTO {
 	
 	private Integer id;
 	private int ocena;
 	
-	public OcenaParam() {
+	public OcenaParamDTO() {
 		super();
 	}
 

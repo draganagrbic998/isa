@@ -12,7 +12,7 @@ import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 import com.example.demo.model.Poseta;
 
-public class Bolest implements Comparable<Bolest>{
+public class BolestDTO implements Comparable<BolestDTO>{
 		
 	private Integer posetaId;
 	private Integer klinikaId;
@@ -22,15 +22,15 @@ public class Bolest implements Comparable<Bolest>{
 	private String nazivPosete;
 	private String izvestaj;
 	private double ocenaKlinike;
-	private List<LekarOcena> lekari;
+	private List<LekarOcenaDTO> lekari;
 	private List<DijagnozaDTO> dijagnoze;
-	private List<Recept> recepti;
+	private List<ReceptDTO> recepti;
 	
-	public Bolest() {
+	public BolestDTO() {
 		super();
 	}
 
-	public Bolest(Poseta poseta) {
+	public BolestDTO(Poseta poseta) {
 		super();
 		this.posetaId = poseta.getId();
 		this.klinikaId = poseta.getSala().getKlinika().getId();
@@ -48,13 +48,13 @@ public class Bolest implements Comparable<Bolest>{
 		this.ocenaKlinike = counter != 0 ? suma / counter : 0.0;
 		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
-			this.lekari.add(new LekarOcena(l));
+			this.lekari.add(new LekarOcenaDTO(l));
 		this.dijagnoze = new ArrayList<>();
 		for (Dijagnoza d: poseta.getIzvestaj().getDijagnoze())
 			this.dijagnoze.add(new DijagnozaDTO(d));
 		this.recepti = new ArrayList<>();
 		for (Lek l: poseta.getIzvestaj().getTerapija().getLekovi())
-			this.recepti.add(new Recept(l, poseta.getIzvestaj().getTerapija().getSestra()));
+			this.recepti.add(new ReceptDTO(l, poseta.getIzvestaj().getTerapija().getSestra()));
 		Collections.sort(this.lekari);
 		Collections.sort(this.dijagnoze);
 		Collections.sort(this.recepti);
@@ -124,11 +124,11 @@ public class Bolest implements Comparable<Bolest>{
 		this.ocenaKlinike = ocenaKlinike;
 	}
 
-	public List<LekarOcena> getLekari() {
+	public List<LekarOcenaDTO> getLekari() {
 		return lekari;
 	}
 
-	public void setLekari(List<LekarOcena> lekari) {
+	public void setLekari(List<LekarOcenaDTO> lekari) {
 		this.lekari = lekari;
 	}
 
@@ -140,16 +140,16 @@ public class Bolest implements Comparable<Bolest>{
 		this.dijagnoze = dijagnoze;
 	}
 
-	public List<Recept> getRecepti() {
+	public List<ReceptDTO> getRecepti() {
 		return recepti;
 	}
 
-	public void setRecepti(List<Recept> recepti) {
+	public void setRecepti(List<ReceptDTO> recepti) {
 		this.recepti = recepti;
 	}
 
 	@Override
-	public int compareTo(Bolest b) {
+	public int compareTo(BolestDTO b) {
 		return this.datum.compareTo(b.datum);
 	}
 

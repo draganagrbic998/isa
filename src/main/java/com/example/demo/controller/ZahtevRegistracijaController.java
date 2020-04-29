@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.ZahtevRegistracijaObrada;
+import com.example.demo.dto.ZahtevRegistracijaObradaDTO;
 import com.example.demo.dto.ZahtevRegistracijaDTO;
 import com.example.demo.dto.conversion.ZahtevRegistracijaConversion;
 import com.example.demo.model.Pacijent;
@@ -64,7 +64,7 @@ public class ZahtevRegistracijaController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/potvrda", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevRegistracijaObrada obradaZahteva) {
+	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevRegistracijaObradaDTO obradaZahteva) {
 		try {
 			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
 			Pacijent pacijent = this.zahtevRegistracijaService.potvrdi(zahtev);
@@ -80,7 +80,7 @@ public class ZahtevRegistracijaController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/odbijanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevRegistracijaObrada obradaZahteva) {
+	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevRegistracijaObradaDTO obradaZahteva) {
 		try {
 			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
 			this.zahtevRegistracijaService.delete(zahtev.getId());

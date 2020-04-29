@@ -18,7 +18,7 @@ import com.example.demo.dto.KartonDTO;
 import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.dto.conversion.PacijentConversion;
-import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.BolestDTO;
 import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
 import com.example.demo.model.Pacijent;
@@ -69,7 +69,7 @@ public class PacijentController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bolest>> bolesti(){
+	public ResponseEntity<List<BolestDTO>> bolesti(){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			Karton karton = pacijent.getKarton();

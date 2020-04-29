@@ -12,18 +12,18 @@ import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 import com.example.demo.model.Zaposleni;
 
-public class KlinikaPretraga extends KlinikaDTO{
+public class KlinikaPretragaDTO extends KlinikaDTO{
 	
 	private double ocena;
 	private double cena;
 	private double trajanje;
-	private List<LekarSatnica> lekari;
+	private List<LekarSatnicaDTO> lekari;
 	
-	public KlinikaPretraga() {
+	public KlinikaPretragaDTO() {
 		super();
 	}
 
-	public KlinikaPretraga(Klinika klinika) {
+	public KlinikaPretragaDTO(Klinika klinika) {
 		super(klinika);
 		double suma = 0;
 		int counter = 0;
@@ -36,13 +36,13 @@ public class KlinikaPretraga extends KlinikaDTO{
 		for (Zaposleni z: klinika.getZaposleni()) {
 			z = (Zaposleni) Hibernate.unproxy(z);
 			if (z instanceof Lekar)
-				this.lekari.add(new LekarSatnica((Lekar) z));
+				this.lekari.add(new LekarSatnicaDTO((Lekar) z));
 		}
 		Collections.sort(this.lekari);
 		
 	}
 
-	public KlinikaPretraga(Klinika klinika, double cena, double trajanje) {
+	public KlinikaPretragaDTO(Klinika klinika, double cena, double trajanje) {
 		this(klinika);
 		this.cena = cena;
 		this.trajanje = trajanje;
@@ -72,15 +72,15 @@ public class KlinikaPretraga extends KlinikaDTO{
 		this.trajanje = trajanje;
 	}
 
-	public List<LekarSatnica> getLekari() {
+	public List<LekarSatnicaDTO> getLekari() {
 		return lekari;
 	}
 
-	public void setLekari(List<LekarSatnica> lekari) {
+	public void setLekari(List<LekarSatnicaDTO> lekari) {
 		this.lekari = lekari;
 	}
 
-	public void dodaj(LekarSatnica ls) {
+	public void dodaj(LekarSatnicaDTO ls) {
 		this.lekari.add(ls);
 	}
 	

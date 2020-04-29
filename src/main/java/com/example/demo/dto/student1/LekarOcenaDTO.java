@@ -4,15 +4,15 @@ import com.example.demo.dto.LekarDTO;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
 
-public class LekarOcena extends LekarDTO {
+public class LekarOcenaDTO extends LekarDTO {
 	
 	private double ocena;
 
-	public LekarOcena() {
+	public LekarOcenaDTO() {
 		super();
 	}
 
-	public LekarOcena(Lekar lekar) {
+	public LekarOcenaDTO(Lekar lekar) {
 		super(lekar);
 		double suma = 0.0;
 		int counter = 0;

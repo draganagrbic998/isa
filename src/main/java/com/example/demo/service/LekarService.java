@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.student1.OcenaParam;
+import com.example.demo.dto.student1.OcenaParamDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Ocena;
@@ -64,7 +64,7 @@ public class LekarService {
 	}
 
 	@Transactional(readOnly = false)
-	public Poseta oceni(Pacijent pacijent, OcenaParam param, Integer posetaId) {
+	public Poseta oceni(Pacijent pacijent, OcenaParamDTO param, Integer posetaId) {
 
 		Lekar l = this.lekarRepository.getOne(param.getId());
 		Ocena o = l.refreshOcena(pacijent, param.getOcena());

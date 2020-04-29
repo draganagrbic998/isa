@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.User;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.repository.KorisnikRepository;
 
@@ -26,7 +26,7 @@ public class UserService {
 	
 	
 	@Transactional(readOnly = true)
-	public Korisnik prijava(User user) {
+	public Korisnik prijava(UserDTO user) {
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka()) && k.isAktivan()) {

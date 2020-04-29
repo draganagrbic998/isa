@@ -2,14 +2,14 @@ package com.example.demo.dto;
 
 import java.util.List;
 
-public class IzvestajUnos {
+public class IzvestajUnosDTO {
 
 	private Integer id;
 	private String opis;
 	private List<Integer> dijagnoze;
 	private List<Integer> lekovi;
 
-	public IzvestajUnos() {
+	public IzvestajUnosDTO() {
 		super();
 	}
 

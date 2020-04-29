@@ -2,12 +2,12 @@ package com.example.demo.dto.student1;
 
 import java.util.Date;
 
-public class Pretraga {
+public class PretragaDTO {
 	
 	private String tipPregleda;
 	private Date datumPregleda;
 	
-	public Pretraga() {
+	public PretragaDTO() {
 		super();
 	}
 

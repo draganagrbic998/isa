@@ -3,17 +3,17 @@ package com.example.demo.dto.student1;
 import com.example.demo.model.Lek;
 import com.example.demo.model.Sestra;
 
-public class Recept implements Comparable<Recept>{
+public class ReceptDTO implements Comparable<ReceptDTO>{
 	
 	private String sifra;
 	private String naziv;
 	private String sestra;
 	
-	public Recept() {
+	public ReceptDTO() {
 		super();
 	}
 
-	public Recept(Lek lek, Sestra sestra) {
+	public ReceptDTO(Lek lek, Sestra sestra) {
 		super();
 		this.sifra = lek.getSifra();
 		this.naziv = lek.getNaziv();
@@ -45,7 +45,7 @@ public class Recept implements Comparable<Recept>{
 	}
 
 	@Override
-	public int compareTo(Recept r) {
+	public int compareTo(ReceptDTO r) {
 		return this.sifra.compareTo(r.sifra);
 	}
 	

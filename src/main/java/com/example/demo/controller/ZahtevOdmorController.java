@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ZahtevOdmorDTO;
-import com.example.demo.dto.ZahtevOdmorObrada;
+import com.example.demo.dto.ZahtevOdmorObradaDTO;
 import com.example.demo.dto.conversion.ZahtevOdmorConversion;
 import com.example.demo.model.Admin;
 import com.example.demo.model.ZahtevOdmor;
@@ -62,7 +62,7 @@ public class ZahtevOdmorController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/potvrda", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevOdmorObrada zahtevObrada){
+	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevOdmorObradaDTO zahtevObrada){
 		try {
 			ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
 			zahtev.setOdobren(true);
@@ -76,7 +76,7 @@ public class ZahtevOdmorController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/odbijanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevOdmorObrada zahtevObrada){
+	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevOdmorObradaDTO zahtevObrada){
 		try {
 			ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
 			this.zahtevOdmorService.delete(zahtev.getId());

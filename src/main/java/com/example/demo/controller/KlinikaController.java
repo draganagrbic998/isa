@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.KlinikaDTO;
 import com.example.demo.dto.conversion.KlinikaConversion;
-import com.example.demo.dto.student1.Bolest;
-import com.example.demo.dto.student1.KlinikaPretraga;
-import com.example.demo.dto.student1.KlinikaSlobodno;
-import com.example.demo.dto.student1.OcenaParam;
-import com.example.demo.dto.student1.Pretraga;
+import com.example.demo.dto.student1.BolestDTO;
+import com.example.demo.dto.student1.KlinikaPretragaDTO;
+import com.example.demo.dto.student1.KlinikaSlobodnoDTO;
+import com.example.demo.dto.student1.OcenaParamDTO;
+import com.example.demo.dto.student1.PretragaDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.KlinikaService;
@@ -77,10 +77,10 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Bolest> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
+	public ResponseEntity<BolestDTO> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(new Bolest(this.klinikaService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
+			return new ResponseEntity<>(new BolestDTO(this.klinikaService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -89,7 +89,7 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<KlinikaPretraga>> pretraga(){
+	public ResponseEntity<List<KlinikaPretragaDTO>> pretraga(){
 		try {
 			return new ResponseEntity<>(this.klinikaConversion.getPretraga(this.klinikaService.findAll()), HttpStatus.OK);
 		}
@@ -100,7 +100,7 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<KlinikaPretraga>> pretragaParam(@RequestBody Pretraga param){
+	public ResponseEntity<Collection<KlinikaPretragaDTO>> pretragaParam(@RequestBody PretragaDTO param){
 		try {
 			return new ResponseEntity<>(this.klinikaService.pretraga(param), HttpStatus.OK);
 		}
@@ -111,7 +111,7 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<KlinikaSlobodno>> slobodno(){
+	public ResponseEntity<List<KlinikaSlobodnoDTO>> slobodno(){
 		try {
 			return new ResponseEntity<>(this.klinikaService.slobodno(), HttpStatus.OK);
 		}

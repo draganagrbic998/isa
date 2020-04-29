@@ -16,7 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.example.demo.dto.student1.Bolest;
+import com.example.demo.dto.student1.BolestDTO;
 import com.example.demo.dto.student1.Termin;
 
 @Entity
@@ -144,12 +144,12 @@ public class Karton {
 		
 	}
 	
-	public List<Bolest> getBolesti(){
+	public List<BolestDTO> getBolesti(){
 		
-		List<Bolest> bolesti = new ArrayList<>();
+		List<BolestDTO> bolesti = new ArrayList<>();
 		for (Poseta p: this.posete) {
 			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
-				bolesti.add(new Bolest(p));
+				bolesti.add(new BolestDTO(p));
 		}
 		Collections.sort(bolesti);
 		return bolesti;

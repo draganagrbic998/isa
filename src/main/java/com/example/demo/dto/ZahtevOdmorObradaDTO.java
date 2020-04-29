@@ -1,11 +1,11 @@
 package com.example.demo.dto;
 
-public class ZahtevRegistracijaObrada {
-
+public class ZahtevOdmorObradaDTO {
+	
 	private Integer id;
 	private String razlog;
-
-	public ZahtevRegistracijaObrada() {
+	
+	public ZahtevOdmorObradaDTO() {
 		super();
 	}
 
@@ -19,6 +19,10 @@ public class ZahtevRegistracijaObrada {
 
 	public String getRazlog() {
 		return razlog;
+	}
+
+	public void setRazlog(String razlog) {
+		this.razlog = razlog;
 	}
 
 }

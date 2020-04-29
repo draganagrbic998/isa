@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.PromenaSifre;
-import com.example.demo.dto.User;
+import com.example.demo.dto.PromenaSifreDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.service.UserService;
 
@@ -26,7 +26,7 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping(value="/prijava", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> prijava(@RequestBody User user) {
+	public ResponseEntity<String> prijava(@RequestBody UserDTO user) {
 		try {
 			Korisnik k = this.userService.prijava(user);
 			return new ResponseEntity<>(k.isPromenjenaSifra() ? Hibernate.getClass(k).getSimpleName().toLowerCase() : "sifra", HttpStatus.OK);
@@ -57,7 +57,7 @@ public class UserController {
 	
 	@PreAuthorize("hasAuthority('SIFRA')")
 	@PostMapping(value="/lozinka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> promenaSifre(@RequestBody PromenaSifre promenaSifre){
+	public ResponseEntity<String> promenaSifre(@RequestBody PromenaSifreDTO promenaSifre){
 		try {
 			Korisnik k = this.userService.getSignedKorisnik();
 			this.userService.promenaSifre(k, promenaSifre.getNovaLozinka());

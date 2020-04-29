@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.PredefinisanaPoseta;
-import com.example.demo.dto.student1.PosetaPretraga;
+import com.example.demo.dto.PredefinisanaPosetaDTO;
+import com.example.demo.dto.student1.PosetaPretragaDTO;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.LekarRepository;
@@ -26,7 +26,7 @@ public class PosetaConversion {
 	@Autowired
 	private LekarRepository lekarRepository;
 	
-	public Poseta get(PredefinisanaPoseta poseta) throws ParseException {
+	public Poseta get(PredefinisanaPosetaDTO poseta) throws ParseException {
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		String temp1 = f.format(poseta.getDatum());
@@ -39,8 +39,8 @@ public class PosetaConversion {
 	}
 	
 
-	public PosetaPretraga get(Poseta poseta) {
-		return new PosetaPretraga(poseta);
+	public PosetaPretragaDTO get(Poseta poseta) {
+		return new PosetaPretragaDTO(poseta);
 	}
 	
 }

@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.IzvestajDTO;
 import com.example.demo.dto.KartonDTO;
 import com.example.demo.dto.LekarDTO;
-import com.example.demo.dto.Obaveza;
+import com.example.demo.dto.ObavezaDTO;
 import com.example.demo.dto.PacijentPretragaDTO;
 import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.dto.conversion.LekarConversion;
-import com.example.demo.dto.student1.Bolest;
-import com.example.demo.dto.student1.OcenaParam;
+import com.example.demo.dto.student1.BolestDTO;
+import com.example.demo.dto.student1.OcenaParamDTO;
 import com.example.demo.model.Admin;
 import com.example.demo.model.KrvnaGrupa;
 import com.example.demo.model.Lekar;
@@ -96,10 +96,10 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Bolest> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParam param){
+	public ResponseEntity<BolestDTO> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(new Bolest(this.lekarService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
+			return new ResponseEntity<>(new BolestDTO(this.lekarService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -131,7 +131,7 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@GetMapping(value="/obaveze", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Obaveza>> getObaveze(){
+	public ResponseEntity<List<ObavezaDTO>> getObaveze(){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(lekar.getObaveze(), HttpStatus.OK);

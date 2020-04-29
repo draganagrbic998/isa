@@ -1,11 +1,11 @@
 package com.example.demo.dto;
 
-public class User {
+public class UserDTO {
 	
 	private String email;
 	private String lozinka;
 	
-	public User() {
+	public UserDTO() {
 		super();
 	}
 

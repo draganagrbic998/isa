@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.IzvestajUnos;
-import com.example.demo.dto.PredefinisanaPoseta;
+import com.example.demo.dto.IzvestajUnosDTO;
+import com.example.demo.dto.PredefinisanaPosetaDTO;
 import com.example.demo.dto.conversion.IzvestajConversion;
 import com.example.demo.dto.conversion.PosetaConversion;
-import com.example.demo.dto.student1.KlinikaSlobodno;
+import com.example.demo.dto.student1.KlinikaSlobodnoDTO;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
@@ -53,7 +53,7 @@ public class PosetaController {
 				
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value = "/zakazi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<KlinikaSlobodno> zakazi(@PathVariable Integer id){
+	public ResponseEntity<KlinikaSlobodnoDTO> zakazi(@PathVariable Integer id){
 
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
@@ -101,7 +101,7 @@ public class PosetaController {
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiraj", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody PredefinisanaPoseta pregled) {
+	public ResponseEntity<HttpStatus> create(@RequestBody PredefinisanaPosetaDTO pregled) {
 		try {
 			this.posetaService.save(this.posetaConversion.get(pregled));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -140,7 +140,7 @@ public class PosetaController {
 	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@PostMapping(value = "/zavrsi", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajUnos izvestajUnosDTO) {
+	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajUnosDTO izvestajUnosDTO) {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			this.posetaService.zavrsi(this.izvestajConversion.get(izvestajUnosDTO, lekar), izvestajUnosDTO, lekar);

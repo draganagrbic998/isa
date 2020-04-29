@@ -1,11 +1,11 @@
 package com.example.demo.dto;
 
-public class PromenaSifre {
+public class PromenaSifreDTO {
 	
 	private String novaLozinka;
 	private String ponovljenaLozinka;
 	
-	public PromenaSifre() {
+	public PromenaSifreDTO() {
 		super();
 	}
 	public String getNovaLozinka() {

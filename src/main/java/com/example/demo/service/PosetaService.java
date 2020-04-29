@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.IzvestajDTO;
-import com.example.demo.dto.IzvestajUnos;
+import com.example.demo.dto.IzvestajUnosDTO;
 import com.example.demo.model.Dijagnoza;
 import com.example.demo.model.Izvestaj;
 import com.example.demo.model.Karton;
@@ -100,7 +100,7 @@ public class PosetaService {
 	}
 
 	@Transactional(readOnly = false)
-	public void zavrsi(Izvestaj izvestaj, IzvestajUnos izvestajUnosDTO, Lekar lekar) {
+	public void zavrsi(Izvestaj izvestaj, IzvestajUnosDTO izvestajUnosDTO, Lekar lekar) {
 		
 		lekar.setZapocetaPoseta(null);
 		this.lekarRepository.save(lekar);

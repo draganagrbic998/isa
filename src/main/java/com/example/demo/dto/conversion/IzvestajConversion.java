@@ -3,7 +3,7 @@ package com.example.demo.dto.conversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.IzvestajUnos;
+import com.example.demo.dto.IzvestajUnosDTO;
 import com.example.demo.model.Izvestaj;
 import com.example.demo.model.Lekar;
 import com.example.demo.repository.DijagnozaRepository;
@@ -18,7 +18,7 @@ public class IzvestajConversion {
 	@Autowired
 	private DijagnozaRepository dijagnozaRepository;
 	
-	public Izvestaj get(IzvestajUnos izvestajUnosDTO, Lekar lekar) {
+	public Izvestaj get(IzvestajUnosDTO izvestajUnosDTO, Lekar lekar) {
 		Izvestaj izvestaj = new Izvestaj();
 		izvestaj.setId(izvestajUnosDTO.getId());
 		izvestaj.setOpis(izvestajUnosDTO.getOpis());
