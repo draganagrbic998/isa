@@ -23,6 +23,8 @@ const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
 const overaRecepata = {template: '<overaRecepata></overaRecepata>'}
 const promenaSifre = {template: '<promenaSifre></promenaSifre>'}
 const lekarKalendar = {template: '<lekarKalendar></lekarKalendar>'}
+const lekarPregledGodisnjih = {template: '<lekarPregledGodisnjih></lekarPregledGodisnjih>'}
+const sestraPregledGodisnjih = {template: '<sestraPregledGodisnjih></sestraPregledGodisnjih>'}
 const unosIzvestaja = {template: '<unosIzvestaja></unosIzvestaja>'}
 
 //Lekar home-page
@@ -65,6 +67,8 @@ const router = new VueRouter({
 		{path: '/adminHome', component: adminHome},
 		{path: '/lekarHome', component: lekarHome},
 		{path: '/lekarKalendar', component: lekarKalendar},
+		{path: '/lekarPregledGodisnjih', component: lekarPregledGodisnjih},
+		{path: '/sestraPregledGodisnjih', component: sestraPregledGodisnjih},
 		{path: '/unosIzvestaja', component: unosIzvestaja},
 		{path: '/sestraHome', component: sestraHome},
 		{path: '/profil', component: profil}, 

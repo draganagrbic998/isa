@@ -26,22 +26,24 @@ Vue.component("sestraHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
+      <li class="nav-item active" style="min-width: 130px;">
+        <a class="nav-link" href="#/sestraPregledGodisnjih">
+          <i class="fa fa-calendar"></i>
+          Godisnji Odmori
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#/overaRecepata">
-          <i class="fa fa-home"></i>
-          Radni Kalendar
+        <a class="nav-link" href="#/">
+          <i class="fa fa-plane"></i>
+          Zahtev za odmor
           <span class="sr-only">(current)</span>
           </a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#/overaRecepata">
-          <i class="fa fa-home"></i>
-          Godisnji Odmor
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" href="#/overaRecepata">
+        <a class="nav-link" href="#/">
           <i class="fa fa-home"></i>
           Profil
           <span class="sr-only">(current)</span>

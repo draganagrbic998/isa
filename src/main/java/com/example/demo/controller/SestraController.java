@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.GodisnjiDTO;
 import com.example.demo.dto.SestraDTO;
 import com.example.demo.dto.conversion.SestraConversion;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Sestra;
 import com.example.demo.service.SestraService;
 import com.example.demo.service.UserService;
 
@@ -72,4 +74,16 @@ public class SestraController {
 		}
 	}
 
+	@PreAuthorize("hasAuthority('Sestra')")
+	@GetMapping(value="/getGodisnji", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<GodisnjiDTO>> getGodisnji(){
+		try {
+			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.sestraService.getGodisnji(sestra), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 }

@@ -88,5 +88,8 @@ public class ZahtevOdmor {
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
 	}
+	public int getTrajanje() {
+		return (int) ((kraj.getTime() - pocetak.getTime()) / 1000 / 60 / 60 / 24);
+	}
 	
 }

@@ -218,8 +218,10 @@ values (2, 13);
 
 -------ZAHTEV GODISNJI ODMOR, LEKAR IRINA------------
 insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
-values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', false, 2, 1)
-
-
+values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', false, 2, 1);
+insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
+values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 3, 1);
+insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
+values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 5, 1)
 
 

@@ -45,6 +45,13 @@ Vue.component("lekarHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
+      <li class="nav-item active" style="min-width: 130px;">
+        <a class="nav-link" href="#/lekarPregledGodisnjih">
+          <i class="fa fa-calendar"></i>
+          Godisnji Odmori
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
     </ul>
     <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 140px;">
