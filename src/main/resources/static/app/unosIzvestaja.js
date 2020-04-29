@@ -30,7 +30,7 @@ Vue.component("unosIzvestaja", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/lekarHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
+          Home
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -43,7 +43,7 @@ Vue.component("unosIzvestaja", {
 	
 		<div class="card" id="tableBox">
 		
-			<h1>Izvestaj o poseti</h1><br>
+			<h1>Unos izvestaja o poseti</h1><br>
 			
 			<table class="table">
 			

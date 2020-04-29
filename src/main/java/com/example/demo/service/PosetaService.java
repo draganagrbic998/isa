@@ -8,14 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dto.IzvestajDTO;
 import com.example.demo.dto.IzvestajUnosDTO;
+import com.example.demo.model.Dijagnoza;
 import com.example.demo.model.Izvestaj;
 import com.example.demo.model.Karton;
+import com.example.demo.model.Lek;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.model.Terapija;
+import com.example.demo.repository.DijagnozaRepository;
 import com.example.demo.repository.IzvestajRepository;
 import com.example.demo.repository.LekRepository;
 import com.example.demo.repository.LekarRepository;
@@ -39,6 +43,9 @@ public class PosetaService {
 	@Autowired
 	LekRepository lekRepository;
 
+	@Autowired
+	DijagnozaRepository dijagnozaRepository;
+	
 	@Autowired
 	IzvestajRepository izvestajRepository;
 	
@@ -157,5 +164,34 @@ public class PosetaService {
 		
 		izvestaj.getPoseta().setIzvestaj(izvestaj);
 		posetaRepository.save(izvestaj.getPoseta());
+	}
+
+	@Transactional(readOnly = false)
+	public void izmeniIzvestaj(IzvestajDTO izvestajDTO) {
+		Izvestaj izvestaj = izvestajRepository.getOne(izvestajDTO.getId());
+		izvestaj.setOpis(izvestajDTO.getOpis());
+		
+		List<Dijagnoza> noveDijagnoze = new ArrayList<Dijagnoza>();
+
+		for (Integer dijagnozaId : izvestajDTO.getDijagnoze())
+			noveDijagnoze.add(dijagnozaRepository.getOne(dijagnozaId));
+		
+		izvestaj.getDijagnoze().clear();
+		
+		for (Dijagnoza dijagnoza : noveDijagnoze)
+			izvestaj.getDijagnoze().add(dijagnoza);
+		
+		List<Lek> noviLekovi = new ArrayList<Lek>();
+
+		for (Integer lekId : izvestajDTO.getLekovi())
+			noviLekovi.add(lekRepository.getOne(lekId));
+		
+		izvestaj.getTerapija().getLekovi().clear();
+		
+		for (Lek lek : noviLekovi)
+			izvestaj.getTerapija().getLekovi().add(lek);
+		
+		terapijaRepository.save(izvestaj.getTerapija());
+		izvestajRepository.save(izvestaj);
 	}
 }

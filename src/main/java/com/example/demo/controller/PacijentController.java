@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.IzvestajDTO;
 import com.example.demo.dto.KartonDTO;
 import com.example.demo.dto.PacijentDTO;
 import com.example.demo.dto.PacijentPretragaDTO;
@@ -23,8 +24,10 @@ import com.example.demo.dto.conversion.PacijentConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.Termin;
 import com.example.demo.model.Karton;
+import com.example.demo.model.KrvnaGrupa;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
+import com.example.demo.service.KartonService;
 import com.example.demo.service.PacijentService;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
@@ -45,6 +48,9 @@ public class PacijentController {
 	
 	@Autowired
 	private IzvestajConversion izvestajConversion;
+	
+	@Autowired
+	private KartonService kartonService;
 	
 	@Autowired
 	private PacijentService pacijentService;
@@ -148,4 +154,48 @@ public class PacijentController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/getKrvneGrupe", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<KrvnaGrupa[]> getKrvneGrupe(){
+		try {
+			return new ResponseEntity<>(KrvnaGrupa.values(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@PostMapping(value="/lekar/izmenaKartona", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody KartonDTO kartonDTO){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			
+			if (lekar.getZapocetaPoseta() == null)
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			
+			if (lekar.getZapocetaPoseta().getKarton().getPacijent().getId() != kartonDTO.getPacijent())
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			
+			this.kartonService.save(this.kartonConversion.get(kartonDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@PostMapping(value = "/izmeniIzvestaj", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajDTO izvestajDTO) {
+		try {
+			this.posetaService.izmeniIzvestaj(izvestajDTO);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+	}
+	
 }

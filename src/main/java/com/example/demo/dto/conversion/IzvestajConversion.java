@@ -46,7 +46,7 @@ public class IzvestajConversion {
 		}
 		return izvestajiDTO;
 	}
-
+	
 	public Izvestaj get(IzvestajUnosDTO izvestajUnosDTO, Lekar lekar) {
 		Izvestaj izvestaj = new Izvestaj();
 		izvestaj.setId(izvestajUnosDTO.getId());
@@ -58,4 +58,5 @@ public class IzvestajConversion {
 
 		return izvestaj;
 	}
+	
 }

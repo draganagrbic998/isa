@@ -3,12 +3,23 @@ Vue.component("lekarPacijenti", {
 		return{
 			pacijenti: {},
 			selectedPacijent: {}, 
+			selectedIzvestaj: {}, 
 			selected: false, 
+			izvestajSelected: false,
 			backup: {},
 			pomocna: {},
 			nemaRezultata: '',
 			pretraga: '',
-			trenutnoZapoceta: null
+			trenutnoZapoceta: null,
+			krvneGrupe: [],
+			greskaVisina: '',
+			greskaTezina: '',
+			greskaLevaDioptrija: '',
+			greskaDesnaDioptrija: '',
+			greskaKrvnaGrupa: '',
+			greska: false,
+			dijagnoze: [],
+			lekovi: []
 		}
 	}, 
 
@@ -63,35 +74,46 @@ Vue.component("lekarPacijenti", {
 				<table class="table">
 				
 				<tbody>
-				
 					<tr>
 						<th scope="row">Broj osiguranika: </th>
-						<td><input type="text" v-model="selectedPacijent.kartonObj.brojOsiguranika" class="form-control" disabled></td>
+						<td colspan="2"><input type="text" v-model="selectedPacijent.kartonObj.brojOsiguranika" class="form-control" disabled></td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Visina: </th>
-						<td><input type="text" v-model="selectedPacijent.kartonObj.visina" class="form-control" disabled></td>
+						<td><input type="number" step="0.01" min="0" v-model="selectedPacijent.kartonObj.visina" class="form-control" v-bind:disabled="cant_edit()"></td>
+						<td>{{greskaVisina}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Tezina: </th>
-						<td><input type="text" v-model="selectedPacijent.kartonObj.tezina" class="form-control" disabled></td>
+						<td><input type="number" step="0.01" min="0" v-model="selectedPacijent.kartonObj.tezina" class="form-control" v-bind:disabled="cant_edit()"></td>
+						<td>{{greskaTezina}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Leva dioptrija: </th>
-						<td><input type="text" v-model="selectedPacijent.kartonObj.levaDioptrija" class="form-control" disabled></td>
+						<td><input type="number" step="0.01" v-model="selectedPacijent.kartonObj.levaDioptrija" class="form-control" v-bind:disabled="cant_edit()"></td>
+						<td>{{greskaLevaDioptrija}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Desna dioptrija: </th>
-						<td><input type="text" v-model="selectedPacijent.kartonObj.desnaDioptrija" class="form-control" disabled></td>
+						<td><input type="number" step="0.01" v-model="selectedPacijent.kartonObj.desnaDioptrija" class="form-control" v-bind:disabled="cant_edit()"></td>
+						<td>{{greskaDesnaDioptrija}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Krvna grupa: </th>
-						<td><input type="text" v-model="selectedPacijent.kartonObj.krvnaGrupa" class="form-control" disabled></td>
+						<td><select v-model="selectedPacijent.kartonObj.krvnaGrupa" v-bind:disabled="cant_edit()">
+						<option v-for="k in krvneGrupe">{{k}}</option>
+						</select></td><td>{{greskaKrvnaGrupa}}</td>
+					</tr>
+					
+					<tr>
+					<td colspan="3">
+						<button class="btn btn-outline-success my-2 my-sm-0" v-on:click="izmeni()" v-bind:disabled="cant_edit()">Izmeni</button>
+					</td>
 					</tr>
 				</tbody>
 			</table>		
@@ -114,7 +136,7 @@ Vue.component("lekarPacijenti", {
 					
 					<tbody>
 						
-						<tr v-for="i in selectedPacijent.stariIzvestaji" >
+						<tr v-for="i in selectedPacijent.stariIzvestaji" v-on:click="selektovanIzvestaj(i)">
 							<td>{{i.opis}}</td>
 							<td>{{i.terapija}}</td>
 							<td>{{i.posetaNaziv}}</td>
@@ -128,7 +150,54 @@ Vue.component("lekarPacijenti", {
 				<br>
 				
 				<button v-if="selectedPacijent.zakazanaPoseta && trenutnoZapoceta === null" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni()">Zapocni</button>
-				</div>
+			</div>
+	</div>
+	<div v-else-if="izvestajSelected" class="row">
+		
+		<div class="card" id="tableBox">
+			
+			<h1>Izmena izvestaja o poseti</h1><br>
+				
+			<table lass="table">
+				<tbody>
+					<tr>
+						<th scope="row">Opis: </th>
+						<td><input type="text" v-model="selectedIzvestaj.opis" class="form-control"></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Dijagnoze: </th>
+						<td>
+							<select v-model="selectedIzvestaj.dijagnoze" multiple>
+				                <option v-for="d in dijagnoze" :value="d.id">
+				                    {{d.naziv}}
+				                </option>
+			                </select>
+			            </td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Lekovi: </th>
+						<td>
+							<select v-model="selectedIzvestaj.lekovi" multiple>
+				                <option v-for="l in lekovi" :value="l.id">
+				                    {{l.naziv}}
+				                </option>
+			                </select>
+			            </td>
+						<td></td>
+					</tr>
+					
+					<tr>
+					<td colspan="3">
+						<button class="btn btn-outline-success my-2 my-sm-0" v-on:click="izmeniIzvestaj()">Izmeni</button>
+					</td>
+					</tr>
+				</tbody>
+			</table>		
+		</div>
 	</div>
 	<div v-else class="row">
 		<table class="table">
@@ -148,9 +217,82 @@ Vue.component("lekarPacijenti", {
 	</div>
 	`, 
 	methods: {
+		selektovanIzvestaj: function(i) {
+			this.selectedIzvestaj = i;
+			this.izvestajSelected = true;
+			this.selected = false;
+		},
+		
 		selektovanPacijent: function(p) {
 			this.selectedPacijent = p;
 			this.selected = true;
+			this.izvestajSelected = false;
+		},
+		
+		cant_edit: function() {
+			if (!this.trenutnoZapoceta)
+				return true;
+			return this.trenutnoZapoceta.karton !== this.selectedPacijent.kartonObj.id;
+		},
+		
+		resetujGreske: function() {
+			this.greska = false;
+			this.greskaVisina = '';
+			this.greskaTezina = '';
+			this.greskaLevaDioptrija = '';
+			this.greskaDesnaDioptrija = '';
+			this.greskaKrvnaGrupa = '';
+		},
+		
+		izmeniIzvestaj: function() {
+			axios.post("/pacijent/izmeniIzvestaj", this.selectedIzvestaj)
+			.then(response => {
+				alert('Izmene uspesno sacuvane!');
+				location.reload();
+			})
+			.catch(response => {
+				alert("SERVER ERROR!!");
+			});
+		},
+		
+		izmeni: function() {
+			this.resetujGreske();
+			
+			if (this.selectedPacijent.kartonObj.visina === '') {
+				this.greska = true;
+				this.greskaVisina = 'Obavezno polje!';
+			}
+			
+			if (this.selectedPacijent.kartonObj.tezina === '') {
+				this.greska = true;
+				this.greskaTezina = 'Obavezno polje!';
+			}
+			
+			if (this.selectedPacijent.kartonObj.levaDioptrija === '') {
+				this.greska = true;
+				this.greskaLevaDioptrija = 'Obavezno polje!';
+			}
+			
+			if (this.selectedPacijent.kartonObj.desnaDioptrija === '') {
+				this.greska = true;
+				this.greskaDesnaDioptrija = 'Obavezno polje!';
+			}
+			
+			if (this.selectedPacijent.kartonObj.krvnaGrupa === '') {
+				this.greska = true;
+				this.greskaKrvnaGrupa = 'Obavezno polje!';
+			}
+			
+			if (this.greska) return;
+			
+			axios.post("/pacijent/lekar/izmenaKartona/", this.selectedPacijent.kartonObj)
+			.then(response => {
+				alert('Izmene uspesno sacuvane!');
+				location.reload();
+			})
+			.catch(error => {
+				alert("SERVER ERROR!");
+			});
 		},
 		
 		zapocni: function() {
@@ -246,6 +388,31 @@ Vue.component("lekarPacijenti", {
 		axios.get("/poseta/proveriUToku")
 		.then(response => this.trenutnoZapoceta = response.data)
 		.catch(reponse => {
+		});
+		
+		axios.get("/pacijent/getKrvneGrupe")
+		.then(response => this.krvneGrupe = response.data)
+		.catch(reponse => {
+			alert('SERVER ERROR!');
+			this.$router.push("/lekarHome");
+		});
+		
+		axios.get("/dijagnoza/dobavi")
+		.then(response => {
+			this.dijagnoze = response.data;
+		})
+		.catch(response => {
+			alert('SERVER ERROR!');
+			this.$router.push("/");
+		});
+		
+		axios.get("/lek/dobavi")
+		.then(response => {
+			this.lekovi = response.data;
+		})
+		.catch(response => {
+			alert('SERVER ERROR!');
+			this.$router.push("/");
 		});
 		
 		axios.get("/pacijent/lekar/pacijenti") 
