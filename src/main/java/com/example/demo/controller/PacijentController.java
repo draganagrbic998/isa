@@ -137,7 +137,7 @@ public class PacijentController {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			List<PacijentPretragaDTO> pacijenti = this.pacijentConversion.get2(this.pacijentService.nadjiPacijente(lekar)); 
 			for (PacijentPretragaDTO p : pacijenti) {
-				p.setStariIzvestaji(this.izvestajConversion.get(this.posetaService.nadjiIzvestaje(p.getId())));
+				p.setStariIzvestaji(this.izvestajConversion.get(this.posetaService.nadjiIzvestaje(p.getId(), lekar)));
 				if (this.posetaService.nadjiZakazanu(lekar)!=null) {
 					p.setZakazanaPoseta(this.posetaService.nadjiZakazanu(lekar).getId());
 				}

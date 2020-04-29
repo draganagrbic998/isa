@@ -93,12 +93,14 @@ public class PosetaService {
 
 	// vraca listu izvestaja za poseta pacijenta
 	@Transactional(readOnly = false)
-	public List<Izvestaj> nadjiIzvestaje(Integer id) {
+	public List<Izvestaj> nadjiIzvestaje(Integer id, Lekar lekar) {
 		List<Izvestaj> izvestaji = new ArrayList<Izvestaj>();
 		Pacijent pacijent = this.pacijentRepository.getOne(id);
 		for (Poseta poseta : pacijent.getKarton().getPosete()) {
-			if (!izvestaji.contains(poseta.getIzvestaj()) && poseta.getStanje().equals(StanjePosete.OBAVLJENO)) {
-				izvestaji.add(poseta.getIzvestaj());
+			if (lekar.getPosete().contains(poseta)) {
+				if (!izvestaji.contains(poseta.getIzvestaj()) && poseta.getStanje().equals(StanjePosete.OBAVLJENO)) {
+					izvestaji.add(poseta.getIzvestaj());
+				}
 			}
 		}
 		return izvestaji;
