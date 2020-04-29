@@ -8,6 +8,7 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 	
 	private Integer id;
 	private Date datum;
+	private String vreme;
 	private Integer karton;
 	private Integer lekar;
 	private Integer tipPosete;
@@ -39,6 +40,14 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
+	}
+
+	public String getVreme() {
+		return vreme;
+	}
+
+	public void setVreme(String vreme) {
+		this.vreme = vreme;
 	}
 
 	public Integer getKarton() {

@@ -30,5 +30,17 @@ public class Pacijent extends Korisnik{
 	public void setKarton(Karton karton) {
 		this.karton = karton;
 	}
+	
+	public boolean posetioLekara(Lekar lekar) {
+		
+		for (Poseta p: this.karton.getPosete()) {
+			for (Lekar l: p.getLekari()) {
+				if (l.getId().equals(lekar.getId()))
+					return true;
+			}
+		}
+		return false;
+		
+	}
 
 }

@@ -29,7 +29,7 @@ public class LekController {
 	@Autowired
 	private LekConversion lekConversion;
 	
-	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@PreAuthorize("hasAnyAuthority('Lekar','SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<LekDTO>> pregled(){
 		try {

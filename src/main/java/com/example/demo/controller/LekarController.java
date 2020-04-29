@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.GodisnjiDTO;
 import com.example.demo.dto.LekarDTO;
 import com.example.demo.dto.ObavezaDTO;
+import com.example.demo.dto.PacijentPretragaDTO;
 import com.example.demo.dto.conversion.LekarConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.OcenaParam;
 import com.example.demo.model.Admin;
+import com.example.demo.model.KrvnaGrupa;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.service.LekarService;
@@ -39,10 +41,10 @@ public class LekarController {
 	
 	@Autowired
 	private UserService userService;
-	
+		
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<LekarDTO>> getDoctors(){
+	public ResponseEntity<List<LekarDTO>> pregled(){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.lekarConversion.get(this.lekarService.findAll(admin)), HttpStatus.OK);
@@ -113,11 +115,11 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Lekar')")
-	@GetMapping(value="/getObaveze", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/obaveze", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ObavezaDTO>> getObaveze(){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.lekarService.getObaveze(lekar), HttpStatus.OK);
+			return new ResponseEntity<>(lekar.getObaveze(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -125,11 +127,26 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Lekar')")
-	@GetMapping(value="/getGodisnji", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<GodisnjiDTO>> getGodisnji(){
+	@GetMapping(value="/pacijenti", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PacijentPretragaDTO>> getPacijenteLekara(){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.lekarService.getGodisnji(lekar), HttpStatus.OK);
+			List<Pacijent> pacijenti = this.lekarService.pacijentiLekara(lekar);
+			List<PacijentPretragaDTO> pacijentiPretraga = new ArrayList<>();
+			for (Pacijent p: pacijenti)
+				pacijentiPretraga.add(new PacijentPretragaDTO(p, lekar));
+			return new ResponseEntity<>(pacijentiPretraga, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value="/krvneGrupe", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<KrvnaGrupa[]> getKrvneGrupe(){
+		try {
+			return new ResponseEntity<>(KrvnaGrupa.values(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

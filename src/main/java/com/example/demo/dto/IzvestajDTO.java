@@ -11,8 +11,8 @@ public class IzvestajDTO {
 	
 	private Integer id;
 	private String opis;
-	private List<Integer> dijagnoze = new ArrayList<Integer>();
-	private List<Integer> lekovi = new ArrayList<Integer>();
+	private List<Integer> dijagnoze;
+	private List<Integer> lekovi;
 	private Integer poseta;
 	private Integer terapija;
 	private String posetaNaziv;
@@ -29,11 +29,14 @@ public class IzvestajDTO {
 		this.posetaNaziv = izvestaj.getPoseta().getTipPosete().getNaziv();
 		this.terapija = izvestaj.getTerapija().getId();
 		
+		this.dijagnoze = new ArrayList<>();
 		for (Dijagnoza d : izvestaj.getDijagnoze())
 			this.dijagnoze.add(d.getId());
 		
+		this.lekovi = new ArrayList<>();
 		for (Lek l : izvestaj.getTerapija().getLekovi())
 			this.lekovi.add(l.getId());
+		
 	}
 	
 	public String getPosetaNaziv() {

@@ -1,7 +1,8 @@
 package com.example.demo.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import com.example.demo.model.Poseta;
 
 public class ObavezaDTO {
 
@@ -11,20 +12,20 @@ public class ObavezaDTO {
 	private Integer trajanje;
 	private String tip;
 	private boolean pregled;
-	private final SimpleDateFormat formatDatum = new SimpleDateFormat("yyyy-MM-dd");
-	private final SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	public ObavezaDTO() {
 		super();
 	}
 
-	public ObavezaDTO(Integer id, Date pocetak, int trajanje, String tip, boolean pregled) {
-		this.id = id;
-		this.datum = formatDatum.format(pocetak);
-		this.pocetak = formatPocetak.format(pocetak);
-		this.trajanje = trajanje;
-		this.tip = tip;
-		this.setPregled(pregled);
+	public ObavezaDTO(Poseta poseta) {
+		SimpleDateFormat formatDatum = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		this.id = poseta.getId();
+		this.datum = formatDatum.format(poseta.getDatum());
+		this.pocetak = formatPocetak.format(poseta.getDatum());
+		this.trajanje = poseta.getTrajanje();
+		this.tip = poseta.getTipPosete().getNaziv();
+		this.pregled = poseta.getTipPosete().getPregled();
 	}
 
 	public Integer getId() {

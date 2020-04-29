@@ -1,4 +1,5 @@
 Vue.component("lekarPacijenti", {
+	
 	data: function(){
 		return{
 			pacijenti: {},
@@ -24,6 +25,7 @@ Vue.component("lekarPacijenti", {
 	}, 
 
 	template: `
+	
 <div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
@@ -216,6 +218,7 @@ Vue.component("lekarPacijenti", {
 	</div>
 	</div>
 	`, 
+	
 	methods: {
 		selektovanIzvestaj: function(i) {
 			this.selectedIzvestaj = i;
@@ -232,7 +235,7 @@ Vue.component("lekarPacijenti", {
 		cant_edit: function() {
 			if (!this.trenutnoZapoceta)
 				return true;
-			return this.trenutnoZapoceta.karton !== this.selectedPacijent.kartonObj.id;
+			return this.trenutnoZapoceta !== this.selectedPacijent.kartonObj.id;
 		},
 		
 		resetujGreske: function() {
@@ -245,7 +248,7 @@ Vue.component("lekarPacijenti", {
 		},
 		
 		izmeniIzvestaj: function() {
-			axios.post("/pacijent/izmeniIzvestaj", this.selectedIzvestaj)
+			axios.post("/pacijent/izmenaIzvestaja", this.selectedIzvestaj)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');
 				location.reload();
@@ -296,7 +299,7 @@ Vue.component("lekarPacijenti", {
 		},
 		
 		zapocni: function() {
-			axios.get("/poseta/zapocniPosetu/" + this.selectedPacijent.zakazanaPoseta)
+			axios.get("/poseta/zapocni/" + this.selectedPacijent.zakazanaPoseta)
 			.then(response => {
 				this.$router.push("/unosIzvestaja");
 			})
@@ -385,37 +388,34 @@ Vue.component("lekarPacijenti", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/poseta/proveriUToku")
-		.then(response => this.trenutnoZapoceta = response.data)
-		.catch(reponse => {
+		axios.get("/poseta/zapoceto")
+		.then(response => {
+			this.trenutnoZapoceta = response.data
 		});
 		
-		axios.get("/pacijent/getKrvneGrupe")
+		axios.get("/lekar/krvneGrupe")
 		.then(response => this.krvneGrupe = response.data)
 		.catch(reponse => {
-			alert('SERVER ERROR!');
-			this.$router.push("/lekarHome");
+			this.$router.push("/");
 		});
 		
-		axios.get("/dijagnoza/dobavi")
+		axios.get("/dijagnoza/pregled")
 		.then(response => {
 			this.dijagnoze = response.data;
 		})
 		.catch(response => {
-			alert('SERVER ERROR!');
 			this.$router.push("/");
 		});
 		
-		axios.get("/lek/dobavi")
+		axios.get("/lek/pregled")
 		.then(response => {
 			this.lekovi = response.data;
 		})
 		.catch(response => {
-			alert('SERVER ERROR!');
 			this.$router.push("/");
 		});
 		
-		axios.get("/pacijent/lekar/pacijenti") 
+		axios.get("/lekar/pacijenti") 
 		.then(response => {
 			this.pacijenti = response.data;
 			this.backup = response.data;

@@ -29,7 +29,7 @@ public class DijagnozaController {
 	@Autowired
 	private DijagnozaConversion dijagnozaConversion;
 	
-	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@PreAuthorize("hasAnyAuthority('Lekar','SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<DijagnozaDTO>> pregled(){
 		try {

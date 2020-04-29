@@ -20,6 +20,7 @@ Vue.component("zakaziPregled", {
 			vreme: ''
 		}
 	}, 
+	
 	template: `
 	
 		<div>
@@ -82,7 +83,7 @@ Vue.component("zakaziPregled", {
 		}
 	}, 
 	
-		methods: {
+	methods: {
 		
 		vremePromena: function() {
 
@@ -97,6 +98,7 @@ Vue.component("zakaziPregled", {
 			}
 			return this.pregled.vreme; 
 		},
+		
 		osvezi: function(){
 			this.greskaVreme = '';
 			this.greskaDatum = '';
@@ -126,12 +128,10 @@ Vue.component("zakaziPregled", {
 				this.greskaVreme = "Nespravan format";
 				this.greska = true;
 			}
-			if (this.greska) {return;}
 			
-			this.pregled.lekar = this.lekar.id;
-			this.pregled.karton = this.trenutni.karton; 
-			
-			axios.post("/zahtevPoseta/lekar/zakazi", this.pregled)
+			if (this.greska) return;
+						
+			axios.post("/zahtevPoseta/kreiraj", this.pregled)
 			.then(response => {
 				alert("Vas zahtev je poslat");
 				this.$router.push("/unosIzvestaja");
@@ -140,7 +140,8 @@ Vue.component("zakaziPregled", {
 				alert("SERVER ERROR!");
 			});
 		}
-		},
+	},
+	
 	mounted(){
 			
 		axios.get("/user/check/lekar")
@@ -148,8 +149,10 @@ Vue.component("zakaziPregled", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/poseta/proveriUToku")
-		.then(response => this.trenutni = response.data)
+		axios.get("/poseta/zapoceto")
+		.then(response => {
+			this.trenutni = response.data
+		})
 		.catch(reponse => {
 			alert("Nijedan pregled nije u toku!");
 			this.$router.push("/lekarHome");
@@ -162,7 +165,7 @@ Vue.component("zakaziPregled", {
 		.catch(response => {
 			this.$router.push("/");
 		});
-		//dobavi tipove pregleda
+
 		axios.get("/tipPosete/lekar/pregled")
 		.then(response => {
 			this.tipovi = response.data;

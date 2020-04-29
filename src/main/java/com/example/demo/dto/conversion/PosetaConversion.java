@@ -2,14 +2,13 @@ package com.example.demo.dto.conversion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.PosetaDTOS2;
-import com.example.demo.dto.PregledAdmin;
-import com.example.demo.dto.student1.PosetaDTO;
+import com.example.demo.dto.PredefinisanaPoseta;
+import com.example.demo.dto.student1.PosetaPretraga;
 import com.example.demo.model.Poseta;
 import com.example.demo.model.StanjePosete;
 import com.example.demo.repository.LekarRepository;
@@ -28,26 +27,21 @@ public class PosetaConversion {
 	@Autowired
 	private LekarRepository lekarRepository;
 	
-	public Poseta get(PregledAdmin poseta) throws ParseException {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+	public Poseta get(PredefinisanaPoseta poseta) throws ParseException {
 		
-		String proba = (f.format(poseta.getDatum()));
-		String dat = proba.substring(0, proba.length()-6);
-		Date datum = f.parse(dat+" "+poseta.getVreme());
-		Poseta mojaPoseta =  new Poseta();
-		mojaPoseta.setId(poseta.getId());
-		mojaPoseta.setDatum(datum);
-		mojaPoseta.setPopust(poseta.getPopust());
-		mojaPoseta.setTipPosete(this.tipPoseteRepository.getOne(poseta.getTip()));
-		mojaPoseta.setSala(this.salaRepository.getOne(poseta.getSala()));
-		mojaPoseta.setStanje(StanjePosete.SLOBODNO);
-		mojaPoseta.getLekari().add(this.lekarRepository.getOne(poseta.getLekar()));
-		return mojaPoseta;
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		String temp1 = f.format(poseta.getDatum());
+		String temp2 = temp1.substring(0, temp1.length() - 6);
+		return new Poseta(f.parse(temp2 + " " + poseta.getVreme()), poseta.getPopust(), 
+				StanjePosete.SLOBODNO, this.tipPoseteRepository.getOne(poseta.getTipPregleda()), 
+				this.salaRepository.getOne(poseta.getSala()), 
+				this.lekarRepository.getOne(poseta.getLekar()));
+
 	}
 	
 
-	public PosetaDTO get(Poseta poseta) {
-		return new PosetaDTO(poseta);
+	public PosetaPretraga get(Poseta poseta) {
+		return new PosetaPretraga(poseta);
 	}
 	
 	public PosetaDTOS2 getS2(Poseta poseta) {

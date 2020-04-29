@@ -125,7 +125,7 @@ Vue.component("lekarKalendar", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/poseta/proveriUToku")
+		axios.get("/poseta/zapoceto")
 		.then(response => {
 			this.trenutnaPostoji = true;
 		})
@@ -133,7 +133,7 @@ Vue.component("lekarKalendar", {
 			this.trenutnaPostoji = false;
 		});
 		
-		axios.get("/lekar/getObaveze")
+		axios.get("/lekar/obaveze")
 		.then(response => {
 			this.obaveze = response.data;
 		})
@@ -147,21 +147,18 @@ Vue.component("lekarKalendar", {
 	methods: {
 		can_start: function(pocetak) {
 			let datum = Date.parse(pocetak);
-			
-			if (((datum - Date.now()) / 1000 / 60) > 5)
+						
+			if (((Date.now() - datum) / 1000 / 60) < -10)
 				return false;
 			
-			if (((datum - Date.now()) / 1000 / 60) < -60)
+			if (((Date.now() - datum) / 1000 / 60) > 20)
 				return false;
-			
-			return false;
+
+			return true;
 		},
 		
 		can_cancel: function(pocetak) {
 			let datum = Date.parse(pocetak);
-			
-			if (datum < Date.now())
-				return false;
 			
 			if (((datum - Date.now()) / 1000 / 60 / 60) >= 24)
 				return true;
@@ -173,7 +170,7 @@ Vue.component("lekarKalendar", {
 			if (id === "")
 				return;
 			
-			axios.get("/poseta/zapocniPosetu/" + id)
+			axios.get("/poseta/zapocni/" + id)
 			.then(response => {
 				this.$router.push("/unosIzvestaja");
 			})
@@ -186,7 +183,7 @@ Vue.component("lekarKalendar", {
 			if (id === "")
 				return;
 			
-			axios.delete("/poseta/otkaziPosetuLekar/" + id)
+			axios.delete("/poseta/otkazi/" + id)
 			.then(response => {
 				alert("Poseta uspesno otkazana!");
 				location.reload();
@@ -206,7 +203,6 @@ Vue.component("lekarKalendar", {
 			this.dnevni = this.obaveze.reduce(function (acc, obaveza) {
 				let period = obaveza.datum;
 				
-				// check if the week number exists
 				if (typeof acc[period] === 'undefined') {
 				  acc[period] = {
 						  'period': '',
@@ -238,7 +234,6 @@ Vue.component("lekarKalendar", {
 			this.nedeljni = this.obaveze.reduce(function (acc, obaveza) {
 				let period = moment(obaveza.datum).startOf('isoWeek').format("YYYY-MM-DD") + ' - ' + moment(obaveza.datum).endOf('isoWeek').format("YYYY-MM-DD");
 				
-				// check if the week number exists
 				if (typeof acc[period] === 'undefined') {
 				  acc[period] = {
 						  'period': '',
@@ -270,7 +265,6 @@ Vue.component("lekarKalendar", {
 			this.mesecni = this.obaveze.reduce(function (acc, obaveza) {
 				let period = moment(obaveza.datum).format("YYYY-MM");
 				
-				// check if the week number exists
 				if (typeof acc[period] === 'undefined') {
 				  acc[period] = {
 						  'period': '',
@@ -302,7 +296,6 @@ Vue.component("lekarKalendar", {
 			this.godisnji = this.obaveze.reduce(function (acc, obaveza) {
 				let period = moment(obaveza.datum).format("YYYY");
 				
-				// check if the week number exists
 				if (typeof acc[period] === 'undefined') {
 				  acc[period] = {
 						  'period': '',

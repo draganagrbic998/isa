@@ -21,6 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.example.demo.dto.ObavezaDTO;
+
 @Entity
 @DiscriminatorValue("lekar")
 public class Lekar extends Zaposleni implements Ocenjivanje{
@@ -296,6 +298,17 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		
 		return true;
 		
+	}
+
+	public List<ObavezaDTO> getObaveze() {
+		List<ObavezaDTO> obaveze = new ArrayList<ObavezaDTO>();
+
+		for (Poseta p : this.posete) {
+			if (p.getStanje().equals(StanjePosete.ZAUZETO))
+				obaveze.add(new ObavezaDTO(p));
+		}
+
+		return obaveze;
 	}
 	
 }

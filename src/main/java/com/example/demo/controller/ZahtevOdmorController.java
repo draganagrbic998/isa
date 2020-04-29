@@ -18,12 +18,8 @@ import com.example.demo.dto.ZahtevOdmorObrada;
 import com.example.demo.dto.conversion.ZahtevOdmorConversion;
 import com.example.demo.model.Admin;
 import com.example.demo.model.ZahtevOdmor;
-import com.example.demo.model.Zaposleni;
-//import com.example.demo.model.Zaposleni;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevOdmorService;
-import com.example.demo.service.email.EmailService;
-import com.example.demo.service.email.Message;
 
 @RestController
 @RequestMapping(value="/zahtevOdmor")
@@ -31,25 +27,21 @@ public class ZahtevOdmorController {
 	
 	@Autowired
 	private UserService userService;
-
-	@Autowired 
-	private EmailService emailService;
 	
 	@Autowired 
-	private  ZahtevOdmorService zahtevOdmorService;
+	private ZahtevOdmorService zahtevOdmorService;
 
 	@Autowired 
-	private  ZahtevOdmorConversion zahtevOdmorConversion;
-
+	private ZahtevOdmorConversion zahtevOdmorConversion;
 	
-	//metoda koja vraca listu DTOZahtevaOdmor na osnovu klinike
+	
+
 	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value="/zahteviKlinika", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ZahtevOdmorObrada>> uzmiZahteveGod(){
+	@GetMapping(value="/klinika/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ZahtevOdmorDTO>> pregled(){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.zahtevOdmorService.zaObradu(admin.getKlinika()), HttpStatus.OK);
-			
+			return new ResponseEntity<>(this.zahtevOdmorService.findAll(admin.getKlinika()), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -72,17 +64,12 @@ public class ZahtevOdmorController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/potvrda", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/potvrda", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevOdmorObrada zahtevObrada){
 		try {
 			ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
 			zahtev.setOdobren(true);
 			this.zahtevOdmorService.save(zahtev);
-			Zaposleni zaposleni = this.zahtevOdmorService.nadjiZaposlenog(zahtevObrada.getZaposleniId());
-			Message message = new Message(zaposleni.getEmail(), "Zahtev odobren!",
-					"Vas zahtev za godisnji odmor/odsustvo je odobren!");
-			System.out.println(message+ "ovo je poruka");
-			this.emailService.sendMessage(message);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 
 		catch (Exception e) {
@@ -91,21 +78,16 @@ public class ZahtevOdmorController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/odbijanje", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/odbijanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevOdmorObrada zahtevObrada){
 		try {
-			//ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
-			Zaposleni zaposleni = this.zahtevOdmorService.nadjiZaposlenog(zahtevObrada.getZaposleniId());
-			this.zahtevOdmorService.delete(zahtevObrada.getId());
-			Message message = new Message(zaposleni.getEmail(), "Zahtev odbijen!",
-				"Vas zahtev za godisnji odmor/odsustvo je odbijen!\n Razlog: "+zahtevObrada.getRazlog()+".");
-			this.emailService.sendMessage(message);
-			return new ResponseEntity<>(HttpStatus.OK);
+			ZahtevOdmor zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
+			this.zahtevOdmorService.delete(zahtev.getId());
+			return new ResponseEntity<>(HttpStatus.OK);			
 		} 
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
 	
 }

@@ -43,6 +43,9 @@ public class UserController {
 			Korisnik k = this.userService.getSignedKorisnik();
 			if (uloga.equalsIgnoreCase("sifra") && !k.isPromenjenaSifra())
 				return new ResponseEntity<>(HttpStatus.OK);
+			if (uloga.equalsIgnoreCase("zaposleni") && (Hibernate.getClass(k).getSimpleName().equalsIgnoreCase("lekar") || 
+					Hibernate.getClass(k).getSimpleName().equalsIgnoreCase("sestra")))
+				return new ResponseEntity<>(HttpStatus.OK);
 			if (Hibernate.getClass(k).getSimpleName().equalsIgnoreCase(uloga))
 				return new ResponseEntity<>(HttpStatus.OK);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			

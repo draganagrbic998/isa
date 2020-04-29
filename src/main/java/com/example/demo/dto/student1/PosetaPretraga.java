@@ -8,7 +8,7 @@ import java.util.List;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Poseta;
 
-public class PosetaDTO implements Comparable<PosetaDTO>{
+public class PosetaPretraga implements Comparable<PosetaPretraga>{
 	
 	private Integer id;
 	private Date datum;
@@ -19,11 +19,11 @@ public class PosetaDTO implements Comparable<PosetaDTO>{
 	private String sala;
 	private List<String> lekari;
 	
-	public PosetaDTO() {
+	public PosetaPretraga() {
 		super();
 	}
 
-	public PosetaDTO(Poseta poseta) {
+	public PosetaPretraga(Poseta poseta) {
 		super();
 		this.id = poseta.getId();
 		this.datum = poseta.getDatum();
@@ -104,7 +104,7 @@ public class PosetaDTO implements Comparable<PosetaDTO>{
 	}
 
 	@Override
-	public int compareTo(PosetaDTO p) {
+	public int compareTo(PosetaPretraga p) {
 		return this.datum.compareTo(p.datum);
 	}
 	

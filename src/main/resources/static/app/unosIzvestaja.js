@@ -103,27 +103,25 @@ Vue.component("unosIzvestaja", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/poseta/proveriUToku")
+		axios.get("/poseta/zapoceto")
 		.catch(response => {
 			alert('Trenutno nemate zapocetu posetu!');
 			this.$router.push("/lekarHome");
 		});
 		
-		axios.get("/dijagnoza/dobavi")
+		axios.get("/dijagnoza/pregled")
 		.then(response => {
 			this.dijagnoze = response.data;
 		})
 		.catch(response => {
-			alert('SERVER ERROR!');
 			this.$router.push("/");
 		});
 		
-		axios.get("/lek/dobavi")
+		axios.get("/lek/pregled")
 		.then(response => {
 			this.lekovi = response.data;
 		})
 		.catch(response => {
-			alert('SERVER ERROR!');
 			this.$router.push("/");
 		});
 	}, 

@@ -2,7 +2,10 @@ package com.example.demo.dto;
 
 import java.util.Date;
 
+import org.hibernate.Hibernate;
+
 import com.example.demo.model.ZahtevOdmor;
+import com.example.demo.model.Zaposleni;
 
 public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 
@@ -12,6 +15,9 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 	private boolean odobren;
 	private Integer zaposleni;
 	private Integer klinika;
+	private String ime;
+	private String prezime;
+	private String profesija;
 	
 	public ZahtevOdmorDTO() {
 		super();
@@ -25,6 +31,9 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 		this.odobren = zahtev.getOdobren();
 		this.zaposleni = zahtev.getZaposleni().getId();
 		this.klinika = zahtev.getKlinika().getId();
+		this.ime = zahtev.getZaposleni().getIme();
+		this.prezime = zahtev.getZaposleni().getPrezime();
+		this.profesija = ((Zaposleni) Hibernate.unproxy(zahtev.getZaposleni())).getClass().getSimpleName();
 	}
 	
 	public Integer getId() {
@@ -74,6 +83,30 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 
 	public void setKlinika(Integer klinika) {
 		this.klinika = klinika;
+	}
+	
+	public String getIme() {
+		return ime;
+	}
+
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+
+	public String getPrezime() {
+		return prezime;
+	}
+
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
+
+	public String getProfesija() {
+		return profesija;
+	}
+
+	public void setProfesija(String profesija) {
+		this.profesija = profesija;
 	}
 
 	@Override

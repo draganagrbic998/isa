@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.dto.ZahtevOdmorObrada;
+import com.example.demo.dto.ZahtevOdmorDTO;
 import com.example.demo.model.Klinika;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.ZahtevOdmor;
@@ -75,21 +74,12 @@ public class ZahtevOdmorService {
 		return zahtevi;
 	}
 	
-	//pomocna metoda, nalazi sve zahtev odmor obrade(neodobrene) za kliniku
-	//hocu da znam da li je zaposleni lekar 
-	public List<ZahtevOdmorObrada> zaObradu(Klinika klinika) {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		List<ZahtevOdmorObrada> zahtevi = new ArrayList<ZahtevOdmorObrada>();
-			for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
-				if (z.getKlinika() == klinika && !z.getOdobren()) {
-					if (z.getZaposleni() instanceof Lekar) {
-						zahtevi.add(new ZahtevOdmorObrada(z.getId(), z.getZaposleni().getIme(), z.getZaposleni().getPrezime(), "Lekar", f.format(z.getPocetak()), f.format(z.getKraj()), z.getZaposleni().getId(), ""));
-					}
-					else {
-						zahtevi.add(new ZahtevOdmorObrada(z.getId(), z.getZaposleni().getIme(), z.getZaposleni().getPrezime(), "Sestra", f.format(z.getPocetak()), f.format(z.getKraj()),z.getZaposleni().getId(), ""));
-					}
-				}
-			}
+	public List<ZahtevOdmorDTO> findAll(Klinika klinika) {
+		List<ZahtevOdmorDTO> zahtevi = new ArrayList<>();
+		for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
+			if (z.getKlinika().getId().equals(klinika.getId()) && !z.getOdobren())
+				zahtevi.add(new ZahtevOdmorDTO(z));
+		}
 		return zahtevi;
 	}
 
@@ -102,6 +92,5 @@ public class ZahtevOdmorService {
 		return true;
 	}
 
-	
-	
+
 }

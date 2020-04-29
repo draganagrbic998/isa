@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.PacijentDTO;
-import com.example.demo.dto.PacijentPretragaDTO;
 import com.example.demo.model.Pacijent;
 import com.example.demo.repository.KartonRepository;
 import com.example.demo.repository.PacijentRepository;
@@ -52,14 +51,6 @@ public class PacijentConversion {
 			pacijentiDTO.add(new PacijentDTO(p));
 		Collections.sort(pacijentiDTO);
 		return pacijentiDTO;
-	}
-	
-	public List<PacijentPretragaDTO> get2(List<Pacijent> pacijenti) {
-		List<PacijentPretragaDTO> pacijentiPretraga = new ArrayList<PacijentPretragaDTO>();
-		for (Pacijent p : pacijenti) {
-			pacijentiPretraga.add(new PacijentPretragaDTO(p));
-		}
-		return pacijentiPretraga;
 	}
 	
 }

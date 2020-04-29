@@ -124,7 +124,9 @@ Vue.component("adminHome", {
 			</table>
 		</div>
 		</div>
-	`, 	methods: {
+	`, 	
+	
+	methods: {
 		
 		osvezi: function(){
 			this.greskaNaziv = '';
@@ -180,11 +182,7 @@ Vue.component("adminHome", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/zahtevOdmor/zahteviKlinika")
-		.then(response => {this.zahteviBroj = response.data.length})
-		.catch(reponse => {
-			this.$router.push("/");
-		});
+		
 	}
 	
 });

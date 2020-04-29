@@ -1,26 +1,45 @@
 package com.example.demo.dto;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
+import com.example.demo.model.Poseta;
+import com.example.demo.model.StanjePosete;
 
 public class PacijentPretragaDTO extends PacijentDTO {
 	
-	Integer karton;
-	KartonDTO kartonObj;
+	private KartonDTO kartonObj;
 	private List<IzvestajDTO> stariIzvestaji;
 	private Integer zakazanaPoseta;
 	
-	public PacijentPretragaDTO(Pacijent pacijent) {
+	public PacijentPretragaDTO(Pacijent pacijent, Lekar lekar) {
 		super(pacijent);
 		this.kartonObj = new KartonDTO(pacijent.getKarton());
-	}
-	public Integer getKarton() {
-		return karton;
-	}
-
-	public void setKarton(Integer karton) {
-		this.karton = karton;
+		this.stariIzvestaji = new ArrayList<>();
+		for (Poseta p: pacijent.getKarton().getPosete()) {
+			for (Lekar l: p.getLekari()) {
+				if (l.getId().equals(lekar.getId()) && p.getStanje().equals(StanjePosete.OBAVLJENO))
+					this.stariIzvestaji.add(new IzvestajDTO(p.getIzvestaj()));
+			}
+		}
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(new Date());
+		gc.add(Calendar.MINUTE, -10);
+		Date lowLimit = gc.getTime();
+		gc.setTime(new Date());
+		gc.add(Calendar.MINUTE, 20);
+		Date highLimit = gc.getTime();
+		for (Poseta p: pacijent.getKarton().getPosete()) {
+			
+			if (p.getStanje().equals(StanjePosete.ZAUZETO) && 
+					p.getDatum().after(lowLimit) && p.getDatum().before(highLimit))
+				this.zakazanaPoseta = p.getId();
+		}
 	}
 
 	public KartonDTO getKartonObj() {
@@ -46,6 +65,5 @@ public class PacijentPretragaDTO extends PacijentDTO {
 	public void setZakazanaPoseta(Integer zakazanaPoseta) {
 		this.zakazanaPoseta = zakazanaPoseta;
 	}
-
 
 }

@@ -32,15 +32,17 @@ Vue.component("lekarPregledGodisnjih", {
 		<div class="card" id="tableBox">
 			<table class="table">
 				<tr bgcolor="#f2f2f2">
-					<th> Datum Pocetka </th>
-					<th> Datum Zavrsetka</th>
-					<th> Dani </th>
+					<th>Datum Pocetka</th>
+					<th>Datum Zavrsetka</th>
+					<th>Dani</th>
+					<th>Odobren</th>
 				</tr>
 				
 				<tr v-for="g in godisnji" bgcolor="white">
-				    <td>{{g.pocetak}}</td>
-					<td>{{g.kraj}}</td>
+				    <td>{{formatiraj(g.pocetak)}}</td>
+					<td>{{formatiraj(g.kraj)}}</td>
 					<td>{{g.trajanje}}</td>
+					<td>{{g.odobren}}</td>
 				</tr>
 			</table>
 		</div>
@@ -51,14 +53,32 @@ Vue.component("lekarPregledGodisnjih", {
 	
 	`, 
 	
+	methods: {
+		formatiraj: function (date) {
+			
+			  date = new Date(date);
+			  let year = date.getFullYear();
+			  let month = (1 + date.getMonth()).toString();
+			  month = month.length > 1 ? month : '0' + month;
+			  let day = date.getDate().toString();
+			  day = day.length > 1 ? day : '0' + day;
+			  let hours = date.getHours().toString();
+			  hours = hours.length > 1 ? hours : '0' + hours;
+			  let minutes = date.getMinutes().toString();
+			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  
+		}
+	},
+	
 	mounted(){
 
-		axios.get("/user/check/lekar")
+		axios.get("/user/check/zaposleni")
 		.catch(reponse => {
 			this.$router.push("/");
 		});
 		
-		axios.get("/lekar/getGodisnji")
+		axios.get("/zaposleni/zahtevOdmor/pregled")
 		.then(response => {
 			this.godisnji = response.data;
 		})

@@ -27,7 +27,7 @@ Vue.component("sestraHome", {
           </a>
       </li>
       <li class="nav-item active" style="min-width: 130px;">
-        <a class="nav-link" href="#/sestraPregledGodisnjih">
+        <a class="nav-link" href="#/lekarPregledGodisnjih">
           <i class="fa fa-calendar"></i>
           Godisnji Odmori
           <span class="sr-only">(current)</span>

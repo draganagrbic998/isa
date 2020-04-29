@@ -2,36 +2,36 @@ Vue.component("kreirajPregled", {
 	data: function(){
 		return {
 			pregled: {
-				'id': null,
-				'datum': '', 
-				'vreme': '', 
-				'sala': '',
-				'tip': '',
-				'lekar': '',
-				'popust': ''
+				"id": null,
+				"datum": '', 
+				"vreme": '', 
+				"tipPregleda": '',
+				"sala": '',
+				"lekar": '',
+				"popust": ''
 			}, 
-			nazivTipaPregleda: '',
+			vreme: '',
 			nazivSale: '',
+			nazivTipaPregleda: '',
 			imePrezimeLekara: '',
 			greskaDatum: '', 
-			greskaPopust: '',
 			greskaVreme: '', 
-			greskaLekar: '',
+			greskaTipPregleda: '',
 			greskaSala: '',
-			greskaTip: '',
+			greskaLekar: '',
+			greskaPopust: '',
 			greska: false,  
-			vreme: '',
-			lekari: {},
+			tipoviPregleda: {},
 			sale: {},
-			tipoviPregleda: {}
+			lekari: {}
 		}
 	}, 
+	
 	template: `
 	
 		<div>
 		
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 100px;">
@@ -41,13 +41,13 @@ Vue.component("kreirajPregled", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-   
     </ul>
   </div>
 </nav>
-<div class="card" id="tableBox">
+
+		<div class="card" id="tableBox">
 		
-			<h1>Kreiraj slobodni pregled</h1><br>
+			<h1>Kreiranje predefinisanog pregleda</h1><br>
 			
 			<table class="table">
 			
@@ -68,7 +68,7 @@ Vue.component("kreirajPregled", {
 					<tr><th scope="row">Tip pregleda: </th>
 						<td><select v-model="nazivTipaPregleda">
 						<option v-for="p in tipoviPregleda">{{p.naziv}}</option>
-					</select></td> <td>{{greskaTip}}</td> </tr>
+					</select></td> <td>{{greskaTipPregleda}}</td> </tr>
 					
 					<tr><th scope="row">Sala: </th>
 						<td><select v-model="nazivSale">
@@ -80,7 +80,6 @@ Vue.component("kreirajPregled", {
 						<option v-for="l in lekari">{{l.ime}} {{l.prezime}}</option>
 					</select></td> <td>{{greskaLekar}}</td> </tr>
 					
-					
 					<tr>
 						<th scope="row">Popust: </th>
 						<td><input type="text" v-model="pregled.popust" name="name"></td>
@@ -90,6 +89,7 @@ Vue.component("kreirajPregled", {
 					<tr>
 						<td colspan="3"><button v-on:click="kreiraj()" class="btn btn-primary">KREIRAJ</button></td>
 					</tr>
+					
 				</tbody>
 			</table>
 		</div>
@@ -99,16 +99,16 @@ Vue.component("kreirajPregled", {
 	
 	`,
 	watch: {
+		nazivTipaPregleda: function(){
+			for (let t of this.tipoviPregleda){
+				if (t.naziv === this.nazivTipaPregleda)
+					this.pregled.tipPregleda = t.id;
+			}
+		},
 		nazivSale: function(){
 			for (let s of this.sale){
 				if (s.naziv === this.nazivSale)
 					this.pregled.sala = s.id;
-			}
-		},
-		nazivTipaPregleda: function(){
-			for (let t of this.tipoviPregleda){
-				if (t.naziv === this.nazivTipaPregleda)
-					this.pregled.tip = t.id;
 			}
 		},
 		imePrezimeLekara: function(){
@@ -119,6 +119,7 @@ Vue.component("kreirajPregled", {
 		}
 	
 	},
+	
 	methods: {
 		
 		vremePromena: function() {
@@ -134,39 +135,42 @@ Vue.component("kreirajPregled", {
 			}
 			return this.pregled.vreme; 
 		},
+		
 		osvezi: function(){
-			this.greskaVreme = '';
-			this.greskaPopust= '';
-			this.greskaLekar= '';
-			this.greskaTip= '';
-			this.greskaSala= '';
 			this.greskaDatum = '';
+			this.greskaVreme = '';
+			this.greskaTipPrgleda = '';
+			this.greskaSala = '';
+			this.greskaLekar = '';
+			this.greskaPopust = '';
 			this.greska = false;
 		},
+		
 		kreiraj : function() {
+			
 			this.osvezi();
 			this.vremePromena();
 			
 			if (this.pregled.datum == '') {
-				this.greskaDatum = "Unesite datum!";
+				this.greskaDatum = "Morate uneti datum.";
 				this.greska = true;
 			}
 			
 			if (this.pregled.vreme == '') {
-				this.greskaVreme = "Morate uneti vreme";
+				this.greskaVreme = "Morate uneti vreme.";
 				this.greska = true;
 			}
-			if (this.pregled.tip == '') {
-				this.greskaTip = "Odaberite tip pregleda";
+			if (this.pregled.tipPregleda == '') {
+				this.greskaTipPregleda = "Odaberite tip pregleda.";
 				this.greska = true;
 			}
 			if (this.pregled.sala == '') {
-				this.greskaSala = "Odaberite salu";
+				this.greskaSala = "Odaberite salu.";
 				this.greska = true;
 			}
 			
 			if (this.pregled.lekar == '') {
-				this.greskaLekar = "Odaberite lekara";
+				this.greskaLekar = "Odaberite lekara.";
 				this.greska = true;
 			}
 			if (isNaN(parseFloat(this.pregled.popust)) || parseFloat(this.pregled.popust) < 0){
@@ -174,16 +178,16 @@ Vue.component("kreirajPregled", {
 				this.greska = true;
 			}
 			if (!this.vreme.includes(':') && ((this.vreme.length>2 || this.vreme.length<1) || parseInt(this.vreme)>25)) {
-				this.greskaVreme = "Nespravan format";
+				this.greskaVreme = "Nespravan format.";
 				this.greska = true;
 			}
 			if (this.vreme.includes(':') && (this.vreme.length != 5)) {
-				this.greskaVreme = "Nespravan format";
+				this.greskaVreme = "Nespravan format.";
 				this.greska = true;
 			}
 			if (this.greska) {return;}
 			
-			axios.post("/poseta/admin/kreiraj", this.pregled)
+			axios.post("/poseta/kreiraj", this.pregled)
 			.then(response => {
 				alert("Pregled uspesno kreiran!");
 				this.$router.push("/adminHome");
@@ -201,7 +205,6 @@ Vue.component("kreirajPregled", {
 			this.$router.push("/");
 		});
 		
-		// dobavi tipove posete
 		axios.get("/tipPosete/admin/pregled")
 		.then(response => {
 			this.tipoviPregleda = response.data;
@@ -210,19 +213,17 @@ Vue.component("kreirajPregled", {
 			this.$router.push("/");
 		});
 		
-		// dobavi lekare
-		axios.get("/lekar/admin/pregled")
+		axios.get("/sala/admin/pregled")
 		.then(response => {
-			this.lekari = response.data;
+			this.sale = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
 		});
 		
-		// dobavi sale
-		axios.get("/sala/admin/pregled")
+		axios.get("/lekar/admin/pregled")
 		.then(response => {
-			this.sale = response.data;
+			this.lekari = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");

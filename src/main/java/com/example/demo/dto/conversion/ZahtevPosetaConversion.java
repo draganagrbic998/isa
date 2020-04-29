@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.ZahtevPosetaDTO;
-import com.example.demo.dto.ZakaziPregledLekar;
 import com.example.demo.model.ZahtevPoseta;
 import com.example.demo.repository.KartonRepository;
 import com.example.demo.repository.LekarRepository;
@@ -30,28 +29,18 @@ public class ZahtevPosetaConversion {
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
 		
-	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) {
+	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) throws ParseException {
 				
-		return new ZahtevPoseta(zahtevDTO.getId(), zahtevDTO.getDatum(), 
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		String temp1 = (f.format(zahtevDTO.getDatum()));
+		String temp2 = temp1.substring(0, temp1.length()-6);
+		Date datum = zahtevDTO.getVreme() == null ? zahtevDTO.getDatum() : f.parse(temp2 + " " + zahtevDTO.getVreme());
+		
+		return new ZahtevPoseta(zahtevDTO.getId(), datum, 
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 
 				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : 
 					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija());
-		
-	}
-	
-	
-	public ZahtevPoseta get(ZakaziPregledLekar poseta) throws ParseException {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		
-		String proba = (f.format(poseta.getDatum()));
-		String dat = proba.substring(0, proba.length()-6);
-		Date datum = f.parse(dat+" "+poseta.getVreme());
-		return new ZahtevPoseta(poseta.getId(), datum,
-				this.kartonRepository.getOne(poseta.getKarton()), 
-				this.lekarRepository.getOne(poseta.getLekar()), 
-				poseta.getTip() != null ? this.tipPoseteRepository.getOne(poseta.getTip()) : 
-				this.lekarRepository.getOne(poseta.getLekar()).getSpecijalizacija());
 		
 	}
 	

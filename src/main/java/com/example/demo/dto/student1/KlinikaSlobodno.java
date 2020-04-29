@@ -14,7 +14,7 @@ import com.example.demo.model.StanjePosete;
 public class KlinikaSlobodno extends KlinikaDTO {
 	
 	private double ocena;
-	private List<PosetaDTO> posete;
+	private List<PosetaPretraga> posete;
 	
 	public KlinikaSlobodno() {
 		super();
@@ -32,7 +32,7 @@ public class KlinikaSlobodno extends KlinikaDTO {
 		this.posete = new ArrayList<>();
 		for (Poseta p: posete) {
 			if (p.getTipPosete().getPregled() && p.getStanje().equals(StanjePosete.SLOBODNO) && p.getDatum().after(new Date()))
-				this.posete.add(new PosetaDTO(p));
+				this.posete.add(new PosetaPretraga(p));
 		}
 		Collections.sort(this.posete);
 	}
@@ -45,11 +45,11 @@ public class KlinikaSlobodno extends KlinikaDTO {
 		this.ocena = ocena;
 	}
 
-	public List<PosetaDTO> getPosete() {
+	public List<PosetaPretraga> getPosete() {
 		return posete;
 	}
 
-	public void setPosete(List<PosetaDTO> posete) {
+	public void setPosete(List<PosetaPretraga> posete) {
 		this.posete = posete;
 	}
 

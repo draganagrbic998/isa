@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ZahtevPosetaDTO;
-import com.example.demo.dto.ZakaziPregledLekar;
 import com.example.demo.dto.conversion.ZahtevPosetaConversion;
 import com.example.demo.model.Admin;
+import com.example.demo.model.Korisnik;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
 import com.example.demo.model.ZahtevPoseta;
 import com.example.demo.model.Zaposleni;
-import com.example.demo.service.AdminService;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevPosetaService;
 import com.example.demo.service.email.EmailService;
@@ -33,10 +32,7 @@ public class ZahtevPosetaController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private AdminService adminService;
-	
+		
 	@Autowired
 	private ZahtevPosetaConversion zahtevPosetaConversion;
 	
@@ -46,14 +42,19 @@ public class ZahtevPosetaController {
 	@Autowired
 	private EmailService emailService;
 
-	@PreAuthorize("hasAuthority('Pacijent')")
+	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@PostMapping(value="/kreiraj", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
 		
 		ZahtevPoseta zahtev = null;
 		try {
-			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			zahtevDTO.setKarton(pacijent.getKarton().getId());
+			Korisnik korisnik = this.userService.getSignedKorisnik();
+			if (korisnik instanceof Pacijent)
+				zahtevDTO.setKarton(((Pacijent) korisnik).getKarton().getId());
+			else{
+				zahtevDTO.setKarton(((Lekar) korisnik).getZapocetaPoseta().getKarton().getId());
+				zahtevDTO.setLekar(korisnik.getId());
+			}
 			zahtev = this.zahtevPosetaConversion.get(zahtevDTO);
 			this.zahtevPosetaService.save(zahtev);
 		}
@@ -74,21 +75,6 @@ public class ZahtevPosetaController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
-	@PreAuthorize("hasAuthority('Lekar')")
-	@PostMapping(value = "/lekar/zakazi", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> zakaziLekar(@RequestBody ZakaziPregledLekar pregled){
-		try {
-			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			this.zahtevPosetaService.save(this.zahtevPosetaConversion.get(pregled)); 
-			Admin admin = this.adminService.nadjiAdminaKlinike(lekar.getKlinika());
-			String obavestenje = "Lekar " + lekar.getIme()+ " " + lekar.getPrezime() + " zatrazio je pregled/operaciju datuma " + pregled.getDatum() + " u " + pregled.getVreme() + " sati.";
-			this.emailService.sendMessage(new Message(admin.getEmail(), "Zahtev za pregled kod lekara", obavestenje));
-			return new ResponseEntity<>(HttpStatus.OK);
-			
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 
-	}
+
 }

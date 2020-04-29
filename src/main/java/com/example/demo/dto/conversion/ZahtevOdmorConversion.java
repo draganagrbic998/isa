@@ -3,10 +3,12 @@ package com.example.demo.dto.conversion;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.dto.GodisnjiDTO;
 import com.example.demo.dto.ZahtevOdmorDTO;
 import com.example.demo.model.ZahtevOdmor;
 import com.example.demo.repository.KlinikaRepository;
@@ -41,5 +43,16 @@ public class ZahtevOdmorConversion {
 			zahteviDTO.add(new ZahtevOdmorDTO(z));
 		Collections.sort(zahteviDTO);
 		return zahteviDTO;
+		
+	}
+	
+	public List<GodisnjiDTO> get(Set<ZahtevOdmor> zahtevi){
+		
+		List<GodisnjiDTO> godisnjiDTO = new ArrayList<>();
+		for (ZahtevOdmor z: zahtevi)
+			godisnjiDTO.add(new GodisnjiDTO(z));
+		Collections.sort(godisnjiDTO);
+		return godisnjiDTO;
+		
 	}
 }
