@@ -175,7 +175,7 @@ public class PacijentController {
 			if (lekar.getZapocetaPoseta() == null)
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			
-			if (lekar.getZapocetaPoseta().getKarton().getPacijent().getId() != kartonDTO.getPacijent())
+			if (!lekar.getZapocetaPoseta().getKarton().getPacijent().getId().equals(kartonDTO.getPacijent()))
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 			
 			this.kartonService.save(this.kartonConversion.get(kartonDTO));
