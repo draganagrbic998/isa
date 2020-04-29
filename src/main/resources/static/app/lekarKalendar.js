@@ -144,10 +144,10 @@ Vue.component("lekarKalendar", {
 		can_start: function(pocetak) {
 			let datum = Date.parse(pocetak);
 			
-			if (((datum - Date.now()) / 1000 / 60) < -5)
+			if (((datum - Date.now()) / 1000 / 60) > 5)
 				return false;
 			
-			if (((datum - Date.now()) / 1000 / 60) >= 60)
+			if (((datum - Date.now()) / 1000 / 60) < -60)
 				return false;
 			
 			return false;
