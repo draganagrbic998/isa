@@ -129,9 +129,9 @@ Vue.component("lekarPacijenti", {
 					
 					<thead>
 						<tr>
-							<th scope="col">Opis</th>
-							<th scope="col">Terapija</th>
 							<th scope="col">Poseta</th>
+							<th scope="col">Datum</th>
+							<th scope="col">Opis</th>
 						</tr>
 					
 					</thead>
@@ -139,9 +139,9 @@ Vue.component("lekarPacijenti", {
 					<tbody>
 						
 						<tr v-for="i in selectedPacijent.stariIzvestaji" v-on:click="selektovanIzvestaj(i)">
-							<td>{{i.opis}}</td>
-							<td>{{i.terapija}}</td>
 							<td>{{i.posetaNaziv}}</td>
+							<td>{{formatiraj(i.datum)}}</td>
+							<td>{{i.opis}}</td>
 						</tr>
 					
 					</tbody>
@@ -220,6 +220,23 @@ Vue.component("lekarPacijenti", {
 	`, 
 	
 	methods: {
+		
+		formatiraj: function (date) {
+			
+			  date = new Date(date);
+			  let year = date.getFullYear();
+			  let month = (1 + date.getMonth()).toString();
+			  month = month.length > 1 ? month : '0' + month;
+			  let day = date.getDate().toString();
+			  day = day.length > 1 ? day : '0' + day;
+			  let hours = date.getHours().toString();
+			  hours = hours.length > 1 ? hours : '0' + hours;
+			  let minutes = date.getMinutes().toString();
+			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  
+		},
+		
 		selektovanIzvestaj: function(i) {
 			this.selectedIzvestaj = i;
 			this.izvestajSelected = true;
@@ -248,7 +265,7 @@ Vue.component("lekarPacijenti", {
 		},
 		
 		izmeniIzvestaj: function() {
-			axios.post("/pacijent/izmenaIzvestaja", this.selectedIzvestaj)
+			axios.post("/lekar/izmenaIzvestaja", this.selectedIzvestaj)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');
 				location.reload();
@@ -288,7 +305,7 @@ Vue.component("lekarPacijenti", {
 			
 			if (this.greska) return;
 			
-			axios.post("/pacijent/lekar/izmenaKartona/", this.selectedPacijent.kartonObj)
+			axios.post("/lekar/izmenaKartona/", this.selectedPacijent.kartonObj)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');
 				location.reload();

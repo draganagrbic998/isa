@@ -111,7 +111,7 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 
 	@Override
 	public int compareTo(ZahtevOdmorDTO z) {
-		return this.id.compareTo(z.id);
+		return this.pocetak.compareTo(z.pocetak);
 	}
 
 }

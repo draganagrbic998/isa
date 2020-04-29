@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -27,6 +28,7 @@ public class PacijentPretragaDTO extends PacijentDTO {
 					this.stariIzvestaji.add(new IzvestajDTO(p.getIzvestaj()));
 			}
 		}
+		Collections.sort(this.stariIzvestaji);
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(new Date());
 		gc.add(Calendar.MINUTE, -10);

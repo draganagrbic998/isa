@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.model.Admin;
 import com.example.demo.model.Sestra;
-import com.example.demo.model.Zaposleni;
 import com.example.demo.repository.SestraRepository;
 
 @Component
@@ -31,7 +31,7 @@ public class SestraService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Sestra> findAll(Zaposleni admin) {
+	public List<Sestra> findAll(Admin admin) {
 		List<Sestra> sestre = new ArrayList<>();
 		for (Sestra s : this.sestraRepository.findAll()) {
 			if (s.getKlinika().getId().equals(admin.getKlinika().getId()) && s.isAktivan())

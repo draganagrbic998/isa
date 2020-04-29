@@ -114,6 +114,7 @@ public class PosetaService {
 		this.izvestajRepository.save(izvestaj);
 
 		izvestaj.getPoseta().setStanje(StanjePosete.OBAVLJENO);
+		izvestaj.getPoseta().setIzvestaj(izvestaj);
 		this.posetaRepository.save(izvestaj.getPoseta());
 		this.posetaRepository.save(izvestaj.getPoseta());
 

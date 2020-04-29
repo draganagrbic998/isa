@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.PosetaDTOS2;
 import com.example.demo.dto.PredefinisanaPoseta;
 import com.example.demo.dto.student1.PosetaPretraga;
 import com.example.demo.model.Poseta;
@@ -44,7 +43,4 @@ public class PosetaConversion {
 		return new PosetaPretraga(poseta);
 	}
 	
-	public PosetaDTOS2 getS2(Poseta poseta) {
-		return new PosetaDTOS2(poseta.getId(), poseta.getKarton().getId(), poseta.getTipPosete().getId());
-	}
 }

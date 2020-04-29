@@ -33,13 +33,13 @@ public class TipPoseteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<TipPosete> findForAdmin(Zaposleni admin) {
-		List<TipPosete> types = new ArrayList<>();
+	public List<TipPosete> findAll(Zaposleni zaposleni) {
+		List<TipPosete> tipovi = new ArrayList<>();
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
-			if (tp.getKlinika().getId().equals(admin.getKlinika().getId()) && tp.isAktivan())
-				types.add(tp);
+			if (tp.getKlinika().getId().equals(zaposleni.getKlinika().getId()) && tp.isAktivan())
+				tipovi.add(tp);
 		}
-		return types;
+		return tipovi;
 	}
 
 	@Transactional(readOnly = true)

@@ -69,7 +69,7 @@ public class TipPoseteController {
 	public ResponseEntity<List<TipPoseteDTO>> pregled() {
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(admin)), HttpStatus.OK);
+			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findAll(admin)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -81,7 +81,7 @@ public class TipPoseteController {
 	public ResponseEntity<List<TipPoseteDTO>> pregledLekar() {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findForAdmin(lekar)), HttpStatus.OK);
+			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findAll(lekar)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

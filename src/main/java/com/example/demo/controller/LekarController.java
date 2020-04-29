@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.IzvestajDTO;
+import com.example.demo.dto.KartonDTO;
 import com.example.demo.dto.LekarDTO;
-import com.example.demo.dto.ObavezaDTO;
+import com.example.demo.dto.Obaveza;
 import com.example.demo.dto.PacijentPretragaDTO;
+import com.example.demo.dto.conversion.KartonConversion;
 import com.example.demo.dto.conversion.LekarConversion;
 import com.example.demo.dto.student1.Bolest;
 import com.example.demo.dto.student1.OcenaParam;
@@ -26,7 +29,9 @@ import com.example.demo.model.Admin;
 import com.example.demo.model.KrvnaGrupa;
 import com.example.demo.model.Lekar;
 import com.example.demo.model.Pacijent;
+import com.example.demo.service.KartonService;
 import com.example.demo.service.LekarService;
+import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -41,6 +46,16 @@ public class LekarController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private KartonService kartonService;
+	
+	@Autowired
+	private KartonConversion kartonConversion;
+
+	
+	@Autowired
+	private PosetaService posetaService;
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -116,7 +131,7 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@GetMapping(value="/obaveze", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ObavezaDTO>> getObaveze(){
+	public ResponseEntity<List<Obaveza>> getObaveze(){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(lekar.getObaveze(), HttpStatus.OK);
@@ -150,6 +165,38 @@ public class LekarController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@PostMapping(value="/izmenaKartona", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody KartonDTO kartonDTO){
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			
+			if (lekar.getZapocetaPoseta() == null)
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			
+			if (!lekar.getZapocetaPoseta().getKarton().getPacijent().getId().equals(kartonDTO.getPacijent()))
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			
+			this.kartonService.save(this.kartonConversion.get(kartonDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@PostMapping(value = "/izmenaIzvestaja", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajDTO izvestajDTO) {
+		try {
+			this.posetaService.izmeniIzvestaj(izvestajDTO);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 	}
 	

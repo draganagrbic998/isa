@@ -64,14 +64,4 @@ public class LekController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('Lekar')")
-	@GetMapping(value = "/dobavi", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<LekDTO>> dobavi(){
-		try {
-			return new ResponseEntity<>(this.lekConversion.get(this.lekService.findAll()), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
 }

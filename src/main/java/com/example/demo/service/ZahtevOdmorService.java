@@ -16,7 +16,6 @@ import com.example.demo.model.ZahtevOdmor;
 import com.example.demo.model.Zaposleni;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.ZahtevOdmorRepository;
-import com.example.demo.repository.ZaposleniRepository;
 
 @Component
 @Transactional(readOnly = true)
@@ -24,10 +23,7 @@ public class ZahtevOdmorService {
 
 	@Autowired
 	private LekarRepository lekarRepository;
-	
-	@Autowired
-	private ZaposleniRepository zaposleniRepository;
-	
+		
 	@Autowired
 	private ZahtevOdmorRepository zahtevOdmorRepository;
 	
@@ -47,12 +43,6 @@ public class ZahtevOdmorService {
 	@Transactional(readOnly = true)
 	public ZahtevOdmor nadji(Integer id) {
 		return this.zahtevOdmorRepository.getOne(id);
-	}
-	
-	@Transactional(readOnly = true)
-	public Zaposleni nadjiZaposlenog(Integer id) {
-		return this.zaposleniRepository.getOne(id);
-		
 	}
 	
 	@Transactional(readOnly = false)

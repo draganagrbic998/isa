@@ -1,15 +1,17 @@
 package com.example.demo.dto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.example.demo.model.Dijagnoza;
 import com.example.demo.model.Izvestaj;
 import com.example.demo.model.Lek;
 
-public class IzvestajDTO {
+public class IzvestajDTO implements Comparable<IzvestajDTO>{
 	
 	private Integer id;
+	private Date datum;
 	private String opis;
 	private List<Integer> dijagnoze;
 	private List<Integer> lekovi;
@@ -24,6 +26,7 @@ public class IzvestajDTO {
 	public IzvestajDTO(Izvestaj izvestaj) {
 		super();
 		this.id = izvestaj.getId();
+		this.datum = izvestaj.getPoseta().getDatum();
 		this.opis = izvestaj.getOpis();
 		this.poseta = izvestaj.getPoseta().getId();
 		this.posetaNaziv = izvestaj.getPoseta().getTipPosete().getNaziv();
@@ -38,14 +41,6 @@ public class IzvestajDTO {
 			this.lekovi.add(l.getId());
 		
 	}
-	
-	public String getPosetaNaziv() {
-		return posetaNaziv;
-	}
-
-	public void setPosetaNaziv(String posetaNaziv) {
-		this.posetaNaziv = posetaNaziv;
-	}
 
 	public Integer getId() {
 		return id;
@@ -55,12 +50,36 @@ public class IzvestajDTO {
 		this.id = id;
 	}
 
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
 	public String getOpis() {
 		return opis;
 	}
 
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+
+	public List<Integer> getDijagnoze() {
+		return dijagnoze;
+	}
+
+	public void setDijagnoze(List<Integer> dijagnoze) {
+		this.dijagnoze = dijagnoze;
+	}
+
+	public List<Integer> getLekovi() {
+		return lekovi;
+	}
+
+	public void setLekovi(List<Integer> lekovi) {
+		this.lekovi = lekovi;
 	}
 
 	public Integer getPoseta() {
@@ -78,20 +97,17 @@ public class IzvestajDTO {
 	public void setTerapija(Integer terapija) {
 		this.terapija = terapija;
 	}
-	
-	public List<Integer> getDijagnoze() {
-		return dijagnoze;
+
+	public String getPosetaNaziv() {
+		return posetaNaziv;
 	}
 
-	public void setDijagnoze(List<Integer> dijagnoze) {
-		this.dijagnoze = dijagnoze;
+	public void setPosetaNaziv(String posetaNaziv) {
+		this.posetaNaziv = posetaNaziv;
 	}
 
-	public List<Integer> getLekovi() {
-		return lekovi;
-	}
-
-	public void setLekovi(List<Integer> lekovi) {
-		this.lekovi = lekovi;
+	@Override
+	public int compareTo(IzvestajDTO i) {
+		return this.datum.compareTo(i.datum);
 	}
 }

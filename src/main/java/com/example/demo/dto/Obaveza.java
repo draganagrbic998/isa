@@ -1,10 +1,11 @@
 package com.example.demo.dto;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.example.demo.model.Poseta;
 
-public class ObavezaDTO {
+public class Obaveza implements Comparable<Obaveza>{
 
 	private Integer id;
 	private String datum;
@@ -12,12 +13,13 @@ public class ObavezaDTO {
 	private Integer trajanje;
 	private String tip;
 	private boolean pregled;
+	private Date datumSortiranje;
 
-	public ObavezaDTO() {
+	public Obaveza() {
 		super();
 	}
 
-	public ObavezaDTO(Poseta poseta) {
+	public Obaveza(Poseta poseta) {
 		SimpleDateFormat formatDatum = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat formatPocetak = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		this.id = poseta.getId();
@@ -26,6 +28,7 @@ public class ObavezaDTO {
 		this.trajanje = poseta.getTrajanje();
 		this.tip = poseta.getTipPosete().getNaziv();
 		this.pregled = poseta.getTipPosete().getPregled();
+		this.datumSortiranje = poseta.getDatum();
 	}
 
 	public Integer getId() {
@@ -74,6 +77,19 @@ public class ObavezaDTO {
 
 	public void setPregled(boolean pregled) {
 		this.pregled = pregled;
+	}
+
+	public Date getDatumSortiranje() {
+		return datumSortiranje;
+	}
+
+	public void setDatumSortiranje(Date datumSortiranje) {
+		this.datumSortiranje = datumSortiranje;
+	}
+
+	@Override
+	public int compareTo(Obaveza o) {
+		return this.datumSortiranje.compareTo(o.datumSortiranje);
 	}
 
 }

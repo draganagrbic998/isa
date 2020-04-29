@@ -64,17 +64,6 @@ public class KlinikaController {
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@GetMapping(value = "/pregled",  produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<KlinikaDTO>> review(){
-		try {
-			return new ResponseEntity<>(this.klinikaConversion.get(this.klinikaService.findAll()), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody KlinikaDTO klinikaDTO) {
 		try {
@@ -97,9 +86,6 @@ public class KlinikaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	
-	
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
