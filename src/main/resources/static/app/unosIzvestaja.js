@@ -103,7 +103,7 @@ Vue.component("unosIzvestaja", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/lekar/proveriTrenutnuPosetu")
+		axios.get("/poseta/proveriUToku")
 		.catch(response => {
 			alert('Trenutno nemate zapocetu posetu!');
 			this.$router.push("/lekarHome");

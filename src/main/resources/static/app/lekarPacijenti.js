@@ -7,7 +7,8 @@ Vue.component("lekarPacijenti", {
 			backup: {},
 			pomocna: {},
 			nemaRezultata: '',
-			pretraga: ''
+			pretraga: '',
+			trenutnoZapoceta: null
 		}
 	}, 
 
@@ -122,6 +123,11 @@ Vue.component("lekarPacijenti", {
 					</tbody>
 				
 				</table>
+				
+				<br>
+				<br>
+				
+				<button v-if="selectedPacijent.zakazanaPoseta && trenutnoZapoceta === null" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni()">Zapocni</button>
 				</div>
 	</div>
 	<div v-else class="row">
@@ -146,6 +152,17 @@ Vue.component("lekarPacijenti", {
 			this.selectedPacijent = p;
 			this.selected = true;
 		},
+		
+		zapocni: function() {
+			axios.get("/poseta/zapocniPosetu/" + this.selectedPacijent.zakazanaPoseta)
+			.then(response => {
+				this.$router.push("/unosIzvestaja");
+			})
+			.catch(error => {
+				alert("SERVER ERROR!");
+			});
+		},
+		
 		search: function(){
 			
 			this.pacijenti = [];
@@ -224,6 +241,11 @@ Vue.component("lekarPacijenti", {
 		axios.get("/user/check/lekar")
 		.catch(reponse => {
 			this.$router.push("/");
+		});
+		
+		axios.get("/poseta/proveriUToku")
+		.then(response => this.trenutnoZapoceta = response.data)
+		.catch(reponse => {
 		});
 		
 		axios.get("/pacijent/lekar/pacijenti") 

@@ -102,7 +102,7 @@ Vue.component("lekarKalendar", {
 					<td>{{obaveza.trajanje}}</td>
 					<td>{{obaveza.tip}}</td>
 					<td>
-						<button v-if="can_start(obaveza.pocetak)" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni(obaveza.id)">Zapocni</button>
+						<button v-if="can_start(obaveza.pocetak) && !trenutnaPostoji" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni(obaveza.id)">Zapocni</button>
 					    <button v-if="can_cancel(obaveza.pocetak)" class="btn btn-outline-success my-2 my-sm-0" v-on:click="otkazi(obaveza.id)">Otkazi</button>
 					</td>
 				</tr>
@@ -122,7 +122,7 @@ Vue.component("lekarKalendar", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/lekar/proveriTrenutnuPosetu")
+		axios.get("/poseta/proveriUToku")
 		.then(response => {
 			this.trenutnaPostoji = true;
 		})
