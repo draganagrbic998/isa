@@ -52,9 +52,6 @@ public class ZahtevOdmorController {
 	@PostMapping(value = "/kreiranje", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> kreiranje(@RequestBody ZahtevOdmorDTO zahtevOdmorDTO){
 		try {
-			if (!this.zahtevOdmorService.proveriDatume(zahtevOdmorDTO.getPocetak(), zahtevOdmorDTO.getKraj())) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
 			this.zahtevOdmorService.save(this.zahtevOdmorConversion.get(zahtevOdmorDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 

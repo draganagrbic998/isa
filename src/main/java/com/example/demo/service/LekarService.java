@@ -75,7 +75,7 @@ public class LekarService {
 	
 	@Transactional(readOnly = false)
 	public List<Pacijent> pacijentiLekara(Lekar lekar) {
-		List<Pacijent> pacijenti = new ArrayList<Pacijent>();
+		List<Pacijent> pacijenti = new ArrayList<>();
 		for (Pacijent pacijent : this.pacijentRepository.findAll()) {
 			if (pacijent.posetioLekara(lekar))
 				pacijenti.add(pacijent);

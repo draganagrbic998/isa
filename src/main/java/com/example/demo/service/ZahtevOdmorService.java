@@ -60,20 +60,6 @@ public class ZahtevOdmorService {
 		this.zahtevOdmorRepository.deleteById(id);
 	}
 	
-	
-	
-	//pronalazi sve zahteve jedne klinike, neodobrene (ne koristim nigde za sad)
-	@Transactional(readOnly = false)
-	public List<ZahtevOdmor> findForClinic(Klinika klinika) {
-		List<ZahtevOdmor> zahtevi = new ArrayList<ZahtevOdmor>();
-			for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
-				if (z.getKlinika() == klinika && !z.getOdobren()) {
-					zahtevi.add(z);
-				}
-			}
-		return zahtevi;
-	}
-	
 	public List<ZahtevOdmorDTO> findAll(Klinika klinika) {
 		List<ZahtevOdmorDTO> zahtevi = new ArrayList<>();
 		for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
@@ -82,15 +68,5 @@ public class ZahtevOdmorService {
 		}
 		return zahtevi;
 	}
-
-	public boolean proveriDatume(Date pocetak, Date kraj) {
-		Date danas = new Date();
-		if (pocetak.before(danas) || kraj.before(danas) || kraj.before(pocetak)) {
-			return false;
-		}
-		
-		return true;
-	}
-
 
 }

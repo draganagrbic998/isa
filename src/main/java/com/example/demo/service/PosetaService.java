@@ -124,7 +124,7 @@ public class PosetaService {
 		Izvestaj izvestaj = this.izvestajRepository.getOne(izvestajDTO.getId());
 		izvestaj.setOpis(izvestajDTO.getOpis());
 		
-		List<Dijagnoza> noveDijagnoze = new ArrayList<Dijagnoza>();
+		List<Dijagnoza> noveDijagnoze = new ArrayList<>();
 
 		for (Integer id : izvestajDTO.getDijagnoze())
 			noveDijagnoze.add(dijagnozaRepository.getOne(id));
@@ -134,7 +134,7 @@ public class PosetaService {
 		for (Dijagnoza dijagnoza : noveDijagnoze)
 			izvestaj.getDijagnoze().add(dijagnoza);
 		
-		List<Lek> noviLekovi = new ArrayList<Lek>();
+		List<Lek> noviLekovi = new ArrayList<>();
 
 		for (Integer id : izvestajDTO.getLekovi())
 			noviLekovi.add(lekRepository.getOne(id));
