@@ -1,5 +1,6 @@
 package com.example.demo.model.resursi;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,10 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.example.demo.model.ostalo.Slobodnost;
 import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.posete.StanjePosete;
 
 @Entity
-public class Sala {
+public class Sala implements Slobodnost{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,6 +95,27 @@ public class Sala {
 
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
+	}
+
+	@Override
+	public boolean slobodan(Date pocetak, Date kraj) {
+
+		
+		
+		for (Poseta p: this.posete) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
+				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+						&&  pocetak.before(p.kraj()))
+					return false;
+				if ((kraj.after(p.pocetak()))
+						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+					return false;
+			}
+			
+
+		}
+		
+		return true;
 	}
 	
 }

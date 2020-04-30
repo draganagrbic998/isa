@@ -24,6 +24,7 @@ import javax.persistence.OneToOne;
 import com.example.demo.dto.pretraga.ObavezaDTO;
 import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.ostalo.Ocenjivanje;
+import com.example.demo.model.ostalo.Slobodnost;
 import com.example.demo.model.ostalo.Zauzetost;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
@@ -34,7 +35,7 @@ import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 @Entity
 @DiscriminatorValue("lekar")
-public class Lekar extends Zaposleni implements Ocenjivanje{
+public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 
 	@ManyToOne
 	@JoinColumn(name="specijalizacija")
@@ -268,8 +269,21 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		
 	}
 	
+	
+
+	public List<ObavezaDTO> getObaveze() {
+		List<ObavezaDTO> obaveze = new ArrayList<>();
+
+		for (Poseta p : this.posete) {
+			if (p.getStanje().equals(StanjePosete.ZAUZETO))
+				obaveze.add(new ObavezaDTO(p));
+		}
+
+		return obaveze;
+	}
+
+	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
-		
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(pocetak);
 		gc.set(Calendar.HOUR, 0);
@@ -286,13 +300,15 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		}
 		
 		for (Poseta p: this.posete) {
-			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
-					&&  pocetak.before(p.kraj()))
-				return false;
-			if ((kraj.after(p.pocetak()))
-					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
-				return false;
 			
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
+				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+						&&  pocetak.before(p.kraj()))
+					return false;
+				if ((kraj.after(p.pocetak()))
+						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+					return false;
+			}
 
 		}
 		
@@ -306,18 +322,6 @@ public class Lekar extends Zaposleni implements Ocenjivanje{
 		}
 		
 		return true;
-		
-	}
-
-	public List<ObavezaDTO> getObaveze() {
-		List<ObavezaDTO> obaveze = new ArrayList<>();
-
-		for (Poseta p : this.posete) {
-			if (p.getStanje().equals(StanjePosete.ZAUZETO))
-				obaveze.add(new ObavezaDTO(p));
-		}
-
-		return obaveze;
 	}
 	
 }

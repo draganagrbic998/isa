@@ -50,6 +50,12 @@ public class PosetaService {
 
 	@Transactional(readOnly = false)
 	public void save(Poseta poseta) {
+		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj()))
+			throw new RuntimeException();
+		for (Lekar l: poseta.getLekari()) {
+			if (!l.slobodan(poseta.pocetak(), poseta.kraj()))
+				throw new RuntimeException();
+		}
 		this.posetaRepository.save(poseta);
 		for (Lekar l : poseta.getLekari()) {
 			l.setPoslednjaIzmena(new Date());
