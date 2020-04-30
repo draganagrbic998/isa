@@ -14,7 +14,7 @@ public class EmailService {
 	private Environment configuration;
 	
 	@Autowired
-	JavaMailSenderImpl sender;
+	private JavaMailSenderImpl sender;
 
 	@Async
 	public void sendMessage(Message poruka) {
