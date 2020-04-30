@@ -29,30 +29,64 @@ Vue.component("klinikeSlobodno", {
           </a>
       </li>
     </ul>    
-    
-    <ul class="navbar-nav mr-auto" style="margin-left: 150px;">
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="/#/klinikeSlobodno" v-on:click="naziv_sort()">
-          <i class="fa fa-coffee"></i>
-          Naziv 
+    <ul class="navbar-nav" style="margin-left: 100px;" v-if="klinikaSelected">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-info"></i>
+          Detalji klinike
           <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="/#/klinikeSlobodno" v-on:click="adresa_sort()">
-          <i class="fa fa-globe"></i>
-          Adresa 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="/#/klinikeSlobodno" v-on:click="ocena_sort()">
-          <i class="fa fa-star"></i>
-          Ocena 
-          <span class="sr-only">(current)</span>
-          </a>
+        </a>
+        <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
+			<form>
+			
+			<h2>{{selectedKlinika.naziv}}</h2><br>
+			
+			<table class="table" style="min-width: 350px;">
+			
+				<tbody>
+				
+					<tr>
+						<th scope="row">Naziv: </th>
+						<td><input type="text" v-model="selectedKlinika.naziv" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Adresa: </th>
+						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Ocena: </th>
+						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
+					</tr>
+					
+				
+				</tbody>
+			</table>
+
+				<label style="font-size: 25px">Opis</label>
+				<textarea disabled style="min-width: 200px;">{{selectedKlinika.opis}}</textarea>
+
+			
+			</form>
+		</div>
       </li>
     </ul> 
+    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="!klinikaSelected && !posetaSelected">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-sort"></i>
+          Sortiranje
+          <span class="sr-only">(current)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">nazivu</a>
+          <a class="dropdown-item" @click.prevent="adresa_sort()" href="#">adresi</a>
+          <a class="dropdown-item" @click.prevent="ocena_sort()" href="#">oceni</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
     <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 140px;">
         <a class="nav-link" href="#/klinikeSlobodno" v-on:click="refresh()">
@@ -69,12 +103,11 @@ Vue.component("klinikeSlobodno", {
 	
 		<div v-if="posetaSelected" class="card" id="box">
 		
-			<h1>Detalji posete</h1><br>
+			<h2>Detalji posete</h2><br>
 			
-			<table class="table">
+			<table>
 				
-				<tbody>
-					<tr>
+				<tr>
 						<th scope="col">Datum: </th>
 						<td><input type="text" v-model="datum" class="form-control" disabled></td>
 					</td>
@@ -106,85 +139,44 @@ Vue.component("klinikeSlobodno", {
 							</option>
 						</select></td>
 					</tr>
+					<br>
 					<tr>	
-						<td colspan="2"><button class="btn btn-primary" v-on:click="zakazi()">ZAKAZI</button></td>
+						<td><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="zakazi()">ZAKAZI</button></td>
 					</tr>	
-				</tbody>
 			
 			</table>
 		
 		</div>
 	
-		<div v-else-if="klinikaSelected" class="row">
+		<div v-else-if="klinikaSelected" class="container" id="cosak">
 		
-			<div id="details">
 			
-				<h2>Detalji klinike</h2>
+			
+			<h2>Slobodni termini</h2><br>
 				
-				<span style="margin-right: 40px">
-					
-					<tr></tr>
-					<tr>
-						<th scope="row">Naziv: </th>
-						<td><input type="text" v-model="selectedKlinika.naziv" class="form-control" disabled></td>
-					</tr>
-					<tr>
-						<th scope="row">Adresa: </th>
-						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
-					</tr>
-					
-				</span>
-				<span style="margin-right: 40px">
-					<tr>
-						<th scope="row">Opis: </th>
-					</tr>
-					<tr>
-						<td rowspan="2"><textarea disabled>{{selectedKlinika.opis}}</textarea></td>
-					</tr>
+			<table class="table table-hover">
 				
-				</span>
-				<span style="margin-right: 40px">
-					<tr></tr>
+				<thead>
 					<tr>
-						<th scope="row">Ocena: </th>
+						<th scope="col">Datum</th>
+						<th scope="col">Tip pregleda</th>
+						<th scope="col">Popust</th>
 					</tr>
-					<tr>
-						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
-
+				</thead>
+				<tbody>
+					<tr v-for="p in selectedKlinika.posete" v-on:click="selectPoseta(p)">
+						<td>{{formatiraj(p.datum)}}</td>
+						<td>{{p.naziv}}</td>
+						<td>{{p.popust}}</td>
 					</tr>
-				</span>
-			
-			</div>
-			
-			<div class="container col-md-8" style="margin-left: 30px; margin-top: 30px">
-			
-				<h2>Slobodni termini</h2><br>
-				
-				<table class="table table-hover">
-				
-					<thead>
-						<tr>
-							<th scope="col">Datum</th>
-							<th scope="col">Tip pregleda</th>
-							<th scope="col">Popust</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="p in selectedKlinika.posete" v-on:click="selectPoseta(p)">
-							<td>{{formatiraj(p.datum)}}</td>
-							<td>{{p.naziv}}</td>
-							<td>{{p.popust}}</td>
-						</tr>
-					</tbody>
-				</table>
-			
-			</div>
+				</tbody>
+			</table>
 		
 		</div>
 	
 		<div v-else class="container" id="cosak">
 		
-			<h1>Klinike</h1><br>
+			<h2>Klinike</h2><br>
 			
 			<table class="table table-hover">
 			

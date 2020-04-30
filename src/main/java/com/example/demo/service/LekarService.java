@@ -17,7 +17,6 @@ import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.OcenaRepository;
 import com.example.demo.repository.PacijentRepository;
-import com.example.demo.repository.PosetaRepository;
 
 @Component
 @Transactional(readOnly = true)
@@ -28,9 +27,6 @@ public class LekarService {
 
 	@Autowired
 	private OcenaRepository ocenaRepository;
-
-	@Autowired
-	private PosetaRepository posetaRepository;
 	
 	@Autowired
 	private PacijentRepository pacijentRepository;
@@ -64,12 +60,12 @@ public class LekarService {
 	}
 
 	@Transactional(readOnly = false)
-	public Poseta oceni(Pacijent pacijent, OcenaParamDTO param, Integer posetaId) {
+	public Lekar oceni(Pacijent pacijent, OcenaParamDTO param) {
 
 		Lekar l = this.lekarRepository.getOne(param.getId());
 		Ocena o = l.refreshOcena(pacijent, param.getOcena());
 		this.ocenaRepository.save(o);
-		return this.posetaRepository.getOne(posetaId);
+		return l;
 
 	}	
 	

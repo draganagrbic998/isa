@@ -35,7 +35,7 @@ Vue.component("pacijentProfil", {
           </a>
       </li>
       <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/pacijentProfil">
+        <a class="nav-link" href="#/pacijentProfil" v-on:click="refresh()">
           <i class="fa fa-user"></i>
           Profil 
           <span class="sr-only">(current)</span>
@@ -88,72 +88,73 @@ Vue.component("pacijentProfil", {
 		</div>
 	
 		<div class="card" id="tableBox">
-		
-			<h1>Podaci o korisniku</h1><br>
+							
+			<h2>Podaci o korisniku</h2><br>
+									
+			<table>
 			
-			<table class="table">
-			
-				<tbody>
-				
 					<tr>
-						<th scope="row">Email: </th>
+						<th>Email: </th>
 						<td><input type="text" v-model="korisnik.email" class="form-control" disabled></td>
-						<td></td>
+						<td style="width: 33%;"></td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Ime: </th>
+						<th>Ime: </th>
 						<td><input type="text" v-model="korisnik.ime" class="form-control"></td>
-						<td>{{greskaIme}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaIme}}</td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Prezime: </th>
+						<th>Prezime: </th>
 						<td><input type="text" v-model="korisnik.prezime" class="form-control"></td>
-						<td>{{greskaPrezime}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaPrezime}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Telefon: </th>
 						<td><input type="text" v-model="korisnik.telefon" class="form-control"></td>
-						<td>{{greskaTelefon}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaTelefon}}</td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Drzava: </th>
+						<th>Drzava: </th>
 						<td><input type="text" v-model="korisnik.drzava" class="form-control"></td>
-						<td>{{greskaDrzava}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaDrzava}}</td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Grad: </th>
+						<th>Grad: </th>
 						<td><input type="text" v-model="korisnik.grad" class="form-control"></td>
-						<td>{{greskaGrad}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaGrad}}</td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Adresa: </th>
+						<th>Adresa: </th>
 						<td><input type="text" v-model="korisnik.adresa" class="form-control"></td>
-						<td>{{greskaAdresa}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaAdresa}}</td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Nova lozinka: </th>
+						<th>Nova lozinka: </th>
 						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
 						<td></td>
 					</tr>
 					
 					<tr>
-						<th scope="row">Ponovljena lozinka: </th>
+						<th>Ponovljena lozinka: </th>
 						<td><input type="password" v-model="ponovljenaLozinka" v-bind:disabled="novaLozinka==''" class="form-control"></td>
-						<td>{{greskaLozinka}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaLozinka}}</td>
 					</tr>
-					
+					<br>
 					<tr>
-						<td><button v-on:click="izmeni()" class="btn btn-primary">IZMENI</button></td>
+						<td><button v-on:click="izmeni()" class="btn btn-outline-success my-2 my-sm-0">IZMENI</button></td>
+						<td></td>
+						<td><button v-on:click="odustani()" class="btn btn-outline-success my-2 my-sm-0 pull-right">ODUSTANI</button></td>
+
 					</tr>
 				
-				</tbody>
+				
 			
 			</table>
 		
@@ -194,6 +195,14 @@ Vue.component("pacijentProfil", {
 			this.greskaAdresa = '';
 			this.greska = false;
 		}, 
+		
+		odustani: function(){
+			this.$router.push("/pacijentHome");
+		},
+		
+		refresh: function(){
+			location.reload();
+		},
 		
 		izmeni: function(){
 			

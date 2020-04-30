@@ -22,6 +22,54 @@ Vue.component("bolesti", {
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="bolestSelected">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-sort"></i>
+          Oceni kliniku
+          <span class="sr-only">(current)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="pretraga">
+          <form>
+         	<table class="table">
+         	<tr>
+				<td><input type="number" min="0" max="10" v-model="klinikaOcena" class="form-control" disable onKeyDown="return false"></td>
+			</tr>
+			<tr>
+				<th scope="row"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="oceniKlinika()">OCENI KLINIKU</button></th>
+
+			</tr>
+         	
+         	</table>
+          
+          </form>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="lekarSelected">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-sort"></i>
+          Oceni lekara
+          <span class="sr-only">(current)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="pretraga">
+          <form>
+         	<table class="table">
+         	<tr>
+				<td><input type="number" min="0" max="10" v-model="lekarOcena" class="form-control" disable onKeyDown="return false"></td>
+			</tr>
+         	<tr>
+				<th scope="row"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="oceniLekar()">OCENI LEKARA</button></th>			
+			</tr>
+			
+         	
+         	</table>
+          
+          </form>
+        </div>
+      </li>
+    </ul>
     <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
@@ -78,19 +126,18 @@ Vue.component("bolesti", {
       </li>
     </ul>
     
+    
   </div>
 </nav>		
 		</div>
 	
 		<div v-if="lekarSelected" class="card" id="box">
 		
-			<h1>Detalji lekara</h1><br>
+			<h2>Detalji lekara</h2><br>
 			
 			<table class="table">
 			
-				<tbody>
-				
-					<tr>
+				<tr>
 						<th scope="row">Ime: </th>
 						<td><input type="text" v-model="selectedLekar.ime" class="form-control" disabled></td>
 					</tr>
@@ -115,28 +162,23 @@ Vue.component("bolesti", {
 						<td><input type="text" v-model="selectedLekar.ocena" class="form-control" disabled></td>
 					</tr>
 					
-					<tr>
-						<th scope="row"><button class="btn btn-primary" v-on:click="oceniLekar()">OCENI LEKARA</button></th>
-						<td><input type="number" min="0" max="10" v-model="lekarOcena" class="form-control" disable onKeyDown="return false"></td>
-					</tr>
-				
-				</tbody>
+					
 			
 			</table>
 		
 		</div>
 	
-		<div v-else-if="bolestSelected" class="row">
+		<div v-else-if="bolestSelected" class="container">
 		
-			<div class="card" id="left">
+			<div class="row" id="red">
 			
-				<h1>Detalji bolesti</h1><br>
+				<div class="col card" id="okvir">
+			
+				<h2>Detalji bolesti</h2><br>
 				
-				<table class="table">
+				<table id="rasiri">
 				
-					<tbody>
-					
-						<tr>
+					<tr>
 							<th scope="row">Datum: </th>
 							<td><input type="text" v-model="datum" class="form-control" disabled></td>
 						</tr>
@@ -161,25 +203,21 @@ Vue.component("bolesti", {
 							<td><input type="text" v-model="selectedBolest.ocenaKlinike" class="form-control" disabled></td>
 						</tr>
 						
-						<tr>
-							<th scope="row"><button class="btn btn-primary" v-on:click="oceniKlinika()">OCENI KLINIKU</button></th>
-							<td><input type="number" min="0" max="10" v-model="klinikaOcena" class="form-control" disable onKeyDown="return false"></td>
-						</tr>
-					
-					</tbody>
+						
 				
-				</table>
+				</table><br>
 				
 				<label style="font-size: 25px">Izvestaj</label>
 				<textarea disabled>{{selectedBolest.izvestaj}}</textarea>
 			
+			
 			</div>
 			
-			<div class="col-md-5" style="margin-top: 3%">
+			<div class="col" style="overflow: scroll; max-height: 500px;">
 				
-				<h1>Lekari</h1><br>
+				<h2>Lekari</h2>
 				
-				<table class="table table-hover">
+				<table class="table table-hover table-bordered">
 					
 					<thead>
 						<tr>
@@ -202,9 +240,9 @@ Vue.component("bolesti", {
 				
 				</table>
 				
-				<h1>Dijagnoze</h1><br>
+				<h2>Dijagnoze</h2>
 				
-				<table class="table">
+				<table class="table table-bordered">
 				
 					<thead>
 					
@@ -224,11 +262,11 @@ Vue.component("bolesti", {
 					
 					</tbody>
 				
-				</table><br>
+				</table>
 				
-				<h1>Recepti</h1><br>
+				<h2>Recepti</h2>
 				
-				<table class="table">
+				<table class="table table-bordered">
 				
 					<thead>
 					
@@ -258,12 +296,14 @@ Vue.component("bolesti", {
 			
 			</div>
 			
+			</div>
+			
 		
 		</div>
 	
 		<div v-else class="container" id="cosak">
 		
-			<h1>Istorija bolesti</h1><br>
+			<h2>Istorija bolesti</h2><br>
 			
 			<table class="table table-hover">
 			
@@ -360,9 +400,9 @@ Vue.component("bolesti", {
 		
 		oceniLekar: function(){
 			
-			axios.post("/lekar/ocenjivanje/" + this.selectedBolest.posetaId, {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
+			axios.post("/lekar/ocenjivanje", {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
 			.then(response => {
-				this.selectBolest(response.data);
+				this.selectLekar(response.data);
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

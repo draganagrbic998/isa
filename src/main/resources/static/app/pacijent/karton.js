@@ -77,13 +77,11 @@ Vue.component("karton", {
 	
 		<div class="card" id="box">
 		
-			<h1>Zdravstveni karton</h1><br>
+			<h2>Zdravstveni karton</h2><br>
 			
 			<table class="table">
 			
-				<tbody>
-				
-					<tr>
+				<tr>
 						<th scope="row">Broj osiguranika: </th>
 						<td><input type="text" v-model="karton.brojOsiguranika" class="form-control" disabled></td>
 					</tr>
@@ -112,8 +110,6 @@ Vue.component("karton", {
 						<th scope="row">Krvna grupa: </th>
 						<td><input type="text" v-model="karton.krvnaGrupa" class="form-control" disabled></td>
 					</tr>
-				
-				</tbody>
 			
 			</table>
 		

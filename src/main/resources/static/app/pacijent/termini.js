@@ -80,66 +80,62 @@ Vue.component("termini", {
 	
 		<div v-if="selected" class="card" id="box">
 		
-			<h1>Detalji termina</h1><br>
+			<h2>Detalji termina</h2><br>
 			
-			<table class="table">
+			<table>
 			
-				<tbody>
+			<tr>
+				<th scope="row" style="width: 40%;">Datum: </th>
+				<td><input type="text" v-model="datum" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Datum: </th>
-						<td><input type="text" v-model="datum" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Klinika: </th>
+				<td><input type="text" v-model="selectedTermin.klinika" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Klinika: </th>
-						<td><input type="text" v-model="selectedTermin.klinika" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Adresa: </th>
+				<td><input type="text" v-model="selectedTermin.adresa" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Adresa: </th>
-						<td><input type="text" v-model="selectedTermin.adresa" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Originalna cena: </th>
+				<td><input type="text" v-model="selectedTermin.cena" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Originalna cena: </th>
-						<td><input type="text" v-model="selectedTermin.cena" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Popust: </th>
+				<td><input type="text" v-model="selectedTermin.popust" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Popust: </th>
-						<td><input type="text" v-model="selectedTermin.popust" class="form-control" disabled></td>
-					</tr>
-				
-					<tr>
-						<th scope="row">Naziv termina: </th>
-						<td><input type="text" v-model="selectedTermin.naziv" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Naziv termina: </th>
+				<td><input type="text" v-model="selectedTermin.naziv" class="form-control" disabled></td>
+			</tr>
 					
-					<tr>
-						<th scope="row">Trajanje termina: </th>
-						<td><input type="text" v-model="selectedTermin.trajanje" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Trajanje termina: </th>
+				<td><input type="text" v-model="selectedTermin.trajanje" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Sala: </th>
-						<td><input type="text" v-model="selectedTermin.sala" class="form-control" disabled></td>
-					</tr>
+			<tr>
+				<th scope="row">Sala: </th>
+				<td><input type="text" v-model="selectedTermin.sala" class="form-control" disabled></td>
+			</tr>
 				
-					<tr>
-						<th scope="row">Lekari: </th>
-						<td><select class="form-control" v-bind:size="selectedTermin.lekari.length" disabled multiple>
-							<option v-for="l in selectedTermin.lekari">
-								{{l}}
-							</option>
-						</select></td>
-					</tr>
-				
-					<tr>
-						<td colspan="2"><button v-on:click="otkazi()" class="btn btn-primary" v-bind:hidden="new Date().addHours(24) >= new Date(selectedTermin.datum)">OTKAZI</button></td>
-					</tr>
-					
-				</tbody>
+			<tr>
+				<th scope="row">Lekari: </th>
+				<td><select class="form-control" v-bind:size="selectedTermin.lekari.length" disabled multiple>
+					<option v-for="l in selectedTermin.lekari">
+						{{l}}
+					</option>
+				</select></td>
+				</tr>
+				<br>
+				<tr>
+				<td><button v-on:click="otkazi()" class="btn btn-outline-success my-2 my-sm-0" v-bind:hidden="new Date().addHours(24) >= new Date(selectedTermin.datum)">OTKAZI</button></td>
+			</tr>
 			
 			</table>
 		
@@ -147,7 +143,7 @@ Vue.component("termini", {
 	
 		<div v-else class="container" id="cosak">
 		
-			<h1>Zakazani termini</h1><br>
+			<h2>Zakazani termini</h2><br>
 			
 			<table class="table table-hover">
 			
