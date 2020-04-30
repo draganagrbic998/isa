@@ -37,18 +37,16 @@ public class TerapijaService {
 	}
 
 	@Transactional(readOnly = false)
-	public boolean overi(Integer id, Sestra sestra) {
+	public void overi(Integer id, Sestra sestra) {
 		
 		Terapija terapija = this.terapijaRepository.getOne(id);
 		
 		if (terapija.getSestra() != null)
-			return false;
+			throw new MyRuntimeException();
 		
 		terapija.setSestra(sestra);
 		this.terapijaRepository.save(terapija);
-		
-		return true;
-		
+				
 	}
 
 }

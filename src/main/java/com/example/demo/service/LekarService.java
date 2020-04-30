@@ -44,10 +44,10 @@ public class LekarService {
 	public void delete(Integer id) {
 		Lekar l = this.lekarRepository.getOne(id);
 		if (!l.getPosetaZahtevi().isEmpty())
-			throw new RuntimeException();
+			throw new MyRuntimeException();
 		for (Poseta p : l.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
-				throw new RuntimeException();
+				throw new MyRuntimeException();
 		}
 		l.setAktivan(false);
 		this.lekarRepository.save(l);

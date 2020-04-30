@@ -49,11 +49,8 @@ public class TerapijaController {
 	public ResponseEntity<HttpStatus> overi(@PathVariable Integer id){
 		try {
 			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
-			boolean retval = this.terapijaService.overi(id, sestra);
-			if (retval)
-				return new ResponseEntity<>(HttpStatus.OK);
-			else
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			this.terapijaService.overi(id, sestra);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

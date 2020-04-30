@@ -40,7 +40,7 @@ public class SalaService {
 		Sala sala = this.salaRepository.getOne(id);
 		for (Poseta p: sala.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
-				throw new RuntimeException();
+				throw new MyRuntimeException();
 		}
 		sala.setAktivan(false);
 		this.salaRepository.save(sala);

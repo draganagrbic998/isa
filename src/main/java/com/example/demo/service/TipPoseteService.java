@@ -27,7 +27,7 @@ public class TipPoseteService {
 	public void save(TipPosete tipPosete) throws Exception {
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
 			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().equals(tipPosete.getKlinika().getId()))
-				throw new RuntimeException();
+				throw new MyRuntimeException();
 		}
 		this.tipPoseteRepository.save(tipPosete);
 	}
@@ -57,7 +57,7 @@ public class TipPoseteService {
 		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
 		for (Poseta p: tipPosete.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
-				throw new RuntimeException();
+				throw new MyRuntimeException();
 		}
 		tipPosete.setAktivan(false);
 		this.tipPoseteRepository.save(tipPosete);

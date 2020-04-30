@@ -51,10 +51,10 @@ public class PosetaService {
 	@Transactional(readOnly = false)
 	public void save(Poseta poseta) {
 		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj()))
-			throw new RuntimeException();
+			throw new MyRuntimeException();
 		for (Lekar l: poseta.getLekari()) {
 			if (!l.slobodan(poseta.pocetak(), poseta.kraj()))
-				throw new RuntimeException();
+				throw new MyRuntimeException();
 		}
 		this.posetaRepository.save(poseta);
 		for (Lekar l : poseta.getLekari()) {
@@ -74,7 +74,7 @@ public class PosetaService {
 
 		Poseta p = this.posetaRepository.getOne(posetaId);
 		if (!p.getStanje().equals(StanjePosete.SLOBODNO))
-			throw new RuntimeException();
+			throw new MyRuntimeException();
 		p.setStanje(StanjePosete.ZAUZETO);
 		p.setKarton(karton);
 		this.posetaRepository.save(p);
@@ -93,10 +93,10 @@ public class PosetaService {
 		Poseta p = this.posetaRepository.getOne(id);
 
 		if (!p.getStanje().equals(StanjePosete.ZAUZETO))
-			throw new RuntimeException();
+			throw new MyRuntimeException();
 
 		if (lekar.getZapocetaPoseta() != null)
-			throw new RuntimeException();
+			throw new MyRuntimeException();
 
 		p.setStanje(StanjePosete.U_TOKU);
 		this.posetaRepository.save(p);
@@ -134,7 +134,7 @@ public class PosetaService {
 		List<Dijagnoza> noveDijagnoze = new ArrayList<>();
 
 		for (Integer id : izvestajDTO.getDijagnoze())
-			noveDijagnoze.add(dijagnozaRepository.getOne(id));
+			noveDijagnoze.add(this.dijagnozaRepository.getOne(id));
 		
 		izvestaj.getDijagnoze().clear();
 		
@@ -144,7 +144,7 @@ public class PosetaService {
 		List<Lek> noviLekovi = new ArrayList<>();
 
 		for (Integer id : izvestajDTO.getLekovi())
-			noviLekovi.add(lekRepository.getOne(id));
+			noviLekovi.add(this.lekRepository.getOne(id));
 		
 		izvestaj.getTerapija().getLekovi().clear();
 		
