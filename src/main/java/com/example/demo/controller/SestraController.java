@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.total.SestraConversion;
 import com.example.demo.dto.model.SestraDTO;
 import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Sestra;
 import com.example.demo.service.SestraService;
 import com.example.demo.service.UserService;
 
@@ -69,6 +70,30 @@ public class SestraController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Sestra')")
+	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SestraDTO> profil(){
+		try {
+			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.sestraConversion.get(sestra), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Sestra')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody SestraDTO sestraDTO){
+		try {
+			this.sestraService.save(this.sestraConversion.get(sestraDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

@@ -93,10 +93,10 @@ insert into lek ( naziv, sifra)
 values ( 'lek3', 'sifra3');
 
 ---------------SESTRE---------------------
-insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version)
-values ('sestra', 'baba', 'deda', 'asd1@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0);
-insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version)
-values ('sestra', 'mama', 'tata', 'asd2@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0);
+insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version, pocetno_vreme, krajnje_vreme)
+values ('sestra', 'baba', 'deda', 'asd1@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
+insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version, pocetno_vreme, krajnje_vreme)
+values ('sestra', 'mama', 'tata', 'asd2@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
 
 --------------TERAPIJE ZA GLAVNOG PACIJENTA-----------------------
 insert into terapija (izvestaj, sestra)

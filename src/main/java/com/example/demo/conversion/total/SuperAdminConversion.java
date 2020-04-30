@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.SuperAdminDTO;
 import com.example.demo.model.korisnici.SuperAdmin;
@@ -17,6 +18,7 @@ public class SuperAdminConversion {
 	@Autowired
 	private SuperAdminRepository superAdminRepository;
 	
+	@Transactional(readOnly = true)
 	public SuperAdmin get(SuperAdminDTO superAdminDTO) {
 		
 		long version;

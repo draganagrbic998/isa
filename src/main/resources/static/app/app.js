@@ -12,8 +12,10 @@ const sestraHome = {template: '<sestraHome></sestraHome>'}
 const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
 
 //profil:
+const superAdminProfil = {template: '<superAdminProfil></superAdminProfil>'}
 const adminProfil = {template: '<adminProfil></adminProfil>'}
 const lekarProfil = {template: '<lekarProfil></lekarProfil>'}
+const sestraProfil = {template: '<sestraProfil></sestraProfil>'}
 const pacijentProfil = {template: '<pacijentProfil></pacijentProfil>'}
 
 //kreiranje:
@@ -71,8 +73,10 @@ const router = new VueRouter({
 		{path: '/sestraHome', component: sestraHome}, 
 		{path: '/pacijentHome', component: pacijentHome}, 
 
+		{path: '/superAdminProfil', component: superAdminProfil}, 
 		{path: '/adminProfil', component: adminProfil}, 
 		{path: '/lekarProfil', component: lekarProfil}, 
+		{path: '/sestraProfil', component: sestraProfil}, 
 		{path: '/pacijentProfil', component: pacijentProfil}, 
 
 		{path: '/dodajSuperAdmina', component: dodajSuperAdmina}, 

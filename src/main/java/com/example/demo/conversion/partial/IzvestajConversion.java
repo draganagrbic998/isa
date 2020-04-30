@@ -2,6 +2,7 @@ package com.example.demo.conversion.partial;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.unos.IzvestajUnosDTO;
 import com.example.demo.model.korisnici.Lekar;
@@ -18,6 +19,7 @@ public class IzvestajConversion {
 	@Autowired
 	private DijagnozaRepository dijagnozaRepository;
 	
+	@Transactional(readOnly = true)
 	public Izvestaj get(IzvestajUnosDTO izvestajUnosDTO, Lekar lekar) {
 		Izvestaj izvestaj = new Izvestaj();
 		izvestaj.setId(izvestajUnosDTO.getId());

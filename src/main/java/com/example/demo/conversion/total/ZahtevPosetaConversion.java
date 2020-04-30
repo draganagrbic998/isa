@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevPosetaDTO;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
@@ -29,6 +30,7 @@ public class ZahtevPosetaConversion {
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
 		
+	@Transactional(readOnly = true)
 	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) throws ParseException {
 				
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");

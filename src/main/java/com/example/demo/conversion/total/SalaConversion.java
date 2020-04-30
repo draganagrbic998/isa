@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.SalaDTO;
 import com.example.demo.model.resursi.Sala;
@@ -17,7 +18,7 @@ public class SalaConversion {
 	@Autowired 
 	private KlinikaRepository klinikaRepository;
 	
-	
+	@Transactional(readOnly = true)
 	public Sala get(SalaDTO salaDTO) {
 				
 		return new Sala(salaDTO.getId(), 

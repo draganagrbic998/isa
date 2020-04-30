@@ -105,6 +105,7 @@ public class LekarController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<LekarDTO> profil(){

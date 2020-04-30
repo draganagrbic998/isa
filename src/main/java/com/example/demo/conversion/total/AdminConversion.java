@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.repository.AdminRepository;
 import com.example.demo.repository.KlinikaRepository;
@@ -21,6 +22,7 @@ public class AdminConversion {
 	@Autowired
 	private AdminRepository adminRepository;
 		
+	@Transactional(readOnly = true)
 	public Admin get(AdminDTO adminDTO) {
 		
 		long version;

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.SestraDTO;
 import com.example.demo.model.korisnici.Sestra;
@@ -23,6 +24,7 @@ public class SestraConversion {
 	@Autowired
 	private SestraRepository sestraRepository;
 	
+	@Transactional(readOnly = true)
 	public Sestra get(SestraDTO sestraDTO) throws ParseException {
 				
 		long version;

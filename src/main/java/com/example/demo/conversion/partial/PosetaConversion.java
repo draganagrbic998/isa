@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.pretraga.PosetaPretragaDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
@@ -26,6 +27,7 @@ public class PosetaConversion {
 	@Autowired
 	private LekarRepository lekarRepository;
 	
+	@Transactional(readOnly = true)
 	public Poseta get(PredefinisanaPosetaDTO poseta) throws ParseException {
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");

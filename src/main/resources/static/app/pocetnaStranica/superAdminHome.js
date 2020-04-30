@@ -77,6 +77,13 @@ Vue.component("superAdminHome", {
           <div class="dropdown-divider"></div>
         </div>
       </li>
+      <li class="nav-item active" style="min-width: 140px;">
+        <a class="nav-link" href="#/superAdminProfil">
+          <i class="fa fa-user-md"></i>
+          Profil
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
     </ul>
   </div>
 </nav>

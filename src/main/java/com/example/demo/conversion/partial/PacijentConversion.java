@@ -2,6 +2,7 @@ package com.example.demo.conversion.partial;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.model.korisnici.Pacijent;
@@ -17,7 +18,7 @@ public class PacijentConversion {
 	@Autowired
 	private PacijentRepository pacijentRepository;
 	
-
+	@Transactional(readOnly = true)
 	public Pacijent get(PacijentDTO pacijentDTO) {
 		
 		long version;

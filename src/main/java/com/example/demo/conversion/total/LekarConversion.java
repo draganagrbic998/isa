@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.LekarDTO;
 import com.example.demo.model.korisnici.Lekar;
@@ -27,6 +28,7 @@ public class LekarConversion {
 	@Autowired
 	private LekarRepository lekarRepository;
 		
+	@Transactional(readOnly = true)
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
 		
 		long version;

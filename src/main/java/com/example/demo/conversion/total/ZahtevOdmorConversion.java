@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevOdmorDTO;
 import com.example.demo.dto.pretraga.GodisnjiDTO;
@@ -23,7 +24,7 @@ public class ZahtevOdmorConversion {
 	@Autowired 
 	private KlinikaRepository klinikaRepository;
 	
-	
+	@Transactional(readOnly = true)
 	public ZahtevOdmor get(ZahtevOdmorDTO zahtevDTO) {
 		return new ZahtevOdmor(zahtevDTO.getId(), zahtevDTO.getPocetak(), zahtevDTO.getKraj(),
 				zahtevDTO.isOdobren(),
