@@ -19,6 +19,8 @@ import com.example.demo.conversion.total.SestraConversion;
 import com.example.demo.dto.model.SestraDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Sestra;
+import com.example.demo.service.EmailService;
+import com.example.demo.service.Message;
 import com.example.demo.service.SestraService;
 import com.example.demo.service.UserService;
 
@@ -36,6 +38,13 @@ public class SestraController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private ApplicationName name;
+
+	
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SestraDTO>> pregled(){
@@ -51,14 +60,24 @@ public class SestraController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody SestraDTO sestraDTO) {
+		Sestra sestra;
 		try {
-			this.sestraService.save(this.sestraConversion.get(sestraDTO));
-			return new ResponseEntity<>(HttpStatus.OK);
+			sestra = this.sestraConversion.get(sestraDTO);
+			this.sestraService.save(sestra);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
+		try {
+			String obavestenje = "Uspesno ste registrovani kao medicinska sestra klinike " + sestra.getKlinika().getNaziv() + "\n"
+					+ "lozinka: " + sestra.getLozinka() + "\nLink za prijavu: " + this.name.getName();
+			Message poruka = new Message(sestra.getEmail(), "Registracija medicinske sestre klinike", obavestenje);
+			this.emailService.sendMessage(poruka);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")

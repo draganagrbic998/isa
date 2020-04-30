@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.total.SuperAdminConversion;
 import com.example.demo.dto.model.SuperAdminDTO;
 import com.example.demo.model.korisnici.SuperAdmin;
+import com.example.demo.service.EmailService;
+import com.example.demo.service.Message;
 import com.example.demo.service.SuperAdminService;
 import com.example.demo.service.UserService;
 
@@ -29,16 +31,33 @@ public class SuperAdminController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EmailService emailService;
 		
+	@Autowired
+	private ApplicationName name;
+
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody SuperAdminDTO superAdminDTO) {
+		SuperAdmin superAdmin;
 		try {
-			this.superAdminService.save(this.superAdminConversion.get(superAdminDTO));
-			return new ResponseEntity<>(HttpStatus.OK);
+			superAdmin = this.superAdminConversion.get(superAdminDTO);
+			this.superAdminService.save(superAdmin);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		try {
+			String obavestenje = "Uspesno ste registrovani kao super admin klinickog centra 'POSLEDNJI TRZAJ' \n"
+					+ "lozinka: " + superAdmin.getLozinka() + "\nLink za prijavu: " + this.name.getName();
+			Message poruka = new Message(superAdmin.getEmail(), "Registracija super admina klinickog centra", obavestenje);
+			this.emailService.sendMessage(poruka);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}	
 	

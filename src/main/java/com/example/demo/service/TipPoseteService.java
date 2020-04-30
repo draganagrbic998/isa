@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
@@ -53,7 +52,7 @@ public class TipPoseteService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Integer id, List<Lekar> lekari) {
+	public void delete(Integer id) {
 		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
 		for (Poseta p: tipPosete.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))

@@ -20,7 +20,6 @@ import com.example.demo.conversion.total.TipPoseteConversion;
 import com.example.demo.dto.model.TipPoseteDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
-import com.example.demo.service.LekarService;
 import com.example.demo.service.TipPoseteService;
 import com.example.demo.service.UserService;
 
@@ -36,10 +35,7 @@ public class TipPoseteController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private LekarService lekarService;
-		
+			
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody TipPoseteDTO tipPoseteDTO) {
@@ -51,12 +47,12 @@ public class TipPoseteController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
 		}
 	}
+	
 	@PreAuthorize("hasAuthority('Admin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
 		try {
-			Admin admin = (Admin) this.userService.getSignedKorisnik();			
-			this.tipPoseteService.delete(id, this.lekarService.findAll(admin));
+			this.tipPoseteService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);			
 		}
 		catch(Exception e) {

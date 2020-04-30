@@ -37,16 +37,5 @@ public class ZaposleniController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	@PreAuthorize("hasAnyAuthority('Lekar','Sestra')")
-	@GetMapping(value="/provera", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> provera(){
-		try {
-			Zaposleni zaposleni = (Zaposleni) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(zaposleni.getId(), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
+
 }

@@ -29,8 +29,10 @@ import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.KrvnaGrupa;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.KartonService;
 import com.example.demo.service.LekarService;
+import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
 
@@ -56,6 +58,12 @@ public class LekarController {
 	
 	@Autowired
 	private PosetaService posetaService;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private ApplicationName name;
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -72,12 +80,23 @@ public class LekarController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody LekarDTO lekarDTO) {
+		Lekar lekar;
 		try {
-			this.lekarService.save(this.lekarConversion.get(lekarDTO));
-			return new ResponseEntity<>(HttpStatus.OK);
+			lekar = this.lekarConversion.get(lekarDTO);
+			this.lekarService.save(lekar);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		try {
+			String obavestenje = "Uspesno ste registrovani kao lekar klinike " + lekar.getKlinika().getNaziv() + "\n"
+					+ "lozinka: " + lekar.getLozinka() + "\nLink za prijavu: " + this.name.getName();
+			Message poruka = new Message(lekar.getEmail(), "Registracija lekara klinike", obavestenje);
+			this.emailService.sendMessage(poruka);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
 	}

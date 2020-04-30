@@ -55,18 +55,23 @@ public class PosetaController {
 	@GetMapping(value = "/zakazi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KlinikaSlobodnoDTO> zakazi(@PathVariable Integer id){
 
+		Pacijent pacijent;
+		Poseta poseta;
 		try {
-			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			poseta = this.posetaService.nadji(id);
 			this.posetaService.zakazi(id, pacijent.getKarton());
-
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
 		try {
-			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			this.emailService.sendMessage(new Message(pacijent.getEmail(), "Termin zakazan", "Zatrazeni termin je zakazan. "));
+			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
+			String obavestenje = "Pregled tipa " + poseta.getTipPosete().getNaziv() + " datuma "
+					+ f.format(poseta.getDatum()) + " uspesno zakazan. ";
+			Message poruka = new Message(pacijent.getEmail(), "Pregled zakazan", obavestenje);
+			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(this.klinikaService.getKlinikaSlobodno(id), HttpStatus.OK);
 
 		}
@@ -78,7 +83,7 @@ public class PosetaController {
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@DeleteMapping(value="/otkazi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> otkaziTermin(@PathVariable Integer id){	
-		Poseta poseta = null;
+		Poseta poseta;
 		try {
 			poseta = this.posetaService.otkazi(id);
 			
@@ -88,14 +93,14 @@ public class PosetaController {
 		}
 		try {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
-			String obavestenje = "Poseta zakazana za " + f.format(poseta.getDatum()) + " je otkazana od strane pacijenta. ";
+			String obavestenje = "Poseta zakazana za " + f.format(poseta.getDatum()) + " je otkazana. ";
+			this.emailService.sendMessage(new Message(poseta.getKarton().getPacijent().getEmail(), "Poseta otkazana", obavestenje));
 			for (Lekar l: poseta.getLekari())
-				this.emailService.sendMessage(new Message(l.getEmail(), "Otkazan termin", obavestenje));
+				this.emailService.sendMessage(new Message(l.getEmail(), "Poseta otkazana", obavestenje));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+			return new ResponseEntity<>(HttpStatus.OK);
 		}	
 	}
 

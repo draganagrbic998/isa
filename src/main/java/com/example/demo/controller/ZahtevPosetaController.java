@@ -63,11 +63,13 @@ public class ZahtevPosetaController {
 		}
 		try {
 			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
-			String obavestenje = "Pacijent sa brojem " + zahtev.getKarton().getBrojOsiguranika() + " zatrazio je datuma " + f.format(zahtev.getDatum()) + " pregled kod doktora " + zahtev.getLekar().getIme() + " " + zahtev.getLekar().getPrezime() + ". ";
+			String obavestenje = "Stigao je zahtev za posetu tipa " + zahtev.getTipPosete().getNaziv() + " datuma " + f.format(zahtev.getDatum()) + ""
+					+ ", kod lekara " + zahtev.getLekar().getIme() + " " + zahtev.getLekar().getPrezime() + ". Leci se pacijent sa " + ""
+							+ zahtev.getKarton().getBrojOsiguranika() + " brojem osiguranika. \n";
 			for (Zaposleni z: zahtev.getLekar().getKlinika().getZaposleni()) {
 				z = (Zaposleni) Hibernate.unproxy(z);
 				if (z instanceof Admin)
-					this.emailService.sendMessage(new Message(z.getEmail(), "Zahtev za pregled kod lekara", obavestenje));
+					this.emailService.sendMessage(new Message(z.getEmail(), "Poslat zahtev za posetu", obavestenje));
 			}
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

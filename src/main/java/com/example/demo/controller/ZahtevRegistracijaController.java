@@ -52,7 +52,6 @@ public class ZahtevRegistracijaController {
 	
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
-
 		try {
 			this.zahtevRegistracijaService.save(this.zahtevRegistracijaConversion.get(zahtevDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -65,33 +64,46 @@ public class ZahtevRegistracijaController {
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/potvrda", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevRegistracijaObradaDTO obradaZahteva) {
+		Pacijent pacijent;
 		try {
 			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
-			Pacijent pacijent = this.zahtevRegistracijaService.potvrdi(zahtev);
-			Message message = new Message(pacijent.getEmail(), "Registracija Uspesna!",
-					"Molimo Vas da aktivirate svoj nalog klikom na link:\n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + pacijent.getId());
-			this.emailService.sendMessage(message);
-			return new ResponseEntity<>(HttpStatus.OK);
+			pacijent = this.zahtevRegistracijaService.potvrdi(zahtev);
 		} 
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		try {
+			String obavestenje = "Uspesno ste registrovani kao pacijent klinike 'POSLEDNJI TRZAJ'. Molimo vas da "
+					+ "aktivirate svoj nalog klikom na link: \n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + pacijent.getId();
+			Message poruka = new Message(pacijent.getEmail(), "Registracija uspesna", obavestenje);
+			this.emailService.sendMessage(poruka);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/odbijanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevRegistracijaObradaDTO obradaZahteva) {
+		ZahtevRegistracija zahtev;
 		try {
-			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
+			zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
 			this.zahtevRegistracijaService.delete(zahtev.getId());
-			Message message = new Message(zahtev.getEmail(), "Registracija Odbijena!",
-					"Vasa registracija je odbijena iz sledecih razloga:\n\n" + obradaZahteva.getRazlog()
-							+ "\n\nMolimo Vas da pokusate ponovo.");
-			this.emailService.sendMessage(message);
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		try {
+			String obavestenje = "Vasa registracija je odbijena iz sledecih razloga: \n\n" + obradaZahteva.getRazlog() + ""
+					+ "\n\nMolimo Vas da pokusate ponovo. \n";
+			Message poruka = new Message(zahtev.getEmail(), "Registracija odbijena", obavestenje);
+			this.emailService.sendMessage(poruka);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
 	}

@@ -47,6 +47,11 @@ public class PosetaService {
 	
 	@Autowired
 	TerapijaRepository terapijaRepository;
+	
+	@Transactional(readOnly = true)
+	public Poseta nadji(Integer id) {
+		return this.posetaRepository.getOne(id);
+	}
 
 	@Transactional(readOnly = false)
 	public void save(Poseta poseta) {
