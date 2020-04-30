@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.ZahtevOdmorConversion;
+import com.example.demo.conversion.total.ZahtevOdmorConversion;
 import com.example.demo.dto.pretraga.GodisnjiDTO;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.service.UserService;
@@ -38,4 +38,15 @@ public class ZaposleniController {
 		}
 	}
 	
+	@PreAuthorize("hasAnyAuthority('Lekar','Sestra')")
+	@GetMapping(value="/provera", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> provera(){
+		try {
+			Zaposleni zaposleni = (Zaposleni) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(zaposleni.getId(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

@@ -1,113 +1,121 @@
-//Registracija & prijava:
+//autentifikacija:
 const prijava = {template: '<prijava></prijava>'}
 const registracija = {template: '<registracija></registracija>'}
-const poslatZahtev = {template: '<poslatZahtev></poslatZahtev>'}
-const zahteviPacijenti = {template: '<zahteviPacijenti></zahteviPacijenti>'}
-const aktivirajNalog = {template: '<aktivirajNalog></aktivirajNalog>'}
+const promenaSifre = {template: '<promenaSifre></promenaSifre>'}
+const aktiviranjeNaloga = {template: '<aktiviranjeNaloga></aktiviranjeNaloga>'}
 
-//Home stranice:
-const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
+//pocetna stranica:
 const superAdminHome = {template: '<superAdminHome></superAdminHome>'}
 const adminHome = {template: '<adminHome></adminHome>'}
 const lekarHome = {template: '<lekarHome></lekarHome>'}
 const sestraHome = {template: '<sestraHome></sestraHome>'}
+const pacijentHome = {template: '<pacijentHome></pacijentHome>'}
 
-//Profili & slicno:
-const profil = {template: '<profil></profil>'}
-const karton = {template: '<karton></karton>'}
-const termini = {template: '<termini></termini>'}
-const bolesti = {template: '<bolesti></bolesti>'}
-const profilAdmin = {template: '<profilAdmin></profilAdmin>'}
-const klinikeSlobodno = {template: '<klinikeSlobodno></klinikeSlobodno>'}
-const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
-const overaRecepata = {template: '<overaRecepata></overaRecepata>'}
-const promenaSifre = {template: '<promenaSifre></promenaSifre>'}
-const lekarKalendar = {template: '<lekarKalendar></lekarKalendar>'}
-const lekarPregledGodisnjih = {template: '<lekarPregledGodisnjih></lekarPregledGodisnjih>'}
-const sestraPregledGodisnjih = {template: '<sestraPregledGodisnjih></sestraPregledGodisnjih>'}
-const unosIzvestaja = {template: '<unosIzvestaja></unosIzvestaja>'}
+//profil:
+const adminProfil = {template: '<adminProfil></adminProfil>'}
+const lekarProfil = {template: '<lekarProfil></lekarProfil>'}
+const pacijentProfil = {template: '<pacijentProfil></pacijentProfil>'}
 
-//Lekar home-page
-const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
-const zakaziPregled = {template: '<zakaziPregled></zakaziPregled>'}
-const zapocniPregled = {template: '<zapocniPregled></zapocniPregled>'}
-const zahtevGodisnji = {template: '<zahtevGodisnji></zahtevGodisnji>'}
-const profilLekar = {template: '<profilLekar></profilLekar>'}
-
-//Dodavanja:
-const registracijaKlinike = {template: '<registracijaKlinike></registracijaKlinike>'}
-const registracijaSuperAdmina = {template: '<registracijaSuperAdmina></registracijaSuperAdmina>'}
-const registracijaAdmina = {template: '<registracijaAdmina></registracijaAdmina>'}
-const registracijaLekara = {template: '<registracijaLekara></registracijaLekara>'}
+//kreiranje:
+const dodajSuperAdmina = {template: '<dodajSuperAdmina></dodajSuperAdmina>'}
+const dodajAdmina = {template: '<dodajAdmina></dodajAdmina>'}
+const dodajLekara = {template: '<dodajLekara></dodajLekara>'}
+const dodajPacijenta = {template: '<dodajPacijenta></dodajPacijenta>'}
 const dodajDijagnozu = {template: '<dodajDijagnozu></dodajDijagnozu>'}
 const dodajLek = {template: '<dodajLek></dodajLek>'}
+const dodajKliniku = {template: '<dodajKliniku></dodajKliniku>'}
 const dodajTipPosete = {template: '<dodajTipPosete></dodajTipPosete>'}
 const dodajSalu = {template: '<dodajSalu></dodajSalu>'}
+const dodajPregled = {template: '<dodajPregled></dodajPregled>'}
 
-//Pretrage:
-const dijagnozePretraga = {template: '<dijagnozePretraga></dijagnozePretraga>'}
-const lekoviPretraga = {template: '<lekoviPretraga></lekoviPretraga>'}
-const tipPregledaPretraga = {template: '<tipPregledaPretraga></tipPregledaPretraga>'}
+//pretraga:
 const lekariPretraga = {template: '<lekariPretraga></lekariPretraga>'}
 const sestrePretraga = {template: '<sestrePretraga></sestrePretraga>'}
+const dijagnozePretraga = {template: '<dijagnozePretraga></dijagnozaPretraga>'}
+const lekoviPretraga = {template: '<lekoviPretraga></lekoviPretraga>'}
+const tipPosetePretraga = {template: '<tipPosetePretraga></tipPosetePretraga>'}
 
-const obradaZahtevGodisnji = {template: '<obradaZahtevGodisnji></obradaZahtevGodisnji>'}
-const kreirajPregled = {template: '<kreirajPregled></kreirajPregled>'}
+//zahtevi:
+const zahtevRegistracijaObrada = {template: '<zahtevRegistracijaObrada></zahtevRegistracijaObrada>'}
+const zahtevPosetaSlanje = {template: '<zahtevPosetaSlanje></zahtevPosetaSlanje>'}
+const zahtevOdmorSlanje = {template: '<zahtevOdmorSlanje></zahtevOdmorSlanje>'}
+const zahtevOdmorObrada = {template: '<zahtevOdmorObrada></zahtevOdmorObrada>'}
+const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
+
+//pacijent:
+const karton = {template: '<karton></karton>'}
+const bolesti = {template: '<bolesti></bolesti>'}
+const termini = {template: '<termini></termini>'}
+const klinikeSlobodno = {template: '<klinikeSlobodno></klinikeSlobodno>'}
+const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
+
+//lekar:
+const radniKalendar = {template: '<radniKalendar></radniKalendar>'}
+const godisnjiOdmori = {template: '<godisnjiOdmori></godisnjiOdmori>'}
+const zapocetPregled = {template: '<zapocetPregled></zapocetPregled>'}
+const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
 
 const router = new VueRouter({
-
+	
 	mode: 'hash', 
 	routes: [
-		{path: '/', component: prijava},
-		{path: '/registracija', component: registracija}, 
-		{path: '/poslatZahtev', component: poslatZahtev}, 
-		{path: '/aktivirajNalog', component: aktivirajNalog}, 
-		{path: '/pacijentHome', component: pacijentHome}, 
-		{path: '/superAdminHome', component: superAdminHome},
-		{path: '/adminHome', component: adminHome},
-		{path: '/lekarHome', component: lekarHome},
-		{path: '/lekarKalendar', component: lekarKalendar},
-		{path: '/lekarPregledGodisnjih', component: lekarPregledGodisnjih},
-		{path: '/sestraPregledGodisnjih', component: sestraPregledGodisnjih},
-		{path: '/unosIzvestaja', component: unosIzvestaja},
-		{path: '/sestraHome', component: sestraHome},
-		{path: '/profil', component: profil}, 
-		{path: '/karton', component: karton}, 
-		{path: '/termini', component: termini}, 
-		{path: '/bolesti', component: bolesti}, 
-		{path: '/registracijaKlinike', component: registracijaKlinike},
-		{path: '/registracijaSuperAdmina', component: registracijaSuperAdmina},
-		{path: '/registracijaAdmina', component: registracijaAdmina},
-		{path: '/registracijaLekara', component: registracijaLekara},
-		{path: '/lekariPretraga', component: lekariPretraga},
-		{path: '/dodajDijagnozu', component: dodajDijagnozu},
-		{path: '/dijagnozePretraga', component: dijagnozePretraga},
-		{path: '/dodajLek', component: dodajLek},
-		{path: '/lekoviPretraga', component: lekoviPretraga},
-		{path: '/dodajTipPosete', component: dodajTipPosete},
-		{path: '/dodajSalu', component: dodajSalu},
-		{path: '/klinikeSlobodno', component: klinikeSlobodno}, 
-		{path: '/klinikeLekari', component: klinikeLekari},
-		{path: '/zahteviPacijenti', component: zahteviPacijenti},
-		{path: '/profilAdmin', component: profilAdmin},
-		{path: '/tipPregledaPretraga', component: tipPregledaPretraga},
-		{path: '/sestrePretraga', component: sestrePretraga},
-		{path: '/overaRecepata', component: overaRecepata}, 
-		{path: '/promenaSifre', component: promenaSifre},
-		{path: '/lekarPacijenti', component: lekarPacijenti},
-		{path: '/zakaziPregled', component: zakaziPregled},
-		{path: '/zapocniPregled', component: zapocniPregled},
-		{path: '/zahtevGodisnji', component: zahtevGodisnji},
-		{path: '/profilLekar', component: profilLekar},
-		{path: '/obradaZahtevGodisnji', component: obradaZahtevGodisnji},
-		{path: '/kreirajPregled', component: kreirajPregled}
-
 		
+		{path: '/', component: prijava}, 
+		{path: '/registracija', component: registracija}, 
+		{path: '/promenaSifre', component: promenaSifre}, 
+		{path: '/aktiviranjeNaloga', component: aktiviranjeNaloga}, 
+
+		{path: '/superAdminHome', component: superAdminHome}, 
+		{path: '/adminHome', component: adminHome}, 
+		{path: '/lekarHome', component: lekarHome}, 
+		{path: '/sestraHome', component: sestraHome}, 
+		{path: '/pacijentHome', component: pacijentHome}, 
+
+		{path: '/adminProfil', component: adminProfil}, 
+		{path: '/lekarProfil', component: lekarProfil}, 
+		{path: '/pacijentProfil', component: pacijentProfil}, 
+
+		{path: '/dodajSuperAdmina', component: dodajSuperAdmina}, 
+		{path: '/dodajAdmina', component: dodajAdmina}, 
+		{path: '/dodajLekara', component: dodajLekara}, 
+		{path: '/dodajPacijenta', component: dodajPacijenta}, 
+		{path: '/dodajDijagnozu', component: dodajDijagnozu}, 
+		{path: '/dodajLek', component: dodajLek}, 
+		{path: '/dodajKliniku', component: dodajKliniku}, 
+		{path: '/dodajTipPosete', component: dodajTipPosete}, 
+		{path: '/dodajSalu', component: dodajSalu}, 
+		{path: '/dodajPregled', component: dodajPregled}, 
+
+		{path: '/lekariPretraga', component: lekariPretraga}, 
+		{path: '/sestrePretraga', component: sestrePretraga}, 
+		{path: '/dijagnozePretraga', component: dijagnozePretraga}, 
+		{path: '/lekoviPretraga', component: lekoviPretraga}, 
+		{path: '/tipPosetePretraga', component: tipPosetePretraga},
+			
+		{path: '/zahtevRegistracijaObrada', component: zahtevRegistracijaObrada},
+		{path: '/zahtevPosetaSlanje', component: zahtevPosetaSlanje},
+		{path: '/zahtevOdmorSlanje', component: zahtevOdmorSlanje},
+		{path: '/zahtevOdmorObrada', component: zahtevOdmorObrada},
+		{path: '/overaRecepta', component: overaRecepta},
+
+		{path: '/karton', component: karton},
+		{path: '/bolesti', component: bolesti},
+		{path: '/termini', component: termini},
+		{path: '/klinikeSlobodno', component: klinikeSlobodno},
+		{path: '/klinikeLekari', component: klinikeLekari},
+
+		{path: '/radniKalendar', component: radniKalendar},
+		{path: '/godisnjiOdmori', component: godisnjiOdmori},
+		{path: '/zapocetPregled', component: zapocetPregled},
+		{path: '/lekarPacijenti', component: lekarPacijenti},
+
 	]
 	
 });
 
 var app = new Vue({
 	router: router, 
-	el: '#main_div'
+	el: '#mainDiv'
 });
+
+

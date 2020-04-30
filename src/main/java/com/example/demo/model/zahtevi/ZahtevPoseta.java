@@ -12,8 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.example.demo.model.Zauzetost;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.ostalo.Zauzetost;
 import com.example.demo.model.posete.Karton;
 import com.example.demo.model.resursi.TipPosete;
 

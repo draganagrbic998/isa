@@ -1,8 +1,8 @@
 package com.example.demo.dto.pretraga;
 
 import com.example.demo.dto.model.LekarDTO;
-import com.example.demo.model.Ocena;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.ostalo.Ocena;
 
 public class LekarOcenaDTO extends LekarDTO {
 	

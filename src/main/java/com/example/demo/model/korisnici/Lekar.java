@@ -22,9 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.example.demo.dto.pretraga.ObavezaDTO;
-import com.example.demo.model.Ocena;
-import com.example.demo.model.Ocenjivanje;
-import com.example.demo.model.Zauzetost;
+import com.example.demo.model.ostalo.Ocena;
+import com.example.demo.model.ostalo.Ocenjivanje;
+import com.example.demo.model.ostalo.Zauzetost;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.resursi.Klinika;

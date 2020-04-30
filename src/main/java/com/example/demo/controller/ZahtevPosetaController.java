@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.ZahtevPosetaConversion;
+import com.example.demo.conversion.total.ZahtevPosetaConversion;
 import com.example.demo.dto.model.ZahtevPosetaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Korisnik;
@@ -43,7 +43,7 @@ public class ZahtevPosetaController {
 	private EmailService emailService;
 
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
-	@PostMapping(value="/kreiraj", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value="/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
 		
 		ZahtevPoseta zahtev = null;

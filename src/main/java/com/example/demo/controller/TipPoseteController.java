@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.TipPoseteConversion;
+import com.example.demo.conversion.total.TipPoseteConversion;
 import com.example.demo.dto.model.TipPoseteDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;

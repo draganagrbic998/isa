@@ -7,9 +7,9 @@ import java.util.List;
 import org.hibernate.Hibernate;
 
 import com.example.demo.dto.model.KlinikaDTO;
-import com.example.demo.model.Ocena;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Zaposleni;
+import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.resursi.Klinika;
 
 public class KlinikaPretragaDTO extends KlinikaDTO{

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.KartonConversion;
-import com.example.demo.conversion.PacijentConversion;
+import com.example.demo.conversion.partial.KartonConversion;
+import com.example.demo.conversion.partial.PacijentConversion;
 import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
@@ -104,7 +104,7 @@ public class PacijentController {
 		}
 	}
 	
-	@GetMapping(value="/aktiviraj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/aktiviranje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable Integer id){
 		try {
 			boolean retval = this.pacijentService.aktiviraj(id);

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.IzvestajConversion;
-import com.example.demo.conversion.PosetaConversion;
+import com.example.demo.conversion.partial.IzvestajConversion;
+import com.example.demo.conversion.partial.PosetaConversion;
 import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
 import com.example.demo.dto.unos.IzvestajUnosDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
@@ -100,7 +100,7 @@ public class PosetaController {
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/kreiraj", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody PredefinisanaPosetaDTO pregled) {
 		try {
 			this.posetaService.save(this.posetaConversion.get(pregled));

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.SalaConversion;
+import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.service.SalaService;

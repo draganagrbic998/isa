@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.TerapijaConversion;
+import com.example.demo.conversion.partial.TerapijaConversion;
 import com.example.demo.dto.model.TerapijaDTO;
 import com.example.demo.model.korisnici.Sestra;
 import com.example.demo.service.TerapijaService;
@@ -33,7 +33,7 @@ public class TerapijaController {
 	private UserService userService;
 	
 	@PreAuthorize("hasAuthority('Sestra')")
-	@GetMapping(value = "/getNeoverene", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/neovereno", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TerapijaDTO>> getNeovereneTerapije(){
 		try {
 			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();

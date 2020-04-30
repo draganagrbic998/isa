@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.KlinikaConversion;
+import com.example.demo.conversion.total.KlinikaConversion;
 import com.example.demo.dto.model.KlinikaDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
@@ -51,6 +51,18 @@ public class KlinikaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<KlinikaDTO>> pregled(){
+		try {
+			return new ResponseEntity<>(this.klinikaConversion.get(this.klinikaService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> izmena(@RequestBody KlinikaDTO klinikaDTO){

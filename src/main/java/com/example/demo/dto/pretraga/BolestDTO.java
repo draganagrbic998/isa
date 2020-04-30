@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.demo.dto.model.DijagnozaDTO;
-import com.example.demo.model.Ocena;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Dijagnoza;
 import com.example.demo.model.resursi.Lek;

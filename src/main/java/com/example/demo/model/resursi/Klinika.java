@@ -13,10 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
-import com.example.demo.model.Ocena;
-import com.example.demo.model.Ocenjivanje;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.korisnici.Zaposleni;
+import com.example.demo.model.ostalo.Ocena;
+import com.example.demo.model.ostalo.Ocenjivanje;
 import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 

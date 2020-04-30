@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.unos.OcenaParamDTO;
-import com.example.demo.model.Ocena;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.repository.LekarRepository;

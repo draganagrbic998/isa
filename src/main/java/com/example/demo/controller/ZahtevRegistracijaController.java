@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.ZahtevRegistracijaConversion;
+import com.example.demo.conversion.total.ZahtevRegistracijaConversion;
 import com.example.demo.dto.model.ZahtevRegistracijaDTO;
 import com.example.demo.dto.unos.ZahtevRegistracijaObradaDTO;
 import com.example.demo.model.korisnici.Pacijent;
@@ -69,7 +69,7 @@ public class ZahtevRegistracijaController {
 			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
 			Pacijent pacijent = this.zahtevRegistracijaService.potvrdi(zahtev);
 			Message message = new Message(pacijent.getEmail(), "Registracija Uspesna!",
-					"Molimo Vas da aktivirate svoj nalog klikom na link:\n" + this.name.getName() + "/#/aktivirajNalog?id=" + pacijent.getId());
+					"Molimo Vas da aktivirate svoj nalog klikom na link:\n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + pacijent.getId());
 			this.emailService.sendMessage(message);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 

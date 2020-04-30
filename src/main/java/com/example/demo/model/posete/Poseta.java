@@ -19,8 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
-import com.example.demo.model.Zauzetost;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.ostalo.Zauzetost;
 import com.example.demo.model.resursi.Sala;
 import com.example.demo.model.resursi.TipPosete;
 

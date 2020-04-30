@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.conversion.all.ZahtevOdmorConversion;
+import com.example.demo.conversion.total.ZahtevOdmorConversion;
 import com.example.demo.dto.model.ZahtevOdmorDTO;
 import com.example.demo.dto.unos.ZahtevOdmorObradaDTO;
 import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevOdmorService;
@@ -48,10 +49,13 @@ public class ZahtevOdmorController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('Lekar')")
-	@PostMapping(value = "/kreiranje", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasAnyAuthority('Lekar','Sestra')")
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> kreiranje(@RequestBody ZahtevOdmorDTO zahtevOdmorDTO){
 		try {
+			Zaposleni zaposleni = (Zaposleni) this.userService.getSignedKorisnik();
+			zahtevOdmorDTO.setZaposleni(zaposleni.getId());
+			zahtevOdmorDTO.setKlinika(zaposleni.getKlinika().getId());
 			this.zahtevOdmorService.save(this.zahtevOdmorConversion.get(zahtevOdmorDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 
