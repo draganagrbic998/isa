@@ -397,7 +397,7 @@ Vue.component("klinikeLekari", {
 			  hours = hours.length > 1 ? hours : '0' + hours;
 			  let minutes = date.getMinutes().toString();
 			  minutes = minutes.length > 1 ? minutes : '0' + minutes;
-			  return month + '/' + day + '/' + year + " " + hours + ":" + minutes;
+			  return day + '/' + month + '/' + year + " " + hours + ":" + minutes;
 			  
 		},
 		
