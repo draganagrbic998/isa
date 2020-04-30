@@ -40,7 +40,7 @@ public class UserService {
 			}
 		}
 		
-		throw new RuntimeException();
+		throw new MyRuntimeException();
 
 	}
 	
