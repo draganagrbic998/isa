@@ -281,6 +281,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 
 		return obaveze;
 	}
+	
+	
 
 	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
@@ -294,8 +296,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 		gc.set(Calendar.MINUTE, 0);
 		Date krajDatum = gc.getTime();
 		
-		for (ZahtevOdmor zo: this.getOdmorZahtevi()) {
-			if (zo.getPocetak().equals(pocetakDatum) || zo.getKraj().equals(krajDatum))
+		for (ZahtevOdmor z: this.getOdmorZahtevi()) {
+			if (z.getPocetak().equals(pocetakDatum) || z.getKraj().equals(krajDatum))
 				return false;
 		}
 		
