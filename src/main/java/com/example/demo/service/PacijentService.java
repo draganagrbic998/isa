@@ -34,8 +34,4 @@ public class PacijentService {
 		return true;	
 	}
 	
-	
-	
-	
-	
 }

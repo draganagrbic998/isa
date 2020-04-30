@@ -30,8 +30,8 @@ public class ZahtevOdmorService {
 	
 	@Transactional(readOnly = false)
 	public void save(ZahtevOdmor zahtev) {
-		if (zahtev.getZaposleni().odmorPreklapanje(zahtev))
-			throw new MyRuntimeException();
+//		if (zahtev.getZaposleni().odmorPreklapanje(zahtev))
+//			throw new MyRuntimeException();
 		this.zahtevOdmorRepository.save(zahtev);
 		Zaposleni z = zahtev.getZaposleni();
 		z = (Zaposleni) Hibernate.unproxy(z);

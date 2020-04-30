@@ -19,7 +19,7 @@ values ('21', 'sala jedna mala', 1, true);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
 values ('2020-04-28 12:00', null, 1, 1, 1, 1, 0);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-04-30 02:00', 0.2, 1, 1, 1, 1, 0);
+values ('2020-04-30 17:43', 0.2, 1, 1, 1, 1, 0);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
 values ('2020-04-30 12:00', 0.2, 1, 1, 1, 1, 0);
 
@@ -214,6 +214,9 @@ values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', false, 2, 1);
 insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
 values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 3, 1);
 insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
-values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 5, 1)
+values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 5, 1);
 
+------------PRVA OPERACIJA-------------------
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
+values (true, 'super operacija', 1, 200, 1, 30, true);
 
