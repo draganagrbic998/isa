@@ -38,8 +38,8 @@ Vue.component("salaPretraga", {
 
 	<table class="table">
 		<tr bgcolor="#f2f2f2">
-			<th> Ime </th>
-			<th> Prezime </th>
+			<th>Naziv </th>
+			<th> Broj </th>
 		</tr>
 		
 		<tr v-for="s in sale">

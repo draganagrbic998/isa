@@ -50,7 +50,11 @@ public class SalaController {
 	public ResponseEntity<List<SalaDTO>> getS(){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.salaConversion.get(this.salaService.findAll(admin)), HttpStatus.OK);
+			List<SalaDTO> sale = this.salaConversion.get(this.salaService.findAll(admin));
+			//for (SalaDTO sala : sale) {
+				//sala.setPrviSlobodan(this.salaService.nadjiSlobodanTermin(sala.getId()));
+			//}
+			return new ResponseEntity<>(sale, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

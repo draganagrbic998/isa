@@ -220,3 +220,16 @@ values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 5, 1);
 insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
 values (true, 'super operacija', 1, 200, 1, 30, true);
 
+-----------PREGLED U TOKU-------------------
+insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
+values ('2020-04-28 12:00', 0.5, 2, 1, 1, 1, 0);
+
+
+--------DODAVANJE LEKARA----------------
+insert into lekar_poseta (lekar, poseta)
+values (2, 15);
+
+
+-----------UPDATE LEKARA DA BI IMAO POSETU ZPAOCETU--------
+update korisnik set zapoceta_poseta = 15
+where id = 2;

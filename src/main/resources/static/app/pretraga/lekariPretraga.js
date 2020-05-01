@@ -7,7 +7,6 @@ Vue.component("lekariPretraga", {
 			pretraga: '',
 			nemaRezultata: ''
 		}
-	}, 
 
 	template: `
 	

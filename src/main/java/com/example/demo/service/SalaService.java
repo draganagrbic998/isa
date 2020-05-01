@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class SalaService {
 	public void save(Sala sala) {
 		this.salaRepository.save(sala);
 	}
+	
 	@Transactional(readOnly = true)
 	public List<Sala> findAll(Zaposleni zaposleni) {
 		List<Sala> sale = new ArrayList<>();
@@ -44,7 +47,19 @@ public class SalaService {
 		}
 		sala.setAktivan(false);
 		this.salaRepository.save(sala);
+	}
+	/*
+	@Transactional(readOnly = false)
+	public Date nadjiSlobodanTermin(Integer id) {
+		Date danas = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		//this.pocetnoVreme = pocetno.substring(pocetno.length() - 5);
 		
+		Sala sala = this.salaRepository.getOne(id);
+		for (Poseta p : sala.getPosete()) {
+			//String pocetno = f.format(p.getDatum());
+		}
 		
 	}
+	*/
 }
