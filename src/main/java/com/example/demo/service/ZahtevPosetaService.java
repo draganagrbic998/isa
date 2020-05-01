@@ -1,12 +1,17 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.resursi.Klinika;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.ZahtevPosetaRepository;
@@ -29,4 +34,12 @@ public class ZahtevPosetaService {
 		this.lekarRepository.save(l);
 	}
 	
+	public List<ZahtevPosetaObradaDTO> findAll(Klinika klinika) {
+		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
+		for (ZahtevPoseta z : this.zahtevPosetaRepository.findAll()) {
+			if (z.getTipPosete().getKlinika().getId().equals(klinika.getId()))
+				zahtevi.add(new ZahtevPosetaObradaDTO(z));
+		}
+		return zahtevi;
+	}
 }

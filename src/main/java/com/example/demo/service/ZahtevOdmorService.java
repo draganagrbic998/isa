@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevOdmorDTO;
+import com.example.demo.dto.unos.ZahtevOdmorObradaDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.resursi.Klinika;
@@ -60,5 +62,5 @@ public class ZahtevOdmorService {
 		}
 		return zahtevi;
 	}
-
+	
 }

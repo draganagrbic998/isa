@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevPosetaDTO;
+import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.KartonRepository;
 import com.example.demo.repository.LekarRepository;
@@ -52,12 +53,26 @@ public class ZahtevPosetaConversion {
 		
 	}
 	
+	public ZahtevPosetaObradaDTO getZPO(ZahtevPoseta zahtev) {
+		
+		return new ZahtevPosetaObradaDTO(zahtev);
+		
+	}
+	
 	public List<ZahtevPosetaDTO> get(List<ZahtevPoseta> zahtevi){
 		
 		List<ZahtevPosetaDTO> zahteviDTO = new ArrayList<>();
 		for (ZahtevPoseta z: zahtevi)
 			zahteviDTO.add(new ZahtevPosetaDTO(z));
 		Collections.sort(zahteviDTO);
+		return zahteviDTO;
+	}
+
+	public List<ZahtevPosetaObradaDTO> getZPO(List<ZahtevPoseta> zahtevi){
+		
+		List<ZahtevPosetaObradaDTO> zahteviDTO = new ArrayList<>();
+		for (ZahtevPoseta z: zahtevi)
+			zahteviDTO.add(new ZahtevPosetaObradaDTO(z));
 		return zahteviDTO;
 	}
 	

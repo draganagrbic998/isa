@@ -110,6 +110,7 @@ public class ZahtevOdmorController {
 		}
 	}
 	
+	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/odbijanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevOdmorObradaDTO zahtevObrada){

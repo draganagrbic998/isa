@@ -38,7 +38,7 @@ public class SalaService {
 	public void delete(Integer id) {
 		
 		Sala sala = this.salaRepository.getOne(id);
-		for (Poseta p: sala.getPosete()) {
+		for (Poseta p : sala.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
 				throw new MyRuntimeException();
 		}

@@ -3,6 +3,7 @@ Vue.component("adminHome", {
 		return{
 			klinika: {},
 			zahteviBroj: '',
+			zahteviPosetaBroj: '',
 			greskaNaziv: '', 
 			greskaAdresa: '', 
 			greska: false
@@ -83,11 +84,15 @@ Vue.component("adminHome", {
           Zahtevi odmor
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#/zahtevPosetaObrada">
+          <i class="fa fa-globe">
+            <span class="badge badge-success">{{zahteviPosetaBroj}}</span>
+          </i>
+          Zahtevi poseta
+        </a>
+      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
 </nav>
 		
@@ -127,8 +132,6 @@ Vue.component("adminHome", {
 	`, 	
 	
 	mounted(){
-		
-		
 		axios.get("/klinika/admin/pregled")
 		.then(response => {
 			this.klinika = response.data
@@ -137,6 +140,17 @@ Vue.component("adminHome", {
 			this.$router.push("/");
 		});
 		
+		axios.get("/zahtevOdmor/klinika/pregled")
+		.then(response => {this.zahteviBroj = response.data.length})
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+		
+		axios.get("/zahtevPoseta/klinika/pregled")
+		.then(response => {this.zahteviPosetaBroj = response.data.length})
+		.catch(reponse => {
+			this.$router.push("/");
+		});
 	},
 	
 	methods: {

@@ -36,6 +36,8 @@ const sestrePretraga = {template: '<sestrePretraga></sestrePretraga>'}
 const dijagnozePretraga = {template: '<dijagnozePretraga></dijagnozaPretraga>'}
 const lekoviPretraga = {template: '<lekoviPretraga></lekoviPretraga>'}
 const tipPosetePretraga = {template: '<tipPosetePretraga></tipPosetePretraga>'}
+const salaPretraga = {template: '<salaPretraga></salaPretraga>'}
+
 
 //zahtevi:
 const zahtevRegistracijaObrada = {template: '<zahtevRegistracijaObrada></zahtevRegistracijaObrada>'}
@@ -43,6 +45,7 @@ const zahtevPosetaSlanje = {template: '<zahtevPosetaSlanje></zahtevPosetaSlanje>
 const zahtevOdmorSlanje = {template: '<zahtevOdmorSlanje></zahtevOdmorSlanje>'}
 const zahtevOdmorObrada = {template: '<zahtevOdmorObrada></zahtevOdmorObrada>'}
 const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
+const zahtevPosetaObrada = {template: '<zahtevPosetaObrada></zahtevPosetaObrada>'}
 
 //pacijent:
 const karton = {template: '<karton></karton>'}
@@ -95,11 +98,14 @@ const router = new VueRouter({
 		{path: '/dijagnozePretraga', component: dijagnozePretraga}, 
 		{path: '/lekoviPretraga', component: lekoviPretraga}, 
 		{path: '/tipPosetePretraga', component: tipPosetePretraga},
+		{path: '/salaPretraga', component: salaPretraga},
+	
 			
 		{path: '/zahtevRegistracijaObrada', component: zahtevRegistracijaObrada},
 		{path: '/zahtevPosetaSlanje', component: zahtevPosetaSlanje},
 		{path: '/zahtevOdmorSlanje', component: zahtevOdmorSlanje},
 		{path: '/zahtevOdmorObrada', component: zahtevOdmorObrada},
+		{path: '/zahtevPosetaObrada', component: zahtevPosetaObrada},
 		{path: '/overaRecepta', component: overaRecepta},
 
 		{path: '/karton', component: karton},

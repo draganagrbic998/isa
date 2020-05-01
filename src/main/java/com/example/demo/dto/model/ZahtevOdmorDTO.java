@@ -36,6 +36,8 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 		this.profesija = ((Zaposleni) Hibernate.unproxy(zahtev.getZaposleni())).getClass().getSimpleName();
 	}
 	
+	
+	
 	public Integer getId() {
 		return id;
 	}
