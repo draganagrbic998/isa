@@ -3,9 +3,11 @@ Vue.component("termini", {
 	data: function(){
 		return{
 			termini: [], 
+			terminiBackup: [],
 			selectedTermin: {}, 
 			selected: false, 
-			datum: ''
+			datum: '', 
+			pretraga: ''
 		}
 	}, 
 	
@@ -19,37 +21,14 @@ Vue.component("termini", {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="!selected">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/pacijentProfil">
-          <i class="fa fa-user"></i>
-          Profil 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/karton">
-          <i class="fa fa-address-book"></i>
-          Karton 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 130px;">
-        <a class="nav-link" href="#/bolesti">
-          <i class="fa fa-line-chart"></i>
-          Istorija bolesti
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 130px;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="selected">
         <a class="nav-link" href="#/termini" v-on:click="refresh()">
           <i class="fa fa-calendar"></i>
           Zakazani termini
@@ -57,23 +36,10 @@ Vue.component("termini", {
           </a>
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 140px;">
-        <a class="nav-link" href="#/klinikeSlobodno">
-          <i class="fa fa-bell"></i>
-          Povoljni termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 140px;">
-        <a class="nav-link" href="#/klinikeLekari">
-          <i class="fa fa-hotel"></i>
-          Klinike centra
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
-    
+        <form class="form-inline my-2 my-lg-0" v-if="!selected">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+    </form>
   </div>
 </nav>		
 		</div>
@@ -185,6 +151,7 @@ Vue.component("termini", {
 		axios.get("/pacijent/termini")
 		.then(response => {
 			this.termini = response.data;
+			this.terminiBackup = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
@@ -234,6 +201,19 @@ Vue.component("termini", {
 		
 		refresh: function(){
 			location.reload();
+		}, 
+		
+		search: function(){
+
+			this.termini = [];
+			let lowerPretraga = this.pretraga.toLowerCase();
+			
+			for (let t of this.terminiBackup){
+				let klinikaPassed = this.pretraga != '' ? t.klinika.toLowerCase().includes(lowerPretraga) : true;
+				let tipPosetePassed = this.pretraga != '' ? t.tipPosete.toLowerCase().includes(lowerPretraga) : true;
+				if (klinikaPassed || tipPosetePassed) this.termini.push(t);
+			}
+			
 		}
 		
 	}

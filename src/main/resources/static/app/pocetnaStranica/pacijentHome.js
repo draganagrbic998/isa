@@ -40,7 +40,7 @@ Vue.component("pacijentHome", {
       </li>
       <li class="nav-item active" style="min-width: 130px;">
         <a class="nav-link" href="#/termini">
-          <i class="fa fa-calendar"></i>
+          <i class="fa fa-list"></i>
           Zakazani termini
           <span class="sr-only">(current)</span>
           </a>

@@ -3,13 +3,15 @@ Vue.component("bolesti", {
 	data: function(){
 		return{
 			bolesti: [], 
+			bolestiBackup: [],
 			selectedBolest: {}, 
 			bolestSelected: false, 
 			selectedLekar: {}, 
 			lekarSelected: false, 
 			klinikaOcena: 0, 
 			lekarOcena: 0, 
-			datum: ''
+			datum: '', 
+			pretraga: ''
 		}
 	}, 
 	
@@ -22,10 +24,24 @@ Vue.component("bolesti", {
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="bolestSelected">
-      <li class="nav-item dropdown">
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="!bolestSelected && !lekarSelected">
+        <a class="nav-link" href="#/pacijentHome">
+          <i class="fa fa-home"></i>
+          Home 
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item active" style="min-width: 100px;" v-if="bolestSelected || lekarSelected">
+        <a class="nav-link" href="#/bolesti" v-on:click="refresh()">
+          <i class="fa fa-line-chart"></i>
+          Istorija bolesti
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item dropdown" v-if="bolestSelected && !lekarSelected" style="margin-left: 50px;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-sort"></i>
+          <i class="fa fa-star"></i>
           Oceni kliniku
           <span class="sr-only">(current)</span>
         </a>
@@ -45,11 +61,9 @@ Vue.component("bolesti", {
           </form>
         </div>
       </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="lekarSelected">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" v-if="!bolestSelected && lekarSelected" style="margin-left: 50px;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-sort"></i>
+          <i class="fa fa-star"></i>
           Oceni lekara
           <span class="sr-only">(current)</span>
         </a>
@@ -69,64 +83,12 @@ Vue.component("bolesti", {
           </form>
         </div>
       </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/pacijentHome">
-          <i class="fa fa-home"></i>
-          Home 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/pacijentProfil">
-          <i class="fa fa-user"></i>
-          Profil 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/karton">
-          <i class="fa fa-address-book"></i>
-          Karton 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 130px;">
-        <a class="nav-link" href="#/bolesti" v-on:click="refresh()">
-          <i class="fa fa-line-chart"></i>
-          Istorija bolesti
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 130px;">
-        <a class="nav-link" href="#/termini">
-          <i class="fa fa-calendar"></i>
-          Zakazani termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 140px;">
-        <a class="nav-link" href="#/klinikeSlobodno">
-          <i class="fa fa-bell"></i>
-          Povoljni termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item active" style="min-width: 140px;">
-        <a class="nav-link" href="#/klinikeLekari">
-          <i class="fa fa-hotel"></i>
-          Klinike centra
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
-    
-    
+
+    </ul>   
+    <form class="form-inline my-2 my-lg-0" v-if="!bolestSelected && !lekarSelected">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+    </form>
   </div>
 </nav>		
 		</div>
@@ -348,6 +310,7 @@ Vue.component("bolesti", {
 		axios.get("/pacijent/bolesti")
 		.then(response => {
 			this.bolesti = response.data;
+			this.bolestiBackup = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
@@ -412,6 +375,18 @@ Vue.component("bolesti", {
 		
 		refresh: function(){
 			location.reload();
+		}, 
+		
+		search: function(){
+			this.bolesti = [];
+			let lowerPretraga = this.pretraga.toLowerCase();
+			
+			for (let b of this.bolestiBackup){
+				let tipPosetePassed = this.pretraga != '' ? b.tipPosete.toLowerCase().includes(lowerPretraga) : true;
+				let nazivPosetePassed = this.pretraga != '' ? b.nazivPosete.toLowerCase().includes(lowerPretraga) : true;
+				if (tipPosetePassed || nazivPosetePassed) this.bolesti.push(b);
+			}		
+			
 		}
 		
 	}

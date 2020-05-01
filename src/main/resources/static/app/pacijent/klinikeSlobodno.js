@@ -3,11 +3,14 @@ Vue.component("klinikeSlobodno", {
 	data: function(){
 		return{
 			klinike: [], 
+			klinikeBackup: [],
+			poseteBackup: [],
 			selectedKlinika: {}, 
 			klinikaSelected: false, 
 			selectedPoseta: {}, 
 			posetaSelected: false, 
-			datum: ''
+			datum: '', 
+			pretraga: ''
 		}
 	}, 
 	
@@ -20,17 +23,22 @@ Vue.component("klinikeSlobodno", {
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav" style="margin-left: 100px;">
-      <li class="nav-item active" style="min-width: 100px;">
+    <ul class="navbar-nav" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="!klinikaSelected && !posetaSelected">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-    </ul>    
-    <ul class="navbar-nav" style="margin-left: 100px;" v-if="klinikaSelected">
-      <li class="nav-item dropdown">
+      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected || posetaSelected">
+        <a class="nav-link" href="#/klinikeSlobodno" v-on:click="refresh()">
+          <i class="fa fa-bell"></i>
+          Povoljni termini
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item dropdown"  style="min-width: 100px; margin-left: 50px;" v-if="klinikaSelected && !posetaSelected">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-info"></i>
           Detalji klinike
@@ -39,18 +47,11 @@ Vue.component("klinikeSlobodno", {
         <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
 			<form>
 			
-			<h2>{{selectedKlinika.naziv}}</h2><br>
+			<h2>{{selectedKlinika.naziv}}</h2>
 			
-			<table class="table" style="min-width: 350px;">
+			<table class="table-sm" style="min-width: 350px;">
 			
-				<tbody>
-				
-					<tr>
-						<th scope="row">Naziv: </th>
-						<td><input type="text" v-model="selectedKlinika.naziv" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
+				<tr>
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
 					</tr>
@@ -59,43 +60,40 @@ Vue.component("klinikeSlobodno", {
 						<th scope="row">Ocena: </th>
 						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
 					</tr>
-					
-				
-				</tbody>
+
 			</table>
 
 				<label style="font-size: 25px">Opis</label>
-				<textarea disabled style="min-width: 200px;">{{selectedKlinika.opis}}</textarea>
+				<textarea disabled>{{selectedKlinika.opis}}</textarea>
 
 			
 			</form>
 		</div>
       </li>
-    </ul> 
-    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="!klinikaSelected && !posetaSelected">
-      <li class="nav-item dropdown">
+
+    </ul>    
+        
+
+        <ul class="navbar-nav mr-auto" style="margin: auto;" v-if="!klinikaSelected && !posetaSelected">
+      <li class="nav-item dropdown" style="min-width: 100px;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-sort"></i>
           Sortiranje
           <span class="sr-only">(current)</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">nazivu</a>
-          <a class="dropdown-item" @click.prevent="adresa_sort()" href="#">adresi</a>
-          <a class="dropdown-item" @click.prevent="ocena_sort()" href="#">oceni</a>
+          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">naziv</a>
+          <a class="dropdown-item" @click.prevent="adresa_sort()" href="#">adresa</a>
+          <a class="dropdown-item" @click.prevent="ocena_sort()" href="#">ocena</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 140px;">
-        <a class="nav-link" href="#/klinikeSlobodno" v-on:click="refresh()">
-          <i class="fa fa-bell"></i>
-          Povoljni termini
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
+
+        <form class="form-inline my-2 my-lg-0" v-if="!posetaSelected">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+    </form>
 
   </div>
 </nav>		
@@ -207,6 +205,7 @@ Vue.component("klinikeSlobodno", {
 		axios.get("/klinika/slobodno")
 		.then(response => {
 			this.klinike = response.data;
+			this.klinikeBackup = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
@@ -215,6 +214,32 @@ Vue.component("klinikeSlobodno", {
 	}, 
 	
 	methods: {
+		
+		search: function(){
+
+			
+			let lowerPretraga = this.pretraga.toLowerCase();
+			
+			if (!this.klinikaSelected){
+				
+				this.klinike = [];
+				for (let k of this.klinikeBackup){
+					let nazivPassed = lowerPretraga != '' ? k.naziv.toLowerCase().includes(lowerPretraga) : true;
+					let adresaPassed = lowerPretraga != '' ? k.adresa.toLowerCase().includes(lowerPretraga) : true;
+					if (nazivPassed || adresaPassed) this.klinike.push(k);
+				}
+				
+			}
+			
+			else{
+				this.selectedKlinika.posete = [];
+				for (let p of this.poseteBackup){
+					let nazivPassed = lowerPretraga != '' ? p.naziv.toLowerCase().includes(lowerPretraga) : true;
+					if (nazivPassed) this.selectedKlinika.posete.push(p);
+				}
+			}
+			
+		},
 		
 		formatiraj: function (date) {
 			
@@ -236,6 +261,7 @@ Vue.component("klinikeSlobodno", {
 			this.selectedKlinika = klinika;
 			this.klinikaSelected = true;
 			this.posetaSelected = false;
+			this.poseteBackup = this.selectedKlinika.posete;
 		}, 
 		
 		selectPoseta: function(poseta){

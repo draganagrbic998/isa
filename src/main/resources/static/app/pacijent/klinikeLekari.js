@@ -22,8 +22,8 @@ Vue.component("klinikeLekari", {
 			zakazivanje: false, 
 			zahtev: {}, 
 			imePrezime: '', 
-			datum: '',
-			id: ''
+			datum: '', 
+			nazivKlinike: ''
 		}
 	}, 
 	
@@ -36,64 +36,35 @@ Vue.component("klinikeLekari", {
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav" style="margin-left: 100px;">
-      <li class="nav-item active" style="min-width: 100px;">
+    <ul class="navbar-nav" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="!klinikaSelected && !lekarSelected && !zakazivanje">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-    </ul>    
-    
-    
-    
-    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="!klinikaSelected && !lekarSelected">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-sort"></i>
-          Sortiranje
-          <span class="sr-only">(current)</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">nazivu</a>
-          <a class="dropdown-item" @click.prevent="adresa_sort()" href="#">adresi</a>
-          <a class="dropdown-item" @click.prevent="ocena_sort()" href="#">oceni</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 140px;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected || lekarSelected || zakazivanje">
         <a class="nav-link" href="#/klinikeLekari" v-on:click="refresh()">
           <i class="fa fa-hotel"></i>
           Klinike centra
           <span class="sr-only">(current)</span>
           </a>
       </li>
-    </ul>
-    <ul class="navbar-nav" style="margin-left: 100px;" v-if="klinikaSelected">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" style="min-width: 100px; margin-left: 50px;" v-if="klinikaSelected">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-info"></i>
           Detalji klinike
           <span class="sr-only">(current)</span>
         </a>
         <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
-			<form>
+						<form>
 			
-			<h2>{{selectedKlinika.naziv}}</h2><br>
+			<h2>{{selectedKlinika.naziv}}</h2>
 			
-			<table class="table" style="min-width: 350px;">
+			<table class="table-sm" style="min-width: 350px;">
 			
-				<tbody>
-				
-					<tr>
-						<th scope="row">Naziv: </th>
-						<td><input type="text" v-model="selectedKlinika.naziv" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
+				<tr>
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
 					</tr>
@@ -102,19 +73,38 @@ Vue.component("klinikeLekari", {
 						<th scope="row">Ocena: </th>
 						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
 					</tr>
-					
-				
-				</tbody>
+
 			</table>
 
 				<label style="font-size: 25px">Opis</label>
-				<textarea disabled style="min-width: 200px;">{{selectedKlinika.opis}}</textarea>
+				<textarea disabled>{{selectedKlinika.opis}}</textarea>
 
 			
 			</form>
+
 		</div>
       </li>
-    </ul> 
+    </ul>    
+    
+    
+    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="!lekarSelected && !zakazivanje">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-sort"></i>
+          Sortiranje
+          <span class="sr-only">(current)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#" v-if="!klinikaSelected">naziv</a>
+          <a class="dropdown-item" @click.prevent="adresa_sort()" href="#" v-if="!klinikaSelected">adresa</a>
+          <a class="dropdown-item" @click.prevent="klinika_ocena_sort()" href="#" v-if="!klinikaSelected">ocena</a>
+          <a class="dropdown-item" @click.prevent="ime_sort()" href="#" v-if="klinikaSelected">ime</a>
+          <a class="dropdown-item" @click.prevent="prezime_sort()" href="#" v-if="klinikaSelected">prezime</a>
+          <a class="dropdown-item" @click.prevent="lekar_ocena_sort()" href="#" v-if="klinikaSelected">ocena</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
     <ul class="navbar-nav " style="margin-left: 150px;"  v-if="!lekarSelected && !zakazivanje">
       
 
@@ -146,6 +136,10 @@ Vue.component("klinikeLekari", {
 						<tr>
 							<td><button v-on:click="pretrazi()" class="btn btn-outline-success my-2 my-sm-0">PRETRAZI</button></td>
 							<td>{{greskaPretraga}}</td>
+						</tr>
+						<tr v-if="!klinikaSelected">
+							<th scope="row">Naziv klinike: </th>
+							<td><input type="text" v-model="nazivKlinike" class="form-control"></td>
 						</tr>
 						<tr v-if="!klinikaSelected">
 							<th scope="row">Adresa klinike: </th>
@@ -462,9 +456,7 @@ Vue.component("klinikeLekari", {
 			this.klinikaSelected = false;
 			this.lekarSelected = true;
 			this.zakazivanje = false;
-			this.selectedLekar = lekar;
-			this.id = this.selectedLekar.satnica.length == 0 ? "centar" : "levo";
-			
+			this.selectedLekar = lekar;			
 		}, 
 		
 		pretrazi: function(){
@@ -511,17 +503,25 @@ Vue.component("klinikeLekari", {
 		filtriraj: function(){
 			
 			if (!this.klinikaSelected){
+				let lowerPretraga1 = this.nazivKlinike.toLowerCase();
+				let lowerPretraga2 = this.lokacijaKlinike.toLowerCase();
 				this.klinike = [];
 				for (let i of this.klinikeBackup){
-					if ((i.adresa == this.lokacijaKlinike || this.lokacijaKlinike == '') && i.ocena >= this.ocenaKlinike)
-						this.klinike.push(i);
+					let nazivPassed = lowerPretraga1 != '' ? i.naziv.toLowerCase().includes(lowerPretraga1) : true;
+					let adresaPassed = lowerPretraga2 != '' ? i.adresa.toLowerCase().includes(lowerPretraga2) : true;
+					let ocenaPassed = i.ocena >= this.ocenaKlinike;
+					if (nazivPassed && adresaPassed && ocenaPassed) this.klinike.push(i);
 				}
 			}
 			else {
+				let lowerPretraga1 = this.imeLekara.toLowerCase();
+				let lowerPretraga2 = this.prezimeLekara.toLowerCase();
 				this.selectedKlinika.lekari = [];
 				for (let i of this.lekariBackup){
-					if ((i.ime == this.imeLekara || this.imeLekara == '') && (i.prezime == this.prezimeLekara || this.prezimeLekara == '') && i.ocena >= this.ocenaLekara)
-					this.selectedKlinika.lekari.push(i);
+					let imePassed = lowerPretraga1 != '' ? i.ime.toLowerCase().includes(lowerPretraga1) : true;
+					let prezimePassed = lowerPretraga2 != '' ? i.prezime.toLowerCase().includes(lowerPretraga2) : true;
+					let ocenaPassed = i.ocena >= this.ocenaLekara;
+					if (imePassed && prezimePassed && ocenaPassed) this.selectedKlinika.lekari.push(i);
 				}
 			}
 			
@@ -551,6 +551,57 @@ Vue.component("klinikeLekari", {
 		refresh: function(){
 			location.reload();
 		}, 
+		
+		ime_sort(){
+
+			let lista = this.selectedKlinika.lekari;
+			this.selectedKlinika.lekari = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].ime > lista[i].ime) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.selectedKlinika.lekari = lista;
+			
+		},
+		
+		prezime_sort(){
+			
+			let lista = this.selectedKlinika.lekari;
+			this.selectedKlinika.lekari = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].prezime > lista[i].prezime) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.selectedKlinika.lekari = lista;
+
+			
+		}, 
+		
+		lekar_ocena_sort(){
+			let lista = this.selectedKlinika.lekari;
+			this.selectedKlinika.lekari = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].ocena < lista[i].ocena) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.selectedKlinika.lekari = lista;
+
+		},
 		
 		naziv_sort(){
 			let lista = this.klinike;
@@ -582,7 +633,7 @@ Vue.component("klinikeLekari", {
 			this.klinike = lista;
 		}, 
 		
-		ocena_sort(){
+		klinika_ocena_sort(){
 			let lista = this.klinike;
 			this.klinike = [];
 			for (let i in lista) {
