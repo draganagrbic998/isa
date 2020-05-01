@@ -55,7 +55,7 @@ public class PosetaConversion {
 				brojac++; }
 			else if ((poseta.getDatum().after(interval.getPocetak()) || poseta.getDatum().equals(interval.getPocetak())) && (poseta.getKraj().before(interval.getKraj()) || poseta.getKraj().equals(interval.getKraj()))) { 
 				brojac++; }
-			else if ((poseta.getDatum().after(interval.getPocetak()) || poseta.getDatum().after(interval.getPocetak())) && (poseta.getKraj().after(interval.getKraj())) && poseta.getDatum().before(interval.getKraj()))  {
+			else if ((poseta.getDatum().after(interval.getPocetak()) || poseta.getDatum().equals(interval.getPocetak())) && (poseta.getKraj().after(interval.getKraj())) && poseta.getDatum().before(interval.getKraj()))  {
 				brojac++; }
 			else if(interval.getPocetak().after(poseta.getDatum()) && interval.getKraj().before(poseta.getKraj())){
 				brojac++; }
