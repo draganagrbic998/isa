@@ -12,6 +12,9 @@ Vue.component("zahtevPosetaObrada", {
 			selectedZahtev: false,
 			pretraga: '',
 			datum: '',
+			slobodan: '',
+			greska: false,
+			greskaDatum: '',
 			kalendarZauzetosti: {},
 			nemaRezultata: ''
 		}
@@ -40,6 +43,11 @@ Vue.component("zahtevPosetaObrada", {
        <form class="form-inline my-2 my-lg-0">
       <input v-if="selectedZahtev" class="form-control mr-sm-2" type="text" placeholder="Unesite naziv/broj sale" aria-label="Search" v-model="pretraga">
       <button v-if="selectedZahtev" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
+      
+      {{greskaDatum}}
+      <input v-if="selectedSala" class="form-control mr-sm-2" type="date" v-model="datum" placeholder="Odaberite datum" aria-label="Search">
+      <button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="reserve()">>Rezervisi</button>
+      
     </form>
   </div>
 </nav>
@@ -85,10 +93,10 @@ Vue.component("zahtevPosetaObrada", {
 				<th>Pocetak</th>
 				<th>Kraj</th>
 			</tr>
-		
+			
 			<tr v-for="d in salaSelected.kalendar">
 				<td>{{formatiraj(d.pocetak)}}</td>
-				<td>{{formatiraj(d.kraj)}}</td>
+				<td>{{formatiraj(d.kraj)}}</td></tr>
 			</table>	
 		
 		</div>
@@ -119,16 +127,43 @@ Vue.component("zahtevPosetaObrada", {
 	
 	methods: {
 		
-		detaljiSala : function(s) {
-			this.selectedSala = true;
-			this.selectedZahtev = false;
-			this.salaSelected = s;
+		reserve: function() {
+			this.osvezi();
+			this.zahtevSelected.idSale = this.salaSelected.id;
+			this.zahtevSelected.datum = this.datum;
+			console.log(this.zahtevSelected.datum);
+			if (this.datum == '') {
+				this.greskaDatum = "Odaberite datum!";
+				this.greska = true;
+			}
+			if (this.greska) {return;}
 			
+			axios.post("/sala/admin/rezervacijaSale", this.zahtevSelected)
+			.then(response => {
+				alert("Uspesno rezervisano!");
+				this.$router.push("/adminHome");
+			})
+			.catch(response => {
+				alert("Pokusajte ponovo!");
+			});
+		},
+		detaljiSala : function(s) {
+			this.zahtevSelected.idSale = s.id;
+			axios.post("/sala/admin/rezervacijaSale", this.zahtevSelected)
+			.then(response => {
+				alert("Uspesno rezervisano!");
+				this.$router.push("/adminHome");
+			})
+			.catch(response => {
+				this.salaSelected = s;	
+				this.selectedSala = true;
+				this.selectedZahtev = false;
+			});
 		},
 		
 		selektovanZahtev: function(z) {
 			this.zahtevSelected = z;
-			this.datum = z.datum;
+			//this.datum = z.datum;
 			this.selectedZahtev = true;
 			this.selectedSala = false;
 		},
@@ -164,11 +199,11 @@ Vue.component("zahtevPosetaObrada", {
 			  return day + '/' + month + '/' + year + " " + hours + ":" + minutes;
 			  
 		},
-		/*
+		
 		osvezi: function(){
-			this.greskaRazlog = "";
+			this.greskaDatum = "";
 			this.greska = false;
-		}, */
+		}
 		
 	}
 		

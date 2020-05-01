@@ -44,23 +44,19 @@ public class ZahtevPosetaConversion {
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 
 				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : 
 					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija());
-		
 	}
 	
+	
 	public ZahtevPosetaDTO get(ZahtevPoseta zahtev) {
-		
 		return new ZahtevPosetaDTO(zahtev);
-		
 	}
 	
 	public ZahtevPosetaObradaDTO getZPO(ZahtevPoseta zahtev) {
-		
 		return new ZahtevPosetaObradaDTO(zahtev);
-		
 	}
+
 	
 	public List<ZahtevPosetaDTO> get(List<ZahtevPoseta> zahtevi){
-		
 		List<ZahtevPosetaDTO> zahteviDTO = new ArrayList<>();
 		for (ZahtevPoseta z: zahtevi)
 			zahteviDTO.add(new ZahtevPosetaDTO(z));
@@ -69,7 +65,6 @@ public class ZahtevPosetaConversion {
 	}
 
 	public List<ZahtevPosetaObradaDTO> getZPO(List<ZahtevPoseta> zahtevi){
-		
 		List<ZahtevPosetaObradaDTO> zahteviDTO = new ArrayList<>();
 		for (ZahtevPoseta z: zahtevi)
 			zahteviDTO.add(new ZahtevPosetaObradaDTO(z));

@@ -7,7 +7,7 @@ Vue.component("lekariPretraga", {
 			pretraga: '',
 			nemaRezultata: ''
 		}
-
+	},
 	template: `
 	
 	<div>
@@ -52,7 +52,7 @@ Vue.component("lekariPretraga", {
 	
 	`, 
 	
-	mounted(){
+	mounted() {
 		
 		axios.get("/lekar/admin/pregled")
 		.then(response => {

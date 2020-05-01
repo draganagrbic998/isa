@@ -1,6 +1,5 @@
 package com.example.demo.dto.model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +9,8 @@ import com.example.demo.dto.pretraga.KalendarSalaDTO;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.resursi.Sala;
+
+
 
 public class SalaDTO implements Comparable<SalaDTO>{
 
@@ -42,10 +43,7 @@ public class SalaDTO implements Comparable<SalaDTO>{
 		        this.kalendar.add(new KalendarSalaDTO(p.getDatum(), kraj));
 			}
 		}
-	}
-	
-	
-	
+	}	
 	public List<KalendarSalaDTO> getKalendar() {
 		return kalendar;
 	}

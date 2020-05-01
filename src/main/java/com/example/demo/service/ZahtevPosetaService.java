@@ -42,4 +42,10 @@ public class ZahtevPosetaService {
 		}
 		return zahtevi;
 	}
+
+	@Transactional(readOnly = false)
+	public void obrisi(Integer id) {
+		this.zahtevPosetaRepository.deleteById(id);
+		
+	}
 }

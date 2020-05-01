@@ -1,14 +1,11 @@
 package com.example.demo.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
@@ -25,6 +22,11 @@ public class SalaService {
 	@Transactional(readOnly = false)
 	public void save(Sala sala) {
 		this.salaRepository.save(sala);
+	}
+	
+	@Transactional(readOnly = false)
+	public Sala nadji(Integer id) {
+		return this.salaRepository.getOne(id);
 	}
 	
 	@Transactional(readOnly = true)
@@ -48,6 +50,9 @@ public class SalaService {
 		sala.setAktivan(false);
 		this.salaRepository.save(sala);
 	}
+	
+	
+	
 	/*
 	@Transactional(readOnly = false)
 	public Date nadjiSlobodanTermin(Integer id) {

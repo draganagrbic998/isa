@@ -4,7 +4,6 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.repository.PacijentRepository;
 
@@ -20,6 +19,11 @@ public class PacijentService {
 		this.pacijentRepository.save(pacijent);
 	}
 
+	@Transactional(readOnly = false)
+	public Pacijent nadji(Integer id) {
+		return this.pacijentRepository.getOne(id);
+	}
+	
 	@Transactional(readOnly = false)
 	public boolean aktiviraj(Integer id) {
 		

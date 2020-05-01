@@ -35,6 +35,11 @@ public class LekarService {
 	public void save(Lekar lekar) {
 		this.lekarRepository.save(lekar);
 	}
+	
+	@Transactional(readOnly = false)
+	public Lekar nadji(Integer id) {
+		return this.lekarRepository.getOne(id);
+	}
 
 	@Transactional(readOnly = false)
 	public void delete(Integer id) {

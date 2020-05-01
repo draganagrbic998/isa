@@ -100,8 +100,6 @@ public class Sala implements Slobodnost{
 	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
 
-		
-		
 		for (Poseta p: this.posete) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
 				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
@@ -111,10 +109,7 @@ public class Sala implements Slobodnost{
 						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
 					return false;
 			}
-			
-
 		}
-		
 		return true;
 	}
 	

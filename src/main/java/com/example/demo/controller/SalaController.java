@@ -15,16 +15,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.conversion.partial.PosetaConversion;
 import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
+import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.resursi.Sala;
+import com.example.demo.service.KartonService;
+import com.example.demo.service.LekarService;
+import com.example.demo.service.PacijentService;
+import com.example.demo.service.PosetaService;
 import com.example.demo.service.SalaService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.ZahtevPosetaService;
 
 @RestController
 @RequestMapping(value = "/sala")
 public class SalaController {
 
+	
 	@Autowired
 	private SalaService salaService;
 	
@@ -32,7 +44,25 @@ public class SalaController {
 	private UserService userService;
 	
 	@Autowired
+	private ZahtevPosetaService zahtevPosetaService;
+	
+	@Autowired
+	private LekarService lekarService;
+	
+	@Autowired
+	private KartonService kartonService;
+	
+	@Autowired
+	private PacijentService pacijentService;
+	
+	@Autowired
 	private SalaConversion salaConversion;
+	
+	@Autowired
+	private PosetaConversion posetaConversion;
+	
+	@Autowired
+	private PosetaService posetaService;
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,14 +80,45 @@ public class SalaController {
 	public ResponseEntity<List<SalaDTO>> getS(){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			List<SalaDTO> sale = this.salaConversion.get(this.salaService.findAll(admin));
-			//for (SalaDTO sala : sale) {
-				//sala.setPrviSlobodan(this.salaService.nadjiSlobodanTermin(sala.getId()));
-			//}
-			return new ResponseEntity<>(sale, HttpStatus.OK);
+			return new ResponseEntity<>(this.salaConversion.get(this.salaService.findAll(admin)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	//ovde sam mozda trebala sa PUT a ne POST
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/admin/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
+		SalaDTO salaDTO = new SalaDTO();
+		try {
+			Sala sala = this.salaService.nadji(zahtevDTO.getIdSale());
+			salaDTO = new SalaDTO(sala);
+			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
+			if (poseta != null) {
+				this.posetaService.save2(poseta);
+				sala.getPosete().add(poseta);
+				this.salaService.save(sala); 
+				Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
+				lekar.getPosete().add(poseta);
+				this.lekarService.save(lekar); 
+				Pacijent pacijent = this.pacijentService.nadji(zahtevDTO.getIdPacijent());
+				pacijent.getKarton().getPosete().add(poseta);
+				this.kartonService.save(pacijent.getKarton()); 
+				this.pacijentService.save(pacijent); 
+				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+				//sacuvati salu
+			}
+			else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+			}
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			System.out.println("desila se greska");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
 		}
 	}
 	

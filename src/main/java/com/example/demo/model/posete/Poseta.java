@@ -69,6 +69,17 @@ public class Poseta implements Zauzetost{
 		this.sala = sala;
 		this.lekari.add(lekar);
 	}
+	
+	public Poseta(Karton karton, Date datum, Double popust, StanjePosete stanje, TipPosete tipPosete, Sala sala, Lekar lekar) {
+		super();
+		this.datum = datum;
+		this.popust = popust;
+		this.stanje = stanje;
+		this.tipPosete = tipPosete;
+		this.sala = sala;
+		this.karton = karton;
+		this.lekari.add(lekar);
+	}
 
 	public Integer getId() {
 		return id;
