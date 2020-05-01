@@ -31,6 +31,11 @@ public class TipPoseteService {
 		this.tipPoseteRepository.save(tipPosete);
 	}
 	
+	@Transactional(readOnly = false)
+	public void saveChanges(TipPosete tipPosete) {
+		this.tipPoseteRepository.save(tipPosete);
+	}
+	
 	@Transactional(readOnly = true)
 	public List<TipPosete> findAll(Zaposleni zaposleni) {
 		List<TipPosete> tipovi = new ArrayList<>();

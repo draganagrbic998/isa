@@ -61,6 +61,18 @@ public class TipPoseteController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody TipPoseteDTO tipDTO){
+		try {
+			this.tipPoseteService.saveChanges(this.tipPoseteConversion.get(tipDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TipPoseteDTO>> pregled() {
 		try {
