@@ -1,7 +1,8 @@
 package com.example.demo.dto.unos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
@@ -12,21 +13,24 @@ public class ZahtevPosetaObradaDTO {
 	private String pacijent;
 	private boolean pregled;
 	private String naziv;
-	private Date datum;
+	private String datum;
 	private Integer idTipa;
 	private Integer idSale;
 	private Integer idLekar;
 	private Integer idPacijent;
-	private Date kraj;
+	private String kraj;
+	private int sati;
+	private int minuti;
 	
 	public ZahtevPosetaObradaDTO() {
 		super();
 	}
 	
 	public ZahtevPosetaObradaDTO(ZahtevPoseta zahtev) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		Calendar cal = Calendar.getInstance();
 		this.id = zahtev.getId();
-		this.datum = zahtev.getDatum();
+		this.datum = sdf.format(zahtev.getDatum());
 		this.pacijent = zahtev.getKarton().getPacijent().getIme()+" "+zahtev.getKarton().getPacijent().getPrezime();
 		this.lekar = zahtev.getLekar().getIme()+" "+zahtev.getLekar().getPrezime();
 		this.naziv = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getNaziv() : null;
@@ -36,17 +40,45 @@ public class ZahtevPosetaObradaDTO {
 		this.idPacijent = zahtev.getKarton().getPacijent().getId();
 		cal.setTime(zahtev.getDatum());
         cal.add(Calendar.HOUR, zahtev.getTipPosete().getSati());
+        this.sati = zahtev.getTipPosete().getSati();
         cal.add(Calendar.MINUTE, zahtev.getTipPosete().getMinute());
-        this.kraj = cal.getTime();
+        this.minuti = zahtev.getTipPosete().getMinute();
+        
+        this.kraj = sdf.format(cal.getTime());
 	}
 
+	public void osveziKraj() throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(sdf.parse(this.datum));
+        cal.add(Calendar.HOUR, this.sati);
+        cal.add(Calendar.MINUTE, this.minuti);
+        this.kraj = sdf.format(cal.getTime());
+	}
 	
 	
-	public Date getKraj() {
+	
+	public int getSati() {
+		return sati;
+	}
+
+	public void setSati(int sati) {
+		this.sati = sati;
+	}
+
+	public int getMinuti() {
+		return minuti;
+	}
+
+	public void setMinuti(int minuti) {
+		this.minuti = minuti;
+	}
+
+	public String getKraj() {
 		return kraj;
 	}
 
-	public void setKraj(Date kraj) {
+	public void setKraj(String kraj) {
 		this.kraj = kraj;
 	}
 
@@ -114,11 +146,11 @@ public class ZahtevPosetaObradaDTO {
 		this.pregled = pregled;
 	}
 
-	public Date getDatum() {
+	public String getDatum() {
 		return datum;
 	}
 
-	public void setDatum(Date datum) {
+	public void setDatum(String datum) {
 		this.datum = datum;
 	}
 

@@ -2,6 +2,7 @@ package com.example.demo.conversion.partial;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,16 +49,19 @@ public class PosetaConversion {
 	}
 	//da li ce biti nakaceno na lekara ili moram ja?
 	@Transactional(readOnly = true)
-	public Poseta get(ZahtevPosetaObradaDTO poseta, SalaDTO salaDTO) {
+	public Poseta get(ZahtevPosetaObradaDTO poseta, SalaDTO salaDTO) throws ParseException {
 		int brojac = 0;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		Date pocetak = sdf.parse(poseta.getDatum());
+		Date kraj = sdf.parse(poseta.getKraj());
 		for (KalendarSalaDTO interval : salaDTO.getKalendar()) {
-			if (poseta.getDatum().before(interval.getPocetak()) && (poseta.getKraj().after(interval.getPocetak())) && (poseta.getKraj().before(interval.getKraj()) || poseta.getKraj().equals(interval.getKraj()))) {
+			if (pocetak.before(interval.getPocetak()) && (kraj.after(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) {
 				brojac++; }
-			else if ((poseta.getDatum().after(interval.getPocetak()) || poseta.getDatum().equals(interval.getPocetak())) && (poseta.getKraj().before(interval.getKraj()) || poseta.getKraj().equals(interval.getKraj()))) { 
+			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) { 
 				brojac++; }
-			else if ((poseta.getDatum().after(interval.getPocetak()) || poseta.getDatum().equals(interval.getPocetak())) && (poseta.getKraj().after(interval.getKraj())) && poseta.getDatum().before(interval.getKraj()))  {
+			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.after(interval.getKraj())) && pocetak.before(interval.getKraj()))  {
 				brojac++; }
-			else if(interval.getPocetak().after(poseta.getDatum()) && interval.getKraj().before(poseta.getKraj())){
+			else if(interval.getPocetak().after(pocetak) && interval.getKraj().before(kraj)){
 				brojac++; }
 			else {}
 		}
@@ -65,7 +69,7 @@ public class PosetaConversion {
 			return null;
 		}
 		else { 
-				return new Poseta(this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(),poseta.getDatum(),null,StanjePosete.ZAUZETO, this.tipPoseteRepository.getOne(poseta.getIdTipa()),
+				return new Poseta(this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(),pocetak,null,StanjePosete.ZAUZETO, this.tipPoseteRepository.getOne(poseta.getIdTipa()),
 						this.salaRepository.getOne(poseta.getIdSale()),
 						this.lekarRepository.getOne(poseta.getIdLekar()));	
 		}

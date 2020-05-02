@@ -43,7 +43,25 @@ public class SalaDTO implements Comparable<SalaDTO>{
 		        this.kalendar.add(new KalendarSalaDTO(p.getDatum(), kraj));
 			}
 		}
-	}	
+	}
+	public boolean proveriDatum(Date pocetak, Date kraj) {
+		int brojac = 0;
+		for (KalendarSalaDTO interval : this.getKalendar()) {
+			if (pocetak.before(interval.getPocetak()) && (kraj.after(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) {
+				brojac++; }
+			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) { 
+				brojac++; }
+			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.after(interval.getKraj())) && pocetak.before(interval.getKraj()))  {
+				brojac++; }
+			else if(interval.getPocetak().after(pocetak) && interval.getKraj().before(kraj)){
+				brojac++; }
+			else {}
+		}
+		if (brojac != 0) { 
+			return false;
+		}
+		return true;
+	}
 	public List<KalendarSalaDTO> getKalendar() {
 		return kalendar;
 	}
