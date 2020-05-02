@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.SalaDTO;
-import com.example.demo.dto.pretraga.KalendarSalaDTO;
 import com.example.demo.dto.pretraga.PosetaPretragaDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
@@ -47,33 +46,21 @@ public class PosetaConversion {
 				this.lekarRepository.getOne(poseta.getLekar()));
 
 	}
-	//da li ce biti nakaceno na lekara ili moram ja?
+	//kreiranje posete na osnovu zahteva!
 	@Transactional(readOnly = true)
 	public Poseta get(ZahtevPosetaObradaDTO poseta, SalaDTO salaDTO) throws ParseException {
-		int brojac = 0;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		Date pocetak = sdf.parse(poseta.getDatum());
 		Date kraj = sdf.parse(poseta.getKraj());
-		for (KalendarSalaDTO interval : salaDTO.getKalendar()) {
-			if (pocetak.before(interval.getPocetak()) && (kraj.after(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) {
-				brojac++; }
-			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) { 
-				brojac++; }
-			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.after(interval.getKraj())) && pocetak.before(interval.getKraj()))  {
-				brojac++; }
-			else if(interval.getPocetak().after(pocetak) && interval.getKraj().before(kraj)){
-				brojac++; }
-			else {}
+		if (salaDTO.proveriDatum(pocetak, kraj)) {
+			return new Poseta(this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(),pocetak,null,StanjePosete.ZAUZETO, this.tipPoseteRepository.getOne(poseta.getIdTipa()),
+					this.salaRepository.getOne(poseta.getIdSale()),
+					this.lekarRepository.getOne(poseta.getIdLekar()));	
 		}
-		if (brojac != 0) { 
+		else {
 			return null;
 		}
-		else { 
-				return new Poseta(this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(),pocetak,null,StanjePosete.ZAUZETO, this.tipPoseteRepository.getOne(poseta.getIdTipa()),
-						this.salaRepository.getOne(poseta.getIdSale()),
-						this.lekarRepository.getOne(poseta.getIdLekar()));	
 		}
-	}
 	
 	public PosetaPretragaDTO get(Poseta poseta) {
 		return new PosetaPretragaDTO(poseta);

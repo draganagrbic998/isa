@@ -71,12 +71,6 @@ public class PosetaService {
 			this.lekarRepository.save(l);
 		}
 	}
-	
-	@Transactional(readOnly = false)
-	public void save2(Poseta poseta) {
-		this.posetaRepository.save(poseta);
-	}
-
 
 	@Transactional(readOnly = false)
 	public void deleteById(Integer posetaId) {

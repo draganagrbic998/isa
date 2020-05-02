@@ -3,17 +3,20 @@ Vue.component("zahtevPosetaObrada", {
 	data: function(){
 		return{
 			sale: {},
-			backup: {},
+			sveSale: {},
+			backupSale: {},
 			zahtevi: {},
 			backup: {},
 			zahtevSelected: {},
 			salaSelected: {},
+			promenjenDatum: false,
 			selectedSala: false,
 			selectedZahtev: false,
 			trebaSlobodan: false,
 			pretraga: '',
 			datum: '',
 			vreme: '',
+			refreshDatum: {},
 			slobodan: {},
 			greska: false,
 			greskaDatum: '',
@@ -28,8 +31,8 @@ Vue.component("zahtevPosetaObrada", {
 	<div>
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
   <a v-if="selectedZahtev==false && selectedSala==false" class="navbar-brand" href="#">ZAHTEVI ZA POSETU</a>
-  <a v-else-if="selectedZahtev" class="navbar-brand" href="#">PRETRAGA SALA</a>
-  <a v-else class="navbar-brand" href="#">REZERVACIJA SALE</a>
+  <a v-else-if="selectedZahtev" class="navbar-brand" href="#">SLOBODNE SALE {{formatiraj(zahtevSelected.datum)}}</a>
+  <a v-else class="navbar-brand" href="#">KALENDAR ZAUZETOSTI SALE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -43,9 +46,13 @@ Vue.component("zahtevPosetaObrada", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="rezervisiPredlog()">>Predlog: {{formatiraj(slobodan)}}</button>
+		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="rezervisiPredlog()">>Rezervisi po preporuci: {{formatiraj(slobodan)}}</button>
       </ul>
-       <form class="form-inline my-2 my-lg-0">
+      
+      <form class="form-inline my-2 my-lg-0">
+      <input v-if="selectedZahtev" class="form-control mr-sm-2" type="text" v-model="vreme" placeholder="Unesite vreme" aria-label="Search">
+      <input v-if="selectedZahtev"  class="form-control mr-sm-0" type="date" v-model="refreshDatum" placeholder="Odaberite datum" aria-label="Search">
+	<button v-if="selectedZahtev"  v-on:click="osveziDatum()" class="btn"><i class="fa fa-refresh fa-2x"></i></button>
       <input v-if="selectedZahtev" class="form-control mr-sm-2" type="text" placeholder="Unesite naziv/broj sale" aria-label="Search" v-model="pretraga">
       <button v-if="selectedZahtev" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
       
@@ -75,10 +82,10 @@ Vue.component("zahtevPosetaObrada", {
 			<td v-if="z.pregled">Pregled</td>
 			<td v-else>Operacija</td>
 			<td> {{formatiraj(z.datum)}} </td> 
-			<td v-if="zahtevi.length != 0"> <button v-on:click="selektovanZahtev(z)" class="btn"><i class="fa fa-ticket"></i>Rezervisi</button></td></tr>
+			<td v-if="zahtevi.length != 0"> <button v-on:click="selektovanZahtev(z)" class="btn"><i class="fa fa-ticket"></i>Nadji salu</button></td></tr>
 		</table>	
 	</div>
-		<div v-else-if="selectedZahtev">
+		<div v-else-if="selectedZahtev && promenjenDatum==false">
 			
 		<table class="table">
 		<tr bgcolor="#f2f2f2">
@@ -91,6 +98,23 @@ Vue.component("zahtevPosetaObrada", {
 			<td>{{s.broj}}</td>
 			<td><button v-on:click="detaljiSala(s)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
 		</table>	
+		<h3>{{nemaRezultata}}</h3>
+		</div>
+		
+		<div v-else-if="promenjenDatum && selectedZahtev && selectedSala==false">
+			
+		<table class="table">
+		<tr bgcolor="#f2f2f2">
+			<th>Naziv </th>
+			<th> Broj </th>
+		</tr>
+		
+		<tr v-for="s in sale">
+			<td>{{s.naziv}}</td>
+			<td>{{s.broj}}</td>
+			<td><button v-on:click="detaljiSala(s)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
+		</table>	
+		
 		<h3>{{nemaRezultata}}</h3>
 		</div>
 		
@@ -107,11 +131,15 @@ Vue.component("zahtevPosetaObrada", {
 			</table>	
 		
 		</div>
+		<div v-if="nemaRezultata!=''">
+		<a @click.prevent="prikaziSveSale()" class="navbar-brand" href="#">Prikazi sve sale</a>
+		<a @click.prevent="ponistiPretragu()" class="navbar-brand" href="#">Ponisti pretragu</a>
+	</div>
 	</div>
 	`, 
 	
 	mounted(){
-
+		//dobavljam zahteve za kliniku
 		axios.get("/zahtevPoseta/klinika/pregled")
 		.then(response => {
 			this.zahtevi = response.data;
@@ -120,17 +148,19 @@ Vue.component("zahtevPosetaObrada", {
 		.catch(reponse => {
 			this.$router.push("/");
 		});
-		
+		// nalazi SVE sale
 		axios.get("/sala/admin/pregled")
 		.then(response => {
-			this.sale = response.data;
-			this.backup = response.data;
+			this.sveSale = response.data;
+			this.backupSale = response.data;
 		})
 		.catch(response => {
 			this.$router.push("/");
 		});
 		
+		
 	}, 
+	//ukoliko je potrebno da se nadje termin poziva get metodu
 	watch: {
 		trebaSlobodan : function(){
 			if (this.trebaSlobodan) {
@@ -141,14 +171,44 @@ Vue.component("zahtevPosetaObrada", {
 		
 	},
 	methods: {
+		
+		ponistiPretragu : function() {
+			this.nemaRezultata = '';
+			this.pretraga = '';
+			this.promenjenDatum = false;	
+			this.nadjiSale();
+		},
+		
+		prikaziSveSale : function() {
+			this.sale = this.sveSale;
+			this.backup = this.backupSale;
+			this.promenjenDatum = true;
+			this.nemaRezultata = '';
+		},
+		//kad klikne na dugme refresh, treba da nadje slobodne sale za taj datum
+		osveziDatum : function() {
+			this.vremePromena();
+			this.osvezi();
+			this.proveriVreme();
+			if (this.refreshDatum=='') {
+				this.greskaDatum = 'Morate uneti datum';
+				this.greska = true;
+			}
+			if (this.greska) {return;}
+			this.zahtevSelected.datum = this.refreshDatum.concat(" ",this.vreme);
+			console.log(this.zahtevSelected.datum);
+			this.promenjenDatum = true;
+			this.nadjiSale();
+ 			
+		},
+		
 		rezervisiPredlog : function() {
 			this.zahtevSelected.datum = this.slobodan;
 			this.posaljiZahtev(); 
 		
 		},
-		
+		//formatiranje vremena, moze da unese 0, 7, 12 pa ja sredim
 		vremePromena: function() {
-
 			if (!this.vreme.includes(':') && (this.vreme.length==2)) {
 				this.vreme = this.vreme.concat(":00"); 
 			}
@@ -160,7 +220,8 @@ Vue.component("zahtevPosetaObrada", {
 			}
 			return this.vreme; 
 		},
-		
+		//dobavlja slobodni termin koji kreiram prilikom neuspele rezervacije
+		//cuvam ga na serveru SalaController
 		nadjiTermin: function() {
 			axios.get("/sala/admin/SlobodniTermin")
 			.then(response => {
@@ -170,7 +231,7 @@ Vue.component("zahtevPosetaObrada", {
 				console.log("greska");
 			});
 		},
-		
+		//rezervacija kod pretrage datuma u kalendaru zauzeca
 		reserve: function() {
 			this.osvezi();
 			this.vremePromena();
@@ -179,20 +240,7 @@ Vue.component("zahtevPosetaObrada", {
 				this.greskaDatum = "Odaberite datum!";
 				this.greska = true;
 			}
-			
-			if (this.vreme == '') {
-				this.greskaVreme = "Morate uneti vreme.";
-				this.greska = true;
-			}
-			
-			if (!this.vreme.includes(':') && ((this.vreme.length>2 || this.vreme.length<1) || parseInt(this.vreme)>25)) {
-				this.greskaVreme = "Nespravan format.";
-				this.greska = true;
-			}
-			if (this.vreme.includes(':') && (this.vreme.length != 5)) {
-				this.greskaVreme = "Nespravan format.";
-				this.greska = true;
-			}
+			this.proveriVreme();
 			
 			if (this.greska) {return;}
 			this.zahtevSelected.idSale = this.salaSelected.id;
@@ -200,12 +248,13 @@ Vue.component("zahtevPosetaObrada", {
 			
 			this.posaljiZahtev();
 		},
+		//kada klikne na dugme rezervisi sa stranice za pretragu sala
 		detaljiSala : function(s) {
 			this.zahtevSelected.idSale = s.id;
 			this.salaSelected = s;	
 			this.posaljiZahtev();
 		},
-		
+		//salje zahtev za registraciju
 		posaljiZahtev: function() {
 			axios.post("/sala/admin/rezervacijaSale", this.zahtevSelected)
 			.then(response => {
@@ -214,20 +263,43 @@ Vue.component("zahtevPosetaObrada", {
 				this.$router.push("/adminHome");
 			})
 			.catch(response => {
+				if (this.selectedSala){
+					alert("Lekar je zauzet!");
+				}
 				this.trebaSlobodan = true;
-				//this.salaSelected = s;	
 				this.selectedSala = true;
 				this.selectedZahtev = false;
 			});
 		},
-		
+		//pronalazi sale za novi datum kod pretrage, nakon refresh klika
+		//salje post zahtev
+		nadjiSale : function() {
+			console.log(this.zahtevSelected.datum);
+			axios.post("/sala/admin/pregledSlobodne", this.zahtevSelected)
+			.then(response => {
+				this.sale = response.data;
+				this.backup = response.data;
+				if (this.sale.length===0) {
+					this.nemaRezultata = "Nema rezultata pretrage! Pokusajte ponovo, ili: ";
+				}
+				else {
+					this.nemaRezultata = '';
+				}
+			})
+			.catch(response => {
+				this.$router.push("/");
+			});
+		},
+		//reaguje na dugme nadji Salu (prikaz zahteva posete)
 		selektovanZahtev: function(z) {
+			// nalazi sve slobodne sale za slektovan zahtev
 			this.zahtevSelected = z;
 			this.selectedZahtev = true;
 			this.selectedSala = false;
 			this.trebaSlobodan = false;
+			this.nadjiSale();
 		},
-		
+		//pretraga ime ILI broj
 		search: function() {
 			console.log("pretraga");
 			this.sale = [];
@@ -241,7 +313,7 @@ Vue.component("zahtevPosetaObrada", {
             }
             
             if (this.sale.length===0) {
-            	this.nemaRezultata = "Nema rezultata pretrage."
+            	this.nemaRezultata = "Nema rezultata pretrage! Pokusajte ponovo, ili: ";
             }
 		},
 		
@@ -260,6 +332,24 @@ Vue.component("zahtevPosetaObrada", {
 			  return day + '/' + month + '/' + year + " " + hours + ":" + minutes;
 			  
 		},
+		//provera ispravnosti unetog vremena od strane korisnika
+		proveriVreme :function() {
+
+			if (this.vreme == '') {
+				this.greskaVreme = "Morate uneti vreme.";
+				this.greska = true;
+			}
+			
+			if (!this.vreme.includes(':') && ((this.vreme.length>2 || this.vreme.length<1) || parseInt(this.vreme)>25)) {
+				this.greskaVreme = "Nespravan format.";
+				this.greska = true;
+			}
+			if (this.vreme.includes(':') && (this.vreme.length != 5)) {
+				this.greskaVreme = "Nespravan format.";
+				this.greska = true;
+			}
+
+		} ,
 		
 		osvezi: function(){
 			this.greskaDatum = "";

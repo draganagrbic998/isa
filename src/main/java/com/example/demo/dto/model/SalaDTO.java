@@ -1,5 +1,7 @@
 package com.example.demo.dto.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -121,6 +123,20 @@ public class SalaDTO implements Comparable<SalaDTO>{
 	@Override
 	public int compareTo(SalaDTO s) {
 		return this.broj.compareTo(s.broj);
+	}
+
+	public void nadjiSlobodanTermin(String p, String k) throws ParseException {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		Calendar pocetak = Calendar.getInstance();
+		pocetak.setTime(f.parse(p));
+		Calendar kraj = Calendar.getInstance();
+		kraj.setTime(f.parse(k));
+		while (!this.proveriDatum(pocetak.getTime(), kraj.getTime())) {
+			pocetak.add(Calendar.HOUR, 1);
+			kraj.add(Calendar.HOUR, 1);
+		}
+		this.prviSlobodan = pocetak.getTime();
+		
 	}
 	
 }

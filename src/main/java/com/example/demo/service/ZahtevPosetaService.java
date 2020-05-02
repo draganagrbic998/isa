@@ -46,6 +46,10 @@ public class ZahtevPosetaService {
 	@Transactional(readOnly = false)
 	public void obrisi(Integer id) {
 		this.zahtevPosetaRepository.deleteById(id);
-		
+	}
+
+	@Transactional(readOnly = false)
+	public ZahtevPoseta nadji(Integer id) {
+		return this.zahtevPosetaRepository.getOne(id);
 	}
 }

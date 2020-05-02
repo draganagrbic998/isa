@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +23,8 @@ import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
-import com.example.demo.model.korisnici.Lekar;
-import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Sala;
-import com.example.demo.service.KartonService;
-import com.example.demo.service.LekarService;
-import com.example.demo.service.PacijentService;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.SalaService;
 import com.example.demo.service.UserService;
@@ -50,14 +45,7 @@ public class SalaController {
 	@Autowired
 	private ZahtevPosetaService zahtevPosetaService;
 
-	@Autowired
-	private LekarService lekarService;
-
-	@Autowired
-	private KartonService kartonService;
-
-	@Autowired
-	private PacijentService pacijentService;
+	
 
 	@Autowired
 	private SalaConversion salaConversion;
@@ -100,7 +88,29 @@ public class SalaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/admin/pregledSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SalaDTO>> pregled(@RequestBody ZahtevPosetaObradaDTO zahtev) {
+		try {
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+			zahtev.osveziKraj();
+			Date pocetak = f.parse(zahtev.getDatum());
+			Date kraj = f.parse(zahtev.getKraj());
+			List<SalaDTO> rezultat = new ArrayList<SalaDTO>();
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			List<SalaDTO> lista = this.salaConversion.get(this.salaService.findAll(admin));
+			for (SalaDTO sala : lista ) {
+				if (sala.proveriDatum(pocetak, kraj)){
+					rezultat.add(sala);
+				}
+			}
+			return new ResponseEntity<>(rezultat,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -111,35 +121,17 @@ public class SalaController {
 			Sala sala = this.salaService.nadji(zahtevDTO.getIdSale());
 			salaDTO = new SalaDTO(sala);
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
-			if (poseta != null) {
-				this.posetaService.save2(poseta);
-				sala.getPosete().add(poseta);
-				this.salaService.save(sala);
-				Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
-				lekar.getPosete().add(poseta);
-				this.lekarService.save(lekar);
-				Pacijent pacijent = this.pacijentService.nadji(zahtevDTO.getIdPacijent());
-				pacijent.getKarton().getPosete().add(poseta);
-				this.kartonService.save(pacijent.getKarton());
-				this.pacijentService.save(pacijent);
+			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj());
+			if (poseta != null && poseta.getTipPosete().getPregled()) { //ovde sam uslovila da ja rezervisem samo preglede
+				this.posetaService.save(poseta);
 				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
-				// sacuvati salu
-			} else { // znaci da nema termina
-				SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-				Calendar pocetak = Calendar.getInstance();
-				pocetak.setTime(f.parse(zahtevDTO.getDatum()));
-				Calendar kraj = Calendar.getInstance();
-				kraj.setTime(f.parse(zahtevDTO.getKraj()));
-				while (!salaDTO.proveriDatum(pocetak.getTime(), kraj.getTime())) {
-					pocetak.add(Calendar.HOUR, 1);
-					kraj.add(Calendar.HOUR, 1);
-				}
-				salaDTO.setPrviSlobodan(pocetak.getTime());
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else { //ako termin ne odgovara
 				this.slobodan = salaDTO.getPrviSlobodan();
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (Exception e) { //ako je upao u catch onda lekar nije slobodan
+			this.slobodan = salaDTO.getPrviSlobodan();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
