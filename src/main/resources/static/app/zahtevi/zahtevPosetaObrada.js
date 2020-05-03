@@ -3,12 +3,15 @@ Vue.component("zahtevPosetaObrada", {
 	data: function(){
 		return{
 			sale: {},
+			lekari: {},
 			sveSale: {},
 			backupSale: {},
 			zahtevi: {},
 			backup: {},
 			zahtevSelected: {},
 			salaSelected: {},
+			showModal: false,
+			lekarIzmena: false,
 			promenjenDatum: false,
 			selectedSala: false,
 			selectedZahtev: false,
@@ -21,8 +24,13 @@ Vue.component("zahtevPosetaObrada", {
 			greska: false,
 			greskaDatum: '',
 			greskaVreme: '',
+			noviLekar: '',
 			kalendarZauzetosti: {},
-			nemaRezultata: ''
+			nemaRezultata: '',
+			novLekarIme: '',
+			novLekarId: '',
+			novLekarPocetak: '',
+			novLekarKraj: ''
 		}
 	}, 
 
@@ -42,11 +50,11 @@ Vue.component("zahtevPosetaObrada", {
       <li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
       </li>
 		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="rezervisiPredlog()">>Rezervisi po preporuci: {{formatiraj(slobodan)}}</button>
+		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" id="show-modal" @click="showModal = true" v-on:click="izmeniLekara()">>Izmeni lekara</button>
       </ul>
       
       <form class="form-inline my-2 my-lg-0">
@@ -65,6 +73,37 @@ Vue.component("zahtevPosetaObrada", {
     </form>
   </div>
 </nav>
+
+	<div v-if="lekarIzmena">
+		<modal v-if="showModal" @close="showModal = false">
+        	<h3 slot="header">Izmena lekara</h3>
+			<div slot="body">
+			<table  class="table">
+				<tr bgcolor="#f2f2f2">
+				<th>Trenutni lekar</th>
+				<th> Radno vreme </th>
+				</tr>
+		
+				<tr>
+				<td>{{zahtevSelected.lekar}}</td>
+				<td>{{zahtevSelected.lekarPocetak}} - {{zahtevSelected.lekarKraj}}</td>
+				</tr>
+			</table>	
+			<table>
+			<tr><td>Nov lekar: </td>
+			<td><select v-model="noviLekar">
+			<option v-for="l in lekari">{{l.ime}} {{l.prezime}}</option>
+			</select></td><td></td></tr>
+			</table>
+			</div>
+        					
+        		<div slot="footer">
+        		<button @click="showModal=false" style="margin:5px;" class="btn btn-success" v-on:click="promeniLekara(noviLekar)"> Sacuvaj </button>       						
+				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" > Nazad </button>								
+				</div>
+		</modal>
+		
+	</div>
 	<div v-if="selectedZahtev==false && selectedSala==false" >
 	<table class="table">
 		<tr bgcolor="#f2f2f2">
@@ -158,7 +197,14 @@ Vue.component("zahtevPosetaObrada", {
 			this.$router.push("/");
 		});
 		
-		
+		//nalazi sve lekare klinike 
+		axios.get("/lekar/admin/pregled")
+		.then(response => {
+			this.lekari = response.data;
+		})
+		.catch(response => {
+			this.$router.push("/");
+		});
 	}, 
 	//ukoliko je potrebno da se nadje termin poziva get metodu
 	watch: {
@@ -171,6 +217,25 @@ Vue.component("zahtevPosetaObrada", {
 		
 	},
 	methods: {
+		//ako je iz dijaloga izabrao novog lekara
+		promeniLekara: function(noviLekar) {
+			for (let l of this.lekari){
+				if (l.ime.concat(" ", l.prezime) === noviLekar)
+					this.novLekarId = l.id;
+					this.novLekarPocetak = l.pocetnoVreme.toString();
+					this.novLekarKraj = l.krajnjeVreme.toString();
+			}
+			this.zahtevSelected.lekar = noviLekar ;
+			this.zahtevSelected.idLekar = this.novLekarId;
+			this.zahtevSelected.lekarPocetak = this.novLekarPocetak;
+			this.zahtevSelected.lekarKraj = this.novLekarKraj;
+			this.lekarIzmena = false;
+			this.showModal = false;
+		},
+		//ako je kliknuo na dugme
+		izmeniLekara : function() {
+			this.lekarIzmena = true;
+		},
 		
 		ponistiPretragu : function() {
 			this.nemaRezultata = '';
@@ -263,7 +328,7 @@ Vue.component("zahtevPosetaObrada", {
 				this.$router.push("/adminHome");
 			})
 			.catch(response => {
-				if (this.selectedSala){
+				if (this.sale.length!=0 || selectedSala){
 					alert("Lekar je zauzet!");
 				}
 				this.trebaSlobodan = true;

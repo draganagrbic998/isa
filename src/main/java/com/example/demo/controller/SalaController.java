@@ -23,8 +23,10 @@ import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Sala;
+import com.example.demo.service.LekarService;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.SalaService;
 import com.example.demo.service.UserService;
@@ -35,6 +37,9 @@ import com.example.demo.service.ZahtevPosetaService;
 public class SalaController {
 
 	Date slobodan;
+	
+	@Autowired 
+	private LekarService lekarService;
 
 	@Autowired
 	private SalaService salaService;
@@ -117,20 +122,22 @@ public class SalaController {
 	public ResponseEntity<HttpStatus> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
 		try {
+			Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
+			System.out.println(lekar.getIme()+" ime"+ lekar.getId()+ " id");
 			zahtevDTO.osveziKraj();
 			Sala sala = this.salaService.nadji(zahtevDTO.getIdSale());
 			salaDTO = new SalaDTO(sala);
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
-			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj());
+			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
 			if (poseta != null && poseta.getTipPosete().getPregled()) { //ovde sam uslovila da ja rezervisem samo preglede
 				this.posetaService.save(poseta);
 				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
 				return new ResponseEntity<>(HttpStatus.OK);
-			} else { //ako termin ne odgovara
+			} else { //ako termin ne odgovara sali 
 				this.slobodan = salaDTO.getPrviSlobodan();
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-		} catch (Exception e) { //ako je upao u catch onda lekar nije slobodan
+		} catch (Exception e) { 
 			this.slobodan = salaDTO.getPrviSlobodan();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

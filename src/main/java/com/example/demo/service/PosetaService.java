@@ -66,9 +66,12 @@ public class PosetaService {
 			}
 		}
 		this.posetaRepository.save(poseta);
+		System.out.println("sacuvah posetu");
 		for (Lekar l : poseta.getLekari()) {
 			l.setPoslednjaIzmena(new Date());
+			System.out.println("Sacuvacu lekara");
 			this.lekarRepository.save(l);
+			System.out.println("sacuvah lekara");
 		}
 	}
 

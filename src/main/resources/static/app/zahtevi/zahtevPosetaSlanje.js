@@ -157,7 +157,14 @@ Vue.component("zahtevPosetaSlanje", {
 				this.$router.push("/zapocetPregled");
 			})
 			.catch((error) => {
-				alert("SERVER ERROR!");
+			    if (error.response.status === 404) {
+			    	this.greskaVreme = "Vreme nije validno!"
+			    	alert("VREME MORA ODGOVARATI VASEM RADNOM VREMENU!");
+			    }
+			    else {
+			    	this.greskaDatum = "Datum nije validan!";
+			    	alert("DATUM NIJE VALIDAN");
+			    }
 			});
 		}
 	}

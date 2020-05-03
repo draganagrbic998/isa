@@ -30,6 +30,10 @@ public class ZahtevPosetaService {
 	public void save(ZahtevPoseta zahtev) {
 		this.zahtevPosetaRepository.save(zahtev);
 		Lekar l = zahtev.getLekar();
+		if (!l.slobodan(zahtev.pocetak(), zahtev.kraj())) {
+			System.out.println("Lekar nije slobodan!");
+			throw new MyRuntimeException();
+		}
 		l.setPoslednjaIzmena(new Date());
 		this.lekarRepository.save(l);
 	}

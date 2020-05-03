@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -57,6 +58,9 @@ public class ZahtevPosetaController {
 			else{
 				zahtevDTO.setKarton(((Lekar) korisnik).getZapocetaPoseta().getKarton().getId());
 				zahtevDTO.setLekar(korisnik.getId());
+			}
+			if (zahtevDTO.getDatum().before(new Date())) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			zahtev = this.zahtevPosetaConversion.get(zahtevDTO);
 			this.zahtevPosetaService.save(zahtev);

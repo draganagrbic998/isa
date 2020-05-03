@@ -1,5 +1,6 @@
 package com.example.demo.model.korisnici;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -286,6 +287,14 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 
 	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		
+		Integer vremePocetak = Integer.parseInt(f.format(pocetak).substring(11,f.format(pocetak).length() - 3));
+		Integer vremeKraj = Integer.parseInt(f.format(kraj).substring(11,f.format(kraj).length() - 3));
+
+		Integer smenaPocetak = Integer.parseInt(f.format(this.getPocetnoVreme()).substring(11,f.format(this.getPocetnoVreme()).length() - 3));
+		Integer smenaKraj = Integer.parseInt(f.format(this.getKrajnjeVreme()).substring(11,f.format(this.getKrajnjeVreme()).length() - 3));
+		
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(pocetak);
 		gc.set(Calendar.HOUR, 0);
@@ -295,6 +304,11 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 		gc.set(Calendar.HOUR, 0);
 		gc.set(Calendar.MINUTE, 0);
 		Date krajDatum = gc.getTime();
+		
+		//ako ne upada u radno vreme lekara
+		if (vremePocetak<smenaPocetak || vremeKraj>smenaKraj){
+			return false;
+		}
 		
 		for (ZahtevOdmor z: this.getOdmorZahtevi()) {
 			if (z.getPocetak().equals(pocetakDatum) || z.getKraj().equals(krajDatum))
@@ -313,8 +327,9 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 			}
 
 		}
-		
+		/*poseta koju zakazuje se nalazi u zahtevima, tako da ovo uvek vrati false
 		for (ZahtevPoseta p: this.posetaZahtevi) {
+		
 			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
 					&&  pocetak.before(p.kraj()))
 				return false;
@@ -322,7 +337,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
 				return false;
 		}
-		
+		*/
 		return true;
 	}
 	

@@ -21,6 +21,8 @@ public class ZahtevPosetaObradaDTO {
 	private String kraj;
 	private int sati;
 	private int minuti;
+	private String lekarPocetak;
+	private String lekarKraj;
 	
 	public ZahtevPosetaObradaDTO() {
 		super();
@@ -29,6 +31,9 @@ public class ZahtevPosetaObradaDTO {
 	public ZahtevPosetaObradaDTO(ZahtevPoseta zahtev) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		Calendar cal = Calendar.getInstance();
+		String radnoVPocetak = sdf.format(zahtev.getLekar().getPocetnoVreme());
+		String radnoVKraj = sdf.format(zahtev.getLekar().getKrajnjeVreme());
+		
 		this.id = zahtev.getId();
 		this.datum = sdf.format(zahtev.getDatum());
 		this.pacijent = zahtev.getKarton().getPacijent().getIme()+" "+zahtev.getKarton().getPacijent().getPrezime();
@@ -43,7 +48,8 @@ public class ZahtevPosetaObradaDTO {
         this.sati = zahtev.getTipPosete().getSati();
         cal.add(Calendar.MINUTE, zahtev.getTipPosete().getMinute());
         this.minuti = zahtev.getTipPosete().getMinute();
-        
+        this.lekarPocetak = radnoVPocetak.substring(radnoVPocetak.length() - 5);
+        this.lekarKraj = radnoVKraj.substring(radnoVKraj.length() - 5);
         this.kraj = sdf.format(cal.getTime());
 	}
 
@@ -58,6 +64,22 @@ public class ZahtevPosetaObradaDTO {
 	
 	
 	
+	public String getLekarPocetak() {
+		return lekarPocetak;
+	}
+
+	public void setLekarPocetak(String lekarPocetak) {
+		this.lekarPocetak = lekarPocetak;
+	}
+
+	public String getLekarKraj() {
+		return lekarKraj;
+	}
+
+	public void setLekarKraj(String lekarKraj) {
+		this.lekarKraj = lekarKraj;
+	}
+
 	public int getSati() {
 		return sati;
 	}
