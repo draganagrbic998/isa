@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.korisnici.Pacijent;
@@ -25,17 +26,20 @@ public class PacijentService {
 	}
 	
 	@Transactional(readOnly = false)
-	public boolean aktiviraj(Integer id) {
+	public boolean aktiviraj(String id) {
 		
-		Pacijent pacijent = this.pacijentRepository.getOne(id);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		for (Pacijent p: this.pacijentRepository.findAll()) {
+			if (encoder.matches(p.getId() + "", id)) {
+				if (p.isAktivan())
+					return false;
+				p.setAktivan(true);
+				this.pacijentRepository.save(p);
+				return true;
+			}
+		}
 		
-		if (pacijent.isAktivan())
-			return false;
-		
-		pacijent.setAktivan(true);
-		this.pacijentRepository.save(pacijent);
-		
-		return true;	
+		throw new MyRuntimeException();
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -73,8 +74,9 @@ public class ZahtevRegistracijaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			String obavestenje = "Uspesno ste registrovani kao pacijent klinike 'POSLEDNJI TRZAJ'. Molimo vas da "
-					+ "aktivirate svoj nalog klikom na link: \n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + pacijent.getId();
+					+ "aktivirate svoj nalog klikom na link: \n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + encoder.encode(pacijent.getId() + "");
 			Message poruka = new Message(pacijent.getEmail(), "Registracija uspesna", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);

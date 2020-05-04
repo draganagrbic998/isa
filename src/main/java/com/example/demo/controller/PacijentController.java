@@ -105,7 +105,7 @@ public class PacijentController {
 	}
 	
 	@GetMapping(value="/aktiviranje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable String id){
 		try {
 			boolean retval = this.pacijentService.aktiviraj(id);
 			if (retval)
