@@ -1,5 +1,7 @@
 package com.example.demo.model.resursi;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +19,8 @@ import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.ostalo.Ocenjivanje;
+import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
@@ -157,5 +161,33 @@ public class Klinika implements Ocenjivanje{
 		this.ocene.add(o);
 		return o;
 	}
+	@Override
+	public Double prosecnaOcena() {
+		Double suma = 0.0;
+		for (Ocena o : this.ocene) {
+			suma += o.getVrednost();
+		}
+		if (this.ocene.size()==0) {
+			return 0.0;
+		}
+		return (suma/this.ocene.size());
+	}
 	
+	@Override
+	public Double izracunajProfit(Date pocetak, Date kraj) {
+		Calendar cal = Calendar.getInstance();
+		double profit = 0.0;
+		for (Sala s : this.sale) {
+			for (Poseta p : s.getPosete()) {
+				cal.setTime(p.getDatum());
+				cal.add(Calendar.MINUTE, p.getTrajanje());
+				if (p.getStanje().equals(StanjePosete.OBAVLJENO) && cal.getTime().after(pocetak) || cal.getTime().equals(pocetak)) {
+					if (p.getPopust()!=null) {
+						profit += (p.getTipPosete().getCena()*(1-p.getPopust())); }
+					else { profit += p.getTipPosete().getCena();}
+				}
+			}
+		}
+		return profit;
+	}
 }

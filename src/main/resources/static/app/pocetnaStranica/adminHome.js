@@ -68,6 +68,13 @@ Vue.component("adminHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="#/izvestaj">
+          <i class="fa fa-bar-chart"></i>
+          Izvestaj
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
     </ul>
     <ul class="navbar-nav ">
       <li class="nav-item">

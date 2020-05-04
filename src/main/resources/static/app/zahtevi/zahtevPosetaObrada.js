@@ -40,7 +40,7 @@ Vue.component("zahtevPosetaObrada", {
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
   <a v-if="selectedZahtev==false && selectedSala==false" class="navbar-brand" href="#">ZAHTEVI ZA POSETU</a>
   <a v-else-if="selectedZahtev" class="navbar-brand" href="#">SLOBODNE SALE {{formatiraj(zahtevSelected.datum)}}</a>
-  <a v-else class="navbar-brand" href="#">KALENDAR ZAUZETOSTI SALE</a>
+  <a v-else class="navbar-brand" href="#">KALENDAR ZAUZETOSTI</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

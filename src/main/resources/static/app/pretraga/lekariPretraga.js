@@ -39,11 +39,13 @@ Vue.component("lekariPretraga", {
 		<tr bgcolor="#f2f2f2">
 			<th> Ime </th>
 			<th> Prezime </th>
+			<th> Ocena </th>
 		</tr>
 		
 		<tr v-for="l in lekari">
 			<td>{{l.ime}}</td>
 			<td>{{l.prezime}}</td>
+			<td>{{l.prosecnaOcena}}</td>
 			<td><button v-on:click="deleteLekar(l.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
 	</table>	
 	

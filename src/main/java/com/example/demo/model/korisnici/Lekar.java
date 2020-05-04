@@ -341,5 +341,22 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 		return true;
 	}
 
+	@Override
+	public Double prosecnaOcena() {
+		Double suma = 0.0;
+		for (Ocena o : this.ocene) {
+			suma += o.getVrednost();
+		}
+		if (this.ocene.size()==0) {
+			return 0.0;
+		}
+		return (suma/this.ocene.size());
+	}
+
+	@Override
+	public Double izracunajProfit(Date pocetak, Date kraj) {
+		return 0.0;
+	}
+	
 	
 }

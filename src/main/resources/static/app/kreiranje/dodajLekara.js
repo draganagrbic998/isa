@@ -67,35 +67,65 @@ Vue.component("dodajLekara", {
 		</div>
 		</nav>
 		
-		<div class="registracija">
+		<div class="card" id="tableBox">
+		
+			<h1>Registracija medicinskog radnika</h1><br>
 			
-			<div>
+			<table class="table">
 			
-				<table>
-					<tr><td class="left">Profesija: </td><td class="right"><select v-model="tip">
+				<tbody>
+					
+					<tr>
+					<th scope="row">Profesija: </th>
+					<td><select v-model="tip" class="form-control">
 						<option>lekar</option>
 						<option>medicinska sestra</option>
 					</select></td><td></td></tr>
-					<tr><td class="left">Email: </td><td class="right"><input type="text" v-model="lekar.email"></td><td>{{greskaEmail}}</td></tr>
-					<tr><td class="left">Ime: </td><td class="right"><input type="text" v-model="lekar.ime"></td><td>{{greskaIme}}</td></tr>
-					<tr><td class="left">Prezime: </td><td class="right"><input type="text" v-model="lekar.prezime"></td><td>{{greskaPrezime}}</td></tr>
-					<tr><td class="left">Telefon: </td><td class="right"><input type="text" v-model="lekar.telefon"></td><td>{{greskaTelefon}}</td></tr>
-					<tr><td class="left">Drzava: </td><td class="right"><input type="text" v-model="lekar.drzava"></td><td>{{greskaDrzava}}</td></tr>
-					<tr><td class="left">Grad: </td><td class="right"><input type="text" v-model="lekar.grad"></td><td>{{greskaGrad}}</td></tr>
-					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="lekar.adresa"></td><td>{{greskaAdresa}}</td></tr>
-					<tr><td class="left">Pocetak smene: </td><td class="right"><input type="text" v-model="pocetak"></td><td>{{greskaPocetak}}</td></tr>
-					<tr><td class="left">Kraj smene: </td><td class="right"><input type="text" v-model="kraj"></td><td>{{greskaKraj}}</td></tr>
-					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
-					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
-					<tr v-if="this.tip==='lekar'" ><td class="left">Specijalizacija: </td><td class="right"><select v-model="nazivSpecijalizacije">
+
+					<tr>
+					<th scope="row">Email: </th>
+					<td><input class="form-control" type="text" v-model="lekar.email"></td><td>{{greskaEmail}}</td></tr>
+					
+					<tr>
+					<th scope="row">Ime: </th>
+					<td ><input type="text" class="form-control" v-model="lekar.ime"></td><td>{{greskaIme}}</td></tr>
+					
+					<tr><th scope="row">Prezime: </th>
+					<td ><input type="text" class="form-control" v-model="lekar.prezime"></td><td>{{greskaPrezime}}</td></tr>
+					
+					<tr><th scope="row">Telefon: </th>
+					<td><input type="text" class="form-control" v-model="lekar.telefon"></td><td>{{greskaTelefon}}</td></tr>
+					
+					<tr><th scope="row">Drzava: </th>
+					<td><input type="text" class="form-control" v-model="lekar.drzava"></td><td>{{greskaDrzava}}</td></tr>
+					
+					<tr><th scope="row">Grad: </th>
+					<td><input type="text" class="form-control" v-model="lekar.grad"></td><td>{{greskaGrad}}</td></tr>
+					
+					<tr><th scope="row">Adresa: </th>
+					<td><input type="text" class="form-control" v-model="lekar.adresa"></td><td>{{greskaAdresa}}</td></tr>
+					
+					<tr><th scope="row">Pocetak smene: </th>
+					<td><input type="text" class="form-control" v-model="pocetak"></td><td>{{greskaPocetak}}</td></tr>
+					
+					<tr><th scope="row">Kraj smene: </th>
+					<td><input type="text" class="form-control" v-model="kraj"></td><td>{{greskaKraj}}</td></tr>
+					
+					<tr><th scope="row">Lozinka: </th>
+					<td ><input type="password" class="form-control" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
+					
+					<tr><th scope="row">Ponovljena lozinka: </th>
+					<td><input type="password" class="form-control" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
+					
+					<tr v-if="this.tip==='lekar'"><th scope="row">Specijalizacija: </th>
+					<td><select v-model="nazivSpecijalizacije" class="form-control">
 						<option v-for="s in specijalizacije">{{s.naziv}}</option>
 					</select></td><td>{{greskaSpecijalizacija}}</td></tr>
-					<tr><td><button v-on:click="dodajLekara()">KREIRAJ PROFIL</button><br></td></tr>
 					
-				</table>
-				
-			</div>
-		
+					<tr><td><button v-on:click="dodajLekara()" class="form-control">KREIRAJ PROFIL</button><br></td></tr>
+					
+				</tbody>	
+			</table>
 		</div>
 		</div>
 		

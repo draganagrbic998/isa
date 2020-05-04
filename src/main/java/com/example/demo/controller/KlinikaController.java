@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.total.KlinikaConversion;
 import com.example.demo.dto.model.KlinikaDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
+import com.example.demo.dto.pretraga.KalendarSalaDTO;
 import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
 import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
@@ -52,11 +53,39 @@ public class KlinikaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/ocena", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Double> getOcena(){
+		try {
+			Admin admin = (Admin) userService.getSignedKorisnik();
+			return new ResponseEntity<>(admin.getKlinika().prosecnaOcena(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaDTO>> pregled(){
 		try {
 			return new ResponseEntity<>(this.klinikaConversion.get(this.klinikaService.findAll()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value="/admin/profit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> profit(@RequestBody KalendarSalaDTO period){
+		try {
+			if (period.getKraj().before(period.getPocetak())) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			double profit = admin.getKlinika().izracunajProfit(period.getPocetak(), period.getKraj()); 
+			return new ResponseEntity<>(profit+".00 din", HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
