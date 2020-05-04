@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.resursi.TipPosete;
+import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.TipPoseteRepository;
 
 @Component
@@ -21,6 +23,9 @@ public class TipPoseteService {
 
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
+	
+	@Autowired
+	private LekarRepository lekarRepository;
 		
 	@Transactional(readOnly = false)
 	public void save(TipPosete tipPosete) {
@@ -64,6 +69,10 @@ public class TipPoseteService {
 		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
 		for (Poseta p: tipPosete.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
+				throw new MyRuntimeException();
+		}
+		for (Lekar l: this.lekarRepository.findAll()) {
+			if (l.isAktivan() && l.getSpecijalizacija().getId().equals(id))
 				throw new MyRuntimeException();
 		}
 		tipPosete.setAktivan(false);
