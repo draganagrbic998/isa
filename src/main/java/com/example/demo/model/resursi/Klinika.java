@@ -47,10 +47,7 @@ public class Klinika implements Ocenjivanje{
 	private Set<TipPosete> tipoviPoseta = new HashSet<>();
 	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<Sala> sale = new HashSet<>();
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "klinika_pregled",
-    joinColumns = @JoinColumn(name = "klinika"),
-    inverseJoinColumns = @JoinColumn(name = "pregled"))
+	@OneToMany(mappedBy = "klinika", fetch = FetchType.EAGER)
 	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="klinika")
 	private Set<ZahtevOdmor> odmorZahtevi = new HashSet<>();

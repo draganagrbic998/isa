@@ -30,6 +30,7 @@ public class ZahtevPosetaConversion {
 	
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
+	
 		
 	@Transactional(readOnly = true)
 	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) throws ParseException {
@@ -43,7 +44,7 @@ public class ZahtevPosetaConversion {
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 
 				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : 
-					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija());
+					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija(), this.lekarRepository.getOne(zahtevDTO.getLekar()).getKlinika());
 	}
 	
 	

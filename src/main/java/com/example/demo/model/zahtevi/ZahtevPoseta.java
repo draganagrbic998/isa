@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.ostalo.Zauzetost;
 import com.example.demo.model.posete.Karton;
+import com.example.demo.model.resursi.Klinika;
 import com.example.demo.model.resursi.TipPosete;
 
 @Entity
@@ -34,18 +35,22 @@ public class ZahtevPoseta implements Zauzetost{
 	@ManyToOne
 	@JoinColumn(name="tipPosete")
 	private TipPosete tipPosete;
-	
+	@ManyToOne
+	@JoinColumn(name="klinika")
+	private Klinika klinika;
+
 	public ZahtevPoseta() {
 		super();
 	}
 
-	public ZahtevPoseta(Integer id, Date datum, Karton karton, Lekar lekar, TipPosete tipPosete) {
+	public ZahtevPoseta(Integer id, Date datum, Karton karton, Lekar lekar, TipPosete tipPosete, Klinika klinika) {
 		super();
 		this.id = id;
 		this.datum = datum;
 		this.karton = karton;
 		this.lekar = lekar;
 		this.tipPosete = tipPosete;
+		this.klinika = klinika;
 	}
 
 	public Integer getId() {
@@ -86,6 +91,14 @@ public class ZahtevPoseta implements Zauzetost{
 
 	public void setTipPosete(TipPosete tipPosete) {
 		this.tipPosete = tipPosete;
+	}
+	
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
 	}
 
 	@Override
