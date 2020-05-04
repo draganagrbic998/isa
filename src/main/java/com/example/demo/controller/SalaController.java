@@ -131,18 +131,23 @@ public class SalaController {
 		SalaDTO salaDTO = new SalaDTO();
 		try {
 			Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
-			System.out.println(lekar.getIme() + " ime" + lekar.getId() + " id");
+			Pacijent pacijent = this.pacijentService.nadji(zahtevDTO.getIdPacijent());
+			
 			zahtevDTO.osveziKraj();
-			Sala sala = this.salaService.nadji(zahtevDTO.getIdSale());
-			salaDTO = new SalaDTO(sala);
+			salaDTO = new SalaDTO(this.salaService.nadji(zahtevDTO.getIdSale()));
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
-			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(), zahtevDTO.getKraj(), lekar);
-			if (poseta != null && poseta.getTipPosete().getPregled()) { // ovde sam uslovila da ja rezervisem samo
-																		// preglede
+			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
+			if (poseta != null ) { 
 				this.posetaService.save(poseta);
 				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+				String obavestenjePacijentu = "Postovani\n, pregled "+ zahtevDTO.getNaziv()+ " kod lekara " + zahtevDTO.getLekar() + " zakazan je za datum "+zahtevDTO.getDatum();
+				String obavestenjeLekaru = "Postovani\n, pregled"+ zahtevDTO.getNaziv()+ " za pacijenta " + zahtevDTO.getPacijent() + " zakazan je za datum "+zahtevDTO.getDatum();
+				Message porukaPacijent = new Message(pacijent.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjePacijentu);
+				Message porukaLekar = new Message(lekar.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjeLekaru);
+				this.emailService.sendMessage(porukaPacijent);
+				this.emailService.sendMessage(porukaLekar);
 				return new ResponseEntity<>(HttpStatus.OK);
-			} else { // ako termin ne odgovara sali
+			} else { 
 				this.slobodan = salaDTO.getPrviSlobodan();
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}

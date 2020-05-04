@@ -305,8 +305,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 		gc.set(Calendar.MINUTE, 0);
 		Date krajDatum = gc.getTime();
 		
-		//ako ne upada u radno vreme lekara
-		if (vremePocetak<smenaPocetak || vremeKraj>smenaKraj){
+
+		if (vremePocetak < smenaPocetak || vremeKraj>smenaKraj || (vremeKraj<smenaKraj && vremeKraj<smenaPocetak)) {
 			return false;
 		}
 		

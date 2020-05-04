@@ -84,7 +84,7 @@ public class ZahtevPosetaController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
-	
+	//nakon petrovog rada izmenjeno da vraca samo posetee
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value="/klinika/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ZahtevPosetaObradaDTO>> pregled(){

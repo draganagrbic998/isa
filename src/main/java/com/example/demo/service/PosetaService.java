@@ -56,22 +56,17 @@ public class PosetaService {
 	@Transactional(readOnly = false)
 	public void save(Poseta poseta) {
 		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj())) {
-			System.out.println("sala nije slobodna");
 			throw new MyRuntimeException();
 		}
 		for (Lekar l: poseta.getLekari()) {
 			if (!l.slobodan(poseta.pocetak(), poseta.kraj())) {
-				System.out.println("lekar nije slobodan");
 				throw new MyRuntimeException();
 			}
 		}
 		this.posetaRepository.save(poseta);
-		System.out.println("sacuvah posetu");
 		for (Lekar l : poseta.getLekari()) {
 			l.setPoslednjaIzmena(new Date());
-			System.out.println("Sacuvacu lekara");
 			this.lekarRepository.save(l);
-			System.out.println("sacuvah lekara");
 		}
 	}
 

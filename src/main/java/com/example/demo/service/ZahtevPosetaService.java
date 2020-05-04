@@ -41,7 +41,7 @@ public class ZahtevPosetaService {
 	public List<ZahtevPosetaObradaDTO> findAll(Klinika klinika) {
 		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
 		for (ZahtevPoseta z : this.zahtevPosetaRepository.findAll()) {
-			if (z.getTipPosete().getKlinika().getId().equals(klinika.getId()))
+			if (z.getTipPosete().getKlinika().getId().equals(klinika.getId()) && z.getTipPosete().getPregled())
 				zahtevi.add(new ZahtevPosetaObradaDTO(z));
 		}
 		return zahtevi;
