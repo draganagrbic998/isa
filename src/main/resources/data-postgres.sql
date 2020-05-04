@@ -1,6 +1,6 @@
 -----------GLAVNI PACIJENT KOJEG KORISTIM--------------------------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version) values 
-('pacijent', 'nasmejlservis@gmail.com', 'asd', 'qwe', 'qwe', '123', '123', '123', '123', true, true, 0);
+('pacijent', 'nasmejlservis@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'qwe', 'qwe', '123', '123', '123', '123', true, true, 0);
 insert into karton (broj_osiguranika, visina, tezina, leva_dioptrija, desna_dioptrija, krvna_grupa, pacijent) 
 values ('123', 10, 10, 10, 10, 1, 1);
 update korisnik
@@ -25,9 +25,9 @@ values ('2020-04-30 12:00', 0.2, 1, 1, 1, 1, 0);
 
 --------------LEKARI ANGAZOVANI NA ZAKAZANIM POSETAMA GLAVNOG PACIJENTA-----------------------
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', 'asd', 1,  '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
+values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', '$2a$10$Ji4eOOFafuhNBdiM8yZZWe2MCjO8eA2qKOch5NmJc3Wr1DfI7XHDK', 1,  '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('lekar', 'mama', 'tata', 'draganaasd@gmail.com', 'asd', 1, '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
+values ('lekar', 'mama', 'tata', 'draganaasd@gmail.com', '$2a$10$Ji4eOOFafuhNBdiM8yZZWe2MCjO8eA2qKOch5NmJc3Wr1DfI7XHDK', 1, '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 --------------------------------------------
 insert into lekar_poseta (lekar, poseta)
 values (2, 1);
@@ -94,9 +94,9 @@ values ( 'lek3', 'sifra3');
 
 ---------------SESTRE---------------------
 insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version, pocetno_vreme, krajnje_vreme)
-values ('sestra', 'baba', 'deda', 'asd1@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
+values ('sestra', 'baba', 'deda', 'asd1@gmail.com', '$2a$10$nt06aM1C.v9xx.7WoTo4h.T7P0Vfsnum5kw61.mxQWmpgFU0Ko24.', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
 insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, klinika, version, pocetno_vreme, krajnje_vreme)
-values ('sestra', 'mama', 'tata', 'asd2@gmail.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
+values ('sestra', 'mama', 'tata', 'asd2@gmail.com', '$2a$10$nt06aM1C.v9xx.7WoTo4h.T7P0Vfsnum5kw61.mxQWmpgFU0Ko24.', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
 
 --------------TERAPIJE ZA GLAVNOG PACIJENTA-----------------------
 insert into terapija (izvestaj, sestra)
@@ -190,15 +190,15 @@ values (2, 14);
 
 ----------SUPER ADMIN, ADMIN i NOVI LEKARI----------------------------------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version) values 
-('super', 'petar@gmail.com', 'aaa', 'p', 'n', '123', '123', '123', '123', true, true, 0);
+('super', 'petar@gmail.com', '$2a$10$zcFdgHGQG1BAOHF4rs04fevTScedhl2GZ4BARo3DMqap7q8f8f2We', 'p', 'n', '123', '123', '123', '123', true, true, 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, aktivan, promenjena_sifra,  telefon, drzava, grad, adresa, version)
-values ('admin', 'm', 't', 'malinavojvodic123@gmail.com', 'aaa', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
+values ('admin', 'm', 't', 'malinavojvodic123@gmail.com', '$2a$10$zcFdgHGQG1BAOHF4rs04fevTScedhl2GZ4BARo3DMqap7q8f8f2We', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika,pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa, version)
-values ('lekar', 'velja', 'pantic', 'velja@gmail.com', 'aaa', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
+values ('lekar', 'velja', 'pantic', 'velja@gmail.com', '$2a$10$zcFdgHGQG1BAOHF4rs04fevTScedhl2GZ4BARo3DMqap7q8f8f2We', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika,pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa, version)
-values ('lekar', 'irina', 'sajak', 'irina@gmail.com', 'aaa', 1, '2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
+values ('lekar', 'irina', 'sajak', 'irina@gmail.com', '$2a$10$zcFdgHGQG1BAOHF4rs04fevTScedhl2GZ4BARo3DMqap7q8f8f2We', 1, '2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija, aktivan, promenjena_sifra, telefon, drzava, grad, adresa, version)
-values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', 'aaa', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
+values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', '$2a$10$zcFdgHGQG1BAOHF4rs04fevTScedhl2GZ4BARo3DMqap7q8f8f2We', 1,'2020-04-02 10:00','2020-04-02 17:00', 1, true, true, 'asd', 'asd', 'asd', 'asd', 0);
 
 ----------DODATANA KLINIKA, TIP POSETE, LEKAR--------------------
 insert into klinika (naziv, opis, adresa)
@@ -206,7 +206,7 @@ values ('njegova klinika', 'ok klinika', 'tamo neka adresa');
 insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
 values (true, 'super pregled', 2, 300, 2, 45, true);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('lekar', 'prababa', 'pradeda', 'isanalog7@gmail.com', 'asd', 2,  '2020-04-20 10:00', '2020-04-20 20:00', 2, 'asd', 'asd', 'asd', 'asd', true, true, 0);
+values ('lekar', 'prababa', 'pradeda', 'isanalog7@gmail.com', '$2a$10$cYhYDcfjJJq.cVF7y9DRtOkhbDTj4EV.1K7dloGs4MRu82IfgrdS.', 2,  '2020-04-20 10:00', '2020-04-20 20:00', 2, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 
 -------ZAHTEV GODISNJI ODMOR, LEKAR IRINA------------
 insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)

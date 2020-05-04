@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,16 +32,25 @@ public class LekarConversion {
 	@Transactional(readOnly = true)
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
 
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		long version;
-		if (lekarDTO.getId() != null)
-			version = this.lekarRepository.getOne(lekarDTO.getId()).getVersion();
-		else
-			version = 0l;
+		String lozinka;
+		if (lekarDTO.getId() != null) {
+			version = this.lekarRepository.getOne(lekarDTO.getId()).getVersion();		
+			if (!lekarDTO.getLozinka().equals(this.lekarRepository.getOne(lekarDTO.getId()).getLozinka()))
+				lozinka = encoder.encode(lekarDTO.getLozinka());
+			else
+				lozinka = lekarDTO.getLozinka();
+		}
+		else {
+			version = 0l;	
+			lozinka = encoder.encode(lekarDTO.getLozinka());
+		}
 
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		String baseDate = "2020-04-20 ";
 
-		return new Lekar(lekarDTO.getId(), lekarDTO.getEmail(), lekarDTO.getLozinka(), lekarDTO.getIme(),
+		return new Lekar(lekarDTO.getId(), lekarDTO.getEmail(), lozinka, lekarDTO.getIme(),
 				lekarDTO.getPrezime(), lekarDTO.getTelefon(), lekarDTO.getDrzava(), lekarDTO.getGrad(),
 				lekarDTO.getAdresa(), lekarDTO.isAktivan(), lekarDTO.isPromenjenaSifra(),
 				f.parse(baseDate + lekarDTO.getPocetnoVreme()), f.parse(baseDate + lekarDTO.getKrajnjeVreme()),

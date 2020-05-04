@@ -32,79 +32,75 @@ Vue.component("dodajPacijenta", {
 	
 	template: `
 	
-		<div class="card" id="tableBox">
+		<div class="card" id="tableBox" style="width: 60%;">
 		
-			<h1>Registracija novog pacijenta</h1><br>
+			<h2>Registracija novog pacijenta</h2><br>
 			
-			<table class="table">
+			<table>
 			
-				<tbody>
-				
-					<tr>
+				<tr>
 						<th scope="row">Email: </th>
 						<td><input type="text" v-model="zahtev.email" class="form-control"></td>
-						<td>{{greskaEmail}}</td>
+						<td style="width: 35%;">&nbsp&nbsp&nbsp{{greskaEmail}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Ime: </th>
 						<td><input type="text" v-model="zahtev.ime" class="form-control"></td>
-						<td>{{greskaIme}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaIme}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Prezime: </th>
 						<td><input type="text" v-model="zahtev.prezime" class="form-control"></td>
-						<td>{{greskaPrezime}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaPrezime}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Telefon: </th>
 						<td><input type="text" v-model="zahtev.telefon" class="form-control"></td>
-						<td>{{greskaTelefon}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaTelefon}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Drzava: </th>
 						<td><input type="text" v-model="zahtev.drzava" class="form-control"></td>
-						<td>{{greskaDrzava}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaDrzava}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Grad: </th>
 						<td><input type="text" v-model="zahtev.grad" class="form-control"></td>
-						<td>{{greskaGrad}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaGrad}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="zahtev.adresa" class="form-control"></td>
-						<td>{{greskaAdresa}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaAdresa}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Broj osiguranika: </th>
 						<td><input type="text" v-model="zahtev.brojOsiguranika" class="form-control"></td>
-						<td>{{greskaBrojOsiguranika}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaBrojOsiguranika}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Lozinka: </th>
 						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
-						<td>{{greskaLozinka}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaLozinka}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Ponovljena lozinka: </th>
 						<td><input type="password" v-model="ponovljenaLozinka" class="form-control"></td>
-						<td>{{greskaPonovljenaLozinka}}</td>
+						<td>&nbsp&nbsp&nbsp{{greskaPonovljenaLozinka}}</td>
 					</tr>
-					
+					<br>
 					<tr>
-						<td><button v-on:click="dodajPacijenta()" class="btn btn-primary">POSALJI ZAHTEV</button></td>
+						<td><button v-on:click="dodajPacijenta()" class="btn btn-outline-success my-2 my-sm-0">POSALJI ZAHTEV</button></td>
 					</tr>
-				
-				</tbody>
 			
 			</table>
 		

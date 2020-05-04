@@ -50,8 +50,10 @@ public class TipPoseteService {
 	public Set<String> sviTipovi(){
 		
 		Set<String> lista = new HashSet<>();
-		for (TipPosete tp: this.tipPoseteRepository.findAll())
-			lista.add(tp.getNaziv());
+		for (TipPosete tp: this.tipPoseteRepository.findAll()) {
+			if (tp.isPregled())
+				lista.add(tp.getNaziv());
+		}
 		return lista;
 		
 	}

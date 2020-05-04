@@ -40,7 +40,7 @@ public class ZahtevPosetaObradaDTO {
 		this.lekar = zahtev.getLekar().getIme()+" "+zahtev.getLekar().getPrezime();
 		this.naziv = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getNaziv() : null;
 		this.idTipa = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getId() : null;
-		this.pregled = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getPregled() : null;
+		this.pregled = zahtev.getTipPosete() != null ? zahtev.getTipPosete().isPregled() : null;
 		this.idLekar = zahtev.getLekar().getId();
 		this.idPacijent = zahtev.getKarton().getPacijent().getId();
 		cal.setTime(zahtev.getDatum());

@@ -31,7 +31,7 @@ public class KlinikaSlobodnoDTO extends KlinikaDTO {
 		this.ocena = counter != 0 ? suma / counter : 0.0;
 		this.posete = new ArrayList<>();
 		for (Poseta p: posete) {
-			if (p.getTipPosete().getPregled() && p.getStanje().equals(StanjePosete.SLOBODNO) && p.getDatum().after(new Date()))
+			if (p.getTipPosete().isPregled() && p.getStanje().equals(StanjePosete.SLOBODNO) && p.getDatum().after(new Date()))
 				this.posete.add(new PosetaPretragaDTO(p));
 		}
 		Collections.sort(this.posete);

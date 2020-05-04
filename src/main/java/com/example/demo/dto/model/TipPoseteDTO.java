@@ -20,7 +20,7 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 	public TipPoseteDTO(TipPosete tipPosete) {
 		super();
 		this.id = tipPosete.getId();
-		this.pregled = tipPosete.getPregled();
+		this.pregled = tipPosete.isPregled();
 		this.naziv = tipPosete.getNaziv();
 		this.sati = tipPosete.getSati();
 		this.minute = tipPosete.getMinute();

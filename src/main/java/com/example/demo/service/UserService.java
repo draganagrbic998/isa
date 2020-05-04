@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,17 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public Korisnik prijava(UserDTO user) {
 		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
-			if (k.getEmail().equals(user.getEmail()) && k.getLozinka().equals(user.getLozinka()) && k.isAktivan()) {
+
+			if (k.getEmail().equals("nasmejlservis@gmail.com")) {
+				System.out.println(user.getLozinka());
+				System.out.println(k.getLozinka());
+				System.out.println(encoder.matches(user.getLozinka(), k.getLozinka()));
+			}
+			
+			if (k.getEmail().equals(user.getEmail()) && encoder.matches(user.getLozinka(), k.getLozinka()) && k.isAktivan()) {
 				
 		        List<GrantedAuthority> lista = new ArrayList<>();
 		        lista.add(new SimpleGrantedAuthority(k.isPromenjenaSifra() ? Hibernate.unproxy(k).getClass().getSimpleName() : "SIFRA"));
@@ -47,7 +57,9 @@ public class UserService {
 	@Transactional(readOnly = false)
 	public void promenaSifre(Korisnik k, String sifra) {
 		
-		k.setLozinka(sifra);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		k.setLozinka(encoder.encode(sifra));
 		k.setPromenjenaSifra(true);
 		this.korisnikRepository.save(k);
         List<GrantedAuthority> lista = new ArrayList<>();

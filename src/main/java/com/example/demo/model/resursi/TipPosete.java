@@ -63,7 +63,7 @@ public class TipPosete {
 		this.id = id;
 	}
 
-	public boolean getPregled() {
+	public boolean isPregled() {
 		return pregled;
 	}
 

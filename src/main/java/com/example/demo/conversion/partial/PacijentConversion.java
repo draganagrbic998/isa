@@ -1,6 +1,7 @@
 package com.example.demo.conversion.partial;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +22,24 @@ public class PacijentConversion {
 	@Transactional(readOnly = true)
 	public Pacijent get(PacijentDTO pacijentDTO) {
 		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		long version;
-		if (pacijentDTO.getId() != null)
+		String lozinka;
+		if (pacijentDTO.getId() != null) {
 			version = this.pacijentRepository.getOne(pacijentDTO.getId()).getVersion();
-		else
-			version = 0l;
+			if (!pacijentDTO.getLozinka().equals(this.pacijentRepository.getOne(pacijentDTO.getId()).getLozinka()))
+				lozinka = encoder.encode(pacijentDTO.getLozinka());
+			else
+				lozinka = pacijentDTO.getLozinka();
+		}
+		else {
+			version = 0l;		
+			lozinka = encoder.encode(pacijentDTO.getLozinka());
+		}
 		
-		return new Pacijent(pacijentDTO.getId(), pacijentDTO.getEmail(), pacijentDTO.getLozinka(), 
+
+		
+		return new Pacijent(pacijentDTO.getId(), pacijentDTO.getEmail(), lozinka, 
 				pacijentDTO.getIme(), pacijentDTO.getPrezime(), pacijentDTO.getTelefon(), 
 				pacijentDTO.getDrzava(), pacijentDTO.getGrad(), pacijentDTO.getAdresa(), 
 				pacijentDTO.isAktivan(), pacijentDTO.isPromenjenaSifra(), 

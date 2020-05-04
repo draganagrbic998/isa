@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,16 +28,25 @@ public class SestraConversion {
 	@Transactional(readOnly = true)
 	public Sestra get(SestraDTO sestraDTO) throws ParseException {
 				
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String lozinka;
 		long version;
-		if (sestraDTO.getId() != null)
+		if (sestraDTO.getId() != null) {
 			version = this.sestraRepository.getOne(sestraDTO.getId()).getVersion();
-		else
+			if (!sestraDTO.getLozinka().equals(this.sestraRepository.getOne(sestraDTO.getId()).getLozinka()))
+				lozinka = encoder.encode(sestraDTO.getLozinka());
+			else
+				lozinka = sestraDTO.getLozinka();
+		}
+		else {
 			version = 0l;
+			lozinka = encoder.encode(sestraDTO.getLozinka());
+		}
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		String baseDate = "2020-04-20 ";
 		
-		return new Sestra(sestraDTO.getId(), sestraDTO.getEmail(), sestraDTO.getLozinka(), 
+		return new Sestra(sestraDTO.getId(), sestraDTO.getEmail(), lozinka, 
 				sestraDTO.getIme(), sestraDTO.getPrezime(), sestraDTO.getTelefon(), 
 				sestraDTO.getDrzava(), sestraDTO.getGrad(), sestraDTO.getAdresa(), 
 				sestraDTO.isAktivan(), sestraDTO.isPromenjenaSifra(), 

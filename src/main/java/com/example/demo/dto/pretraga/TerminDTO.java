@@ -17,7 +17,7 @@ public class TerminDTO extends PosetaPretragaDTO {
 		super(poseta);
 		this.klinika = poseta.getTipPosete().getKlinika().getNaziv();
 		this.adresa = poseta.getTipPosete().getKlinika().getAdresa();
-		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
+		this.tipPosete = poseta.getTipPosete().isPregled() ? "PREGLED" : "OPERACIJA";
 		this.novaCena = this.getPopust() != null ? this.getCena()- this.getCena() * this.getPopust() : this.getCena();
 	}
 

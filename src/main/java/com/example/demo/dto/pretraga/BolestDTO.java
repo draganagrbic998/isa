@@ -36,7 +36,7 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		this.klinikaId = poseta.getSala().getKlinika().getId();
 		this.datum = poseta.getDatum();
 		this.klinika = poseta.getSala().getKlinika().getNaziv();
-		this.tipPosete = poseta.getTipPosete().getPregled() ? "PREGLED" : "OPERACIJA";
+		this.tipPosete = poseta.getTipPosete().isPregled() ? "PREGLED" : "OPERACIJA";
 		this.nazivPosete = poseta.getTipPosete().getNaziv();
 		this.izvestaj = poseta.getIzvestaj().getOpis();
 		double suma = 0.0;

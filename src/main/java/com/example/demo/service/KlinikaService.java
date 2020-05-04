@@ -105,7 +105,7 @@ public class KlinikaService {
 
 		Map<Integer, KlinikaPretragaDTO> mapa = new HashMap<>();
 		for (Lekar l: this.lekarRepository.findAll()) {
-			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) && l.getSpecijalizacija().getPregled()) {
+			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) && l.getSpecijalizacija().isPregled()) {
 				List<Date> satnica = l.getSatnica(param.getDatumPregleda());
 
 				if (!satnica.isEmpty()) {

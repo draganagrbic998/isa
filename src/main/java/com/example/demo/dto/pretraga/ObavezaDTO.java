@@ -27,7 +27,7 @@ public class ObavezaDTO implements Comparable<ObavezaDTO>{
 		this.pocetak = formatPocetak.format(poseta.getDatum());
 		this.trajanje = poseta.getTrajanje();
 		this.tip = poseta.getTipPosete().getNaziv();
-		this.pregled = poseta.getTipPosete().getPregled();
+		this.pregled = poseta.getTipPosete().isPregled();
 		this.datumSortiranje = poseta.getDatum();
 	}
 
