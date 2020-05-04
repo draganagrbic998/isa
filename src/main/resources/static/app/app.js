@@ -46,6 +46,7 @@ const zahtevOdmorSlanje = {template: '<zahtevOdmorSlanje></zahtevOdmorSlanje>'}
 const zahtevOdmorObrada = {template: '<zahtevOdmorObrada></zahtevOdmorObrada>'}
 const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
 const zahtevPosetaObrada = {template: '<zahtevPosetaObrada></zahtevPosetaObrada>'}
+const zahtevOperacijaObrada = {template: '<zahtevOperacijaObrada></zahtevOperacijaObrada>'}
 
 //pacijent:
 const karton = {template: '<karton></karton>'}
@@ -106,6 +107,7 @@ const router = new VueRouter({
 		{path: '/zahtevOdmorSlanje', component: zahtevOdmorSlanje},
 		{path: '/zahtevOdmorObrada', component: zahtevOdmorObrada},
 		{path: '/zahtevPosetaObrada', component: zahtevPosetaObrada},
+		{path: '/zahtevOperacijaObrada', component: zahtevOperacijaObrada},
 		{path: '/overaRecepta', component: overaRecepta},
 
 		{path: '/karton', component: karton},

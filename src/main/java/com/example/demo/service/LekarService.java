@@ -41,6 +41,18 @@ public class LekarService {
 		return this.lekarRepository.getOne(id);
 	}
 
+	@Transactional(readOnly = true)
+	public List<Lekar> nadji(List<Integer> lekariId) {
+		List<Lekar> lekari = new ArrayList<Lekar>();
+		
+		for (Lekar l : this.lekarRepository.findAll()) {
+			if (lekariId.contains(l.getId()))
+				lekari.add(l);
+		}
+		
+		return lekari;
+	}
+	
 	@Transactional(readOnly = false)
 	public void delete(Integer id) {
 		Lekar l = this.lekarRepository.getOne(id);
@@ -83,4 +95,5 @@ public class LekarService {
 		}
 		return pacijenti;
 	}
+
 }

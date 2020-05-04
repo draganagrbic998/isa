@@ -46,6 +46,16 @@ public class ZahtevPosetaService {
 		}
 		return zahtevi;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<ZahtevPosetaObradaDTO> getOperacije(Klinika klinika) {
+		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
+		for (ZahtevPoseta z : this.zahtevPosetaRepository.findAll()) {
+			if (z.getTipPosete().getKlinika().getId().equals(klinika.getId()) && !z.getTipPosete().getPregled())
+				zahtevi.add(new ZahtevPosetaObradaDTO(z));
+		}
+		return zahtevi;
+	}
 
 	@Transactional(readOnly = false)
 	public void obrisi(Integer id) {

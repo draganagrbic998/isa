@@ -97,7 +97,7 @@ Vue.component("zahtevPosetaSlanje", {
 		nazivTipa : function(){
 			for (let t of this.tipovi){
 				if (t.naziv === this.nazivTipa)
-					this.pregled.tip = t.id;
+					this.pregled.tipPosete = t.id;
 			}
 		}
 	}, 
@@ -130,7 +130,7 @@ Vue.component("zahtevPosetaSlanje", {
 			this.osvezi();
 			this.vremePromena();
 			
-			if (this.pregled.tip == '') {
+			if (this.pregled.tipPosete == '') {
 				this.greskaTip = "Odaberite tip pregleda!";
 				this.greska = true;
 			}

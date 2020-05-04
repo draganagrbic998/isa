@@ -24,4 +24,3 @@ public class LekarDTO extends ZaposleniDTO {
 	}
 
 }
-

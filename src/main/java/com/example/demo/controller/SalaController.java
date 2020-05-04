@@ -21,12 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.partial.PosetaConversion;
 import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
+import com.example.demo.dto.unos.ZahtevOperacijaObradaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Sala;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.LekarService;
+import com.example.demo.service.Message;
+import com.example.demo.service.PacijentService;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.SalaService;
 import com.example.demo.service.UserService;
@@ -37,8 +42,8 @@ import com.example.demo.service.ZahtevPosetaService;
 public class SalaController {
 
 	Date slobodan;
-	
-	@Autowired 
+
+	@Autowired
 	private LekarService lekarService;
 
 	@Autowired
@@ -50,7 +55,8 @@ public class SalaController {
 	@Autowired
 	private ZahtevPosetaService zahtevPosetaService;
 
-	
+	@Autowired
+	private PacijentService pacijentService;
 
 	@Autowired
 	private SalaConversion salaConversion;
@@ -60,6 +66,9 @@ public class SalaController {
 
 	@Autowired
 	private PosetaService posetaService;
+
+	@Autowired
+	private EmailService emailService;
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -93,7 +102,7 @@ public class SalaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/pregledSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SalaDTO>> pregled(@RequestBody ZahtevPosetaObradaDTO zahtev) {
@@ -105,40 +114,72 @@ public class SalaController {
 			List<SalaDTO> rezultat = new ArrayList<SalaDTO>();
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			List<SalaDTO> lista = this.salaConversion.get(this.salaService.findAll(admin));
-			for (SalaDTO sala : lista ) {
-				if (sala.proveriDatum(pocetak, kraj)){
+			for (SalaDTO sala : lista) {
+				if (sala.proveriDatum(pocetak, kraj)) {
 					rezultat.add(sala);
 				}
 			}
-			return new ResponseEntity<>(rezultat,HttpStatus.OK);
+			return new ResponseEntity<>(rezultat, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	
+
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
 		try {
 			Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
-			System.out.println(lekar.getIme()+" ime"+ lekar.getId()+ " id");
+			System.out.println(lekar.getIme() + " ime" + lekar.getId() + " id");
 			zahtevDTO.osveziKraj();
 			Sala sala = this.salaService.nadji(zahtevDTO.getIdSale());
 			salaDTO = new SalaDTO(sala);
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
-			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
-			if (poseta != null && poseta.getTipPosete().getPregled()) { //ovde sam uslovila da ja rezervisem samo preglede
+			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(), zahtevDTO.getKraj(), lekar);
+			if (poseta != null && poseta.getTipPosete().getPregled()) { // ovde sam uslovila da ja rezervisem samo
+																		// preglede
 				this.posetaService.save(poseta);
 				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
 				return new ResponseEntity<>(HttpStatus.OK);
-			} else { //ako termin ne odgovara sali 
+			} else { // ako termin ne odgovara sali
 				this.slobodan = salaDTO.getPrviSlobodan();
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
-		} catch (Exception e) { 
+		} catch (Exception e) {
 			this.slobodan = salaDTO.getPrviSlobodan();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/admin/rezervacijaSaleOperacije", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> reserveOperacija(@RequestBody ZahtevOperacijaObradaDTO zahtevDTO) {
+		SalaDTO salaDTO = new SalaDTO();
+		try {
+			Sala sala = this.salaService.nadji(zahtevDTO.getSalaId());
+			salaDTO = new SalaDTO(sala);
+
+			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
+			this.posetaService.save(poseta);
+
+			this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		try {
+			if (!zahtevDTO.getPocetak().equals(zahtevDTO.getPocetakOriginalni())) {
+				Pacijent p = pacijentService.nadji(zahtevDTO.getPacijentId());
+
+				String obavestenje = "Operacija zakazana za " + zahtevDTO.getPocetakOriginalni() + " pomerena je za "
+						+ zahtevDTO.getPocetak();
+
+				Message poruka = new Message(p.getEmail(), "Pomeranje zakazane operacije", obavestenje);
+				this.emailService.sendMessage(poruka);
+			}
+
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}

@@ -4,6 +4,7 @@ Vue.component("adminHome", {
 			klinika: {},
 			zahteviBroj: '',
 			zahteviPosetaBroj: '',
+			zahteviOperacijaBroj: '',
 			greskaNaziv: '', 
 			greskaAdresa: '', 
 			greska: false
@@ -92,6 +93,14 @@ Vue.component("adminHome", {
           Zahtevi poseta
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#/zahtevOperacijaObrada">
+          <i class="fa fa-globe">
+            <span class="badge badge-success">{{zahteviOperacijaBroj}}</span>
+          </i>
+          Zahtevi Operacije
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -148,6 +157,12 @@ Vue.component("adminHome", {
 		
 		axios.get("/zahtevPoseta/klinika/pregled")
 		.then(response => {this.zahteviPosetaBroj = response.data.length})
+		.catch(reponse => {
+			this.$router.push("/");
+		});
+		
+		axios.get("/zahtevPoseta/klinika/getOperacije")
+		.then(response => {this.zahteviOperacijaBroj = response.data.length})
 		.catch(reponse => {
 			this.$router.push("/");
 		});

@@ -96,6 +96,17 @@ public class ZahtevPosetaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value="/klinika/getOperacije", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ZahtevPosetaObradaDTO>> getOperacije(){
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.zahtevPosetaService.getOperacije(admin.getKlinika()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 }

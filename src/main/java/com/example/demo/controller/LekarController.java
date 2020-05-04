@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import com.example.demo.dto.pretraga.LekarOcenaDTO;
 import com.example.demo.dto.pretraga.ObavezaDTO;
 import com.example.demo.dto.pretraga.PacijentPretragaDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
+import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
@@ -73,6 +76,31 @@ public class LekarController {
 			return new ResponseEntity<>(this.lekarConversion.get(this.lekarService.findAll(admin)), HttpStatus.OK);
 		}
 		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/admin/getSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<LekarDTO>> getSlobodne(@RequestBody ZahtevPosetaObradaDTO zahtev) {
+		try {
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+			zahtev.osveziKraj();
+			Date pocetak = f.parse(zahtev.getDatum());
+			Date kraj = f.parse(zahtev.getKraj());
+			List<LekarDTO> rezultat = new ArrayList<LekarDTO>();
+			
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			List<Lekar> lista = this.lekarService.findAll(admin);
+			
+			for (Lekar lekar : lista ) {
+				if (lekar.slobodan(pocetak, kraj)){
+					rezultat.add(lekarConversion.get(lekar));
+				}
+			}
+			
+			return new ResponseEntity<>(rezultat, HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}

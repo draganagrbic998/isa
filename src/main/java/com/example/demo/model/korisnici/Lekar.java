@@ -340,5 +340,6 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 		*/
 		return true;
 	}
+
 	
 }
