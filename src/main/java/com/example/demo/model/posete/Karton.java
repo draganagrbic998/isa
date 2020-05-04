@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.TerminDTO;
+import com.example.demo.dto.pretraga.ZahtevTerminDTO;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
@@ -166,6 +167,14 @@ public class Karton {
 		Collections.sort(bolesti);
 		return bolesti;
 		
+	}
+
+	public List<ZahtevTerminDTO> getZahtevTermini() {
+		List<ZahtevTerminDTO> zahtevTermini = new ArrayList<>();
+		for (ZahtevPoseta zahtev: this.posetaZahtevi)
+			zahtevTermini.add(new ZahtevTerminDTO(zahtev));
+		Collections.sort(zahtevTermini);
+		return zahtevTermini;
 	}
 	
 }

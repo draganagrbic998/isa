@@ -53,6 +53,7 @@ const izvestaj = {template: '<izvestaj></izvestaj>'}
 const karton = {template: '<karton></karton>'}
 const bolesti = {template: '<bolesti></bolesti>'}
 const termini = {template: '<termini></termini>'}
+const zahtevTermini = {template: '<zahtevTermini></zahtevTermini>'}
 const klinikeSlobodno = {template: '<klinikeSlobodno></klinikeSlobodno>'}
 const klinikeLekari = {template: '<klinikeLekari></klinikeLekari>'}
 
@@ -116,6 +117,7 @@ const router = new VueRouter({
 		{path: '/karton', component: karton},
 		{path: '/bolesti', component: bolesti},
 		{path: '/termini', component: termini},
+		{path: '/zahtevTermini', component: zahtevTermini},
 		{path: '/klinikeSlobodno', component: klinikeSlobodno},
 		{path: '/klinikeLekari', component: klinikeLekari},
 

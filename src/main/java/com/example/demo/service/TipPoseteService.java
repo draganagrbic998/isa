@@ -70,8 +70,8 @@ public class TipPoseteService {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
 				throw new MyRuntimeException();
 		}
-		for (Lekar l: this.lekarRepository.findAll()) {
-			if (l.isAktivan() && l.getSpecijalizacija().getId().equals(id))
+		for (Lekar l: this.lekarRepository.findBySpecijalizacijaId(id)) {
+			if (l.isAktivan())
 				throw new MyRuntimeException();
 		}
 		tipPosete.setAktivan(false);

@@ -33,8 +33,8 @@ public class SestraService {
 	@Transactional(readOnly = true)
 	public List<Sestra> findAll(Admin admin) {
 		List<Sestra> sestre = new ArrayList<>();
-		for (Sestra s : this.sestraRepository.findAll()) {
-			if (s.getKlinika().getId().equals(admin.getKlinika().getId()) && s.isAktivan())
+		for (Sestra s : this.sestraRepository.findByKlinikaId(admin.getKlinika().getId())) {
+			if (s.isAktivan())
 				sestre.add(s);
 		}
 		return sestre;

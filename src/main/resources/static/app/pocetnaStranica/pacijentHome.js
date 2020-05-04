@@ -7,14 +7,17 @@ Vue.component("pacijentHome", {
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;">
+	<ul class="navbar-nav mr-auto" style="margin: auto;">
+	
+		<li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
+	</ul>
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentProfil">
           <i class="fa fa-user"></i>
@@ -29,8 +32,6 @@ Vue.component("pacijentHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-    </ul>
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 130px;">
         <a class="nav-link" href="#/bolesti">
           <i class="fa fa-line-chart"></i>
@@ -38,10 +39,19 @@ Vue.component("pacijentHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 130px;">
         <a class="nav-link" href="#/termini">
           <i class="fa fa-list"></i>
           Zakazani termini
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item active" style="min-width: 130px;">
+        <a class="nav-link" href="#/zahtevTermini">
+          <i class="fa fa-list"></i>
+          Zahtevi za termine
           <span class="sr-only">(current)</span>
           </a>
       </li>

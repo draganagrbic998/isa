@@ -20,6 +20,7 @@ import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.TerminDTO;
+import com.example.demo.dto.pretraga.ZahtevTerminDTO;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.Karton;
 import com.example.demo.service.PacijentService;
@@ -61,6 +62,19 @@ public class PacijentController {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			Karton karton = pacijent.getKarton();		
 			return new ResponseEntity<>(karton.getTermini(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value="/zahtevTermini", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ZahtevTerminDTO>> zahtevTermini(){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			Karton karton = pacijent.getKarton();		
+			return new ResponseEntity<>(karton.getZahtevTermini(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

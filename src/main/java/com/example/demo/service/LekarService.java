@@ -69,8 +69,8 @@ public class LekarService {
 	@Transactional(readOnly = true)
 	public List<Lekar> findAll(Admin admin) {
 		List<Lekar> lekari = new ArrayList<>();
-		for (Lekar l : this.lekarRepository.findAll()) {
-			if (l.getKlinika().getId().equals(admin.getKlinika().getId()) && l.isAktivan())
+		for (Lekar l : this.lekarRepository.findByKlinikaId(admin.getKlinika().getId())) {
+			if (l.isAktivan())
 				lekari.add(l);
 		}
 		return lekari;

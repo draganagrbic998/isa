@@ -209,8 +209,8 @@ Vue.component("termini", {
 			let lowerPretraga = this.pretraga.toLowerCase();
 			
 			for (let t of this.terminiBackup){
-				let klinikaPassed = this.pretraga != '' ? t.klinika.toLowerCase().includes(lowerPretraga) : true;
-				let tipPosetePassed = this.pretraga != '' ? t.tipPosete.toLowerCase().includes(lowerPretraga) : true;
+				let klinikaPassed = lowerPretraga != '' ? t.klinika.toLowerCase().includes(lowerPretraga) : true;
+				let tipPosetePassed = lowerPretraga != '' ? t.tipPosete.toLowerCase().includes(lowerPretraga) : true;
 				if (klinikaPassed || tipPosetePassed) this.termini.push(t);
 			}
 			
