@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.posete.Karton;
 import com.example.demo.model.resursi.Klinika;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.LekarRepository;
@@ -34,6 +35,9 @@ public class ZahtevPosetaService {
 			System.out.println("Lekar nije slobodan!");
 			throw new MyRuntimeException();
 		}
+		Karton k = zahtev.getKarton();
+		if (!k.slobodan(zahtev.pocetak(), zahtev.kraj()))
+			throw new MyRuntimeException();
 		l.setPoslednjaIzmena(new Date());
 		this.lekarRepository.save(l);
 	}

@@ -1,5 +1,12 @@
 Vue.component("pacijentHome", {
 	
+	data: function(){
+		return{
+			terminiBroj: '', 
+			zahtevTerminiBroj: ''
+		}
+	},
+	
 	template: `
 	
 		<div>
@@ -43,14 +50,18 @@ Vue.component("pacijentHome", {
     <ul class="navbar-nav mr-auto" style="margin: auto;">
       <li class="nav-item active" style="min-width: 130px;">
         <a class="nav-link" href="#/termini">
-          <i class="fa fa-list"></i>
+          <i class="fa fa-list">
+          	<span class="badge badge-success">{{terminiBroj}}</span>
+          </i>
           Zakazani termini
           <span class="sr-only">(current)</span>
           </a>
       </li>
       <li class="nav-item active" style="min-width: 130px;">
         <a class="nav-link" href="#/zahtevTermini">
-          <i class="fa fa-list"></i>
+          <i class="fa fa-list">
+          	<span class="badge badge-success">{{zahtevTerminiBroj}}</span>
+          </i>
           Zahtevi za termine
           <span class="sr-only">(current)</span>
           </a>
@@ -82,8 +93,19 @@ Vue.component("pacijentHome", {
 	
 	mounted(){
 
-		axios.get("/user/check/pacijent")
+		axios.get("/pacijent/termini")
+		.then(response => {
+			this.terminiBroj = response.data.length;
+		})
 		.catch(reponse => {
+			this.$router.push("/");
+		});
+		
+		axios.get("/pacijent/zahtevTermini")
+		.then(response => {
+			this.zahtevTerminiBroj = response.data.length
+		})
+		.catch(response => {
 			this.$router.push("/");
 		});
 	}

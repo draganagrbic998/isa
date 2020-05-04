@@ -2,6 +2,7 @@ package com.example.demo.model.posete;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,10 +21,11 @@ import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.TerminDTO;
 import com.example.demo.dto.pretraga.ZahtevTerminDTO;
 import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.ostalo.Slobodnost;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 @Entity
-public class Karton {
+public class Karton implements Slobodnost{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -175,6 +177,36 @@ public class Karton {
 			zahtevTermini.add(new ZahtevTerminDTO(zahtev));
 		Collections.sort(zahtevTermini);
 		return zahtevTermini;
+	}
+
+	@Override
+	public boolean slobodan(Date pocetak, Date kraj) {
+
+		for (Poseta p: this.posete) {
+			
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
+				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+						&&  pocetak.before(p.kraj()))
+					return false;
+				if ((kraj.after(p.pocetak()))
+						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+					return false;
+			}
+
+		}
+		
+		for (ZahtevPoseta p: this.posetaZahtevi) {
+			
+			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+					&&  pocetak.before(p.kraj()))
+				return false;
+			if ((kraj.after(p.pocetak()))
+					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+				return false;
+		}
+		
+		return true;
+		
 	}
 	
 }
