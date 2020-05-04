@@ -38,8 +38,9 @@ Vue.component("zahtevOperacijaObrada", {
 	
 	<div>
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a v-if="selectedZahtev==false" class="navbar-brand" href="#">ZAHTEVI ZA POSETU</a>
-  <a v-else class="navbar-brand" href="#">SLOBODNE SALE {{formatiraj(zahtevSelected.datum)}}</a>
+  <a v-if="selectedZahtev==false && selectedSala==false" class="navbar-brand" href="#">ZAHTEVI ZA POSETU</a>
+  <a v-else-if="selectedZahtev==true && selectedSala==false" class="navbar-brand" href="#">SLOBODNE SALE {{formatiraj(zahtevSelected.datum)}}</a>
+  <a v-else class="navbar-brand" href="#">KALENDAR ZAUZETOSTI SALE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -135,13 +136,19 @@ Vue.component("zahtevOperacijaObrada", {
 		</div>
 		
 		<div class="zahteviObradaOperacijeDesniDiv">
-			<select v-model="selectedLekari" multiple style="min-width: 300px;">
-				<option v-for="l in lekari" :value="l.id">
-				{{l.ime + " " + l.prezime}}
-				</option>
-			</select>
-			<br><br>
-			<button v-on:click="rezervisi(salaSelected)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button>
+			<table class="table">
+				<tr><td>Prvi Slobodan Termin: <input type="text" v-model="salaSelected.prviSlobodan" disabled></td></tr>
+				<tr>
+					<td>Obavezni Lekari: 
+					<select v-model="selectedLekari" multiple style="min-width: 300px;">
+						<option v-for="l in lekari" :value="l.id">
+						{{l.ime + " " + l.prezime}}
+						</option>
+					</select>
+					</td>
+				</tr>
+				<tr><td><button v-on:click="rezervisi(salaSelected)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
+			</table>
 		</div>
 	</div>
 		
@@ -179,8 +186,26 @@ Vue.component("zahtevOperacijaObrada", {
 			this.zahtevOperacijaObrada.pocetakOriginalni = this.zahtevSelected.datum;
 			this.selectedLekari = [];
 			this.selectedLekari.push(this.zahtevSelected.idLekar);
+			this.nadjiPrviSlobodan();
 		},
-	
+		
+		nadjiPrviSlobodan: function() {
+			let data = {
+				'zahtev': this.zahtevSelected,
+				'salaId': this.salaSelected.id,
+				'lekari': this.selectedLekari
+			}
+			
+			axios.post("/sala/admin/getPrviSlobodan", data)
+			.then(response => {
+				this.salaSelected.prviSlobodan = response.data;
+			})
+			.catch(response => {
+				alert("SERVER ERROR!");
+				this.$router.push("/");
+			});
+		},
+		
 		selektovanZahtev: function(z) {
 			// nalazi sve slobodne sale za slektovan zahtev
 			this.zahtevSelected = z;
@@ -213,6 +238,9 @@ Vue.component("zahtevOperacijaObrada", {
 		//pretraga ime ILI broj
 		search: function() {
 			console.log("pretraga");
+			this.salaSelected = {};
+			this.selectedSala = false;
+			
 			this.salePretraga = [];
 			this.nemaRezultata = '';
             let lowerPretraga = (this.pretraga).toLowerCase();
@@ -242,6 +270,9 @@ Vue.component("zahtevOperacijaObrada", {
 			console.log(this.zahtevSelected.datum);
 			this.nadjiSale();
 			this.nadjiLekare();
+			
+			if (this.selectedSala)
+				this.nadjiPrviSlobodan();
 		},
 
 		//formatiranje vremena, moze da unese 0, 7, 12 pa ja sredim

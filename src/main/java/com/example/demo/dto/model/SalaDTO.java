@@ -139,5 +139,22 @@ public class SalaDTO implements Comparable<SalaDTO>{
 		this.prviSlobodan = pocetak.getTime();
 		
 	}
+
+	public void nadjiSlobodanTermin(String p, String k, List<Lekar> lekari) throws ParseException {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		Calendar pocetak = Calendar.getInstance();
+		pocetak.setTime(f.parse(p));
+		Calendar kraj = Calendar.getInstance();
+		kraj.setTime(f.parse(k));
+		
+		for (Lekar l : lekari) {
+			while (!this.proveriDatum(pocetak.getTime(), kraj.getTime()) || !l.slobodan(pocetak.getTime(), kraj.getTime())) {
+				pocetak.add(Calendar.HOUR, 1);
+				kraj.add(Calendar.HOUR, 1);
+			}	
+		}
+		
+		this.prviSlobodan = pocetak.getTime();		
+	}
 	
 }

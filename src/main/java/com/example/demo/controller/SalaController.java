@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.partial.PosetaConversion;
 import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
+import com.example.demo.dto.pretraga.GetPrviSlobodanDTO;
 import com.example.demo.dto.unos.ZahtevOperacijaObradaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
@@ -123,6 +125,24 @@ public class SalaController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/admin/getPrviSlobodan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getPrviSlobodan(@RequestBody GetPrviSlobodanDTO data) throws ParseException {		
+		//try {
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+			data.getZahtev().osveziKraj();
+			
+			SalaDTO sala = this.salaConversion.get(this.salaService.nadji(data.getSalaId()));
+			
+			List<Lekar> lekari = lekarService.nadji(data.getLekari());
+			
+			sala.nadjiSlobodanTermin(data.getZahtev().getDatum(), data.getZahtev().getKraj(), lekari);
+			return new ResponseEntity<>(f.format(sala.getPrviSlobodan()), HttpStatus.OK);
+		//} catch (Exception e) {
+		//	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		//}
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
