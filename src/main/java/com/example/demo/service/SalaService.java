@@ -32,8 +32,8 @@ public class SalaService {
 	@Transactional(readOnly = true)
 	public List<Sala> findAll(Zaposleni zaposleni) {
 		List<Sala> sale = new ArrayList<>();
-		for (Sala s : this.salaRepository.findAll()) {
-			if (s.getKlinika().getId().equals(zaposleni.getKlinika().getId()) && s.isAktivan())
+		for (Sala s : this.salaRepository.findByKlinikaId(zaposleni.getKlinika().getId())) {
+			if (s.isAktivan())
 				sale.add(s);
 		}
 		return sale;

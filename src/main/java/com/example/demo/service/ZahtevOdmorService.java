@@ -54,8 +54,8 @@ public class ZahtevOdmorService {
 	
 	public List<ZahtevOdmorDTO> findAll(Klinika klinika) {
 		List<ZahtevOdmorDTO> zahtevi = new ArrayList<>();
-		for (ZahtevOdmor z : this.zahtevOdmorRepository.findAll()) {
-			if (z.getKlinika().getId().equals(klinika.getId()) && !z.getOdobren())
+		for (ZahtevOdmor z : this.zahtevOdmorRepository.findByKlinikaId(klinika.getId())) {
+			if (!z.getOdobren())
 				zahtevi.add(new ZahtevOdmorDTO(z));
 		}
 		return zahtevi;

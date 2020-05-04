@@ -40,8 +40,8 @@ public class ZahtevPosetaService {
 	
 	public List<ZahtevPosetaObradaDTO> findAll(Klinika klinika) {
 		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
-		for (ZahtevPoseta z : this.zahtevPosetaRepository.findAll()) {
-			if (z.getTipPosete().getKlinika().getId().equals(klinika.getId()) && z.getTipPosete().isPregled())
+		for (ZahtevPoseta z : this.zahtevPosetaRepository.findByKlinikaId(klinika.getId())) {
+			if (z.getTipPosete().isPregled())
 				zahtevi.add(new ZahtevPosetaObradaDTO(z));
 		}
 		return zahtevi;
@@ -50,8 +50,8 @@ public class ZahtevPosetaService {
 	@Transactional(readOnly = true)
 	public List<ZahtevPosetaObradaDTO> getOperacije(Klinika klinika) {
 		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
-		for (ZahtevPoseta z : this.zahtevPosetaRepository.findAll()) {
-			if (z.getTipPosete().getKlinika().getId().equals(klinika.getId()) && !z.getTipPosete().isPregled())
+		for (ZahtevPoseta z : this.zahtevPosetaRepository.findByKlinikaId(klinika.getId())) {
+			if (!z.getTipPosete().isPregled())
 				zahtevi.add(new ZahtevPosetaObradaDTO(z));
 		}
 		return zahtevi;

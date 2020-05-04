@@ -29,9 +29,8 @@ public class TipPoseteService {
 		
 	@Transactional(readOnly = false)
 	public void save(TipPosete tipPosete) {
-		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
-			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().
-					equals(tipPosete.getKlinika().getId()))
+		for (TipPosete tp: this.tipPoseteRepository.findByKlinikaId(tipPosete.getKlinika().getId())) {
+			if (tp.getNaziv().equals(tipPosete.getNaziv()))
 				throw new MyRuntimeException();
 		}
 		this.tipPoseteRepository.save(tipPosete);
@@ -45,8 +44,8 @@ public class TipPoseteService {
 	@Transactional(readOnly = true)
 	public List<TipPosete> findAll(Zaposleni zaposleni) {
 		List<TipPosete> tipovi = new ArrayList<>();
-		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
-			if (tp.getKlinika().getId().equals(zaposleni.getKlinika().getId()) && tp.isAktivan())
+		for (TipPosete tp : this.tipPoseteRepository.findByKlinikaId(zaposleni.getKlinika().getId())) {
+			if (tp.isAktivan())
 				tipovi.add(tp);
 		}
 		return tipovi;

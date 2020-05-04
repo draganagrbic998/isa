@@ -33,11 +33,7 @@ public class UserService {
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 
-			if (k.getEmail().equals("nasmejlservis@gmail.com")) {
-				System.out.println(user.getLozinka());
-				System.out.println(k.getLozinka());
-				System.out.println(encoder.matches(user.getLozinka(), k.getLozinka()));
-			}
+			
 			
 			if (k.getEmail().equals(user.getEmail()) && encoder.matches(user.getLozinka(), k.getLozinka()) && k.isAktivan()) {
 				
