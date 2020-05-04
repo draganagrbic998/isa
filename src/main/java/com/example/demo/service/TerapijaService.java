@@ -28,7 +28,8 @@ public class TerapijaService {
 		List<Terapija> terapije = new ArrayList<>();
 		
 		for (Terapija t : this.terapijaRepository.findAll()) {
-			if (t.getSestra() == null && t.getIzvestaj().getPoseta().getSala().getKlinika().equals(sestra.getKlinika())) 
+			if (t.getSestra() == null && t.getIzvestaj().getPoseta().getSala().
+					getKlinika().getId().equals(sestra.getKlinika().getId())) 
 				terapije.add(t);
 
 		}

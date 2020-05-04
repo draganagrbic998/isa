@@ -25,7 +25,8 @@ public class TipPoseteService {
 	@Transactional(readOnly = false)
 	public void save(TipPosete tipPosete) {
 		for (TipPosete tp : this.tipPoseteRepository.findAll()) {
-			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().equals(tipPosete.getKlinika().getId()))
+			if (tp.getNaziv().equals(tipPosete.getNaziv()) && tp.getKlinika().getId().
+					equals(tipPosete.getKlinika().getId()))
 				throw new MyRuntimeException();
 		}
 		this.tipPoseteRepository.save(tipPosete);

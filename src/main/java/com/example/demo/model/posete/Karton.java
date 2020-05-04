@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.TerminDTO;
 import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 @Entity
 public class Karton {
@@ -43,7 +44,9 @@ public class Karton {
 	private Pacijent pacijent;
 	@OneToMany(mappedBy="karton", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
-	
+	@OneToMany(mappedBy="karton", fetch = FetchType.EAGER)
+	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
+
 	public Karton() {
 		super();
 	}
@@ -131,6 +134,14 @@ public class Karton {
 
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
+	}
+	
+	public Set<ZahtevPoseta> getPosetaZahtevi() {
+		return posetaZahtevi;
+	}
+
+	public void setPosetaZahtevi(Set<ZahtevPoseta> posetaZahtevi) {
+		this.posetaZahtevi = posetaZahtevi;
 	}
 
 	public List<TerminDTO> getTermini(){
