@@ -144,7 +144,7 @@ public class SalaController {
 			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
 			slobodan = salaDTO.getPrviSlobodan();
 			if (poseta != null ) { 
-				this.posetaService.save(poseta, zahtevDTO.getId());
+				this.posetaService.save(poseta, zahtevDTO.getId(), true);
 				String obavestenjePacijentu = "Postovani\n, pregled "+ zahtevDTO.getNaziv()+ " kod lekara " + zahtevDTO.getLekar() + " zakazan je za datum "+zahtevDTO.getDatum();
 				String obavestenjeLekaru = "Postovani\n, pregled"+ zahtevDTO.getNaziv()+ " za pacijenta " + zahtevDTO.getPacijent() + " zakazan je za datum "+zahtevDTO.getDatum();
 				Message porukaPacijent = new Message(pacijent.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjePacijentu);
@@ -171,7 +171,7 @@ public class SalaController {
 
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
 			if (!poseta.getTipPosete().isPregled()) {
-				this.posetaService.save(poseta, zahtevDTO.getId());
+				this.posetaService.save(poseta, zahtevDTO.getId(), true);
 			}
 			else {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);

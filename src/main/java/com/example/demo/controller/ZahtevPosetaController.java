@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +28,12 @@ import com.example.demo.model.korisnici.Korisnik;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.korisnici.Zaposleni;
+import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.KlinikaService;
 import com.example.demo.service.Message;
+import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevPosetaService;
 
@@ -44,6 +49,9 @@ public class ZahtevPosetaController {
 	
 	@Autowired
 	private ZahtevPosetaService zahtevPosetaService;
+	
+	@Autowired
+	private PosetaService posetaService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -114,4 +122,11 @@ public class ZahtevPosetaController {
 		}
 	}
 
+	//Cron expression: sekunde, minuti, sati, dan u nedelji, dan, mesec, godina
+	@Scheduled(cron = "0 59 23 * * *")
+	public void obradiZahteveAutomatski() throws ParseException {
+		HashMap<Poseta, Integer> novePosete = this.zahtevPosetaService.obradiAutomatski();
+		for (Poseta np : novePosete.keySet())
+			posetaService.save(np, novePosete.get(np), false);
+	}
 }

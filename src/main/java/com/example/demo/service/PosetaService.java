@@ -57,7 +57,7 @@ public class PosetaService {
 	}
 
 	@Transactional(readOnly = false)
-	public void save(Poseta poseta, Integer id) {
+	public void save(Poseta poseta, Integer id, boolean menjajLekare) {
 		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj())) {
 			System.out.println("sala nije slobodna");
 			throw new MyRuntimeException();
@@ -69,10 +69,14 @@ public class PosetaService {
 			}
 		}
 		this.posetaRepository.save(poseta);
-		for (Lekar l : poseta.getLekari()) {
-			l.setPoslednjaIzmena(new Date());
-			this.lekarRepository.save(l);
+		
+		if (menjajLekare) {
+			for (Lekar l : poseta.getLekari()) {
+				l.setPoslednjaIzmena(new Date());
+				this.lekarRepository.save(l);
+			}
 		}
+		
 		if (id!=null) {
 			this.zahtevRepository.deleteById(id);
 		}
