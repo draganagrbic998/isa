@@ -287,6 +287,10 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 
 	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
+		
+		if (!this.isAktivan())
+			return false;
+		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		
 		Integer vremePocetak = Integer.parseInt(f.format(pocetak).substring(11,f.format(pocetak).length() - 3));

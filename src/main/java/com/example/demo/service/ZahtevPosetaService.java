@@ -26,6 +26,8 @@ public class ZahtevPosetaService {
 	
 	@Autowired
 	private LekarRepository lekarRepository;
+
+
 		
 	@Transactional(readOnly = false)
 	public void save(ZahtevPoseta zahtev) {

@@ -99,6 +99,9 @@ public class Sala implements Slobodnost{
 
 	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
+		
+		if (!this.aktivan)
+			return false;
 
 		for (Poseta p: this.posete) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {

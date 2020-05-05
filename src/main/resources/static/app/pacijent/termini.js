@@ -30,15 +30,15 @@ Vue.component("termini", {
       </li>
       <li class="nav-item active" style="min-width: 100px;" v-if="selected">
         <a class="nav-link" href="#/termini" v-on:click="refresh()">
-          <i class="fa fa-calendar"></i>
-          Zakazani termini
+          <i class="fa fa-reply"></i>
+          Nazad
           <span class="sr-only">(current)</span>
           </a>
       </li>
     </ul>
         <form class="form-inline my-2 my-lg-0" v-if="!selected">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+      <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>		

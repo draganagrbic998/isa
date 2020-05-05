@@ -151,7 +151,7 @@ public class Karton implements Slobodnost{
 		
 		List<TerminDTO> termini = new ArrayList<>();
 		for (Poseta p: this.posete) {
-			if (p.getStanje().equals(StanjePosete.ZAUZETO))
+			if (p.getStanje().equals(StanjePosete.ZAUZETO) && p.getDatum().after(new Date()))
 				termini.add(new TerminDTO(p));
 		}
 		Collections.sort(termini);
@@ -173,8 +173,10 @@ public class Karton implements Slobodnost{
 
 	public List<ZahtevTerminDTO> getZahtevTermini() {
 		List<ZahtevTerminDTO> zahtevTermini = new ArrayList<>();
-		for (ZahtevPoseta zahtev: this.posetaZahtevi)
-			zahtevTermini.add(new ZahtevTerminDTO(zahtev));
+		for (ZahtevPoseta zahtev: this.posetaZahtevi) {
+			if (zahtev.getDatum().after(new Date()))
+				zahtevTermini.add(new ZahtevTerminDTO(zahtev));
+		}
 		Collections.sort(zahtevTermini);
 		return zahtevTermini;
 	}

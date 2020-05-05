@@ -53,7 +53,7 @@ Vue.component("pacijentHome", {
           <i class="fa fa-list">
           	<span class="badge badge-success">{{terminiBroj}}</span>
           </i>
-          Zakazani termini
+          Zakazane posete
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -62,7 +62,7 @@ Vue.component("pacijentHome", {
           <i class="fa fa-list">
           	<span class="badge badge-success">{{zahtevTerminiBroj}}</span>
           </i>
-          Zahtevi za termine
+          Zahtevi za posete
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -71,7 +71,7 @@ Vue.component("pacijentHome", {
       <li class="nav-item active" style="min-width: 140px;">
         <a class="nav-link" href="#/klinikeSlobodno">
           <i class="fa fa-bell"></i>
-          Povoljni termini
+          Povoljni pregledi
           <span class="sr-only">(current)</span>
           </a>
       </li>

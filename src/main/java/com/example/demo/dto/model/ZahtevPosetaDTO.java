@@ -12,6 +12,7 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 	private Integer karton;
 	private Integer lekar;
 	private Integer tipPosete;
+	private Integer klinika;
 	
 	public ZahtevPosetaDTO() {
 		super();
@@ -24,6 +25,7 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 		this.karton = zahtev.getKarton().getId();
 		this.lekar = zahtev.getLekar().getId();
 		this.tipPosete = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getId() : null;
+		this.klinika = zahtev.getKlinika().getId();
 	}
 
 	public Integer getId() {
@@ -72,6 +74,14 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 
 	public void setTipPosete(Integer tipPosete) {
 		this.tipPosete = tipPosete;
+	}
+
+	public Integer getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Integer klinika) {
+		this.klinika = klinika;
 	}
 
 	@Override

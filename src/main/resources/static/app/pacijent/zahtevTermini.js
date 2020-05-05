@@ -4,7 +4,10 @@ Vue.component("zahtevTermini", {
 		return{
 			zahtevi: [], 
 			zahteviBackup: [],
-			pretraga: ''
+			pretraga: '', 
+			selectedZahtev: {}, 
+			selected: false, 
+			datum: ''
 		}
 	}, 
 	
@@ -18,17 +21,24 @@ Vue.component("zahtevTermini", {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="!selected">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
+      <li class="nav-item active" style="min-width: 100px;" v-if="selected">
+        <a class="nav-link" href="#/zahtevTermini" v-on:click="refresh()">
+          <i class="fa fa-reply"></i>
+          Nazad
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
     </ul>
-        <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+        <form class="form-inline my-2 my-lg-0" v-if="!selected">
+      <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>	
@@ -36,11 +46,58 @@ Vue.component("zahtevTermini", {
 		
 		</div>
 		
-		<div class="container" id="cosak">
+		<div v-if="selected" class="card" id="box">
+		
+			<h2>Detalji zahteva</h2><br>
+			
+			<table class="table">
+			
+			<tr>
+				<th>Datum: </th>
+				<td><input type="text" v-model="datum" class="form-control" disabled></td>
+			</tr>
+				
+			
+				
+			<tr>
+				<th scope="row">Tip posete: </th>
+				<td><input type="text" v-model="selectedZahtev.tipPosete" class="form-control" disabled></td>
+			</tr>
+			
+			<tr>
+				<th scope="row">Naziv posete: </th>
+				<td><input type="text" v-model="selectedZahtev.nazivPosete" class="form-control" disabled></td>
+			</tr>
+					
+			
+				
+			<tr>
+				<th scope="row">Lekar: </th>
+				<td><input type="text" v-model="selectedZahtev.lekar" class="form-control" disabled></td>
+			</tr>
+				
+			<tr>
+				<th scope="row">Trajanje posete: </th>
+				<td><input type="text" v-model="selectedZahtev.trajanje" class="form-control" disabled></td>
+			</tr>
+			
+			<tr>
+				<th scope="row">Cena posete: </th>
+				<td><input type="text" v-model="selectedZahtev.cena" class="form-control" disabled></td>
+			</tr>
+			
+			</table>
+
+			
+			</table>
+		
+		</div>
+		
+		<div v-else class="container" id="cosak">
 		
 			<h2>Zahtevi za termine</h2><br>
 			
-			<table class="table">
+			<table class="table table-hover">
 			
 				<thead>
 				
@@ -56,7 +113,7 @@ Vue.component("zahtevTermini", {
 				
 				<tbody>
 				
-					<tr v-for="z in zahtevi">
+					<tr v-for="z in zahtevi" v-on:click="selectZahtev(z)">
 						
 						<td>{{formatiraj(z.datum)}}</td>
 						<td>{{z.tipPosete}}</td>
@@ -106,6 +163,16 @@ Vue.component("zahtevTermini", {
 			  return day + '/' + month + '/' + year + " " + hours + ":" + minutes;
 			  
 		},
+		
+		selectZahtev: function(zahtev){
+			this.selectedZahtev = zahtev;
+			this.selected = true;
+			this.datum = this.formatiraj(this.selectedZahtev.datum);
+		}, 
+		
+		refresh: function(){
+			location.reload();
+		}, 
 		
 		search: function(){
 			

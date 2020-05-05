@@ -11,6 +11,8 @@ public class ZahtevTerminDTO implements Comparable<ZahtevTerminDTO>{
 	private String tipPosete;
 	private String nazivPosete;
 	private String lekar;
+	private double trajanje;
+	private double cena;
 	
 	public ZahtevTerminDTO() {
 		super();
@@ -22,6 +24,8 @@ public class ZahtevTerminDTO implements Comparable<ZahtevTerminDTO>{
 		this.tipPosete = zahtev.getTipPosete().isPregled() ? "PREGLED" : "OPERACIJA";
 		this.nazivPosete = zahtev.getTipPosete().getNaziv();
 		this.lekar = zahtev.getLekar().getIme() + " " + zahtev.getLekar().getPrezime();
+		this.trajanje = zahtev.getTipPosete().getSati() + zahtev.getTipPosete().getMinute() / 60.0;
+		this.cena = zahtev.getTipPosete().getCena();
 	}
 	public Integer getId() {
 		return id;
@@ -53,7 +57,19 @@ public class ZahtevTerminDTO implements Comparable<ZahtevTerminDTO>{
 	public void setLekar(String lekar) {
 		this.lekar = lekar;
 	}
-
+	public double getTrajanje() {
+		return trajanje;
+	}
+	public void setTrajanje(double trajanje) {
+		this.trajanje = trajanje;
+	}
+	public double getCena() {
+		return cena;
+	}
+	public void setCena(double cena) {
+		this.cena = cena;
+	}
+	
 	@Override
 	public int compareTo(ZahtevTerminDTO z) {
 		return this.datum.compareTo(z.datum);

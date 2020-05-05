@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.conversion.total.ZahtevPosetaConversion;
 import com.example.demo.dto.model.ZahtevPosetaDTO;
+import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Korisnik;
@@ -26,6 +27,7 @@ import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.service.EmailService;
+import com.example.demo.service.KlinikaService;
 import com.example.demo.service.Message;
 import com.example.demo.service.UserService;
 import com.example.demo.service.ZahtevPosetaService;
@@ -45,10 +47,13 @@ public class ZahtevPosetaController {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private KlinikaService klinikaService;
 
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@PostMapping(value="/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
+	public ResponseEntity<KlinikaPretragaDTO> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
 		
 		ZahtevPoseta zahtev = null;
 		try {
@@ -78,10 +83,10 @@ public class ZahtevPosetaController {
 				if (z instanceof Admin)
 					this.emailService.sendMessage(new Message(z.getEmail(), "Poslat zahtev za posetu", obavestenje));
 			}
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.nadji(zahtev.getKlinika().getId())), HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.nadji(zahtev.getKlinika().getId())), HttpStatus.OK);
 		}
 	}
 	//nakon petrovog rada izmenjeno da vraca samo posetee

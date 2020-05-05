@@ -540,7 +540,8 @@ Vue.component("klinikeLekari", {
 			
 			axios.post("/zahtevPoseta/kreiranje", this.zahtev)
 			.then(response => {
-				location.reload();
+				this.selectKlinika(response.data);
+				this.pretraga = false;
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

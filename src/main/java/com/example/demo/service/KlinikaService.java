@@ -82,8 +82,11 @@ public class KlinikaService {
 	public List<KlinikaSlobodnoDTO> slobodno() {
 		
 		List<KlinikaSlobodnoDTO> lista = new ArrayList<>();
-		for (Klinika k: this.klinikaRepository.findAll())
-			lista.add(new KlinikaSlobodnoDTO(k, this.getPosete(k)));
+		for (Klinika k: this.klinikaRepository.findAll()) {
+			KlinikaSlobodnoDTO temp = new KlinikaSlobodnoDTO(k, this.getPosete(k));
+			if (!temp.getPosete().isEmpty())
+				lista.add(new KlinikaSlobodnoDTO(k, this.getPosete(k)));
+		}
 		Collections.sort(lista);
 		return lista;
 
@@ -125,6 +128,10 @@ public class KlinikaService {
 		}
 		return mapa.values();
 		
+	}
+
+	public Klinika nadji(Integer id) {
+		return this.klinikaRepository.getOne(id);
 	}
 
 	
