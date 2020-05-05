@@ -1,8 +1,8 @@
-Vue.component("radniKalendar", {
-	
+Vue.component("radniKalendar", {	
 	data: function(){
 		return {
 			obaveze: [],
+			trenutni: [],
 			dnevni: {},
 			nedeljni: {},
 			mesecni: {},
@@ -82,8 +82,8 @@ Vue.component("radniKalendar", {
 					<th> Br. Operacija </th>
 				</tr>
 				
-				<tr v-for="(value, key) in trenutni" v-on:click="prikaziDetalje(value.obaveze)" bgcolor="white">
-				    <td>{{key}}</td>
+				<tr v-for="(value, key) in trenutniSorted" v-on:click="prikaziDetalje(value.obaveze)" bgcolor="white">
+				    <td>{{value.period}}</td>
 					<td>{{value.brPregleda}}</td>
 					<td>{{value.brOperacija}}</td>
 				</tr>
@@ -99,7 +99,7 @@ Vue.component("radniKalendar", {
 					<th> Akcija </th>
 				</tr>
 				
-				<tr v-for="obaveza in selectedObaveze" bgcolor="white">
+				<tr v-for="obaveza in selectedObavezeSorted" bgcolor="white">
 				    <td>{{obaveza.pocetak}}</td>
 					<td>{{obaveza.trajanje}}</td>
 					<td>{{obaveza.tip}}</td>
@@ -116,6 +116,16 @@ Vue.component("radniKalendar", {
 		</div>
 	
 	`, 
+	
+	computed: {
+		trenutniSorted: function () {
+			return _.orderBy(this.trenutni, 'period');
+		},
+	
+		selectedObavezeSorted: function () {
+			return _.orderBy(this.selectedObaveze, 'datum');
+		}
+	},
 	
 	mounted(){
 		
@@ -190,6 +200,19 @@ Vue.component("radniKalendar", {
 			this.selectedObaveze = obaveze;
 		},
 		
+		compare: function(a, b) {
+			  const datumA = a.datumSortiranje;
+			  const datumB = b.datumSortiranje;
+
+			  let comparison = 0;
+			  if (datumA > datumB) {
+			    comparison = 1;
+			  } else if (datumA < datumB) {
+			    comparison = -1;
+			  }
+			  return comparison;
+		},
+		
 		prikaziDnevni: function() {
 			this.selectedObaveze = [];
 			
@@ -244,7 +267,7 @@ Vue.component("radniKalendar", {
 					acc[period].brOperacija += 1;
 				  
 				acc[period].obaveze.push(obaveza);
-
+				
 				return acc;
 
 			}, {});
@@ -275,6 +298,7 @@ Vue.component("radniKalendar", {
 					acc[period].brOperacija += 1;
 				
 				acc[period].obaveze.push(obaveza);
+				acc[period].obaveze.sort(this.compare);
 
 				return acc;
 
@@ -306,6 +330,7 @@ Vue.component("radniKalendar", {
 					acc[period].brOperacija += 1;
 				
 				acc[period].obaveze.push(obaveza);
+				acc[period].obaveze.sort(this.compare);
 
 				return acc;
 
