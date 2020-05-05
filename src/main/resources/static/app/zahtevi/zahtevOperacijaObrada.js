@@ -96,9 +96,9 @@ Vue.component("zahtevOperacijaObrada", {
 				<th> Broj </th>
 			</tr>
 			
-			<tr v-for="s in salePretraga" v-on:click="selectSala(s)">
-				<td>{{s.naziv}}</td>
-				<td>{{s.broj}}</td>
+			<tr v-for="s in salePretraga">
+				<td v-on:click="selectSala(s)">{{s.naziv}}</td>
+				<td v-on:click="selectSala(s)">{{s.broj}}</td>
 				<td><button v-on:click="rezervisi(s)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
 			</table>
 				
@@ -352,6 +352,11 @@ Vue.component("zahtevOperacijaObrada", {
 		
 		//salje zahtev za registraciju
 		rezervisi: function(s) {
+			if (this.selectedLekari.length === 0) {
+				alert("Morate odabrati bar jednog lekara!");
+				return;
+			}
+				
 			this.zahtevSelected.idSale = s.id;
 
 			this.zahtevOperacijaObrada.id = this.zahtevSelected.id;
@@ -369,8 +374,8 @@ Vue.component("zahtevOperacijaObrada", {
 				this.$router.push("/adminHome");
 			})
 			.catch(response => {
-				alert("SERVER ERROR!");
-				this.selectedZahtev = false;
+				alert("Sala ili lekar su zauzeti!");				
+				this.selectSala(s);
 			});
 		},
 		
