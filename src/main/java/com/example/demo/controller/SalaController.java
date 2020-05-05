@@ -130,7 +130,7 @@ public class SalaController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/getPrviSlobodan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getPrviSlobodan(@RequestBody GetPrviSlobodanDTO data) throws ParseException {		
-		//try {
+		try {
 			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 			data.getZahtev().osveziKraj();
 			
@@ -140,9 +140,9 @@ public class SalaController {
 			
 			sala.nadjiSlobodanTermin(data.getZahtev().getDatum(), data.getZahtev().getKraj(), lekari);
 			return new ResponseEntity<>(f.format(sala.getPrviSlobodan()), HttpStatus.OK);
-		//} catch (Exception e) {
-		//	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		//}
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
@@ -186,9 +186,13 @@ public class SalaController {
 			salaDTO = new SalaDTO(sala);
 
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
-			this.posetaService.save(poseta);
-
-			this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+			if (!poseta.getTipPosete().isPregled()) {
+				this.posetaService.save(poseta);
+				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+			}
+			else {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
