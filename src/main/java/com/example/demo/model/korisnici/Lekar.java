@@ -285,7 +285,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 	
 	public boolean proveriZahteve(Date pocetak, Date kraj, Integer id) {
 		for (ZahtevPoseta p: this.posetaZahtevi) {
-			if (p.getId()!=id) {
+			if (!p.getId().equals(id)) {
 				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
 					&&  pocetak.before(p.kraj())) {
 					System.out.println("pao sam na proveri zahteve 1");
