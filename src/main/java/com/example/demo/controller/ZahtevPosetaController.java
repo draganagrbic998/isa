@@ -54,7 +54,7 @@ public class ZahtevPosetaController {
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@PostMapping(value="/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KlinikaPretragaDTO> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
-		
+		System.out.println("MAMA");
 		ZahtevPoseta zahtev = null;
 		try {
 			Korisnik korisnik = this.userService.getSignedKorisnik();

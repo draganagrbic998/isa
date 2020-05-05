@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.model.ZahtevRegistracijaDTO;
@@ -13,13 +13,16 @@ import com.example.demo.model.zahtevi.ZahtevRegistracija;
 @Component
 public class ZahtevRegistracijaConversion {
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	
 
 	public ZahtevRegistracija get(ZahtevRegistracijaDTO zahtevDTO) {
 				
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return new ZahtevRegistracija(zahtevDTO.getId(), 
 				zahtevDTO.getEmail(), 
-				encoder.encode(zahtevDTO.getLozinka()), 
+				this.passwordEncoder.encoder().encode(zahtevDTO.getLozinka()), 
 				zahtevDTO.getIme(), 
 				zahtevDTO.getPrezime(), 
 				zahtevDTO.getTelefon(), 

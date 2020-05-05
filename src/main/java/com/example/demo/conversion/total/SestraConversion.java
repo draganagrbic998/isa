@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,23 +23,26 @@ public class SestraConversion {
 		
 	@Autowired
 	private SestraRepository sestraRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+
 	
 	@Transactional(readOnly = true)
 	public Sestra get(SestraDTO sestraDTO) throws ParseException {
 				
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String lozinka;
 		long version;
 		if (sestraDTO.getId() != null) {
 			version = this.sestraRepository.getOne(sestraDTO.getId()).getVersion();
 			if (!sestraDTO.getLozinka().equals(this.sestraRepository.getOne(sestraDTO.getId()).getLozinka()))
-				lozinka = encoder.encode(sestraDTO.getLozinka());
+				lozinka = this.passwordEncoder.encoder().encode(sestraDTO.getLozinka());
 			else
 				lozinka = sestraDTO.getLozinka();
 		}
 		else {
 			version = 0l;
-			lozinka = encoder.encode(sestraDTO.getLozinka());
+			lozinka = this.passwordEncoder.encoder().encode(sestraDTO.getLozinka());
 		}
 		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");

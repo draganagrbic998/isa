@@ -151,7 +151,7 @@ Vue.component("zahtevPosetaSlanje", {
 			
 			if (this.greska) return;
 						
-			axios.post("/zahtevPoseta/kreiranje", this.pregled)
+			axios.post("/zahtevPoseta/kreiranje", this.pregled, null)
 			.then(response => {
 				alert("Zahtev uspesno poslat!");
 				this.$router.push("/zapocetPregled");

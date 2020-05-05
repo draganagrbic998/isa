@@ -1,10 +1,10 @@
 package com.example.demo.conversion.partial;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.conversion.total.PasswordEncoder;
 import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.repository.KartonRepository;
@@ -19,22 +19,25 @@ public class PacijentConversion {
 	@Autowired
 	private PacijentRepository pacijentRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	
 	@Transactional(readOnly = true)
 	public Pacijent get(PacijentDTO pacijentDTO) {
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		long version;
 		String lozinka;
 		if (pacijentDTO.getId() != null) {
 			version = this.pacijentRepository.getOne(pacijentDTO.getId()).getVersion();
 			if (!pacijentDTO.getLozinka().equals(this.pacijentRepository.getOne(pacijentDTO.getId()).getLozinka()))
-				lozinka = encoder.encode(pacijentDTO.getLozinka());
+				lozinka = this.passwordEncoder.encoder().encode(pacijentDTO.getLozinka());
 			else
 				lozinka = pacijentDTO.getLozinka();
 		}
 		else {
 			version = 0l;		
-			lozinka = encoder.encode(pacijentDTO.getLozinka());
+			lozinka = this.passwordEncoder.encoder().encode(pacijentDTO.getLozinka());
 		}
 		
 

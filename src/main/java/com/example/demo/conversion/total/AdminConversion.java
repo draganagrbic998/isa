@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,24 +22,25 @@ public class AdminConversion {
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 		
 	@Transactional(readOnly = true)
 	public Admin get(AdminDTO adminDTO) {
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		long version;
 		String lozinka;
+		
 		if (adminDTO.getId() != null) {
 			version = this.adminRepository.getOne(adminDTO.getId()).getVersion();
 			if (!adminDTO.getLozinka().equals(this.adminRepository.getOne(adminDTO.getId()).getLozinka()))
-				lozinka = encoder.encode(adminDTO.getLozinka());
+				lozinka = this.passwordEncoder.encoder().encode(adminDTO.getLozinka());
 			else
 				lozinka = adminDTO.getLozinka();
 		}
 		else {
 			version = 0l;
-			lozinka = encoder.encode(adminDTO.getLozinka());
+			lozinka = this.passwordEncoder.encoder().encode(adminDTO.getLozinka());
 		}
 		
 		

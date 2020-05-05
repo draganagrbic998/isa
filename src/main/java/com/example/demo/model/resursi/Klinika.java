@@ -159,19 +159,17 @@ public class Klinika implements Ocenjivanje{
 		return o;
 	}
 	@Override
-	public Double prosecnaOcena() {
-		Double suma = 0.0;
-		for (Ocena o : this.ocene) {
-			suma += o.getVrednost();
-		}
-		if (this.ocene.size()==0) {
+	public double prosecnaOcena() {
+		if (this.ocene.isEmpty())
 			return 0.0;
-		}
-		return (suma/this.ocene.size());
+		double suma = 0.0;
+		for (Ocena o : this.ocene)
+			suma += o.getVrednost();
+		return suma/this.ocene.size();
 	}
 	
 	@Override
-	public Double izracunajProfit(Date pocetak, Date kraj) {
+	public double izracunajProfit(Date pocetak, Date kraj) {
 		Calendar cal = Calendar.getInstance();
 		double profit = 0.0;
 		for (Sala s : this.sale) {

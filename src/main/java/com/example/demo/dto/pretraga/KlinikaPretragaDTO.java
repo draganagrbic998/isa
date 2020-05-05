@@ -9,7 +9,6 @@ import org.hibernate.Hibernate;
 import com.example.demo.dto.model.KlinikaDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Zaposleni;
-import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.resursi.Klinika;
 
 public class KlinikaPretragaDTO extends KlinikaDTO{
@@ -25,13 +24,7 @@ public class KlinikaPretragaDTO extends KlinikaDTO{
 
 	public KlinikaPretragaDTO(Klinika klinika) {
 		super(klinika);
-		double suma = 0;
-		int counter = 0;
-		for (Ocena o: klinika.getOcene()) {
-			suma += o.getVrednost();
-			counter += 1;
-		}
-		this.ocena = counter != 0 ? suma / counter : 0.0;
+		this.ocena = klinika.prosecnaOcena();
 		this.lekari = new ArrayList<>();
 		for (Zaposleni z: klinika.getZaposleni()) {
 			z = (Zaposleni) Hibernate.unproxy(z);
@@ -47,7 +40,7 @@ public class KlinikaPretragaDTO extends KlinikaDTO{
 		this.cena = cena;
 		this.trajanje = trajanje;
 	}
-
+	
 	public double getOcena() {
 		return ocena;
 	}

@@ -46,7 +46,7 @@ Vue.component("termini", {
 	
 		<div v-if="selected" class="card" id="box">
 		
-			<h2>Detalji termina</h2><br>
+			<h2>Detalji posete</h2><br>
 			
 			<table>
 			
@@ -109,7 +109,7 @@ Vue.component("termini", {
 	
 		<div v-else class="container" id="cosak">
 		
-			<h2>Zakazani termini</h2><br>
+			<h2>Zakazane posete</h2><br>
 			
 			<table class="table table-hover">
 			
@@ -190,8 +190,13 @@ Vue.component("termini", {
 		}, 
 		
 		otkazi: function(){
+
+			let temp = confirm("Da li ste sigurni?");
+        	if (!temp) return;
+
 			axios.delete("/poseta/otkazi/" + this.selectedTermin.id)
 			.then(response => {
+				alert("Poseta uspesno otkazana!");
 				location.reload();
 			})
 			.catch(response => {

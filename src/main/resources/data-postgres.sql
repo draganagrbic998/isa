@@ -19,7 +19,7 @@ values ('21', 'sala jedna mala', 1, true);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
 values ('2020-04-28 12:00', null, 1, 1, 1, 1, 0);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-04-30 17:43', 0.2, 1, 1, 1, 1, 0);
+values ('2020-05-05 10:25', 0.2, 1, 1, 1, 1, 0);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
 values ('2020-04-30 12:00', 0.2, 1, 1, 1, 1, 0);
 

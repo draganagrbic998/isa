@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,22 +18,25 @@ public class SuperAdminConversion {
 	@Autowired
 	private SuperAdminRepository superAdminRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	
 	@Transactional(readOnly = true)
 	public SuperAdmin get(SuperAdminDTO superAdminDTO) {
 		
 		long version;
 		String lozinka;
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if (superAdminDTO.getId() != null) {
 			version = this.superAdminRepository.getOne(superAdminDTO.getId()).getVersion();
 			if (!superAdminDTO.getLozinka().equals(this.superAdminRepository.getOne(superAdminDTO.getId()).getLozinka()))
-				lozinka = encoder.encode(superAdminDTO.getLozinka());
+				lozinka = this.passwordEncoder.encoder().encode(superAdminDTO.getLozinka());
 			else
 				lozinka = superAdminDTO.getLozinka();
 		}
 		else {
 			version = 0l;
-			lozinka = encoder.encode(superAdminDTO.getLozinka());
+			lozinka = this.passwordEncoder.encoder().encode(superAdminDTO.getLozinka());
 		}
 				
 		return new SuperAdmin(superAdminDTO.getId(), superAdminDTO.getEmail(), lozinka, 

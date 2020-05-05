@@ -2,7 +2,6 @@ package com.example.demo.dto.pretraga;
 
 import com.example.demo.dto.model.LekarDTO;
 import com.example.demo.model.korisnici.Lekar;
-import com.example.demo.model.ostalo.Ocena;
 
 public class LekarOcenaDTO extends LekarDTO {
 	
@@ -14,13 +13,7 @@ public class LekarOcenaDTO extends LekarDTO {
 
 	public LekarOcenaDTO(Lekar lekar) {
 		super(lekar);
-		double suma = 0.0;
-		int counter = 0;
-		for (Ocena o: lekar.getOcene()) {
-			suma += o.getVrednost();
-			counter += 1;
-		}
-		this.ocena = counter != 0 ? suma / counter : 0.0;
+		this.ocena = lekar.prosecnaOcena();
 	}
 
 	public double getOcena() {

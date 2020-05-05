@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,23 +27,26 @@ public class LekarConversion {
 
 	@Autowired
 	private LekarRepository lekarRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 	@Transactional(readOnly = true)
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
 
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		long version;
 		String lozinka;
 		if (lekarDTO.getId() != null) {
 			version = this.lekarRepository.getOne(lekarDTO.getId()).getVersion();		
 			if (!lekarDTO.getLozinka().equals(this.lekarRepository.getOne(lekarDTO.getId()).getLozinka()))
-				lozinka = encoder.encode(lekarDTO.getLozinka());
+				lozinka = this.passwordEncoder.encoder().encode(lekarDTO.getLozinka());
 			else
 				lozinka = lekarDTO.getLozinka();
 		}
 		else {
 			version = 0l;	
-			lozinka = encoder.encode(lekarDTO.getLozinka());
+			lozinka = this.passwordEncoder.encoder().encode(lekarDTO.getLozinka());
 		}
 
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");

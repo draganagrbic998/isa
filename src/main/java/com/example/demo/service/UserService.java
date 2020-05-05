@@ -9,11 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.conversion.total.PasswordEncoder;
 import com.example.demo.dto.unos.UserDTO;
 import com.example.demo.model.korisnici.Korisnik;
 import com.example.demo.repository.KorisnikRepository;
@@ -25,17 +25,19 @@ public class UserService {
 	@Autowired
 	private KorisnikRepository korisnikRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	
 	@Transactional(readOnly = true)
 	public Korisnik prijava(UserDTO user) {
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 
 			
 			
-			if (k.getEmail().equals(user.getEmail()) && encoder.matches(user.getLozinka(), k.getLozinka()) && k.isAktivan()) {
+			if (k.getEmail().equals(user.getEmail()) && this.passwordEncoder.encoder().matches(user.getLozinka(), k.getLozinka()) && k.isAktivan()) {
 				
 		        List<GrantedAuthority> lista = new ArrayList<>();
 		        lista.add(new SimpleGrantedAuthority(k.isPromenjenaSifra() ? Hibernate.unproxy(k).getClass().getSimpleName() : "SIFRA"));
@@ -53,9 +55,8 @@ public class UserService {
 	@Transactional(readOnly = false)
 	public void promenaSifre(Korisnik k, String sifra) {
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		k.setLozinka(encoder.encode(sifra));
+		k.setLozinka(this.passwordEncoder.encoder().encode(sifra));
 		k.setPromenjenaSifra(true);
 		this.korisnikRepository.save(k);
         List<GrantedAuthority> lista = new ArrayList<>();

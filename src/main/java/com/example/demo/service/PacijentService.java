@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.example.demo.conversion.total.PasswordEncoder;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.repository.PacijentRepository;
 
@@ -14,6 +14,10 @@ public class PacijentService {
 
 	@Autowired
 	private PacijentRepository pacijentRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	
 	@Transactional(readOnly = false)
 	public void save(Pacijent pacijent) {
@@ -28,9 +32,8 @@ public class PacijentService {
 	@Transactional(readOnly = false)
 	public boolean aktiviraj(String id) {
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		for (Pacijent p: this.pacijentRepository.findAll()) {
-			if (encoder.matches(p.getId() + "", id)) {
+			if (this.passwordEncoder.encoder().matches(p.getId() + "", id)) {
 				if (p.isAktivan())
 					return false;
 				p.setAktivan(true);

@@ -95,7 +95,7 @@ Vue.component("zahtevTermini", {
 		
 		<div v-else class="container" id="cosak">
 		
-			<h2>Zahtevi za termine</h2><br>
+			<h2>Zahtevi za posete</h2><br>
 			
 			<table class="table table-hover">
 			
