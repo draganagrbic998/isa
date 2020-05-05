@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import com.example.demo.repository.LekRepository;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.PosetaRepository;
 import com.example.demo.repository.TerapijaRepository;
+import com.example.demo.repository.ZahtevPosetaRepository;
 
 @Component
 @Transactional(readOnly = true)
@@ -48,18 +48,23 @@ public class PosetaService {
 	@Autowired
 	TerapijaRepository terapijaRepository;
 	
+	@Autowired
+	ZahtevPosetaRepository zahtevRepository;
+	
 	@Transactional(readOnly = true)
 	public Poseta nadji(Integer id) {
 		return this.posetaRepository.getOne(id);
 	}
 
 	@Transactional(readOnly = false)
-	public void save(Poseta poseta) {
+	public void save(Poseta poseta, Integer id) {
 		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj())) {
+			System.out.println("sala nije slobodna");
 			throw new MyRuntimeException();
 		}
 		for (Lekar l: poseta.getLekari()) {
-			if (!l.slobodan(poseta.pocetak(), poseta.kraj())) {
+			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || !l.proveriZahteve(poseta.pocetak(), poseta.kraj(), id)) {
+				System.out.println("lekar nije slobodan");
 				throw new MyRuntimeException();
 			}
 		}
@@ -67,6 +72,9 @@ public class PosetaService {
 		for (Lekar l : poseta.getLekari()) {
 			l.setPoslednjaIzmena(new Date());
 			this.lekarRepository.save(l);
+		}
+		if (id!=null) {
+			this.zahtevRepository.deleteById(id);
 		}
 	}
 

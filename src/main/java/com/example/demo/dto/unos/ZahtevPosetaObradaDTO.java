@@ -3,6 +3,7 @@ package com.example.demo.dto.unos;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
@@ -30,7 +31,7 @@ public class ZahtevPosetaObradaDTO {
 	
 	public ZahtevPosetaObradaDTO(ZahtevPoseta zahtev) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		Calendar cal = Calendar.getInstance();
+		GregorianCalendar cal = new GregorianCalendar();
 		String radnoVPocetak = sdf.format(zahtev.getLekar().getPocetnoVreme());
 		String radnoVKraj = sdf.format(zahtev.getLekar().getKrajnjeVreme());
 		
@@ -44,7 +45,7 @@ public class ZahtevPosetaObradaDTO {
 		this.idLekar = zahtev.getLekar().getId();
 		this.idPacijent = zahtev.getKarton().getPacijent().getId();
 		cal.setTime(zahtev.getDatum());
-        cal.add(Calendar.HOUR, zahtev.getTipPosete().getSati());
+        cal.add(Calendar.HOUR_OF_DAY, zahtev.getTipPosete().getSati());
         this.sati = zahtev.getTipPosete().getSati();
         cal.add(Calendar.MINUTE, zahtev.getTipPosete().getMinute());
         this.minuti = zahtev.getTipPosete().getMinute();
@@ -55,9 +56,9 @@ public class ZahtevPosetaObradaDTO {
 
 	public void osveziKraj() throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		Calendar cal = Calendar.getInstance();
+		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(sdf.parse(this.datum));
-        cal.add(Calendar.HOUR, this.sati);
+        cal.add(Calendar.HOUR_OF_DAY, this.sati);
         cal.add(Calendar.MINUTE, this.minuti);
         this.kraj = sdf.format(cal.getTime());
 	}

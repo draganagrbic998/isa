@@ -10,7 +10,7 @@ public class LekarDTO extends ZaposleniDTO {
 	public LekarDTO() {
 		super();
 	}
-
+	
 	public LekarDTO(Lekar lekar) {
 		super(lekar);
 		this.specijalizacija = lekar.getSpecijalizacija().getId();

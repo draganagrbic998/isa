@@ -108,7 +108,7 @@ public class PosetaController {
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> create(@RequestBody PredefinisanaPosetaDTO pregled) {
 		try {
-			this.posetaService.save(this.posetaConversion.get(pregled));
+			this.posetaService.save(this.posetaConversion.get(pregled), null);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

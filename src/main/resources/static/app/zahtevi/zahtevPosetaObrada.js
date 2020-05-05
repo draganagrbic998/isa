@@ -53,8 +53,8 @@ Vue.component("zahtevPosetaObrada", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="rezervisiPredlog()">>Rezervisi po preporuci: {{formatiraj(slobodan)}}</button>
-		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" id="show-modal" @click="showModal = true" v-on:click="izmeniLekara()">>Izmeni lekara</button>
+		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="rezervisiPredlog()">Rezervisi po preporuci: {{formatiraj(slobodan)}}</button>
+		<button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" id="show-modal" @click="showModal = true" v-on:click="izmeniLekara()">Izmeni lekara</button>
       </ul>
       
       <form class="form-inline my-2 my-lg-0">
@@ -62,13 +62,13 @@ Vue.component("zahtevPosetaObrada", {
       <input v-if="selectedZahtev"  class="form-control mr-sm-0" type="date" v-model="refreshDatum" placeholder="Odaberite datum" aria-label="Search">
 	<button v-if="selectedZahtev"  v-on:click="osveziDatum()" class="btn"><i class="fa fa-refresh fa-2x"></i></button>
       <input v-if="selectedZahtev" class="form-control mr-sm-2" type="text" placeholder="Unesite naziv/broj sale" aria-label="Search" v-model="pretraga">
-      <button v-if="selectedZahtev" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
+      <button v-if="selectedZahtev" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
       
       
       <input v-if="selectedSala" class="form-control mr-sm-2" type="text" v-model="vreme" placeholder="Unesite vreme" aria-label="Search">
       <input v-if="selectedSala" class="form-control mr-sm-2" type="date" v-model="datum" placeholder="Odaberite datum" aria-label="Search">
       {{greskaDatum}}
-      <button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="reserve()">>Rezervisi</button>
+      <button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="reserve()">Rezervisi</button>
       
     </form>
   </div>
@@ -206,16 +206,6 @@ Vue.component("zahtevPosetaObrada", {
 			this.$router.push("/");
 		});
 	}, 
-	//ukoliko je potrebno da se nadje termin poziva get metodu
-	watch: {
-		trebaSlobodan : function(){
-			if (this.trebaSlobodan) {
-				this.trebaSlobodan = false;
-				this.nadjiTermin();
-			}	
-		},
-		
-	},
 	methods: {
 		//ako je iz dijaloga izabrao novog lekara
 		promeniLekara: function(noviLekar) {
@@ -287,15 +277,15 @@ Vue.component("zahtevPosetaObrada", {
 		},
 		//dobavlja slobodni termin koji kreiram prilikom neuspele rezervacije
 		//cuvam ga na serveru SalaController
-		nadjiTermin: function() {
-			axios.get("/sala/admin/SlobodniTermin")
-			.then(response => {
-				this.slobodan = response.data;
-			})
-			.catch(response => {
-				console.log("greska");
-			});
-		},
+		//nadjiTermin: function() {
+			//axios.get("/sala/admin/SlobodniTermin")
+			//.then(response => {
+				//this.slobodan = response.data;
+			//})
+			//.catch(response => {
+				//console.log("greska");
+			//});
+		//},
 		//rezervacija kod pretrage datuma u kalendaru zauzeca
 		reserve: function() {
 			this.osvezi();
@@ -324,14 +314,13 @@ Vue.component("zahtevPosetaObrada", {
 			axios.post("/sala/admin/rezervacijaSale", this.zahtevSelected)
 			.then(response => {
 				alert("Uspesno rezervisano!");
-				this.trebaSlobodan = false;
 				this.$router.push("/adminHome");
 			})
 			.catch(response => {
+				this.slobodan = response.response.data;
 				if (this.sale.length!=0 || selectedSala){
 					alert("Lekar je zauzet!");
 				}
-				this.trebaSlobodan = true;
 				this.selectedSala = true;
 				this.selectedZahtev = false;
 			});
@@ -361,7 +350,6 @@ Vue.component("zahtevPosetaObrada", {
 			this.zahtevSelected = z;
 			this.selectedZahtev = true;
 			this.selectedSala = false;
-			this.trebaSlobodan = false;
 			this.nadjiSale();
 		},
 		//pretraga ime ILI broj

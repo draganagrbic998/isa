@@ -85,7 +85,7 @@ public class KlinikaController {
 			}
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			double profit = admin.getKlinika().izracunajProfit(period.getPocetak(), period.getKraj()); 
-			return new ResponseEntity<>(profit+".00 din", HttpStatus.OK);
+			return new ResponseEntity<>(profit+" din", HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -67,9 +67,11 @@ Vue.component("lekarPacijenti", {
     </form>
 
 </nav>	
-		<div v-if="selected" class="row">
+		<div v-if="selected" class="container"> 
 		
-			<div class="card" id="left">
+		<div class="row">
+		
+			<div class="col card" id="left">
 			
 				<h1>Karton</h1><br>
 				
@@ -153,6 +155,7 @@ Vue.component("lekarPacijenti", {
 				
 				<button v-if="selectedPacijent.zakazanaPoseta && trenutnoZapoceta === null" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni()">Zapocni</button>
 			</div>
+	</div>
 	</div>
 	<div v-else-if="izvestajSelected" class="row">
 		

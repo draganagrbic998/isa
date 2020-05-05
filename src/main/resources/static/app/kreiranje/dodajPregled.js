@@ -68,7 +68,7 @@ Vue.component("dodajPregled", {
 					
 					<tr><th scope="row">Tip pregleda: </th>
 						<td><select v-model="nazivTipaPregleda">
-						<option v-for="p in tipoviPregleda">{{p.naziv}}</option>
+						<option v-for="p in tipoviPregleda" v-if="p.pregled">{{p.naziv}}</option>
 					</select></td> <td>{{greskaTipPregleda}}</td> </tr>
 					
 					<tr><th scope="row">Sala: </th>
@@ -185,7 +185,7 @@ Vue.component("dodajPregled", {
 				this.greskaDatum = "Morate uneti datum.";
 				this.greska = true;
 			}
-			
+
 			if (this.pregled.vreme == '') {
 				this.greskaVreme = "Morate uneti vreme.";
 				this.greska = true;
@@ -203,7 +203,7 @@ Vue.component("dodajPregled", {
 				this.greskaLekar = "Odaberite lekara.";
 				this.greska = true;
 			}
-			if (isNaN(parseFloat(this.pregled.popust)) || parseFloat(this.pregled.popust) < 0){
+			if (isNaN(parseFloat(this.pregled.popust)) || parseFloat(this.pregled.popust) < 0 || parseFloat(this.pregled.popust) > 1 ){
 				this.greskaPopust = "Popust nije ispravan. ";
 				this.greska = true;
 			}

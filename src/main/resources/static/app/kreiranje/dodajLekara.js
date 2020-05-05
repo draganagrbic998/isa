@@ -268,6 +268,11 @@ Vue.component("dodajLekara", {
 				this.greskaKraj = "Nespravan format.";
 				this.greska = true;
 			}
+			if (parseInt(this.kraj)<parseInt(this.pocetak)) {
+				this.greskaKraj = "Nespravan format.";
+				this.greskaPocetak = "Nespravan format.";
+				this.greska = true;
+			}
 			
 			if (!this.emailProvera(this.lekar.email)){
 				this.greskaEmail = "Email nije ispravan. ";

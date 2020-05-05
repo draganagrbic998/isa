@@ -37,14 +37,11 @@ import com.example.demo.service.PacijentService;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.SalaService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.ZahtevPosetaService;
 
 @RestController
 @RequestMapping(value = "/sala")
 public class SalaController {
-
-	Date slobodan;
-
+	
 	@Autowired
 	private LekarService lekarService;
 
@@ -53,9 +50,6 @@ public class SalaController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private ZahtevPosetaService zahtevPosetaService;
 
 	@Autowired
 	private PacijentService pacijentService;
@@ -93,17 +87,7 @@ public class SalaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/admin/SlobodniTermin", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> kkk() {
-		try {
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-			return new ResponseEntity<>(f.format(this.slobodan), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
+	
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/pregledSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -147,33 +131,33 @@ public class SalaController {
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
+	public ResponseEntity<String> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		Date slobodan = null;
 		try {
 			Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
 			Pacijent pacijent = this.pacijentService.nadji(zahtevDTO.getIdPacijent());
-			
 			zahtevDTO.osveziKraj();
 			salaDTO = new SalaDTO(this.salaService.nadji(zahtevDTO.getIdSale()));
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
 			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
+			slobodan = salaDTO.getPrviSlobodan();
 			if (poseta != null ) { 
-				this.posetaService.save(poseta);
-				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+				this.posetaService.save(poseta, zahtevDTO.getId());
 				String obavestenjePacijentu = "Postovani\n, pregled "+ zahtevDTO.getNaziv()+ " kod lekara " + zahtevDTO.getLekar() + " zakazan je za datum "+zahtevDTO.getDatum();
 				String obavestenjeLekaru = "Postovani\n, pregled"+ zahtevDTO.getNaziv()+ " za pacijenta " + zahtevDTO.getPacijent() + " zakazan je za datum "+zahtevDTO.getDatum();
 				Message porukaPacijent = new Message(pacijent.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjePacijentu);
 				Message porukaLekar = new Message(lekar.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjeLekaru);
 				this.emailService.sendMessage(porukaPacijent);
 				this.emailService.sendMessage(porukaLekar);
-				return new ResponseEntity<>(HttpStatus.OK);
+				return new ResponseEntity<>(f.format(slobodan), HttpStatus.OK);
 			} else { 
-				this.slobodan = salaDTO.getPrviSlobodan();
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(f.format(slobodan), HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
-			this.slobodan = salaDTO.getPrviSlobodan();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			slobodan = salaDTO.getPrviSlobodan();
+			return new ResponseEntity<>(f.format(slobodan), HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -187,8 +171,7 @@ public class SalaController {
 
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
 			if (!poseta.getTipPosete().isPregled()) {
-				this.posetaService.save(poseta);
-				this.zahtevPosetaService.obrisi(zahtevDTO.getId());
+				this.posetaService.save(poseta, zahtevDTO.getId());
 			}
 			else {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);

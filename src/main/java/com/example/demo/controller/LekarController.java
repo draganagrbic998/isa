@@ -125,8 +125,7 @@ public class LekarController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		
+		}	
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")

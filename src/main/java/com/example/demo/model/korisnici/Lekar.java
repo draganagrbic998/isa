@@ -1,6 +1,5 @@
 package com.example.demo.model.korisnici;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -284,22 +283,42 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 	}
 	
 	
+	public boolean proveriZahteve(Date pocetak, Date kraj, Integer id) {
+		for (ZahtevPoseta p: this.posetaZahtevi) {
+			if (p.getId()!=id) {
+				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+					&&  pocetak.before(p.kraj())) {
+					System.out.println("pao sam na proveri zahteve 1");
+					return false; }
+				if ((kraj.after(p.pocetak())) 
+					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj()))) {
+					System.out.println("pao sam na proveri zahteve 2");
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public boolean slobodan(Date pocetak, Date kraj) {
 		
 		if (!this.isAktivan())
 			return false;
+		GregorianCalendar gc = new GregorianCalendar();	
 		
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		
-		Integer vremePocetak = Integer.parseInt(f.format(pocetak).substring(11,f.format(pocetak).length() - 3));
-		Integer vremeKraj = Integer.parseInt(f.format(kraj).substring(11,f.format(kraj).length() - 3));
+		gc.setTime(pocetak);
+		Double vremePocetak = gc.get(Calendar.HOUR_OF_DAY)+gc.get(Calendar.MINUTE)/60.0;
+		gc.setTime(kraj);
+		Double vremeKraj = gc.get(Calendar.HOUR_OF_DAY)+gc.get(Calendar.MINUTE)/60.0;
 
-		Integer smenaPocetak = Integer.parseInt(f.format(this.getPocetnoVreme()).substring(11,f.format(this.getPocetnoVreme()).length() - 3));
-		Integer smenaKraj = Integer.parseInt(f.format(this.getKrajnjeVreme()).substring(11,f.format(this.getKrajnjeVreme()).length() - 3));
+		gc.setTime(this.getPocetnoVreme());
+		Double smenaPocetak = gc.get(Calendar.HOUR_OF_DAY)+gc.get(Calendar.MINUTE)/60.0;
 		
-		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(this.getKrajnjeVreme());
+		Double smenaKraj = gc.get(Calendar.HOUR_OF_DAY)+gc.get(Calendar.MINUTE)/60.0;
+		
+		
 		gc.setTime(pocetak);
 		gc.set(Calendar.HOUR, 0);
 		gc.set(Calendar.MINUTE, 0);
@@ -310,10 +329,18 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 		Date krajDatum = gc.getTime();
 		
 
-		if (vremePocetak < smenaPocetak || vremeKraj>smenaKraj || (vremeKraj<smenaKraj && vremeKraj<smenaPocetak)) {
+		if (vremePocetak < smenaPocetak) {
 			return false;
 		}
 		
+		if (vremeKraj > smenaKraj) {
+			return false;
+		}
+		
+		if (vremeKraj < smenaPocetak) {
+			return false;
+		}
+				
 		for (ZahtevOdmor z: this.getOdmorZahtevi()) {
 			if (z.getPocetak().equals(pocetakDatum) || z.getKraj().equals(krajDatum))
 				return false;
@@ -331,17 +358,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost{
 			}
 
 		}
-		/*poseta koju zakazuje se nalazi u zahtevima, tako da ovo uvek vrati false
-		for (ZahtevPoseta p: this.posetaZahtevi) {
 		
-			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
-					&&  pocetak.before(p.kraj()))
-				return false;
-			if ((kraj.after(p.pocetak()))
-					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
-				return false;
-		}
-		*/
 		return true;
 	}
 
