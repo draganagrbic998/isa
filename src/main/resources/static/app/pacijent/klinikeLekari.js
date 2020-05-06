@@ -247,7 +247,7 @@ Vue.component("klinikeLekari", {
 					
 						<tr>
 							<th scope="row">Ocena: </th>
-							<td><input type="text" v-model="selectedLekar.ocena" class="form-control" disabled></td>
+							<td><input type="text" v-model="selectedLekar.prosecnaOcena" class="form-control" disabled></td>
 						</tr>
 					
 					</table>
@@ -288,7 +288,7 @@ Vue.component("klinikeLekari", {
 					
 						<tr>
 							<th scope="row">Ocena: </th>
-							<td><input type="text" v-model="selectedLekar.ocena" class="form-control" disabled></td>
+							<td><input type="text" v-model="selectedLekar.prosecnaOcena" class="form-control" disabled></td>
 						</tr>
 					
 					</table>
