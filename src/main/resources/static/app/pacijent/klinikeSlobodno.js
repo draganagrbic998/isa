@@ -275,7 +275,9 @@ Vue.component("klinikeSlobodno", {
 			
 			axios.get("/poseta/zakazi/" + this.selectedPoseta.id)
 			.then(response => {
+				alert("Pregled zakazan!");
 				this.selectKlinika(response.data);
+				
 			})
 			.catch(response => {
 				alert("Imate zakazane posete u isto vreme!!");

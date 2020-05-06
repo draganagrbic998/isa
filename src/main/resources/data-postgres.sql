@@ -19,7 +19,7 @@ values ('21', 'sala jedna mala', 1, true);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
 values ('2020-04-28 12:00', null, 1, 1, 1, 1, 0);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-05-06 12:15', 0.2, 1, 1, 1, 1, 0);
+values ('2020-05-06 15:25', 0.2, 1, 1, 1, 1, 0);
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
 values ('2020-04-30 12:00', 0.2, 1, 1, 1, 1, 0);
 
@@ -233,20 +233,6 @@ values ('2020-04-28 12:00', 0.5, 2, 1, 1, 1, 0);
 -----------UPDATE LEKARA DA BI IMAO POSETU ZAPOCETU--------
 --update korisnik set zapoceta_poseta = 15
 --where id = 2;
-
-----------PREDEFINISANE POSETE, NOVI TIP POSETE------------
-insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-05-28 12:00', 0.2, 0, null, 1, 1, 0);
-insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-05-28 12:00', 0.4, 0, null, 1, 1, 0);
-insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-05-30 12:00', 0.5, 0, null, 1, 1, 0);
-insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-05-31 12:00', 0.3, 0, null, 1, 1, 0);
-insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-05-29 12:00', 0.4, 0, null, 1, 1, 0);
-insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
-values ('2020-07-28 12:00', 0.1, 0, null, 1, 1, 0);
 
 ----------------JOS JEDAN TIP PREGLEDA------------
 insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
