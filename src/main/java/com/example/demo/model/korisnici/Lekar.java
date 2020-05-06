@@ -178,6 +178,35 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 		return true;
 	}
 	
+	@Override
+	public boolean odmorPreklapanje(ZahtevOdmor zahtev) {
+		for (Poseta p: this.posete) {
+			
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
+				if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().after(p.pocetak()))
+						&&  zahtev.getPocetak().before(p.kraj()))
+					return false;
+				if ((zahtev.getKraj().after(p.pocetak()))
+						&& (zahtev.getKraj().equals(p.kraj()) ||  zahtev.getKraj().before(p.kraj())))
+					return false;
+			}
+
+		}
+		for (ZahtevPoseta p: this.posetaZahtevi) {
+			if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().after(p.pocetak()))
+					&&  zahtev.getPocetak().before(p.kraj())) {
+					return false; 
+				}
+			if ((zahtev.getKraj().after(p.pocetak())) 
+					&& (zahtev.getKraj().equals(p.kraj()) || zahtev.getKraj().before(p.kraj()))) {
+					return false;
+
+				}
+		}
+		return super.odmorPreklapanje(zahtev);
+		
+	}
+	
 	public List<ObavezaDTO> getObaveze() {
 		List<ObavezaDTO> obaveze = new ArrayList<>();
 

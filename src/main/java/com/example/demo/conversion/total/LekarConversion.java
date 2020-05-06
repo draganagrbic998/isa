@@ -32,7 +32,7 @@ public class LekarConversion {
 	private PasswordEncoder passwordEncoder;
 	
 	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-	private final String baseDate = "2020-04-20 ";
+	private static final String baseDate = "2020-04-20 ";
 
 	@Transactional(readOnly = true)
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {

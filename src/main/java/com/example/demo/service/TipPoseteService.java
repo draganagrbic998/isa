@@ -33,6 +33,10 @@ public class TipPoseteService {
 					throw new MyRuntimeException();
 			}
 		}
+		else {
+			if (!tipPosete.mozeBrisanje())
+				throw new MyRuntimeException();
+		}
 		this.tipPoseteRepository.save(tipPosete);
 	}
 	

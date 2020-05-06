@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import com.example.demo.model.ostalo.Brisanje;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
+import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 @Entity
 public class TipPosete implements Brisanje {
@@ -40,7 +41,9 @@ public class TipPosete implements Brisanje {
 	private Klinika klinika;
 	@OneToMany(mappedBy = "tipPosete", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
-	
+	@OneToMany(mappedBy = "tipPosete", fetch = FetchType.EAGER)
+	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
+
 	public TipPosete() {
 		super();
 	}
@@ -63,9 +66,11 @@ public class TipPosete implements Brisanje {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
 				return false;
 		}
+		if (!this.posetaZahtevi.isEmpty())
+			return false;
 		return true;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -136,6 +141,14 @@ public class TipPosete implements Brisanje {
 
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
+	}
+
+	public Set<ZahtevPoseta> getPosetaZahtevi() {
+		return posetaZahtevi;
+	}
+
+	public void setPosetaZahtevi(Set<ZahtevPoseta> posetaZahtevi) {
+		this.posetaZahtevi = posetaZahtevi;
 	}
 	
 }

@@ -200,6 +200,7 @@ Vue.component("tipPosetePretraga", {
 			})
 			.catch(error => {
 				alert("Postoje zakazane posete sa odabranim tipom i nije moguce brisanje!");
+				location.reload();
 			});
 		}
 		
