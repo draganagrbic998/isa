@@ -19,11 +19,11 @@ public class Ocena {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(unique = false, nullable = false)
+	private int vrednost;
 	@ManyToOne
 	@JoinColumn(name="pacijent")
 	private Pacijent pacijent;
-	@Column(unique = false, nullable = false)
-	private int vrednost;
 	@Column(unique = false, nullable = false)
 	private String provera;
 	
@@ -31,10 +31,10 @@ public class Ocena {
 		super();
 	}
 
-	public Ocena(Pacijent pacijent, int vrednost, String provera) {
+	public Ocena(int vrednost, Pacijent pacijent, String provera) {
 		super();
-		this.pacijent = pacijent;
 		this.vrednost = vrednost;
+		this.pacijent = pacijent;
 		this.provera = provera;
 	}
 
@@ -46,20 +46,20 @@ public class Ocena {
 		this.id = id;
 	}
 
-	public Pacijent getPacijent() {
-		return pacijent;
-	}
-
-	public void setPacijent(Pacijent pacijent) {
-		this.pacijent = pacijent;
-	}
-
 	public int getVrednost() {
 		return vrednost;
 	}
 
 	public void setVrednost(int vrednost) {
 		this.vrednost = vrednost;
+	}
+
+	public Pacijent getPacijent() {
+		return pacijent;
+	}
+
+	public void setPacijent(Pacijent pacijent) {
+		this.pacijent = pacijent;
 	}
 
 	public String getProvera() {

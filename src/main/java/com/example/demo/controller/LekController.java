@@ -42,7 +42,7 @@ public class LekController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody LekDTO lekDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody LekDTO lekDTO) {
 		try {
 			this.lekService.save(this.lekConversion.get(lekDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -54,7 +54,7 @@ public class LekController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
 		try {
 			this.lekService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);

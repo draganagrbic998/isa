@@ -7,7 +7,7 @@ import com.example.demo.model.posete.Terapija;
 public class TerapijaDTO implements Comparable<TerapijaDTO>{
 
 	private Integer id;
-	private String brOsiguranika;
+	private String brojOsiguranika;
 	private List<String> dijagnoze;
 	private List<String> lekovi;
 	
@@ -17,10 +17,15 @@ public class TerapijaDTO implements Comparable<TerapijaDTO>{
 
 	public TerapijaDTO(Terapija terapija) {
 		super();
-		this.setId(terapija.getId());
-		this.setBrOsiguranika(terapija.getIzvestaj().getPoseta().getKarton().getBrojOsiguranika());
-		this.setDijagnoze(terapija.getDijagnozeSifre());
-		this.setLekovi(terapija.getLekoviSifre());
+		this.id = terapija.getId();
+		this.brojOsiguranika = terapija.getIzvestaj().getPoseta().getKarton().getBrojOsiguranika();
+		this.dijagnoze = terapija.getDijagnozeSifre();
+		this.lekovi = terapija.getLekoviSifre();
+	}
+
+	@Override
+	public int compareTo(TerapijaDTO o) {
+		return this.brojOsiguranika.compareTo(o.brojOsiguranika);
 	}
 
 	public Integer getId() {
@@ -31,12 +36,12 @@ public class TerapijaDTO implements Comparable<TerapijaDTO>{
 		this.id = id;
 	}
 
-	public String getBrOsiguranika() {
-		return brOsiguranika;
+	public String getBrojOsiguranika() {
+		return brojOsiguranika;
 	}
 
-	public void setBrOsiguranika(String brOsiguranika) {
-		this.brOsiguranika = brOsiguranika;
+	public void setBrojOsiguranika(String brojOsiguranika) {
+		this.brojOsiguranika = brojOsiguranika;
 	}
 
 	public List<String> getDijagnoze() {
@@ -53,11 +58,6 @@ public class TerapijaDTO implements Comparable<TerapijaDTO>{
 
 	public void setLekovi(List<String> lekovi) {
 		this.lekovi = lekovi;
-	}
-
-	@Override
-	public int compareTo(TerapijaDTO o) {
-		return this.brOsiguranika.compareTo(o.brOsiguranika);
 	}
 	
 }

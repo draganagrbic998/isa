@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.dto.model.LekarDTO;
 import com.example.demo.model.korisnici.Lekar;
 
-public class LekarSatnicaDTO extends LekarOcenaDTO {
+public class LekarSatnicaDTO extends LekarDTO {
 	
 	private List<Date> satnica;
 

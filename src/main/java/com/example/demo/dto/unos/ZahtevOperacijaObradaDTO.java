@@ -3,6 +3,7 @@ package com.example.demo.dto.unos;
 import java.util.List;
 
 public class ZahtevOperacijaObradaDTO {
+	
 	private Integer id;
 	private boolean pregled;
 	private Integer tipId;

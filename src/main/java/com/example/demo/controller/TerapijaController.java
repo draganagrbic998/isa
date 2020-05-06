@@ -22,7 +22,6 @@ import com.example.demo.service.UserService;
 @RequestMapping(value = "/terapija")
 public class TerapijaController {
 	
-	
 	@Autowired
 	private TerapijaService terapijaService;
 	
@@ -34,7 +33,7 @@ public class TerapijaController {
 	
 	@PreAuthorize("hasAuthority('Sestra')")
 	@GetMapping(value = "/neovereno", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TerapijaDTO>> getNeovereneTerapije(){
+	public ResponseEntity<List<TerapijaDTO>> neovereno(){
 		try {
 			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.terapijaConversion.get(this.terapijaService.nadjiNeoverene(sestra)), HttpStatus.OK);

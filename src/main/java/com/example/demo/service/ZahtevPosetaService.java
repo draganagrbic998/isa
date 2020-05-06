@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,7 +47,6 @@ public class ZahtevPosetaService {
 		this.zahtevPosetaRepository.save(zahtev);
 		Lekar l = zahtev.getLekar();
 		if (!l.slobodan(zahtev.pocetak(), zahtev.kraj())) {
-			System.out.println("Lekar nije slobodan!");
 			throw new MyRuntimeException();
 		}
 		Karton k = zahtev.getKarton();
@@ -86,9 +86,9 @@ public class ZahtevPosetaService {
 	}
 
 	@Transactional(readOnly = true)
-	public HashMap<Poseta, Integer> obradiAutomatski() throws ParseException {
+	public Map<Poseta, Integer> obradiAutomatski() throws ParseException {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		HashMap<Poseta, Integer> novePosete = new HashMap<Poseta, Integer>();
+		Map<Poseta, Integer> novePosete = new HashMap<>();
 
 		for (ZahtevPoseta z : this.zahtevPosetaRepository.findAll()) {
 			Date najboljiTermin = null;
@@ -105,8 +105,9 @@ public class ZahtevPosetaService {
 				}
 			}
 			
-			novePosete.put(new Poseta(z.getKarton(), najboljiTermin, null, StanjePosete.ZAUZETO, z.getTipPosete(),
-					najboljaSala, z.getLekar()), z.getId());
+			novePosete.put(new Poseta(StanjePosete.ZAUZETO, najboljiTermin, null, 
+					z.getTipPosete(), najboljaSala, z.getKarton(), 
+					z.getLekar()), z.getId());
 		}
 
 		return novePosete;

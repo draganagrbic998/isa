@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.conversion.total.PasswordEncoder;
 import com.example.demo.conversion.total.ZahtevRegistracijaConversion;
 import com.example.demo.dto.model.ZahtevRegistracijaDTO;
 import com.example.demo.dto.unos.ZahtevRegistracijaObradaDTO;
@@ -38,8 +38,10 @@ public class ZahtevRegistracijaController {
 
 	@Autowired
 	private ApplicationName name;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
-		
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ZahtevRegistracijaDTO>> getZahteviRegistracija(){
@@ -67,16 +69,15 @@ public class ZahtevRegistracijaController {
 	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevRegistracijaObradaDTO obradaZahteva) {
 		Pacijent pacijent;
 		try {
-			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
+			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.getOne(obradaZahteva.getId());
 			pacijent = this.zahtevRegistracijaService.potvrdi(zahtev);
 		} 
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			String obavestenje = "Uspesno ste registrovani kao pacijent klinike 'POSLEDNJI TRZAJ'. Molimo vas da "
-					+ "aktivirate svoj nalog klikom na link: \n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + encoder.encode(pacijent.getId() + "");
+					+ "aktivirate svoj nalog klikom na link: \n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + this.encoder.encoder().encode(pacijent.getId() + "");
 			Message poruka = new Message(pacijent.getEmail(), "Registracija uspesna", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -91,7 +92,7 @@ public class ZahtevRegistracijaController {
 	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevRegistracijaObradaDTO obradaZahteva) {
 		ZahtevRegistracija zahtev;
 		try {
-			zahtev = this.zahtevRegistracijaService.nadji(obradaZahteva.getId());
+			zahtev = this.zahtevRegistracijaService.getOne(obradaZahteva.getId());
 			this.zahtevRegistracijaService.delete(zahtev.getId());
 		}
 		catch(Exception e) {

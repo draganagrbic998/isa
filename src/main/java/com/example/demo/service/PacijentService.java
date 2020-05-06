@@ -17,7 +17,6 @@ public class PacijentService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	
 	@Transactional(readOnly = false)
 	public void save(Pacijent pacijent) {
@@ -25,7 +24,7 @@ public class PacijentService {
 	}
 
 	@Transactional(readOnly = false)
-	public Pacijent nadji(Integer id) {
+	public Pacijent getOne(Integer id) {
 		return this.pacijentRepository.getOne(id);
 	}
 	

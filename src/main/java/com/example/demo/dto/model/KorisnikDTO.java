@@ -35,6 +35,13 @@ public class KorisnikDTO implements Comparable<KorisnikDTO>{
 		this.promenjenaSifra = korisnik.isPromenjenaSifra();
 	}
 
+	@Override
+	public int compareTo(KorisnikDTO k) {
+		if (this.ime.compareTo(k.ime) != 0)
+			return this.ime.compareTo(k.ime);
+		return this.prezime.compareTo(k.prezime);
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -121,13 +128,6 @@ public class KorisnikDTO implements Comparable<KorisnikDTO>{
 
 	public void setPromenjenaSifra(boolean promenjenaSifra) {
 		this.promenjenaSifra = promenjenaSifra;
-	}
-
-	@Override
-	public int compareTo(KorisnikDTO k) {
-		if (this.ime.compareTo(k.ime) != 0)
-			return this.ime.compareTo(k.ime);
-		return this.prezime.compareTo(k.prezime);
 	}
 	
 }

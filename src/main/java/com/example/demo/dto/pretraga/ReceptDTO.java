@@ -20,6 +20,11 @@ public class ReceptDTO implements Comparable<ReceptDTO>{
 		this.sestra = sestra != null ? sestra.getIme() + " " + sestra.getPrezime() : "NEOVERENO";
 	}
 
+	@Override
+	public int compareTo(ReceptDTO r) {
+		return this.sifra.compareTo(r.sifra);
+	}
+
 	public String getSifra() {
 		return sifra;
 	}
@@ -42,11 +47,6 @@ public class ReceptDTO implements Comparable<ReceptDTO>{
 
 	public void setSestra(String sestra) {
 		this.sestra = sestra;
-	}
-
-	@Override
-	public int compareTo(ReceptDTO r) {
-		return this.sifra.compareTo(r.sifra);
 	}
 	
 }

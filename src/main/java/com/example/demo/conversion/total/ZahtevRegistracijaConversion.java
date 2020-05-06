@@ -16,8 +16,6 @@ public class ZahtevRegistracijaConversion {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
-
 	public ZahtevRegistracija get(ZahtevRegistracijaDTO zahtevDTO) {
 				
 		return new ZahtevRegistracija(zahtevDTO.getId(), 

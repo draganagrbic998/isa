@@ -40,6 +40,24 @@ public abstract class Zaposleni extends Korisnik{
 		this.klinika = klinika;
 	}
 
+	public boolean odmorPreklapanje(ZahtevOdmor zahtev) {
+		
+		for (ZahtevOdmor z: this.odmorZahtevi) {
+			
+			if ((zahtev.getPocetak().equals(z.getPocetak()) || zahtev.getPocetak().after(z.getPocetak()))
+					&& zahtev.getPocetak().before(z.getKraj()))
+				return true;
+
+			if (zahtev.getKraj().after(z.getPocetak()) && (zahtev.getKraj().equals(z.getKraj()) ||
+					zahtev.getKraj().before(z.getKraj())))
+				return true;
+			
+		}
+		
+		return false;
+		
+	}
+	
 	public Date getPocetnoVreme() {
 		return pocetnoVreme;
 	}
@@ -70,24 +88,6 @@ public abstract class Zaposleni extends Korisnik{
 
 	public void setOdmorZahtevi(Set<ZahtevOdmor> odmorZahtevi) {
 		this.odmorZahtevi = odmorZahtevi;
-	}
-	
-	public boolean odmorPreklapanje(ZahtevOdmor zahtev) {
-		
-		for (ZahtevOdmor z: this.odmorZahtevi) {
-			
-			if ((zahtev.getPocetak().equals(z.getPocetak()) || zahtev.getPocetak().after(z.getPocetak()))
-					&& zahtev.getPocetak().before(z.getKraj()))
-				return true;
-
-			if (zahtev.getKraj().after(z.getPocetak()) && (zahtev.getKraj().equals(z.getKraj()) ||
-					zahtev.getKraj().before(z.getKraj())))
-				return true;
-			
-		}
-		
-		return false;
-		
 	}
 
 }

@@ -5,11 +5,11 @@ import com.example.demo.model.resursi.TipPosete;
 public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 	
 	private Integer id;
-	private Boolean pregled;
+	private boolean pregled;
 	private String naziv;
+	private double cena;
 	private Integer sati;
 	private Integer minute;
-	private double cena;
 	private Integer klinika;
 	private boolean aktivan;
 	
@@ -22,11 +22,16 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 		this.id = tipPosete.getId();
 		this.pregled = tipPosete.isPregled();
 		this.naziv = tipPosete.getNaziv();
+		this.cena = tipPosete.getCena();
 		this.sati = tipPosete.getSati();
 		this.minute = tipPosete.getMinute();
-		this.cena = tipPosete.getCena();
 		this.klinika = tipPosete.getKlinika().getId();
 		this.aktivan = tipPosete.isAktivan();
+	}
+
+	@Override
+	public int compareTo(TipPoseteDTO t) {
+		return this.naziv.compareTo(t.naziv);
 	}
 
 	public Integer getId() {
@@ -37,11 +42,11 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 		this.id = id;
 	}
 
-	public Boolean getPregled() {
+	public boolean isPregled() {
 		return pregled;
 	}
 
-	public void setPregled(Boolean pregled) {
+	public void setPregled(boolean pregled) {
 		this.pregled = pregled;
 	}
 
@@ -51,6 +56,14 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	public double getCena() {
+		return cena;
+	}
+
+	public void setCena(double cena) {
+		this.cena = cena;
 	}
 
 	public Integer getSati() {
@@ -69,14 +82,6 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 		this.minute = minute;
 	}
 
-	public double getCena() {
-		return cena;
-	}
-
-	public void setCena(double cena) {
-		this.cena = cena;
-	}
-
 	public Integer getKlinika() {
 		return klinika;
 	}
@@ -91,11 +96,6 @@ public class TipPoseteDTO implements Comparable<TipPoseteDTO>{
 
 	public void setAktivan(boolean aktivan) {
 		this.aktivan = aktivan;
-	}
-
-	@Override
-	public int compareTo(TipPoseteDTO t) {
-		return this.naziv.compareTo(t.naziv);
 	}
 
 }

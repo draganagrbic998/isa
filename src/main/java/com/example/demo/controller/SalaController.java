@@ -65,6 +65,9 @@ public class SalaController {
 
 	@Autowired
 	private EmailService emailService;
+	
+	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -93,11 +96,10 @@ public class SalaController {
 	@PostMapping(value = "/admin/pregledSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SalaDTO>> pregled(@RequestBody ZahtevPosetaObradaDTO zahtev) {
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 			zahtev.osveziKraj();
 			Date pocetak = f.parse(zahtev.getDatum());
 			Date kraj = f.parse(zahtev.getKraj());
-			List<SalaDTO> rezultat = new ArrayList<SalaDTO>();
+			List<SalaDTO> rezultat = new ArrayList<>();
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			List<SalaDTO> lista = this.salaConversion.get(this.salaService.findAll(admin));
 			for (SalaDTO sala : lista) {
@@ -115,12 +117,11 @@ public class SalaController {
 	@PostMapping(value = "/admin/getPrviSlobodan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getPrviSlobodan(@RequestBody GetPrviSlobodanDTO data) throws ParseException {		
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 			data.getZahtev().osveziKraj();
 			
-			SalaDTO sala = this.salaConversion.get(this.salaService.nadji(data.getSalaId()));
+			SalaDTO sala = this.salaConversion.get(this.salaService.getOne(data.getSalaId()));
 			
-			List<Lekar> lekari = lekarService.nadji(data.getLekari());
+			List<Lekar> lekari = lekarService.getOnes(data.getLekari());
 			
 			sala.nadjiSlobodanTermin(data.getZahtev().getDatum(), data.getZahtev().getKraj(), lekari);
 			return new ResponseEntity<>(f.format(sala.getPrviSlobodan()), HttpStatus.OK);
@@ -133,27 +134,26 @@ public class SalaController {
 	@PostMapping(value = "/admin/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		Date slobodan = null;
 		try {
-			Lekar lekar = this.lekarService.nadji(zahtevDTO.getIdLekar());
-			Pacijent pacijent = this.pacijentService.nadji(zahtevDTO.getIdPacijent());
+			Lekar lekar = this.lekarService.getOne(zahtevDTO.getIdLekar());
+			Pacijent pacijent = this.pacijentService.getOne(zahtevDTO.getIdPacijent());
 			zahtevDTO.osveziKraj();
-			salaDTO = new SalaDTO(this.salaService.nadji(zahtevDTO.getIdSale()));
+			salaDTO = new SalaDTO(this.salaService.getOne(zahtevDTO.getIdSale()));
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
 			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
 			slobodan = salaDTO.getPrviSlobodan();
 			if (poseta != null ) { 
-				this.posetaService.save(poseta, zahtevDTO.getId(), true);
+				this.posetaService.save(poseta, zahtevDTO.getId());
 				String obavestenjePacijentu = "Postovani\n, pregled "+ zahtevDTO.getNaziv()+ " kod lekara " + zahtevDTO.getLekar() + " zakazan je za datum "+zahtevDTO.getDatum();
 				String obavestenjeLekaru = "Postovani\n, pregled"+ zahtevDTO.getNaziv()+ " za pacijenta " + zahtevDTO.getPacijent() + " zakazan je za datum "+zahtevDTO.getDatum();
 				Message porukaPacijent = new Message(pacijent.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjePacijentu);
 				Message porukaLekar = new Message(lekar.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjeLekaru);
 				this.emailService.sendMessage(porukaPacijent);
 				this.emailService.sendMessage(porukaLekar);
-				return new ResponseEntity<>(f.format(slobodan), HttpStatus.OK);
+				return new ResponseEntity<>(this.f.format(slobodan), HttpStatus.OK);
 			} else { 
-				return new ResponseEntity<>(f.format(slobodan), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(this.f.format(slobodan), HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
 			slobodan = salaDTO.getPrviSlobodan();
@@ -166,12 +166,12 @@ public class SalaController {
 	public ResponseEntity<HttpStatus> reserveOperacija(@RequestBody ZahtevOperacijaObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
 		try {
-			Sala sala = this.salaService.nadji(zahtevDTO.getSalaId());
+			Sala sala = this.salaService.getOne(zahtevDTO.getSalaId());
 			salaDTO = new SalaDTO(sala);
 
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
 			if (!poseta.getTipPosete().isPregled()) {
-				this.posetaService.save(poseta, zahtevDTO.getId(), true);
+				this.posetaService.save(poseta, zahtevDTO.getId());
 			}
 			else {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -181,7 +181,7 @@ public class SalaController {
 		}
 		try {
 			if (!zahtevDTO.getPocetak().equals(zahtevDTO.getPocetakOriginalni())) {
-				Pacijent p = pacijentService.nadji(zahtevDTO.getPacijentId());
+				Pacijent p = pacijentService.getOne(zahtevDTO.getPacijentId());
 
 				String obavestenje = "Operacija zakazana za " + zahtevDTO.getPocetakOriginalni() + " pomerena je za "
 						+ zahtevDTO.getPocetak();

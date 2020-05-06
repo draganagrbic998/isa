@@ -13,7 +13,6 @@ import com.example.demo.model.resursi.Klinika;
 
 public class KlinikaPretragaDTO extends KlinikaDTO{
 	
-	private double ocena;
 	private double cena;
 	private double trajanje;
 	private List<LekarSatnicaDTO> lekari;
@@ -24,7 +23,6 @@ public class KlinikaPretragaDTO extends KlinikaDTO{
 
 	public KlinikaPretragaDTO(Klinika klinika) {
 		super(klinika);
-		this.ocena = klinika.prosecnaOcena();
 		this.lekari = new ArrayList<>();
 		for (Zaposleni z: klinika.getZaposleni()) {
 			z = (Zaposleni) Hibernate.unproxy(z);
@@ -32,21 +30,12 @@ public class KlinikaPretragaDTO extends KlinikaDTO{
 				this.lekari.add(new LekarSatnicaDTO((Lekar) z));
 		}
 		Collections.sort(this.lekari);
-		
 	}
 
 	public KlinikaPretragaDTO(Klinika klinika, double cena, double trajanje) {
 		this(klinika);
 		this.cena = cena;
 		this.trajanje = trajanje;
-	}
-	
-	public double getOcena() {
-		return ocena;
-	}
-
-	public void setOcena(double ocena) {
-		this.ocena = ocena;
 	}
 
 	public double getCena() {
@@ -72,9 +61,9 @@ public class KlinikaPretragaDTO extends KlinikaDTO{
 	public void setLekari(List<LekarSatnicaDTO> lekari) {
 		this.lekari = lekari;
 	}
-
-	public void dodaj(LekarSatnicaDTO ls) {
-		this.lekari.add(ls);
+	
+	public void dodaj(LekarSatnicaDTO lekar) {
+		this.lekari.add(lekar);
 	}
 	
 }

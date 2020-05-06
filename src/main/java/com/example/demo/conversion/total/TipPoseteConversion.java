@@ -22,11 +22,11 @@ public class TipPoseteConversion {
 	public TipPosete get(TipPoseteDTO tipPoseteDTO) {
 				
 		return new TipPosete(tipPoseteDTO.getId(), 
-				tipPoseteDTO.getPregled(), 
+				tipPoseteDTO.isPregled(), 
 				tipPoseteDTO.getNaziv(), 
+				tipPoseteDTO.getCena(), 
 				tipPoseteDTO.getSati(), 
 				tipPoseteDTO.getMinute(), 
-				tipPoseteDTO.getCena(), 
 				this.klinikaRepository.getOne(tipPoseteDTO.getKlinika()), 
 				tipPoseteDTO.isAktivan());
 	}

@@ -12,22 +12,22 @@ import com.example.demo.repository.PacijentRepository;
 
 @Component
 public class PacijentConversion {
-	
-	@Autowired
-	private KartonRepository kartonRepository;
-	
+		
 	@Autowired
 	private PacijentRepository pacijentRepository;
 	
 	@Autowired
+	private KartonRepository kartonRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
 	@Transactional(readOnly = true)
 	public Pacijent get(PacijentDTO pacijentDTO) {
 		
 		long version;
 		String lozinka;
+		
 		if (pacijentDTO.getId() != null) {
 			version = this.pacijentRepository.getOne(pacijentDTO.getId()).getVersion();
 			if (!pacijentDTO.getLozinka().equals(this.pacijentRepository.getOne(pacijentDTO.getId()).getLozinka()))
@@ -39,21 +39,25 @@ public class PacijentConversion {
 			version = 0l;		
 			lozinka = this.passwordEncoder.encoder().encode(pacijentDTO.getLozinka());
 		}
-		
-
-		
-		return new Pacijent(pacijentDTO.getId(), pacijentDTO.getEmail(), lozinka, 
-				pacijentDTO.getIme(), pacijentDTO.getPrezime(), pacijentDTO.getTelefon(), 
-				pacijentDTO.getDrzava(), pacijentDTO.getGrad(), pacijentDTO.getAdresa(), 
-				pacijentDTO.isAktivan(), pacijentDTO.isPromenjenaSifra(), 
-				this.kartonRepository.getOne(pacijentDTO.getKarton()), version);
+				
+		return new Pacijent(pacijentDTO.getId(), 
+				pacijentDTO.getEmail(), 
+				lozinka, 
+				pacijentDTO.getIme(), 
+				pacijentDTO.getPrezime(), 
+				pacijentDTO.getTelefon(), 
+				pacijentDTO.getDrzava(), 
+				pacijentDTO.getGrad(), 
+				pacijentDTO.getAdresa(), 
+				pacijentDTO.isAktivan(), 
+				pacijentDTO.isPromenjenaSifra(), 
+				this.kartonRepository.getOne(pacijentDTO.getKarton()), 
+				version);
 		
 	}
 	
 	public PacijentDTO get(Pacijent pacijent) {
-		
 		return new PacijentDTO(pacijent);
-		
 	}
 	
 }

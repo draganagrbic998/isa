@@ -11,10 +11,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	http.formLogin().disable();
+
     	http.httpBasic().disable();
+    	http.formLogin().disable();
     	http.rememberMe().disable();
     	http.headers().frameOptions().disable();
     	http.csrf().disable();
+    	
     }
 }

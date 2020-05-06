@@ -19,6 +19,11 @@ public class DijagnozaDTO implements Comparable<DijagnozaDTO>{
 		this.naziv = stavka.getNaziv();
 	}
 
+	@Override
+	public int compareTo(DijagnozaDTO d) {
+		return this.sifra.compareTo(d.sifra);
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -41,11 +46,6 @@ public class DijagnozaDTO implements Comparable<DijagnozaDTO>{
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
-	}
-
-	@Override
-	public int compareTo(DijagnozaDTO d) {
-		return this.sifra.compareTo(d.sifra);
 	}
 	
 }

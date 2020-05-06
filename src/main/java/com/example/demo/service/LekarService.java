@@ -12,8 +12,6 @@ import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.ostalo.Ocena;
-import com.example.demo.model.posete.Poseta;
-import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.OcenaRepository;
 import com.example.demo.repository.PacijentRepository;
@@ -37,35 +35,18 @@ public class LekarService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Lekar nadji(Integer id) {
+	public Lekar getOne(Integer id) {
 		return this.lekarRepository.getOne(id);
 	}
 
 	@Transactional(readOnly = true)
-	public List<Lekar> nadji(List<Integer> lekariId) {
-		List<Lekar> lekari = new ArrayList<Lekar>();
-		
-		for (Lekar l : this.lekarRepository.findAll()) {
-			if (lekariId.contains(l.getId()))
-				lekari.add(l);
-		}
-		
+	public List<Lekar> getOnes(List<Integer> ids) {
+		List<Lekar> lekari = new ArrayList<>();
+		for (Integer id: ids)
+			lekari.add(this.lekarRepository.getOne(id));
 		return lekari;
 	}
 	
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		Lekar l = this.lekarRepository.getOne(id);
-		if (!l.getPosetaZahtevi().isEmpty())
-			throw new MyRuntimeException();
-		for (Poseta p : l.getPosete()) {
-			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
-				throw new MyRuntimeException();
-		}
-		l.setAktivan(false);
-		this.lekarRepository.save(l);
-	}
-
 	@Transactional(readOnly = true)
 	public List<Lekar> findAll(Admin admin) {
 		List<Lekar> lekari = new ArrayList<>();
@@ -74,6 +55,15 @@ public class LekarService {
 				lekari.add(l);
 		}
 		return lekari;
+	}
+	
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		Lekar l = this.lekarRepository.getOne(id);
+		if (!l.mozeBrisanje())
+			throw new MyRuntimeException();
+		l.setAktivan(false);
+		this.lekarRepository.save(l);
 	}
 
 	@Transactional(readOnly = false)
@@ -86,7 +76,7 @@ public class LekarService {
 
 	}	
 	
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = true)
 	public List<Pacijent> pacijentiLekara(Lekar lekar) {
 		List<Pacijent> pacijenti = new ArrayList<>();
 		for (Pacijent pacijent : this.pacijentRepository.findAll()) {

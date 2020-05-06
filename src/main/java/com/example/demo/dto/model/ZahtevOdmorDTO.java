@@ -28,7 +28,7 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 		this.id = zahtev.getId();
 		this.pocetak = zahtev.getPocetak();
 		this.kraj = zahtev.getKraj();
-		this.odobren = zahtev.getOdobren();
+		this.odobren = zahtev.isOdobren();
 		this.zaposleni = zahtev.getZaposleni().getId();
 		this.klinika = zahtev.getKlinika().getId();
 		this.ime = zahtev.getZaposleni().getIme();
@@ -36,8 +36,11 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 		this.profesija = ((Zaposleni) Hibernate.unproxy(zahtev.getZaposleni())).getClass().getSimpleName();
 	}
 	
-	
-	
+	@Override
+	public int compareTo(ZahtevOdmorDTO z) {
+		return this.pocetak.compareTo(z.pocetak);
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -69,7 +72,6 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 	public void setOdobren(boolean odobren) {
 		this.odobren = odobren;
 	}
-	
 
 	public Integer getZaposleni() {
 		return zaposleni;
@@ -86,7 +88,7 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 	public void setKlinika(Integer klinika) {
 		this.klinika = klinika;
 	}
-	
+
 	public String getIme() {
 		return ime;
 	}
@@ -109,11 +111,6 @@ public class ZahtevOdmorDTO implements Comparable<ZahtevOdmorDTO>{
 
 	public void setProfesija(String profesija) {
 		this.profesija = profesija;
-	}
-
-	@Override
-	public int compareTo(ZahtevOdmorDTO z) {
-		return this.pocetak.compareTo(z.pocetak);
 	}
 
 }

@@ -20,13 +20,13 @@ public class SuperAdminConversion {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	
 	@Transactional(readOnly = true)
 	public SuperAdmin get(SuperAdminDTO superAdminDTO) {
 		
 		long version;
 		String lozinka;
+		
 		if (superAdminDTO.getId() != null) {
 			version = this.superAdminRepository.getOne(superAdminDTO.getId()).getVersion();
 			if (!superAdminDTO.getLozinka().equals(this.superAdminRepository.getOne(superAdminDTO.getId()).getLozinka()))
@@ -39,17 +39,23 @@ public class SuperAdminConversion {
 			lozinka = this.passwordEncoder.encoder().encode(superAdminDTO.getLozinka());
 		}
 				
-		return new SuperAdmin(superAdminDTO.getId(), superAdminDTO.getEmail(), lozinka, 
-				superAdminDTO.getIme(), superAdminDTO.getPrezime(), superAdminDTO.getTelefon(), 
-				superAdminDTO.getDrzava(), superAdminDTO.getGrad(), superAdminDTO.getAdresa(), 
-				superAdminDTO.isAktivan(), superAdminDTO.isPromenjenaSifra(), version);
+		return new SuperAdmin(superAdminDTO.getId(), 
+				superAdminDTO.getEmail(), 
+				lozinka, 
+				superAdminDTO.getIme(), 
+				superAdminDTO.getPrezime(), 
+				superAdminDTO.getTelefon(), 
+				superAdminDTO.getDrzava(), 
+				superAdminDTO.getGrad(), 
+				superAdminDTO.getAdresa(), 
+				superAdminDTO.isAktivan(), 
+				superAdminDTO.isPromenjenaSifra(), 
+				version);
 		
 	}
 	
 	public SuperAdminDTO get(SuperAdmin superAdmin) {
-		
 		return new SuperAdminDTO(superAdmin);
-		
 	}
 	
 	public List<SuperAdminDTO> get(List<SuperAdmin> superAdmini){

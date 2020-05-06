@@ -29,8 +29,8 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 		this.datum = izvestaj.getPoseta().getDatum();
 		this.opis = izvestaj.getOpis();
 		this.poseta = izvestaj.getPoseta().getId();
-		this.posetaNaziv = izvestaj.getPoseta().getTipPosete().getNaziv();
 		this.terapija = izvestaj.getTerapija().getId();
+		this.posetaNaziv = izvestaj.getPoseta().getTipPosete().getNaziv();
 		
 		this.dijagnoze = new ArrayList<>();
 		for (Dijagnoza d : izvestaj.getDijagnoze())
@@ -40,6 +40,11 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 		for (Lek l : izvestaj.getTerapija().getLekovi())
 			this.lekovi.add(l.getId());
 		
+	}
+
+	@Override
+	public int compareTo(IzvestajDTO i) {
+		return this.datum.compareTo(i.datum);
 	}
 
 	public Integer getId() {
@@ -106,8 +111,4 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 		this.posetaNaziv = posetaNaziv;
 	}
 
-	@Override
-	public int compareTo(IzvestajDTO i) {
-		return this.datum.compareTo(i.datum);
-	}
 }

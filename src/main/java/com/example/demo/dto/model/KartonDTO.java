@@ -30,6 +30,11 @@ public class KartonDTO implements Comparable<KartonDTO>{
 		this.pacijent = karton.getPacijent().getId();
 	}
 
+	@Override
+	public int compareTo(KartonDTO k) {
+		return this.brojOsiguranika.compareTo(k.brojOsiguranika);
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -92,11 +97,6 @@ public class KartonDTO implements Comparable<KartonDTO>{
 
 	public void setPacijent(Integer pacijent) {
 		this.pacijent = pacijent;
-	}
-
-	@Override
-	public int compareTo(KartonDTO k) {
-		return this.brojOsiguranika.compareTo(k.brojOsiguranika);
 	}
 	
 }

@@ -14,7 +14,6 @@ public class LekConversion {
 	
 
 	public Lek get(LekDTO lekDTO) {
-				
 		return new Lek(lekDTO.getId(), 
 				lekDTO.getSifra(), 
 				lekDTO.getNaziv());

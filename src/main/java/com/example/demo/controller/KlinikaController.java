@@ -33,14 +33,14 @@ import com.example.demo.service.UserService;
 public class KlinikaController {
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private KlinikaService klinikaService;
 
 	@Autowired
 	private KlinikaConversion klinikaConversion;
-	
+
+	@Autowired
+	private UserService userService;
+
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KlinikaDTO> getClinic(){
@@ -84,7 +84,7 @@ public class KlinikaController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			double profit = admin.getKlinika().izracunajProfit(period.getPocetak(), period.getKraj()); 
+			double profit = admin.getKlinika().getProfit(period.getPocetak(), period.getKraj()); 
 			return new ResponseEntity<>(profit+" din", HttpStatus.OK);
 		}
 		catch(Exception e) {
@@ -132,7 +132,7 @@ public class KlinikaController {
 	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaPretragaDTO>> pretraga(){
 		try {
-			return new ResponseEntity<>(this.klinikaConversion.getPretraga(this.klinikaService.findAll()), HttpStatus.OK);
+			return new ResponseEntity<>(this.klinikaConversion.getPretraga(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -154,7 +154,7 @@ public class KlinikaController {
 	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaSlobodnoDTO>> slobodno(){
 		try {
-			return new ResponseEntity<>(this.klinikaService.slobodno(), HttpStatus.OK);
+			return new ResponseEntity<>(this.klinikaConversion.getSlobodno(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

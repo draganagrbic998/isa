@@ -7,10 +7,10 @@ public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 	private Integer id;
 	private String email;
 	private String lozinka;
+	private String brojOsiguranika;
 	private String ime;
 	private String prezime;
 	private String telefon;
-	private String brojOsiguranika;
 	private String drzava;
 	private String grad;
 	private String adresa;
@@ -24,13 +24,18 @@ public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 		this.id = zahtev.getId();
 		this.email = zahtev.getEmail();
 		this.lozinka = zahtev.getLozinka();
+		this.brojOsiguranika = zahtev.getBrojOsiguranika();
 		this.ime = zahtev.getIme();
 		this.prezime = zahtev.getPrezime();
 		this.telefon = zahtev.getTelefon();
-		this.brojOsiguranika = zahtev.getBrojOsiguranika();
 		this.drzava = zahtev.getDrzava();
 		this.grad = zahtev.getGrad();
 		this.adresa = zahtev.getAdresa();
+	}
+
+	@Override
+	public int compareTo(ZahtevRegistracijaDTO z) {
+		return this.brojOsiguranika.compareTo(z.brojOsiguranika);
 	}
 
 	public Integer getId() {
@@ -57,6 +62,14 @@ public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 		this.lozinka = lozinka;
 	}
 
+	public String getBrojOsiguranika() {
+		return brojOsiguranika;
+	}
+
+	public void setBrojOsiguranika(String brojOsiguranika) {
+		this.brojOsiguranika = brojOsiguranika;
+	}
+
 	public String getIme() {
 		return ime;
 	}
@@ -81,14 +94,6 @@ public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 		this.telefon = telefon;
 	}
 
-	public String getBrojOsiguranika() {
-		return brojOsiguranika;
-	}
-
-	public void setBrojOsiguranika(String brojOsiguranika) {
-		this.brojOsiguranika = brojOsiguranika;
-	}
-
 	public String getDrzava() {
 		return drzava;
 	}
@@ -111,11 +116,6 @@ public class ZahtevRegistracijaDTO implements Comparable<ZahtevRegistracijaDTO>{
 
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
-	}
-
-	@Override
-	public int compareTo(ZahtevRegistracijaDTO z) {
-		return this.brojOsiguranika.compareTo(z.brojOsiguranika);
 	}
 
 }

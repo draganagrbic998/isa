@@ -26,7 +26,9 @@ public class ZahtevOdmorConversion {
 	
 	@Transactional(readOnly = true)
 	public ZahtevOdmor get(ZahtevOdmorDTO zahtevDTO) {
-		return new ZahtevOdmor(zahtevDTO.getId(), zahtevDTO.getPocetak(), zahtevDTO.getKraj(),
+		return new ZahtevOdmor(zahtevDTO.getId(), 
+				zahtevDTO.getPocetak(), 
+				zahtevDTO.getKraj(),
 				zahtevDTO.isOdobren(),
 				this.zaposleniRepository.getOne(zahtevDTO.getZaposleni()), 
 				this.klinikaRepository.getOne(zahtevDTO.getKlinika()));

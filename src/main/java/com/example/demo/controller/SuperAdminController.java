@@ -28,10 +28,10 @@ public class SuperAdminController {
 	
 	@Autowired
 	private SuperAdminConversion superAdminConversion;
-	
+		
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private EmailService emailService;
 		
@@ -40,7 +40,7 @@ public class SuperAdminController {
 
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody SuperAdminDTO superAdminDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody SuperAdminDTO superAdminDTO) {
 		SuperAdmin superAdmin;
 		try {
 			superAdmin = this.superAdminConversion.get(superAdminDTO);
@@ -51,7 +51,7 @@ public class SuperAdminController {
 		}
 		try {
 			String obavestenje = "Uspesno ste registrovani kao super admin klinickog centra 'POSLEDNJI TRZAJ' \n"
-					+ "lozinka: " + superAdmin.getLozinka() + "\nLink za prijavu: " + this.name.getName();
+					+ "lozinka: " + superAdminDTO.getLozinka() + "\nLink za prijavu: " + this.name.getName();
 			Message poruka = new Message(superAdmin.getEmail(), "Registracija super admina klinickog centra", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);

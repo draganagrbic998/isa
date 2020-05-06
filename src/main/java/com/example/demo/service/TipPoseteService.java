@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Zaposleni;
-import com.example.demo.model.posete.Poseta;
-import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.resursi.TipPosete;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.TipPoseteRepository;
@@ -29,15 +27,12 @@ public class TipPoseteService {
 		
 	@Transactional(readOnly = false)
 	public void save(TipPosete tipPosete) {
-		for (TipPosete tp: this.tipPoseteRepository.findByKlinikaId(tipPosete.getKlinika().getId())) {
-			if (tp.getNaziv().equals(tipPosete.getNaziv()))
-				throw new MyRuntimeException();
+		if (tipPosete.getId() == null) {
+			for (TipPosete tp: this.tipPoseteRepository.findByKlinikaId(tipPosete.getKlinika().getId())) {
+				if (tp.getNaziv().equals(tipPosete.getNaziv()))
+					throw new MyRuntimeException();
+			}
 		}
-		this.tipPoseteRepository.save(tipPosete);
-	}
-	
-	@Transactional(readOnly = false)
-	public void saveChanges(TipPosete tipPosete) {
 		this.tipPoseteRepository.save(tipPosete);
 	}
 	
@@ -50,7 +45,20 @@ public class TipPoseteService {
 		}
 		return tipovi;
 	}
-
+	
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
+		if (!tipPosete.mozeBrisanje())
+			throw new MyRuntimeException();
+		for (Lekar l: this.lekarRepository.findBySpecijalizacijaId(id)) {
+			if (l.isAktivan())
+				throw new MyRuntimeException();
+		}
+		tipPosete.setAktivan(false);
+		this.tipPoseteRepository.save(tipPosete);
+	}
+	
 	@Transactional(readOnly = true)
 	public Set<String> sviTipovi(){
 		
@@ -61,20 +69,5 @@ public class TipPoseteService {
 		}
 		return lista;
 		
-	}
-	
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
-		for (Poseta p: tipPosete.getPosete()) {
-			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
-				throw new MyRuntimeException();
-		}
-		for (Lekar l: this.lekarRepository.findBySpecijalizacijaId(id)) {
-			if (l.isAktivan())
-				throw new MyRuntimeException();
-		}
-		tipPosete.setAktivan(false);
-		this.tipPoseteRepository.save(tipPosete);
 	}
 }

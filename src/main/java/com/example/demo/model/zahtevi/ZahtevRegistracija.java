@@ -17,13 +17,13 @@ public class ZahtevRegistracija {
 	@Column(unique = false, nullable = false)
 	private String lozinka;
 	@Column(unique = false, nullable = false)
+	private String brojOsiguranika;
+	@Column(unique = false, nullable = false)
 	private String ime;
 	@Column(unique = false, nullable = false)
 	private String prezime;
 	@Column(unique = false, nullable = false)
 	private String telefon;
-	@Column(unique = false, nullable = false)
-	private String brojOsiguranika;
 	@Column(unique = false, nullable = false)
 	private String drzava;
 	@Column(unique = false, nullable = false)
@@ -74,6 +74,14 @@ public class ZahtevRegistracija {
 		this.lozinka = lozinka;
 	}
 
+	public String getBrojOsiguranika() {
+		return brojOsiguranika;
+	}
+
+	public void setBrojOsiguranika(String brojOsiguranika) {
+		this.brojOsiguranika = brojOsiguranika;
+	}
+
 	public String getIme() {
 		return ime;
 	}
@@ -96,14 +104,6 @@ public class ZahtevRegistracija {
 
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
-	}
-
-	public String getBrojOsiguranika() {
-		return brojOsiguranika;
-	}
-
-	public void setBrojOsiguranika(String brojOsiguranika) {
-		this.brojOsiguranika = brojOsiguranika;
 	}
 
 	public String getDrzava() {

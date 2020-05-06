@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.SalaDTO;
-import com.example.demo.dto.pretraga.PosetaPretragaDTO;
+import com.example.demo.dto.pretraga.PosetaDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
 import com.example.demo.dto.unos.ZahtevOperacijaObradaDTO;
 import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
@@ -37,43 +37,45 @@ public class PosetaConversion {
 
 	@Autowired
 	private LekarRepository lekarRepository;
+	
+	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 
 	@Transactional(readOnly = true)
 	public Poseta get(PredefinisanaPosetaDTO poseta) throws ParseException {
 
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		String temp1 = f.format(poseta.getDatum());
+		String temp1 = this.f.format(poseta.getDatum());
 		String temp2 = temp1.substring(0, temp1.length() - 6);
-		return new Poseta(f.parse(temp2 + " " + poseta.getVreme()), poseta.getPopust(), StanjePosete.SLOBODNO,
-				this.tipPoseteRepository.getOne(poseta.getTipPregleda()), this.salaRepository.getOne(poseta.getSala()),
-				this.lekarRepository.getOne(poseta.getLekar()));
-
+		return new Poseta(StanjePosete.SLOBODNO, 
+				this.f.parse(temp2 + " " + poseta.getVreme()), 
+				poseta.getPopust(),
+				this.tipPoseteRepository.getOne(poseta.getTipPregleda()), 
+				this.salaRepository.getOne(poseta.getSala()),
+				null, this.lekarRepository.getOne(poseta.getLekar()));
+		
+	}
+	
+	public PosetaDTO get(Poseta poseta) {
+		return new PosetaDTO(poseta);
 	}
 
-	// kreiranje posete na osnovu zahteva!
 	@Transactional(readOnly = true)
 	public Poseta get(ZahtevPosetaObradaDTO poseta, SalaDTO salaDTO) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		Date pocetak = sdf.parse(poseta.getDatum());
-		Date kraj = sdf.parse(poseta.getKraj());
-		if (salaDTO.proveriDatum(pocetak, kraj)) {
-			return new Poseta(this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(), pocetak, null,
-					StanjePosete.ZAUZETO, this.tipPoseteRepository.getOne(poseta.getIdTipa()),
-					this.salaRepository.getOne(poseta.getIdSale()), this.lekarRepository.getOne(poseta.getIdLekar()));
-		} else {
-			return null;
-		}
-	}
 
-	public PosetaPretragaDTO get(Poseta poseta) {
-		return new PosetaPretragaDTO(poseta);
+		Date pocetak = this.f.parse(poseta.getDatum());
+		return new Poseta(StanjePosete.ZAUZETO, 
+				pocetak, 
+				null,
+				this.tipPoseteRepository.getOne(poseta.getIdTipa()),
+				this.salaRepository.getOne(poseta.getIdSale()), 
+				this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(),
+				this.lekarRepository.getOne(poseta.getIdLekar()));
+
 	}
 
 	@Transactional(readOnly = true)
 	public Poseta get(ZahtevOperacijaObradaDTO zahtevDTO, SalaDTO salaDTO) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		Date pocetak = sdf.parse(zahtevDTO.getPocetak());
 
+		Date pocetak = this.f.parse(zahtevDTO.getPocetak());
 		Set<Lekar> lekari = new HashSet<>();
 
 		for (Lekar l : this.lekarRepository.findAll()) {
@@ -82,9 +84,13 @@ public class PosetaConversion {
 			}
 		}
 
-		return new Poseta(this.pacijentRepository.getOne(zahtevDTO.getPacijentId()).getKarton(), pocetak, null,
-				StanjePosete.ZAUZETO, this.tipPoseteRepository.getOne(zahtevDTO.getTipId()),
-				this.salaRepository.getOne(zahtevDTO.getSalaId()), lekari);
+		return new Poseta(StanjePosete.ZAUZETO, 
+				pocetak, 
+				null,
+				this.tipPoseteRepository.getOne(zahtevDTO.getTipId()),
+				this.salaRepository.getOne(zahtevDTO.getSalaId()), 
+				this.pacijentRepository.getOne(zahtevDTO.getPacijentId()).getKarton(),
+				lekari);
 	}
 
 }

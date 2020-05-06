@@ -53,63 +53,13 @@ public class ZahtevPoseta implements Zauzetost{
 		this.klinika = klinika;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Date getDatum() {
-		return datum;
-	}
-
-	public void setDatum(Date datum) {
-		this.datum = datum;
-	}
-
-	public Karton getKarton() {
-		return karton;
-	}
-
-	public void setKarton(Karton karton) {
-		this.karton = karton;
-	}
-	
-	public Lekar getLekar() {
-		return lekar;
-	}
-
-	public void setLekar(Lekar lekar) {
-		this.lekar = lekar;
-	}
-
-	public TipPosete getTipPosete() {
-		return tipPosete;
-	}
-
-	public void setTipPosete(TipPosete tipPosete) {
-		this.tipPosete = tipPosete;
-	}
-	
-	public Klinika getKlinika() {
-		return klinika;
-	}
-
-	public void setKlinika(Klinika klinika) {
-		this.klinika = klinika;
-	}
-
 	@Override
 	public int compareTo(Zauzetost o) {
-
 		return this.datum.compareTo(o.pocetak());
 	}
 
 	@Override
 	public Date pocetak() {
-
 		return this.datum;
 	}
 
@@ -130,6 +80,54 @@ public class ZahtevPoseta implements Zauzetost{
 		gs.add(Calendar.HOUR_OF_DAY, this.sati());
 		gs.add(Calendar.MINUTE, this.minute());
 		return gs.getTime();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
+	public Karton getKarton() {
+		return karton;
+	}
+
+	public void setKarton(Karton karton) {
+		this.karton = karton;
+	}
+
+	public Lekar getLekar() {
+		return lekar;
+	}
+
+	public void setLekar(Lekar lekar) {
+		this.lekar = lekar;
+	}
+
+	public TipPosete getTipPosete() {
+		return tipPosete;
+	}
+
+	public void setTipPosete(TipPosete tipPosete) {
+		this.tipPosete = tipPosete;
+	}
+
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
 	}
 	
 }

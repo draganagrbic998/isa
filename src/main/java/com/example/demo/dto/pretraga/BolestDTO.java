@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.demo.dto.model.DijagnozaDTO;
+import com.example.demo.dto.model.LekarDTO;
 import com.example.demo.model.korisnici.Lekar;
-import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Dijagnoza;
 import com.example.demo.model.resursi.Lek;
@@ -22,7 +22,7 @@ public class BolestDTO implements Comparable<BolestDTO>{
 	private String nazivPosete;
 	private String izvestaj;
 	private double ocenaKlinike;
-	private List<LekarOcenaDTO> lekari;
+	private List<LekarDTO> lekari;
 	private List<DijagnozaDTO> dijagnoze;
 	private List<ReceptDTO> recepti;
 	
@@ -39,16 +39,10 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		this.tipPosete = poseta.getTipPosete().isPregled() ? "PREGLED" : "OPERACIJA";
 		this.nazivPosete = poseta.getTipPosete().getNaziv();
 		this.izvestaj = poseta.getIzvestaj().getOpis();
-		double suma = 0.0;
-		int counter = 0;
-		for (Ocena o: poseta.getSala().getKlinika().getOcene()) {
-			suma += o.getVrednost();
-			counter += 1;
-		}
-		this.ocenaKlinike = counter != 0 ? suma / counter : 0.0;
+		this.ocenaKlinike = poseta.getSala().getKlinika().prosecnaOcena();
 		this.lekari = new ArrayList<>();
 		for (Lekar l: poseta.getLekari())
-			this.lekari.add(new LekarOcenaDTO(l));
+			this.lekari.add(new LekarDTO(l));
 		this.dijagnoze = new ArrayList<>();
 		for (Dijagnoza d: poseta.getIzvestaj().getDijagnoze())
 			this.dijagnoze.add(new DijagnozaDTO(d));
@@ -58,6 +52,11 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		Collections.sort(this.lekari);
 		Collections.sort(this.dijagnoze);
 		Collections.sort(this.recepti);
+	}
+
+	@Override
+	public int compareTo(BolestDTO b) {
+		return this.datum.compareTo(b.datum);
 	}
 
 	public Integer getPosetaId() {
@@ -124,11 +123,11 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		this.ocenaKlinike = ocenaKlinike;
 	}
 
-	public List<LekarOcenaDTO> getLekari() {
+	public List<LekarDTO> getLekari() {
 		return lekari;
 	}
 
-	public void setLekari(List<LekarOcenaDTO> lekari) {
+	public void setLekari(List<LekarDTO> lekari) {
 		this.lekari = lekari;
 	}
 
@@ -146,11 +145,6 @@ public class BolestDTO implements Comparable<BolestDTO>{
 
 	public void setRecepti(List<ReceptDTO> recepti) {
 		this.recepti = recepti;
-	}
-
-	@Override
-	public int compareTo(BolestDTO b) {
-		return this.datum.compareTo(b.datum);
 	}
 
 }

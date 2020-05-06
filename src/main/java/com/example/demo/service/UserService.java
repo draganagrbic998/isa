@@ -28,15 +28,11 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
 	@Transactional(readOnly = true)
 	public Korisnik prijava(UserDTO user) {
-		
-		
+				
 		for (Korisnik k: this.korisnikRepository.findAll()) {
 
-			
-			
 			if (k.getEmail().equals(user.getEmail()) && this.passwordEncoder.encoder().matches(user.getLozinka(), k.getLozinka()) && k.isAktivan()) {
 				
 		        List<GrantedAuthority> lista = new ArrayList<>();

@@ -20,36 +20,37 @@ import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.ostalo.Profitiranje;
 import com.example.demo.model.ostalo.Zauzetost;
 import com.example.demo.model.resursi.Sala;
 import com.example.demo.model.resursi.TipPosete;
 
 @Entity
-public class Poseta implements Zauzetost{
+public class Poseta implements Zauzetost, Profitiranje{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(unique = false, nullable = false)
+	private StanjePosete stanje;
+	@Column(unique = false, nullable = false)
 	private Date datum;
 	@Column(unique = false, nullable = true)
 	private Double popust;
-	@Column(unique = false, nullable = false)
-	private StanjePosete stanje;
 	@ManyToOne
 	@JoinColumn(name="tipPosete")
 	private TipPosete tipPosete;
 	@ManyToOne
 	@JoinColumn(name="sala")
 	private Sala sala;
+	@ManyToOne
+	@JoinColumn(name="karton")
+	private Karton karton;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "lekar_poseta",
     joinColumns = @JoinColumn(name = "poseta"),
     inverseJoinColumns = @JoinColumn(name = "lekar"))
 	private Set<Lekar> lekari = new HashSet<>();
-	@ManyToOne
-	@JoinColumn(name="karton")
-	private Karton karton;
 	@OneToOne
 	@JoinColumn(name="izvestaj")
 	private Izvestaj izvestaj;
@@ -60,44 +61,90 @@ public class Poseta implements Zauzetost{
 		super();
 	}
 	
-	public Poseta(Date datum, Double popust, StanjePosete stanje, TipPosete tipPosete, Sala sala, Lekar lekar) {
+	public Poseta(StanjePosete stanje, Date datum, Double popust, TipPosete tipPosete, Sala sala, Karton karton, Lekar lekar) {
 		super();
+		this.stanje = stanje;
 		this.datum = datum;
 		this.popust = popust;
-		this.stanje = stanje;
-		this.tipPosete = tipPosete;
-		this.sala = sala;
-		this.lekari.add(lekar);
-	}
-	
-	public Poseta(Karton karton, Date datum, Double popust, StanjePosete stanje, TipPosete tipPosete, Sala sala, Lekar lekar) {
-		super();
-		this.datum = datum;
-		this.popust = popust;
-		this.stanje = stanje;
 		this.tipPosete = tipPosete;
 		this.sala = sala;
 		this.karton = karton;
 		this.lekari.add(lekar);
 	}
-
-	public Poseta(Karton karton, Date datum, Double popust, StanjePosete stanje, TipPosete tipPosete, Sala sala, Set<Lekar> lekari) {
+	
+	public Poseta(StanjePosete stanje, Date datum, Double popust, TipPosete tipPosete, Sala sala, Karton karton,
+			Set<Lekar> lekari) {
 		super();
+		this.stanje = stanje;
 		this.datum = datum;
 		this.popust = popust;
-		this.stanje = stanje;
 		this.tipPosete = tipPosete;
 		this.sala = sala;
 		this.karton = karton;
 		this.lekari = lekari;
 	}
+
+	@Override
+	public int compareTo(Zauzetost o) {
+
+		return this.datum.compareTo(o.pocetak());
+	}
+
+	@Override
+	public Date pocetak() {
+
+		return this.datum;
+	}
+
+	@Override
+	public int sati() {
+
+		return this.tipPosete.getSati();
+	}
+
+	@Override
+	public int minute() {
+
+		return this.tipPosete.getMinute();
+	}
+
+	@Override
+	public Date kraj() {
+		GregorianCalendar gs = new GregorianCalendar();
+		gs.setTime(this.pocetak());
+		gs.add(Calendar.HOUR_OF_DAY, this.sati());
+		gs.add(Calendar.MINUTE, this.minute());
+		return gs.getTime();
+	}
 	
+	@Override
+	public double getProfit(Date pocetak, Date kraj) {
+		if (!this.stanje.equals(StanjePosete.OBAVLJENO))
+			return 0.0;
+		if (!(this.pocetak().after(pocetak) && this.pocetak().before(kraj)))
+			return 0.0;
+		if (!(this.kraj().after(pocetak) && this.kraj().before(kraj)))
+			return 0.0;
+		double suma = this.tipPosete.getCena();
+		if (this.popust != 0)
+			suma *= (1 - this.popust);
+		return suma;
+	}
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public StanjePosete getStanje() {
+		return stanje;
+	}
+
+	public void setStanje(StanjePosete stanje) {
+		this.stanje = stanje;
 	}
 
 	public Date getDatum() {
@@ -116,14 +163,6 @@ public class Poseta implements Zauzetost{
 		this.popust = popust;
 	}
 
-	public StanjePosete getStanje() {
-		return stanje;
-	}
-
-	public void setStanje(StanjePosete stanje) {
-		this.stanje = stanje;
-	}
-
 	public TipPosete getTipPosete() {
 		return tipPosete;
 	}
@@ -140,20 +179,20 @@ public class Poseta implements Zauzetost{
 		this.sala = sala;
 	}
 
-	public Set<Lekar> getLekari() {
-		return lekari;
-	}
-
-	public void setLekari(Set<Lekar> lekari) {
-		this.lekari = lekari;
-	}
-
 	public Karton getKarton() {
 		return karton;
 	}
 
 	public void setKarton(Karton karton) {
 		this.karton = karton;
+	}
+
+	public Set<Lekar> getLekari() {
+		return lekari;
+	}
+
+	public void setLekari(Set<Lekar> lekari) {
+		this.lekari = lekari;
 	}
 
 	public Izvestaj getIzvestaj() {
@@ -171,41 +210,5 @@ public class Poseta implements Zauzetost{
 	public void setVersion(long version) {
 		this.version = version;
 	}
-
-	@Override
-	public int compareTo(Zauzetost o) {
-
-		return this.datum.compareTo(o.pocetak());
-	}
-
-	@Override
-	public Date pocetak() {
-
-		return this.datum;
-	}
-
-	@Override
-	public int sati() {
-
-		return this.getTipPosete().getSati();
-	}
-
-	@Override
-	public int minute() {
-
-		return this.tipPosete.getMinute();
-	}
-
-	@Override
-	public Date kraj() {
-		GregorianCalendar gs = new GregorianCalendar();
-		gs.setTime(this.pocetak());
-		gs.add(Calendar.HOUR_OF_DAY, this.sati());
-		gs.add(Calendar.MINUTE, this.minute());
-		return gs.getTime();
-	}
 	
-	public int getTrajanje() {
-		return this.sati()*60 + this.minute();
-	}
 }

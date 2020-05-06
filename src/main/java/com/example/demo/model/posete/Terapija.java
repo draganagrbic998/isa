@@ -48,7 +48,21 @@ public class Terapija {
 		this.izvestaj = izvestaj;
 		this.sestra = sestra;
 	}
+
+	public List<String> getDijagnozeSifre() {
+		List<String> sifre = new ArrayList<>();
+		for (Dijagnoza d : this.izvestaj.getDijagnoze())
+			sifre.add(d.getSifra());
+		return sifre;
+	}
 	
+	public List<String> getLekoviSifre() {
+		List<String> sifre = new ArrayList<>();
+		for (Lek l : this.lekovi)
+			sifre.add(l.getSifra());
+		return sifre;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -81,22 +95,4 @@ public class Terapija {
 		this.lekovi = lekovi;
 	}
 
-	public List<String> getDijagnozeSifre() {
-		List<String> sifre = new ArrayList<>();
-		
-		for (Dijagnoza d : this.izvestaj.getDijagnoze())
-			sifre.add(d.getSifra());
-		
-		return sifre;
-	}
-	
-	public List<String> getLekoviSifre() {
-		List<String> sifre = new ArrayList<>();
-		
-		for (Lek l : this.lekovi)
-			sifre.add(l.getSifra());
-
-		
-		return sifre;
-	}
 }

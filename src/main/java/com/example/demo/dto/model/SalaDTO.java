@@ -14,8 +14,6 @@ import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.resursi.Sala;
 
-
-
 public class SalaDTO implements Comparable<SalaDTO>{
 
 	private Integer id; 
@@ -31,19 +29,19 @@ public class SalaDTO implements Comparable<SalaDTO>{
 	}
 	
 	public SalaDTO(Sala sala) {
-		Calendar cal = Calendar.getInstance();
+		GregorianCalendar gc = new GregorianCalendar();
 		this.id = sala.getId();
 		this.broj = sala.getBroj();
 		this.naziv = sala.getNaziv();
 		this.klinika = sala.getKlinika().getId();
 		this.aktivan = sala.isAktivan();
-		this.kalendar = new ArrayList<KalendarSalaDTO>();
+		this.kalendar = new ArrayList<>();
 		for (Poseta p : sala.getPosete()) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
-				cal.setTime(p.getDatum());
-		        cal.add(Calendar.HOUR, p.getTipPosete().getSati());
-		        cal.add(Calendar.MINUTE, p.getTipPosete().getMinute());
-		        Date kraj = cal.getTime();
+				gc.setTime(p.getDatum());
+		        gc.add(Calendar.HOUR, p.getTipPosete().getSati());
+		        gc.add(Calendar.MINUTE, p.getTipPosete().getMinute());
+		        Date kraj = gc.getTime();
 		        this.kalendar.add(new KalendarSalaDTO(p.getDatum(), kraj));
 			}
 		}

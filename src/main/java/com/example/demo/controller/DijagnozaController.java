@@ -42,7 +42,7 @@ public class DijagnozaController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody DijagnozaDTO dijagnozaDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody DijagnozaDTO dijagnozaDTO) {
 		try {
 			this.dijagnozaService.save(this.dijagnozaConversion.get(dijagnozaDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -54,7 +54,7 @@ public class DijagnozaController {
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
 		try {
 			this.dijagnozaService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -63,6 +63,5 @@ public class DijagnozaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
 	
 }

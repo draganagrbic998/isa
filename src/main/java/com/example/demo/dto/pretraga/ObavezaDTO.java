@@ -1,19 +1,17 @@
 package com.example.demo.dto.pretraga;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.example.demo.model.posete.Poseta;
 
-public class ObavezaDTO implements Comparable<ObavezaDTO>{
+public class ObavezaDTO {
 
 	private Integer id;
 	private String datum;
 	private String pocetak;
 	private Integer trajanje;
-	private String tip;
 	private boolean pregled;
-	private Date datumSortiranje;
+	private String tip;
 
 	public ObavezaDTO() {
 		super();
@@ -25,10 +23,9 @@ public class ObavezaDTO implements Comparable<ObavezaDTO>{
 		this.id = poseta.getId();
 		this.datum = formatDatum.format(poseta.getDatum());
 		this.pocetak = formatPocetak.format(poseta.getDatum());
-		this.trajanje = poseta.getTrajanje();
-		this.tip = poseta.getTipPosete().getNaziv();
+		this.trajanje = poseta.sati() * 60 + poseta.minute();
 		this.pregled = poseta.getTipPosete().isPregled();
-		this.datumSortiranje = poseta.getDatum();
+		this.tip = poseta.getTipPosete().getNaziv();
 	}
 
 	public Integer getId() {
@@ -38,7 +35,7 @@ public class ObavezaDTO implements Comparable<ObavezaDTO>{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getDatum() {
 		return datum;
 	}
@@ -46,7 +43,7 @@ public class ObavezaDTO implements Comparable<ObavezaDTO>{
 	public void setDatum(String datum) {
 		this.datum = datum;
 	}
-	
+
 	public String getPocetak() {
 		return pocetak;
 	}
@@ -63,14 +60,6 @@ public class ObavezaDTO implements Comparable<ObavezaDTO>{
 		this.trajanje = trajanje;
 	}
 
-	public String getTip() {
-		return tip;
-	}
-
-	public void setTip(String tip) {
-		this.tip = tip;
-	}
-
 	public boolean isPregled() {
 		return pregled;
 	}
@@ -79,17 +68,12 @@ public class ObavezaDTO implements Comparable<ObavezaDTO>{
 		this.pregled = pregled;
 	}
 
-	public Date getDatumSortiranje() {
-		return datumSortiranje;
+	public String getTip() {
+		return tip;
 	}
 
-	public void setDatumSortiranje(Date datumSortiranje) {
-		this.datumSortiranje = datumSortiranje;
-	}
-
-	@Override
-	public int compareTo(ObavezaDTO o) {
-		return this.datumSortiranje.compareTo(o.datumSortiranje);
+	public void setTip(String tip) {
+		this.tip = tip;
 	}
 
 }

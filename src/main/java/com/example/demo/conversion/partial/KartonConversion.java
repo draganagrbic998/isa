@@ -17,16 +17,18 @@ public class KartonConversion {
 	@Transactional(readOnly = true)
 	public Karton get(KartonDTO kartonDTO) {
 		
-		
-		return new Karton(kartonDTO.getId(), kartonDTO.getBrojOsiguranika(), 
-				kartonDTO.getVisina(), kartonDTO.getTezina(), 
-				kartonDTO.getLevaDioptrija(), kartonDTO.getDesnaDioptrija(), 
-				kartonDTO.getKrvnaGrupa(), this.pacijentRepository.getOne(kartonDTO.getPacijent()));
+		return new Karton(kartonDTO.getId(), 
+				kartonDTO.getBrojOsiguranika(), 
+				kartonDTO.getVisina(), 
+				kartonDTO.getTezina(), 
+				kartonDTO.getLevaDioptrija(), 
+				kartonDTO.getDesnaDioptrija(), 
+				kartonDTO.getKrvnaGrupa(), 
+				this.pacijentRepository.getOne(kartonDTO.getPacijent()));
 	}
 		
 	public KartonDTO get(Karton karton) {
 		return new KartonDTO(karton);
 	}
-	
 
 }

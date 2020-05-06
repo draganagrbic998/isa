@@ -28,6 +28,11 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 		this.klinika = zahtev.getKlinika().getId();
 	}
 
+	@Override
+	public int compareTo(ZahtevPosetaDTO z) {
+		return this.datum.compareTo(z.datum);
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -82,11 +87,6 @@ public class ZahtevPosetaDTO implements Comparable<ZahtevPosetaDTO>{
 
 	public void setKlinika(Integer klinika) {
 		this.klinika = klinika;
-	}
-
-	@Override
-	public int compareTo(ZahtevPosetaDTO z) {
-		return this.datum.compareTo(z.datum);
 	}
 	
 }

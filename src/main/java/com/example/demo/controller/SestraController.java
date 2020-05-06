@@ -28,7 +28,6 @@ import com.example.demo.service.UserService;
 @RequestMapping(value = "/sestra")
 public class SestraController {
 	
-		
 	@Autowired
 	private SestraService sestraService;
 	
@@ -37,13 +36,12 @@ public class SestraController {
 	
 	@Autowired
 	private UserService userService;
-	
+		
 	@Autowired
 	private EmailService emailService;
 	
 	@Autowired
 	private ApplicationName name;
-
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +57,7 @@ public class SestraController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody SestraDTO sestraDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody SestraDTO sestraDTO) {
 		Sestra sestra;
 		try {
 			sestra = this.sestraConversion.get(sestraDTO);
@@ -70,7 +68,7 @@ public class SestraController {
 		}
 		try {
 			String obavestenje = "Uspesno ste registrovani kao medicinska sestra klinike " + sestra.getKlinika().getNaziv() + "\n"
-					+ "lozinka: " + sestra.getLozinka() + "\nLink za prijavu: " + this.name.getName();
+					+ "lozinka: " + sestraDTO.getLozinka() + "\nLink za prijavu: " + this.name.getName();
 			Message poruka = new Message(sestra.getEmail(), "Registracija medicinske sestre klinike", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -82,7 +80,7 @@ public class SestraController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
 		try {
 			this.sestraService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);			
@@ -115,6 +113,5 @@ public class SestraController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 	
 }

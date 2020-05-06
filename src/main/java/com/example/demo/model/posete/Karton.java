@@ -66,6 +66,70 @@ public class Karton implements Slobodnost{
 		this.krvnaGrupa = krvnaGrupa;
 		this.pacijent = pacijent;
 	}
+	
+	@Override
+	public boolean slobodan(Date pocetak, Date kraj) {
+
+		for (Poseta p: this.posete) {
+			
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
+				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+						&&  pocetak.before(p.kraj()))
+					return false;
+				if ((kraj.after(p.pocetak()))
+						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+					return false;
+			}
+
+		}
+		
+		for (ZahtevPoseta p: this.posetaZahtevi) {
+			
+			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+					&&  pocetak.before(p.kraj()))
+				return false;
+			if ((kraj.after(p.pocetak()))
+					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+				return false;
+		}
+		
+		return true;
+		
+	}
+
+	public List<TerminDTO> getTermini(){
+		
+		List<TerminDTO> termini = new ArrayList<>();
+		for (Poseta p: this.posete) {
+			if (p.getStanje().equals(StanjePosete.ZAUZETO) && p.getDatum().after(new Date()))
+				termini.add(new TerminDTO(p));
+		}
+		Collections.sort(termini);
+		return termini;
+		
+	}
+	
+	public List<BolestDTO> getBolesti(){
+		
+		List<BolestDTO> bolesti = new ArrayList<>();
+		for (Poseta p: this.posete) {
+			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
+				bolesti.add(new BolestDTO(p));
+		}
+		Collections.sort(bolesti);
+		return bolesti;
+		
+	}
+
+	public List<ZahtevTerminDTO> getZahtevTermini() {
+		List<ZahtevTerminDTO> zahtevTermini = new ArrayList<>();
+		for (ZahtevPoseta zahtev: this.posetaZahtevi) {
+			if (zahtev.getDatum().after(new Date()))
+				zahtevTermini.add(new ZahtevTerminDTO(zahtev));
+		}
+		Collections.sort(zahtevTermini);
+		return zahtevTermini;
+	}
 
 	public Integer getId() {
 		return id;
@@ -138,77 +202,13 @@ public class Karton implements Slobodnost{
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
 	}
-	
+
 	public Set<ZahtevPoseta> getPosetaZahtevi() {
 		return posetaZahtevi;
 	}
 
 	public void setPosetaZahtevi(Set<ZahtevPoseta> posetaZahtevi) {
 		this.posetaZahtevi = posetaZahtevi;
-	}
-
-	public List<TerminDTO> getTermini(){
-		
-		List<TerminDTO> termini = new ArrayList<>();
-		for (Poseta p: this.posete) {
-			if (p.getStanje().equals(StanjePosete.ZAUZETO) && p.getDatum().after(new Date()))
-				termini.add(new TerminDTO(p));
-		}
-		Collections.sort(termini);
-		return termini;
-		
-	}
-	
-	public List<BolestDTO> getBolesti(){
-		
-		List<BolestDTO> bolesti = new ArrayList<>();
-		for (Poseta p: this.posete) {
-			if (p.getStanje().equals(StanjePosete.OBAVLJENO))
-				bolesti.add(new BolestDTO(p));
-		}
-		Collections.sort(bolesti);
-		return bolesti;
-		
-	}
-
-	public List<ZahtevTerminDTO> getZahtevTermini() {
-		List<ZahtevTerminDTO> zahtevTermini = new ArrayList<>();
-		for (ZahtevPoseta zahtev: this.posetaZahtevi) {
-			if (zahtev.getDatum().after(new Date()))
-				zahtevTermini.add(new ZahtevTerminDTO(zahtev));
-		}
-		Collections.sort(zahtevTermini);
-		return zahtevTermini;
-	}
-
-	@Override
-	public boolean slobodan(Date pocetak, Date kraj) {
-
-		for (Poseta p: this.posete) {
-			
-			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
-				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
-						&&  pocetak.before(p.kraj()))
-					return false;
-				if ((kraj.after(p.pocetak()))
-						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
-					return false;
-			}
-
-		}
-		
-		for (ZahtevPoseta p: this.posetaZahtevi) {
-			
-			if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
-					&&  pocetak.before(p.kraj()))
-				return false;
-			if ((kraj.after(p.pocetak()))
-					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
-				return false;
-		}
-		
-		return true;
-		
 	}
 	
 }

@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Klinika;
-import com.example.demo.model.resursi.Sala;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.OcenaRepository;
@@ -54,6 +52,11 @@ public class KlinikaService {
 		return this.klinikaRepository.findAll();
 	}
 	
+	@Transactional(readOnly = true)
+	public Klinika getOne(Integer id) {
+		return this.klinikaRepository.getOne(id);
+	}
+	
 	@Transactional(readOnly = false)
 	public Poseta oceni(Pacijent pacijent, OcenaParamDTO param, Integer posetaId) {
 		
@@ -63,60 +66,21 @@ public class KlinikaService {
 		return this.posetaRepository.getOne(posetaId);
 		
 	}
-	
-	@Transactional(readOnly = true)
-	public List<Poseta> getPosete(Klinika klinika){
-		
-		List<Poseta> lista = new ArrayList<>();
-		for (Poseta p: this.posetaRepository.findAll()) {
-			for (Sala s: klinika.getSale()) {
-				if (s.getId().equals(p.getSala().getId()))
-					lista.add(p);
-			}
-		}
-		return lista;
-		
-	}
 
 	@Transactional(readOnly = true)
-	public List<KlinikaSlobodnoDTO> slobodno() {
-		
-		List<KlinikaSlobodnoDTO> lista = new ArrayList<>();
-		for (Klinika k: this.klinikaRepository.findAll()) {
-			KlinikaSlobodnoDTO temp = new KlinikaSlobodnoDTO(k, this.getPosete(k));
-			if (!temp.getPosete().isEmpty())
-				lista.add(new KlinikaSlobodnoDTO(k, this.getPosete(k)));
-		}
-		Collections.sort(lista);
-		return lista;
-
-	}
-
-	
-
-	@Transactional(readOnly = true)
-	public KlinikaSlobodnoDTO getKlinikaSlobodno(Integer posetaId) {
-
-		Poseta p = this.posetaRepository.getOne(posetaId);
-		Klinika k = p.getSala().getKlinika();
-		return new KlinikaSlobodnoDTO(k, this.getPosete(k));
-
-	}
-
-	@Transactional(readOnly = true)
-	public Collection<KlinikaPretragaDTO> pretraga(PretragaDTO param) {
+	public List<KlinikaPretragaDTO> pretraga(PretragaDTO param) {
 
 		Map<Integer, KlinikaPretragaDTO> mapa = new HashMap<>();
 		for (Lekar l: this.lekarRepository.findAll()) {
-			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) && l.getSpecijalizacija().isPregled()) {
+			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) 
+					&& l.getSpecijalizacija().isPregled()) {
+				
 				List<Date> satnica = l.getSatnica(param.getDatumPregleda());
-
 				if (!satnica.isEmpty()) {
 					LekarSatnicaDTO ls = new LekarSatnicaDTO(l, satnica);
 					KlinikaPretragaDTO kp;
-					if (mapa.containsKey(l.getKlinika().getId())) {
+					if (mapa.containsKey(l.getKlinika().getId()))
 						kp = mapa.get(l.getKlinika().getId());
-					}
 					else {
 						kp = new KlinikaPretragaDTO(l.getKlinika(), l.getSpecijalizacija().getCena(), l.getSpecijalizacija().getSati() + l.getSpecijalizacija().getMinute() / 60.0);
 						mapa.put(l.getKlinika().getId(), kp);
@@ -126,13 +90,22 @@ public class KlinikaService {
 			}
 			
 		}
-		return mapa.values();
+
+		List<KlinikaPretragaDTO> lista = new ArrayList<>();
+		for (KlinikaPretragaDTO k: mapa.values())
+			lista.add(k);
+		Collections.sort(lista);
+		return lista;
 		
 	}
+	
+	@Transactional(readOnly = true)
+	public KlinikaSlobodnoDTO getKlinikaSlobodno(Integer posetaId) {
 
-	public Klinika nadji(Integer id) {
-		return this.klinikaRepository.getOne(id);
+		Poseta p = this.posetaRepository.getOne(posetaId);
+		Klinika k = p.getSala().getKlinika();
+		return new KlinikaSlobodnoDTO(k);
+
 	}
-
 	
 }

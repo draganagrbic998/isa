@@ -29,19 +29,42 @@ import com.example.demo.service.UserService;
 @RestController
 @RequestMapping(value="/pacijent")
 public class PacijentController {
+							
+	@Autowired
+	private PacijentService pacijentService;
+
+	@Autowired
+	private PacijentConversion pacijentConversion;
+
+	@Autowired
+	private KartonConversion kartonConversion;
 	
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private KartonConversion kartonConversion;
-		
-	@Autowired
-	private PacijentConversion pacijentConversion;
-			
-	@Autowired
-	private PacijentService pacijentService;
-		
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PacijentDTO> profil(){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.pacijentConversion.get(pacijent), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> izmena(@RequestBody PacijentDTO pacijentDTO){
+		try {
+			this.pacijentService.save(this.pacijentConversion.get(pacijentDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/karton", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,6 +72,19 @@ public class PacijentController {
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.kartonConversion.get(pacijent.getKarton()), HttpStatus.OK);		
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<BolestDTO>> bolesti(){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			Karton karton = pacijent.getKarton();
+			return new ResponseEntity<>(karton.getBolesti(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -81,45 +117,8 @@ public class PacijentController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@GetMapping(value="/bolesti", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BolestDTO>> bolesti(){
-		try {
-			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			Karton karton = pacijent.getKarton();
-			return new ResponseEntity<>(karton.getBolesti(), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PacijentDTO> profil(){
-		try {
-			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.pacijentConversion.get(pacijent), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> izmena(@RequestBody PacijentDTO pacijentDTO){
-		try {
-			this.pacijentService.save(this.pacijentConversion.get(pacijentDTO));
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
 	@GetMapping(value="/aktiviranje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> aktiviraj(@PathVariable String id){
+	public ResponseEntity<HttpStatus> aktiviranje(@PathVariable String id){
 		try {
 			boolean retval = this.pacijentService.aktiviraj(id);
 			if (retval)
@@ -131,6 +130,5 @@ public class PacijentController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 	
 }

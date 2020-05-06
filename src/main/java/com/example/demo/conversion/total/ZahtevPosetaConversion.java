@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevPosetaDTO;
-import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.KartonRepository;
 import com.example.demo.repository.LekarRepository;
@@ -31,31 +30,28 @@ public class ZahtevPosetaConversion {
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
 	
+	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		
 	@Transactional(readOnly = true)
 	public ZahtevPoseta get(ZahtevPosetaDTO zahtevDTO) throws ParseException {
 				
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		String temp1 = (f.format(zahtevDTO.getDatum()));
-		String temp2 = temp1.substring(0, temp1.length()-6);
-		Date datum = zahtevDTO.getVreme() == null ? zahtevDTO.getDatum() : f.parse(temp2 + " " + zahtevDTO.getVreme());
+		String temp1 = this.f.format(zahtevDTO.getDatum());
+		String temp2 = temp1.substring(0, temp1.length() - 6);
+		Date datum = zahtevDTO.getVreme() == null ? zahtevDTO.getDatum() : this.f.parse(temp2 + " " + zahtevDTO.getVreme());
 		
-		return new ZahtevPoseta(zahtevDTO.getId(), datum, 
+		return new ZahtevPoseta(zahtevDTO.getId(), 
+				datum, 
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 
 				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : 
-					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija(), this.lekarRepository.getOne(zahtevDTO.getLekar()).getKlinika());
+					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija(), 
+					this.lekarRepository.getOne(zahtevDTO.getLekar()).getKlinika());
 	}
 	
 	
 	public ZahtevPosetaDTO get(ZahtevPoseta zahtev) {
 		return new ZahtevPosetaDTO(zahtev);
 	}
-	
-	public ZahtevPosetaObradaDTO getZPO(ZahtevPoseta zahtev) {
-		return new ZahtevPosetaObradaDTO(zahtev);
-	}
-
 	
 	public List<ZahtevPosetaDTO> get(List<ZahtevPoseta> zahtevi){
 		List<ZahtevPosetaDTO> zahteviDTO = new ArrayList<>();
@@ -65,11 +61,4 @@ public class ZahtevPosetaConversion {
 		return zahteviDTO;
 	}
 
-	public List<ZahtevPosetaObradaDTO> getZPO(List<ZahtevPoseta> zahtevi){
-		List<ZahtevPosetaObradaDTO> zahteviDTO = new ArrayList<>();
-		for (ZahtevPoseta z: zahtevi)
-			zahteviDTO.add(new ZahtevPosetaObradaDTO(z));
-		return zahteviDTO;
-	}
-	
 }

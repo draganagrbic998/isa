@@ -20,7 +20,6 @@ public class SalaConversion {
 	
 	@Transactional(readOnly = true)
 	public Sala get(SalaDTO salaDTO) {
-				
 		return new Sala(salaDTO.getId(), 
 				salaDTO.getBroj(), 
 				salaDTO.getNaziv(), 

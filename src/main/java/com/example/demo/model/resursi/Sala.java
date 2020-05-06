@@ -14,12 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.example.demo.model.ostalo.Brisanje;
 import com.example.demo.model.ostalo.Slobodnost;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 
 @Entity
-public class Sala implements Slobodnost{
+public class Sala implements Slobodnost, Brisanje{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +29,11 @@ public class Sala implements Slobodnost{
 	private String broj;
 	@Column(unique = false, nullable = false)
 	private String naziv;
+	@Column(unique = false, nullable = false)
+	private boolean aktivan;
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
-	@Column(unique = false, nullable = false)
-	private boolean aktivan;
 	@OneToMany(mappedBy = "sala", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
 
@@ -47,6 +48,34 @@ public class Sala implements Slobodnost{
 		this.naziv = naziv;
 		this.klinika = klinika;
 		this.aktivan = aktivan;
+	}
+
+	@Override
+	public boolean slobodan(Date pocetak, Date kraj) {
+		
+		if (!this.aktivan)
+			return false;
+
+		for (Poseta p: this.posete) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
+				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
+						&&  pocetak.before(p.kraj()))
+					return false;
+				if ((kraj.after(p.pocetak()))
+						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean mozeBrisanje() {
+		for (Poseta p: this.posete) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
+				return false;
+		}
+		return true;
 	}
 
 	public Integer getId() {
@@ -73,14 +102,6 @@ public class Sala implements Slobodnost{
 		this.naziv = naziv;
 	}
 
-	public Klinika getKlinika() {
-		return klinika;
-	}
-
-	public void setKlinika(Klinika klinika) {
-		this.klinika = klinika;
-	}
-
 	public boolean isAktivan() {
 		return aktivan;
 	}
@@ -89,31 +110,20 @@ public class Sala implements Slobodnost{
 		this.aktivan = aktivan;
 	}
 
+	public Klinika getKlinika() {
+		return klinika;
+	}
+
+	public void setKlinika(Klinika klinika) {
+		this.klinika = klinika;
+	}
+
 	public Set<Poseta> getPosete() {
 		return posete;
 	}
 
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
-	}
-
-	@Override
-	public boolean slobodan(Date pocetak, Date kraj) {
-		
-		if (!this.aktivan)
-			return false;
-
-		for (Poseta p: this.posete) {
-			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
-				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
-						&&  pocetak.before(p.kraj()))
-					return false;
-				if ((kraj.after(p.pocetak()))
-						&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj())))
-					return false;
-			}
-		}
-		return true;
 	}
 	
 }

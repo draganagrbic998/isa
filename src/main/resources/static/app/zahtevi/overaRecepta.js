@@ -47,7 +47,7 @@ Vue.component("overaRecepta", {
 		
 		<tr v-for="r in recepti">
 		    <td>{{r.id}}</td>
-			<td>{{r.brOsiguranika}}</td>
+			<td>{{r.brojOsiguranika}}</td>
 			<td>
 			<select>
 				<option v-for="l in r.lekovi">{{l}}</option>

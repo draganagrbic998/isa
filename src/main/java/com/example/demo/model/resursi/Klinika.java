@@ -1,8 +1,9 @@
 package com.example.demo.model.resursi;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -20,7 +21,6 @@ import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.ostalo.Ocenjivanje;
 import com.example.demo.model.posete.Poseta;
-import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
@@ -62,6 +62,49 @@ public class Klinika implements Ocenjivanje{
 		this.naziv = naziv;
 		this.opis = opis;
 		this.adresa = adresa;
+	}
+	
+	@Override
+	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
+
+		for (Ocena o: this.ocene) {
+			if (o.getPacijent().getId().equals(pacijent.getId())) {
+				o.setVrednost(ocena);
+				return o;
+			}
+		}
+		Ocena o = new Ocena(ocena, pacijent, this.id + "K");
+		this.ocene.add(o);
+		return o;
+		
+	}
+	
+	@Override
+	public double prosecnaOcena() {
+		if (this.ocene.isEmpty())
+			return 0.0;
+		double suma = 0.0;
+		for (Ocena o : this.ocene)
+			suma += o.getVrednost();
+		return suma/this.ocene.size();
+	}
+	
+	public double getProfit(Date pocetak, Date kraj) {
+		double suma = 0.0;
+		for (Poseta p: this.getPosete())
+			suma += p.getProfit(pocetak, kraj);
+		return suma;
+	}
+	
+	public List<Poseta> getPosete(){
+		
+		List<Poseta> posete = new ArrayList<>();
+		for (Sala s: this.sale) {
+			for (Poseta p: s.getPosete())
+				posete.add(p);
+		}
+		return posete;
+		
 	}
 
 	public Integer getId() {
@@ -143,46 +186,5 @@ public class Klinika implements Ocenjivanje{
 	public void setOdmorZahtevi(Set<ZahtevOdmor> odmorZahtevi) {
 		this.odmorZahtevi = odmorZahtevi;
 	}
-
-	@Override
-	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
-
-
-		for (Ocena o: this.ocene) {
-			if (o.getPacijent().getId().equals(pacijent.getId())) {
-				o.setVrednost(ocena);
-				return o;
-			}
-		}
-		Ocena o = new Ocena(pacijent, ocena, this.id + "K");
-		this.ocene.add(o);
-		return o;
-	}
-	@Override
-	public double prosecnaOcena() {
-		if (this.ocene.isEmpty())
-			return 0.0;
-		double suma = 0.0;
-		for (Ocena o : this.ocene)
-			suma += o.getVrednost();
-		return suma/this.ocene.size();
-	}
 	
-	@Override
-	public double izracunajProfit(Date pocetak, Date kraj) {
-		Calendar cal = Calendar.getInstance();
-		double profit = 0.0;
-		for (Sala s : this.sale) {
-			for (Poseta p : s.getPosete()) {
-				cal.setTime(p.getDatum());
-				cal.add(Calendar.MINUTE, p.getTrajanje());
-				if (p.getStanje().equals(StanjePosete.OBAVLJENO) && cal.getTime().after(pocetak) || cal.getTime().equals(pocetak)) {
-					if (p.getPopust()!=null) {
-						profit += (p.getTipPosete().getCena()*(1-p.getPopust())); }
-					else { profit += p.getTipPosete().getCena();}
-				}
-			}
-		}
-		return profit;
-	}
 }

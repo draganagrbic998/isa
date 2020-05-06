@@ -13,10 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.example.demo.model.ostalo.Brisanje;
 import com.example.demo.model.posete.Poseta;
+import com.example.demo.model.posete.StanjePosete;
 
 @Entity
-public class TipPosete {
+public class TipPosete implements Brisanje {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +28,16 @@ public class TipPosete {
 	@Column(unique = false, nullable = false)
 	private String naziv;
 	@Column(unique = false, nullable = false)
+	private double cena;
+	@Column(unique = false, nullable = false)
 	private int sati;
 	@Column(unique = false, nullable = false)
 	private int minute;
-	@Column(unique = false, nullable = false)
-	private double cena;
+	@Column
+	private boolean aktivan;
 	@ManyToOne
 	@JoinColumn(name="klinika")
 	private Klinika klinika;
-	@Column
-	private boolean aktivan;
 	@OneToMany(mappedBy = "tipPosete", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
 	
@@ -43,18 +45,27 @@ public class TipPosete {
 		super();
 	}
 
-	public TipPosete(Integer id, boolean pregled, String naziv, int sati, int minute, double cena, Klinika klinika, boolean aktivan) {
+	public TipPosete(Integer id, boolean pregled, String naziv, double cena, int sati, int minute, Klinika klinika, boolean aktivan) {
 		super();
 		this.id = id;
 		this.pregled = pregled;
 		this.naziv = naziv;
+		this.cena = cena;
 		this.sati = sati;
 		this.minute = minute;
-		this.cena = cena;
 		this.klinika = klinika;
 		this.aktivan = aktivan;
 	}
 
+	@Override
+	public boolean mozeBrisanje() {
+		for (Poseta p: this.posete) {
+			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
+				return false;
+		}
+		return true;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -78,7 +89,15 @@ public class TipPosete {
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
-	
+
+	public double getCena() {
+		return cena;
+	}
+
+	public void setCena(double cena) {
+		this.cena = cena;
+	}
+
 	public int getSati() {
 		return sati;
 	}
@@ -95,12 +114,12 @@ public class TipPosete {
 		this.minute = minute;
 	}
 
-	public double getCena() {
-		return cena;
+	public boolean isAktivan() {
+		return aktivan;
 	}
 
-	public void setCena(double cena) {
-		this.cena = cena;
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 
 	public Klinika getKlinika() {
@@ -109,14 +128,6 @@ public class TipPosete {
 
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
-	}
-
-	public boolean isAktivan() {
-		return aktivan;
-	}
-
-	public void setAktivan(boolean aktivan) {
-		this.aktivan = aktivan;
 	}
 
 	public Set<Poseta> getPosete() {

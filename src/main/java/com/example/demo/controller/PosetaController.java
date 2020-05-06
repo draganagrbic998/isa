@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.conversion.partial.IzvestajConversion;
 import com.example.demo.conversion.partial.PosetaConversion;
+import com.example.demo.dto.model.IzvestajDTO;
 import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
-import com.example.demo.dto.unos.IzvestajUnosDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
@@ -32,15 +32,15 @@ import com.example.demo.service.UserService;
 @RestController
 @RequestMapping(value="/poseta")
 public class PosetaController {
-	
-	@Autowired
-	private KlinikaService klinikaService;
-
+		
 	@Autowired
 	private PosetaService posetaService;
 	
 	@Autowired
 	private PosetaConversion posetaConversion;
+	
+	@Autowired
+	private KlinikaService klinikaService;
 	
 	@Autowired
 	private IzvestajConversion izvestajConversion;
@@ -50,6 +50,20 @@ public class PosetaController {
 
 	@Autowired
 	private EmailService emailService;
+	
+	private final SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody PredefinisanaPosetaDTO pregled) {
+		try {
+			this.posetaService.save(this.posetaConversion.get(pregled), null);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 				
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value = "/zakazi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +73,7 @@ public class PosetaController {
 		Poseta poseta;
 		try {
 			pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			poseta = this.posetaService.nadji(id);
+			poseta = this.posetaService.getOne(id);
 			this.posetaService.zakazi(id, pacijent.getKarton());
 		}
 		catch(Exception e) {
@@ -67,33 +81,29 @@ public class PosetaController {
 		}
 		
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
 			String obavestenje = "Pregled tipa " + poseta.getTipPosete().getNaziv() + " datuma "
-					+ f.format(poseta.getDatum()) + " uspesno zakazan. ";
+					+ this.f.format(poseta.getDatum()) + " uspesno zakazan. ";
 			Message poruka = new Message(pacijent.getEmail(), "Pregled zakazan", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(this.klinikaService.getKlinikaSlobodno(id), HttpStatus.OK);
-
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 	
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@DeleteMapping(value="/otkazi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> otkaziTermin(@PathVariable Integer id){	
+	public ResponseEntity<HttpStatus> otkazi(@PathVariable Integer id){	
 		Poseta poseta;
 		try {
 			poseta = this.posetaService.otkazi(id);
-			
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
-			String obavestenje = "Poseta zakazana za " + f.format(poseta.getDatum()) + " je otkazana. ";
+			String obavestenje = "Poseta zakazana za " + this.f.format(poseta.getDatum()) + " je otkazana. ";
 			this.emailService.sendMessage(new Message(poseta.getKarton().getPacijent().getEmail(), "Poseta otkazana", obavestenje));
 			for (Lekar l: poseta.getLekari())
 				this.emailService.sendMessage(new Message(l.getEmail(), "Poseta otkazana", obavestenje));
@@ -104,21 +114,9 @@ public class PosetaController {
 		}	
 	}
 
-	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody PredefinisanaPosetaDTO pregled) {
-		try {
-			this.posetaService.save(this.posetaConversion.get(pregled), null, true);
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
 	@PreAuthorize("hasAuthority('Lekar')")
 	@GetMapping(value = "/zapoceto", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> provera() {
+	public ResponseEntity<Integer> zapoceto() {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			if (lekar.getZapocetaPoseta() != null)
@@ -132,7 +130,7 @@ public class PosetaController {
 
 	@PreAuthorize("hasAuthority('Lekar')")
 	@GetMapping(value="/zapocni/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> zapocniPosetu(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> zapocni(@PathVariable Integer id){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			this.posetaService.zapocni(id, lekar);
@@ -145,10 +143,10 @@ public class PosetaController {
 	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@PostMapping(value = "/zavrsi", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajUnosDTO izvestajUnosDTO) {
+	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajDTO izvestajDTO) {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			this.posetaService.zavrsi(this.izvestajConversion.get(izvestajUnosDTO, lekar), izvestajUnosDTO, lekar);
+			this.posetaService.zavrsi(this.izvestajConversion.get(izvestajDTO, lekar), lekar);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

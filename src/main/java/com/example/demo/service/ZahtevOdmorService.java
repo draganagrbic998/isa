@@ -30,7 +30,8 @@ public class ZahtevOdmorService {
 	
 	@Transactional(readOnly = false)
 	public void save(ZahtevOdmor zahtev) {
-		if (zahtev.getId() == null && zahtev.getZaposleni().odmorPreklapanje(zahtev))
+		if (zahtev.getId() == null && 
+				zahtev.getZaposleni().odmorPreklapanje(zahtev))
 			throw new MyRuntimeException();
 		this.zahtevOdmorRepository.save(zahtev);
 		Zaposleni z = zahtev.getZaposleni();
@@ -43,7 +44,7 @@ public class ZahtevOdmorService {
 	}
 	
 	@Transactional(readOnly = true)
-	public ZahtevOdmor nadji(Integer id) {
+	public ZahtevOdmor getOne(Integer id) {
 		return this.zahtevOdmorRepository.getOne(id);
 	}
 	
@@ -55,7 +56,7 @@ public class ZahtevOdmorService {
 	public List<ZahtevOdmorDTO> findAll(Klinika klinika) {
 		List<ZahtevOdmorDTO> zahtevi = new ArrayList<>();
 		for (ZahtevOdmor z : this.zahtevOdmorRepository.findByKlinikaId(klinika.getId())) {
-			if (!z.getOdobren())
+			if (!z.isOdobren())
 				zahtevi.add(new ZahtevOdmorDTO(z));
 		}
 		return zahtevi;

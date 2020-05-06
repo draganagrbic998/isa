@@ -8,6 +8,7 @@ public class KlinikaDTO implements Comparable<KlinikaDTO>{
 	private String naziv;
 	private String opis;
 	private String adresa;
+	private double ocena;
 	
 	public KlinikaDTO() {
 		super();
@@ -19,6 +20,12 @@ public class KlinikaDTO implements Comparable<KlinikaDTO>{
 		this.naziv = klinika.getNaziv();
 		this.opis = klinika.getOpis();
 		this.adresa = klinika.getAdresa();
+		this.ocena = klinika.prosecnaOcena();
+	}
+
+	@Override
+	public int compareTo(KlinikaDTO k) {
+		return this.naziv.compareTo(k.naziv);
 	}
 
 	public Integer getId() {
@@ -53,9 +60,12 @@ public class KlinikaDTO implements Comparable<KlinikaDTO>{
 		this.adresa = adresa;
 	}
 
-	@Override
-	public int compareTo(KlinikaDTO k) {
-		return this.naziv.compareTo(k.naziv);
+	public double getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(double ocena) {
+		this.ocena = ocena;
 	}
 	
 }

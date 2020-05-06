@@ -121,7 +121,7 @@ Vue.component("bolesti", {
 					
 					<tr>
 						<th scope="row">Ocena: </th>
-						<td><input type="text" v-model="selectedLekar.ocena" class="form-control" disabled></td>
+						<td><input type="text" v-model="selectedLekar.prosecnaOcena" class="form-control" disabled></td>
 					</tr>
 					
 					
@@ -195,7 +195,7 @@ Vue.component("bolesti", {
 						<tr v-for="l in selectedBolest.lekari" v-on:click="selectLekar(l)">
 							<td>{{l.ime}}</td>
 							<td>{{l.prezime}}</td>
-							<td>{{l.ocena}}</td>
+							<td>{{l.prosecnaOcena}}</td>
 						</tr>
 					
 					</tbody>

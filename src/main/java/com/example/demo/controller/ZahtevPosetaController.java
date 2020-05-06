@@ -3,8 +3,8 @@ package com.example.demo.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class ZahtevPosetaController {
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@PostMapping(value="/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KlinikaPretragaDTO> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
-		System.out.println("MAMA");
+
 		ZahtevPoseta zahtev = null;
 		try {
 			Korisnik korisnik = this.userService.getSignedKorisnik();
@@ -91,13 +91,13 @@ public class ZahtevPosetaController {
 				if (z instanceof Admin)
 					this.emailService.sendMessage(new Message(z.getEmail(), "Poslat zahtev za posetu", obavestenje));
 			}
-			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.nadji(zahtev.getKlinika().getId())), HttpStatus.OK);
+			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.getOne(zahtev.getKlinika().getId())), HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.nadji(zahtev.getKlinika().getId())), HttpStatus.OK);
+			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.getOne(zahtev.getKlinika().getId())), HttpStatus.OK);
 		}
 	}
-	//nakon petrovog rada izmenjeno da vraca samo posetee
+
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value="/klinika/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ZahtevPosetaObradaDTO>> pregled(){
@@ -125,8 +125,8 @@ public class ZahtevPosetaController {
 	//Cron expression: sekunde, minuti, sati, dan u nedelji, dan, mesec, godina
 	@Scheduled(cron = "0 59 23 * * *")
 	public void obradiZahteveAutomatski() throws ParseException {
-		HashMap<Poseta, Integer> novePosete = this.zahtevPosetaService.obradiAutomatski();
+		Map<Poseta, Integer> novePosete = this.zahtevPosetaService.obradiAutomatski();
 		for (Poseta np : novePosete.keySet())
-			posetaService.save(np, novePosete.get(np), false);
+			this.posetaService.save(np, novePosete.get(np));
 	}
 }

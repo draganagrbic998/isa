@@ -15,13 +15,13 @@ import com.example.demo.model.korisnici.Admin;
 
 @Component
 public class AdminConversion {
-		
-	@Autowired
-	private KlinikaRepository klinikaRepository;
-	
+			
 	@Autowired
 	private AdminRepository adminRepository;
 	
+	@Autowired
+	private KlinikaRepository klinikaRepository;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 		
@@ -43,13 +43,20 @@ public class AdminConversion {
 			lozinka = this.passwordEncoder.encoder().encode(adminDTO.getLozinka());
 		}
 		
-		
-		
-		return new Admin(adminDTO.getId(), adminDTO.getEmail(), lozinka, 
-				adminDTO.getIme(), adminDTO.getPrezime(), adminDTO.getTelefon(), 
-				adminDTO.getDrzava(), adminDTO.getGrad(), adminDTO.getAdresa(), 
-				adminDTO.isAktivan(), adminDTO.isPromenjenaSifra(), 
-				null, null, this.klinikaRepository.getOne(adminDTO.getKlinika()), version);
+		return new Admin(adminDTO.getId(), 
+				adminDTO.getEmail(), 
+				lozinka, 
+				adminDTO.getIme(), 
+				adminDTO.getPrezime(), 
+				adminDTO.getTelefon(), 
+				adminDTO.getDrzava(), 
+				adminDTO.getGrad(), 
+				adminDTO.getAdresa(), 
+				adminDTO.isAktivan(), 
+				adminDTO.isPromenjenaSifra(), 
+				null, 
+				null, 
+				this.klinikaRepository.getOne(adminDTO.getKlinika()), version);
 		
 	}
 	

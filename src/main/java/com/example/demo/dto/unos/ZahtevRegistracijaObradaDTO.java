@@ -21,4 +21,8 @@ public class ZahtevRegistracijaObradaDTO {
 		return razlog;
 	}
 
+	public void setRazlog(String razlog) {
+		this.razlog = razlog;
+	}
+
 }

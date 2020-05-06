@@ -26,14 +26,6 @@ public class Pacijent extends Korisnik{
 		this.karton = karton;
 	}
 
-	public Karton getKarton() {
-		return karton;
-	}
-
-	public void setKarton(Karton karton) {
-		this.karton = karton;
-	}
-	
 	public boolean posetioLekara(Lekar lekar) {
 		
 		for (Poseta p: this.karton.getPosete()) {
@@ -44,6 +36,14 @@ public class Pacijent extends Korisnik{
 		}
 		return false;
 		
+	}
+	
+	public Karton getKarton() {
+		return karton;
+	}
+
+	public void setKarton(Karton karton) {
+		this.karton = karton;
 	}
 
 }

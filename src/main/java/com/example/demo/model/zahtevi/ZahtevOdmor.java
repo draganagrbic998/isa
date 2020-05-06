@@ -44,55 +44,45 @@ public class ZahtevOdmor {
 		this.klinika = klinika;
 	}
 
-	public Date getPocetak() {
-		return pocetak;
+	public int getTrajanje() {
+		return (int) ((kraj.getTime() - pocetak.getTime()) / 1000 / 60 / 60 / 24);
 	}
-
-	public void setPocetak(Date pocetak) {
-		this.pocetak = pocetak;
-	}
-
-	public Date getKraj() {
-		return kraj;
-	}
-
-	public void setKraj(Date kraj) {
-		this.kraj = kraj;
-	}
-
-	public boolean getOdobren() {
-		return odobren;
-	}
-
-	public void setOdobren(boolean odobren) {
-		this.odobren = odobren;
-	}
-
+	
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	public Date getPocetak() {
+		return pocetak;
+	}
+	public void setPocetak(Date pocetak) {
+		this.pocetak = pocetak;
+	}
+	public Date getKraj() {
+		return kraj;
+	}
+	public void setKraj(Date kraj) {
+		this.kraj = kraj;
+	}
+	public boolean isOdobren() {
+		return odobren;
+	}
+	public void setOdobren(boolean odobren) {
+		this.odobren = odobren;
+	}
 	public Zaposleni getZaposleni() {
 		return zaposleni;
 	}
-
 	public void setZaposleni(Zaposleni zaposleni) {
 		this.zaposleni = zaposleni;
 	}
-
 	public Klinika getKlinika() {
 		return klinika;
 	}
-
 	public void setKlinika(Klinika klinika) {
 		this.klinika = klinika;
-	}
-	public int getTrajanje() {
-		return (int) ((kraj.getTime() - pocetak.getTime()) / 1000 / 60 / 60 / 24);
 	}
 	
 }

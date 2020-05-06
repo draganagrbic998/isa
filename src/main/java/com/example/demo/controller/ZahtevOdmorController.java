@@ -29,10 +29,7 @@ import com.example.demo.service.ZahtevOdmorService;
 @RestController
 @RequestMapping(value="/zahtevOdmor")
 public class ZahtevOdmorController {
-	
-	@Autowired
-	private UserService userService;
-	
+		
 	@Autowired 
 	private ZahtevOdmorService zahtevOdmorService;
 
@@ -40,7 +37,12 @@ public class ZahtevOdmorController {
 	private ZahtevOdmorConversion zahtevOdmorConversion;
 	
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private EmailService emailService;
+	
+	private final SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy.");
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value="/klinika/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,9 +72,8 @@ public class ZahtevOdmorController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy.");
 			String obavestenje = "Zaposleni " + zaposleni.getIme() + " " + zaposleni.getPrezime() + " zatrazio je "
-					+ "godisnji odmor u periodu od " + f.format(zahtevOdmor.getPocetak()) + " do " + f.format(zahtevOdmor.getKraj()) + "\n";
+					+ "godisnji odmor u periodu od " + this.f.format(zahtevOdmor.getPocetak()) + " do " + this.f.format(zahtevOdmor.getKraj()) + "\n";
 			for (Zaposleni z: zaposleni.getKlinika().getZaposleni()) {
 				z = (Zaposleni) Hibernate.unproxy(z);
 				if (z instanceof Admin)
@@ -90,7 +91,7 @@ public class ZahtevOdmorController {
 	public ResponseEntity<HttpStatus> potvrda(@RequestBody ZahtevOdmorObradaDTO zahtevObrada){
 		ZahtevOdmor zahtev;
 		try {
-			zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
+			zahtev = this.zahtevOdmorService.getOne(zahtevObrada.getId());
 			zahtev.setOdobren(true);
 			this.zahtevOdmorService.save(zahtev);
 		} 
@@ -98,9 +99,8 @@ public class ZahtevOdmorController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy.");
-			String obavestenje = "Vas zahtev za godisnji odmor u periodu od " + f.format(zahtev.getPocetak()) + ""
-					+ " do " + f.format(zahtev.getKraj()) + " je odobren. \n";
+			String obavestenje = "Vas zahtev za godisnji odmor u periodu od " + this.f.format(zahtev.getPocetak()) + ""
+					+ " do " + this.f.format(zahtev.getKraj()) + " je odobren. \n";
 			Message poruka = new Message(zahtev.getZaposleni().getEmail(), "Godisnji odmor odobren", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -116,16 +116,15 @@ public class ZahtevOdmorController {
 	public ResponseEntity<HttpStatus> odbijanje(@RequestBody ZahtevOdmorObradaDTO zahtevObrada){
 		ZahtevOdmor zahtev;
 		try {
-			zahtev = this.zahtevOdmorService.nadji(zahtevObrada.getId());
+			zahtev = this.zahtevOdmorService.getOne(zahtevObrada.getId());
 			this.zahtevOdmorService.delete(zahtev.getId());
 		} 
 		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy. HH:mm");
-			String obavestenje = "Vas zahtev za godisnji odmor u periodu od " + f.format(zahtev.getPocetak()) + ""
-					+ " do " + f.format(zahtev.getKraj()) + " je odbijen, iz razloga: " + zahtevObrada.getRazlog() + "\n";
+			String obavestenje = "Vas zahtev za godisnji odmor u periodu od " + this.f.format(zahtev.getPocetak()) + ""
+					+ " do " + this.f.format(zahtev.getKraj()) + " je odbijen, iz razloga: " + zahtevObrada.getRazlog() + "\n";
 			Message poruka = new Message(zahtev.getZaposleni().getEmail(), "Godisnji odmor odbijen", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);			

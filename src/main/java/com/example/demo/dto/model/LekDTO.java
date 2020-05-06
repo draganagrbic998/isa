@@ -19,6 +19,11 @@ public class LekDTO implements Comparable<LekDTO>{
 		this.naziv = lek.getNaziv();
 	}
 
+	@Override
+	public int compareTo(LekDTO l) {
+		return this.sifra.compareTo(l.sifra);
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -41,11 +46,6 @@ public class LekDTO implements Comparable<LekDTO>{
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
-	}
-
-	@Override
-	public int compareTo(LekDTO l) {
-		return this.sifra.compareTo(l.sifra);
 	}
 	
 }

@@ -2,7 +2,7 @@ package com.example.demo.dto.pretraga;
 
 import com.example.demo.model.posete.Poseta;
 
-public class TerminDTO extends PosetaPretragaDTO {
+public class TerminDTO extends PosetaDTO {
 	
 	private String klinika;
 	private String adresa;
@@ -52,6 +52,6 @@ public class TerminDTO extends PosetaPretragaDTO {
 	public void setNovaCena(double novaCena) {
 		this.novaCena = novaCena;
 	}
-
+	
 }
 

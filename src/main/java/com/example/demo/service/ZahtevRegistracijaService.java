@@ -37,7 +37,7 @@ public class ZahtevRegistracijaService {
 	}
 
 	@Transactional(readOnly = true)
-	public ZahtevRegistracija nadji(Integer id) {
+	public ZahtevRegistracija getOne(Integer id) {
 		return zahtevRepository.getOne(id);
 	}
 

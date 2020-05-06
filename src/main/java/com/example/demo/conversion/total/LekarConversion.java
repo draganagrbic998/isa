@@ -20,23 +20,26 @@ import com.example.demo.repository.TipPoseteRepository;
 public class LekarConversion {
 
 	@Autowired
+	private LekarRepository lekarRepository;
+
+	@Autowired
 	private KlinikaRepository klinikaRepository;
 
 	@Autowired
 	private TipPoseteRepository tipPoseteRepository;
-
-	@Autowired
-	private LekarRepository lekarRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
+	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+	private final String baseDate = "2020-04-20 ";
 
 	@Transactional(readOnly = true)
 	public Lekar get(LekarDTO lekarDTO) throws ParseException {
 
 		long version;
 		String lozinka;
+		
 		if (lekarDTO.getId() != null) {
 			version = this.lekarRepository.getOne(lekarDTO.getId()).getVersion();		
 			if (!lekarDTO.getLozinka().equals(this.lekarRepository.getOne(lekarDTO.getId()).getLozinka()))
@@ -49,13 +52,19 @@ public class LekarConversion {
 			lozinka = this.passwordEncoder.encoder().encode(lekarDTO.getLozinka());
 		}
 
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		String baseDate = "2020-04-20 ";
-
-		return new Lekar(lekarDTO.getId(), lekarDTO.getEmail(), lozinka, lekarDTO.getIme(),
-				lekarDTO.getPrezime(), lekarDTO.getTelefon(), lekarDTO.getDrzava(), lekarDTO.getGrad(),
-				lekarDTO.getAdresa(), lekarDTO.isAktivan(), lekarDTO.isPromenjenaSifra(),
-				f.parse(baseDate + lekarDTO.getPocetnoVreme()), f.parse(baseDate + lekarDTO.getKrajnjeVreme()),
+		return new Lekar(lekarDTO.getId(), 
+				lekarDTO.getEmail(), 
+				lozinka, 
+				lekarDTO.getIme(),
+				lekarDTO.getPrezime(), 
+				lekarDTO.getTelefon(), 
+				lekarDTO.getDrzava(), 
+				lekarDTO.getGrad(),
+				lekarDTO.getAdresa(), 
+				lekarDTO.isAktivan(), 
+				lekarDTO.isPromenjenaSifra(),
+				this.f.parse(baseDate + lekarDTO.getPocetnoVreme()), 
+				this.f.parse(baseDate + lekarDTO.getKrajnjeVreme()),
 				this.klinikaRepository.getOne(lekarDTO.getKlinika()),
 				this.tipPoseteRepository.getOne(lekarDTO.getSpecijalizacija()), version);
 

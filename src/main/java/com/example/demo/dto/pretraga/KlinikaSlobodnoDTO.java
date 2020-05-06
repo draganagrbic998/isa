@@ -6,50 +6,34 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.demo.dto.model.KlinikaDTO;
-import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.resursi.Klinika;
 
 public class KlinikaSlobodnoDTO extends KlinikaDTO {
 	
-	private double ocena;
-	private List<PosetaPretragaDTO> posete;
+	private List<PosetaDTO> posete;
 	
 	public KlinikaSlobodnoDTO() {
 		super();
 	}
 
-	public KlinikaSlobodnoDTO(Klinika klinika, List<Poseta> posete) {
+	public KlinikaSlobodnoDTO(Klinika klinika) {
 		super(klinika);
-		double suma = 0;
-		int counter = 0;
-		for (Ocena o: klinika.getOcene()) {
-			suma += o.getVrednost();
-			counter += 1;
-		}
-		this.ocena = counter != 0 ? suma / counter : 0.0;
 		this.posete = new ArrayList<>();
-		for (Poseta p: posete) {
-			if (p.getTipPosete().isPregled() && p.getStanje().equals(StanjePosete.SLOBODNO) && p.getDatum().after(new Date()))
-				this.posete.add(new PosetaPretragaDTO(p));
+		for (Poseta p: klinika.getPosete()) {
+			if (p.getTipPosete().isPregled() && p.getStanje().equals(StanjePosete.SLOBODNO) && 
+					p.getDatum().after(new Date()))
+				this.posete.add(new PosetaDTO(p));
 		}
 		Collections.sort(this.posete);
 	}
 
-	public double getOcena() {
-		return ocena;
-	}
-
-	public void setOcena(double ocena) {
-		this.ocena = ocena;
-	}
-
-	public List<PosetaPretragaDTO> getPosete() {
+	public List<PosetaDTO> getPosete() {
 		return posete;
 	}
 
-	public void setPosete(List<PosetaPretragaDTO> posete) {
+	public void setPosete(List<PosetaDTO> posete) {
 		this.posete = posete;
 	}
 

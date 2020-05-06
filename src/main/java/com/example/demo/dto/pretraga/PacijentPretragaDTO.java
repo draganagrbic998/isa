@@ -27,10 +27,12 @@ public class PacijentPretragaDTO extends PacijentDTO {
 		this.stariIzvestaji = new ArrayList<>();
 		for (Poseta p: pacijent.getKarton().getPosete()) {
 			for (Lekar l: p.getLekari()) {
-				if (l.getId().equals(lekar.getId()) && p.getStanje().equals(StanjePosete.OBAVLJENO))
+				if (l.getId().equals(lekar.getId()) && 
+						p.getStanje().equals(StanjePosete.OBAVLJENO))
 					this.stariIzvestaji.add(new IzvestajDTO(p.getIzvestaj()));
 			}
 		}
+		
 		Collections.sort(this.stariIzvestaji);
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(new Date());
@@ -40,7 +42,6 @@ public class PacijentPretragaDTO extends PacijentDTO {
 		gc.add(Calendar.MINUTE, 20);
 		Date highLimit = gc.getTime();
 		for (Poseta p: pacijent.getKarton().getPosete()) {
-			
 			if (p.getStanje().equals(StanjePosete.ZAUZETO) && 
 					p.getDatum().after(lowLimit) && p.getDatum().before(highLimit))
 				this.zakazanaPoseta = p.getId();

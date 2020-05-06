@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.conversion.partial.IzvestajConversion;
 import com.example.demo.conversion.partial.KartonConversion;
 import com.example.demo.conversion.total.LekarConversion;
 import com.example.demo.dto.model.IzvestajDTO;
 import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.LekarDTO;
-import com.example.demo.dto.pretraga.LekarOcenaDTO;
 import com.example.demo.dto.pretraga.ObavezaDTO;
 import com.example.demo.dto.pretraga.PacijentPretragaDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
@@ -57,7 +57,6 @@ public class LekarController {
 	
 	@Autowired
 	private KartonConversion kartonConversion;
-
 	
 	@Autowired
 	private PosetaService posetaService;
@@ -67,6 +66,9 @@ public class LekarController {
 	
 	@Autowired
 	private ApplicationName name;
+	
+	@Autowired
+	private IzvestajConversion izvestajConversion;
 		
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,7 +90,7 @@ public class LekarController {
 			zahtev.osveziKraj();
 			Date pocetak = f.parse(zahtev.getDatum());
 			Date kraj = f.parse(zahtev.getKraj());
-			List<LekarDTO> rezultat = new ArrayList<LekarDTO>();
+			List<LekarDTO> rezultat = new ArrayList<>();
 			
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			List<Lekar> lista = this.lekarService.findAll(admin);
@@ -142,10 +144,10 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value = "/ocenjivanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<LekarOcenaDTO> oceni(@RequestBody OcenaParamDTO param){
+	public ResponseEntity<LekarDTO> oceni(@RequestBody OcenaParamDTO param){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(new LekarOcenaDTO(this.lekarService.oceni(pacijent, param)), HttpStatus.OK);
+			return new ResponseEntity<>(new LekarDTO(this.lekarService.oceni(pacijent, param)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -239,7 +241,8 @@ public class LekarController {
 	@PostMapping(value = "/izmenaIzvestaja", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajDTO izvestajDTO) {
 		try {
-			this.posetaService.izmeniIzvestaj(izvestajDTO);
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			this.posetaService.izmeniIzvestaj(this.izvestajConversion.get(izvestajDTO, lekar));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

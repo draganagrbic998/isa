@@ -19,13 +19,13 @@ import com.example.demo.service.UserService;
 @RestController
 @RequestMapping(value="/zaposleni")
 public class ZaposleniController {
-	
-	@Autowired
-	private UserService userService;
-	
+		
 	@Autowired
 	private ZahtevOdmorConversion zahtevOdmorConversion;
-	
+
+	@Autowired
+	private UserService userService;
+
 	@PreAuthorize("hasAnyAuthority('Lekar','Sestra')")
 	@GetMapping(value="/zahtevOdmor/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<GodisnjiDTO>> pregled(){

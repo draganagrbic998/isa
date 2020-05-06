@@ -35,10 +35,34 @@ public class TipPoseteController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TipPoseteDTO>> adminPregled() {
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findAll(admin)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Lekar')")
+	@GetMapping(value = "/lekar/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TipPoseteDTO>> lekarPregled() {
+		try {
+			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findAll(lekar)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 			
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody TipPoseteDTO tipPoseteDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody TipPoseteDTO tipPoseteDTO) {
 		try {
 			this.tipPoseteService.save(this.tipPoseteConversion.get(tipPoseteDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -50,7 +74,7 @@ public class TipPoseteController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
 		try {
 			this.tipPoseteService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);			
@@ -64,32 +88,8 @@ public class TipPoseteController {
 	@PostMapping(value="/izmena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> izmena(@RequestBody TipPoseteDTO tipDTO){
 		try {
-			this.tipPoseteService.saveChanges(this.tipPoseteConversion.get(tipDTO));
+			this.tipPoseteService.save(this.tipPoseteConversion.get(tipDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TipPoseteDTO>> pregled() {
-		try {
-			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findAll(admin)), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Lekar')")
-	@GetMapping(value = "/lekar/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TipPoseteDTO>> pregledLekar() {
-		try {
-			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.tipPoseteConversion.get(this.tipPoseteService.findAll(lekar)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -99,7 +99,6 @@ public class TipPoseteController {
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/nazivi", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Set<String>> nazivi(){
-		
 		try {
 			return new ResponseEntity<>(this.tipPoseteService.sviTipovi(), HttpStatus.OK);
 		}
