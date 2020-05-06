@@ -278,7 +278,7 @@ Vue.component("klinikeSlobodno", {
 				this.selectKlinika(response.data);
 			})
 			.catch(response => {
-				alert("SERVER ERROR!!");
+				alert("Imate zakazane posete u isto vreme!!");
 			});
 			
 		}, 

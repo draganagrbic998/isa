@@ -38,7 +38,7 @@ public class PosetaService {
 
 	@Transactional(readOnly = false)
 	public void save(Poseta poseta, Integer id) {
-		
+				
 		if (!poseta.getTipPosete().isAktivan())
 			throw new MyRuntimeException();
 		
@@ -78,9 +78,13 @@ public class PosetaService {
 	@Transactional(readOnly = false)
 	public void zakazi(Integer posetaId, Karton karton) {
 
+		
 		Poseta p = this.posetaRepository.getOne(posetaId);
 		if (!p.getStanje().equals(StanjePosete.SLOBODNO))
 			throw new MyRuntimeException();
+		if (!karton.slobodan(p.pocetak(), p.kraj()))
+			throw new MyRuntimeException();
+
 		p.setStanje(StanjePosete.ZAUZETO);
 		p.setKarton(karton);
 		this.posetaRepository.save(p);

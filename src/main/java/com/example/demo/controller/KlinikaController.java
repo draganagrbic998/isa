@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.total.KlinikaConversion;
 import com.example.demo.dto.model.KlinikaDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
-import com.example.demo.dto.pretraga.KalendarSalaDTO;
+import com.example.demo.dto.pretraga.PeriodDTO;
 import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
 import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
@@ -78,11 +78,8 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value="/admin/profit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> profit(@RequestBody KalendarSalaDTO period){
+	public ResponseEntity<String> profit(@RequestBody PeriodDTO period){
 		try {
-			if (period.getKraj().before(period.getPocetak())) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			double profit = admin.getKlinika().getProfit(period.getPocetak(), period.getKraj()); 
 			return new ResponseEntity<>(profit+" din", HttpStatus.OK);

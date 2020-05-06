@@ -346,7 +346,7 @@ Vue.component("klinikeLekari", {
 						<tr v-for="l in selectedKlinika.lekari" v-on:click="selectLekar(l)" v-if="!pretraga || l.satnica.length>0">
 							<td>{{l.ime}}</td>
 							<td>{{l.prezime}}</td>
-							<td>{{l.ocena}}</td>
+							<td>{{l.prosecnaOcena}}</td>
 
 						</tr>
 					
@@ -544,7 +544,7 @@ Vue.component("klinikeLekari", {
 				this.pretraga = false;
 			})
 			.catch(response => {
-				alert("SERVER ERROR!!");
+				alert("Imate zakazane posete u isto vreme!!");
 			});
 			
 		}, 

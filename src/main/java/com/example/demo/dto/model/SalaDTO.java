@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.example.demo.dto.pretraga.KalendarSalaDTO;
+import com.example.demo.dto.pretraga.PeriodDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
@@ -22,7 +22,7 @@ public class SalaDTO implements Comparable<SalaDTO>{
 	private Integer klinika;
 	private boolean aktivan;
 	private Date prviSlobodan;
-	private List<KalendarSalaDTO> kalendar;
+	private List<PeriodDTO> kalendar;
 	
 	public SalaDTO() {
 		super();
@@ -42,12 +42,12 @@ public class SalaDTO implements Comparable<SalaDTO>{
 		        gc.add(Calendar.HOUR, p.getTipPosete().getSati());
 		        gc.add(Calendar.MINUTE, p.getTipPosete().getMinute());
 		        Date kraj = gc.getTime();
-		        this.kalendar.add(new KalendarSalaDTO(p.getDatum(), kraj));
+		        this.kalendar.add(new PeriodDTO(p.getDatum(), kraj));
 			}
 		}
 	}
 	public boolean proveriDatum(Date pocetak, Date kraj) {
-		for (KalendarSalaDTO interval : this.getKalendar()) {
+		for (PeriodDTO interval : this.getKalendar()) {
 			if ((kraj.after(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) {
 				return false;
 			}
@@ -64,11 +64,11 @@ public class SalaDTO implements Comparable<SalaDTO>{
 			
 		return true;
 	}
-	public List<KalendarSalaDTO> getKalendar() {
+	public List<PeriodDTO> getKalendar() {
 		return kalendar;
 	}
 
-	public void setKalendar(List<KalendarSalaDTO> kalendar) {
+	public void setKalendar(List<PeriodDTO> kalendar) {
 		this.kalendar = kalendar;
 	}
 

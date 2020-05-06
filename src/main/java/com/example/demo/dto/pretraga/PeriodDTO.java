@@ -2,16 +2,16 @@ package com.example.demo.dto.pretraga;
 
 import java.util.Date;
 
-public class KalendarSalaDTO {
+public class PeriodDTO {
 	
 	private Date pocetak;
 	private Date kraj;
 	
-	public KalendarSalaDTO() {
+	public PeriodDTO() {
 		super();
 	}
 	
-	public KalendarSalaDTO(Date pocetak, Date kraj) {
+	public PeriodDTO(Date pocetak, Date kraj) {
 		super();
 		this.pocetak = pocetak;
 		this.kraj = kraj;
