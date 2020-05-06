@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.unos.PromenaSifreDTO;
+import com.example.demo.dto.unos.ParamDTO;
 import com.example.demo.dto.unos.UserDTO;
 import com.example.demo.model.korisnici.Korisnik;
 import com.example.demo.service.UserService;
@@ -57,10 +57,10 @@ public class UserController {
 	
 	@PreAuthorize("hasAuthority('SIFRA')")
 	@PostMapping(value="/lozinka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> promenaSifre(@RequestBody PromenaSifreDTO promenaSifre){
+	public ResponseEntity<String> promenaSifre(@RequestBody ParamDTO promenaSifre){
 		try {
 			Korisnik k = this.userService.getSignedKorisnik();
-			this.userService.promenaSifre(k, promenaSifre.getNovaLozinka());
+			this.userService.promenaSifre(k, promenaSifre.getParam());
 			return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
 		}
 		catch(Exception e) {

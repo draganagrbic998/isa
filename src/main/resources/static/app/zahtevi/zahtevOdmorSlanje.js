@@ -91,7 +91,7 @@ Vue.component("zahtevOdmorSlanje", {
 				alert("Zahtev poslat!");
 			})
 			.catch(error => {
-				alert("SERVER ERROR");
+				alert("TERMIN ZAUZET!!");
 			});
 		}
 	},

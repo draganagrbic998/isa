@@ -45,11 +45,11 @@ Vue.component("dodajTipPosete", {
 		</div>
 		</nav>
 		
-		<div class="registracija">
+		<div class="card" id="box">
+		
+			<h2>Kreiranje tipa posete</h2><br>
 
-			<div>
-			
-				<table>
+				<table class="table">
 				
 					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="tipPosete.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<tr><td class="left">Pregled: </td><td class="right"><select v-model="tipPosete.pregled">
@@ -62,8 +62,7 @@ Vue.component("dodajTipPosete", {
 					<tr><td><button v-on:click="dodajTipPosete()">DODAJ</button><br></td></tr>
 					
 				</table>
-				
-			</div>
+
 		</div>
 		</div>
 	

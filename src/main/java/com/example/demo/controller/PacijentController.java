@@ -21,6 +21,7 @@ import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.TerminDTO;
 import com.example.demo.dto.pretraga.ZahtevTerminDTO;
+import com.example.demo.dto.unos.ParamDTO;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.Karton;
 import com.example.demo.service.PacijentService;
@@ -117,10 +118,11 @@ public class PacijentController {
 		}
 	}
 	
-	@GetMapping(value="/aktiviranje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> aktiviranje(@PathVariable String id){
+	@PostMapping(value="/aktiviranje/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> aktiviranje(@RequestBody ParamDTO param){
+		System.out.println("MAMA MIA");
 		try {
-			boolean retval = this.pacijentService.aktiviraj(id);
+			boolean retval = this.pacijentService.aktiviraj(param.getParam());
 			if (retval)
 				return new ResponseEntity<>(HttpStatus.OK);
 			else

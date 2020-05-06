@@ -53,7 +53,6 @@ Vue.component("zahtevRegistracijaObrada", {
 		<tr bgcolor="#f2f2f2">
 			<th> ID </th>
 			<th> Email </th>
-			<th> Lozinka </th>
 			<th> Ime </th>
 			<th> Prezime </th>
 			<th> Broj Osiguranika </th>
@@ -66,7 +65,6 @@ Vue.component("zahtevRegistracijaObrada", {
 		<tr v-for="z in zahtevi">
 		    <td>{{z.id}}</td>
 			<td>{{z.email}}</td>
-			<td>{{z.lozinka}}</td>
 			<td>{{z.ime}}</td>
 			<td>{{z.prezime}}</td>
 			<td>{{z.brojOsiguranika}}</td>

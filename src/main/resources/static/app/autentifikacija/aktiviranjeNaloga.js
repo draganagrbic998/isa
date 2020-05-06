@@ -16,13 +16,13 @@ Vue.component("aktiviranjeNaloga", {
 	mounted() {
 		
 		let id = this.$route.query.id;
-		
+
 		if (id === "") {
 			alert("ID NOT FOUND!\nPLEASE CONTACT SERVER SUPPORT.");
 			return;
 		}
 				
-		axios.get("/pacijent/aktiviranje/" + id)
+		axios.post("/pacijent/aktiviranje/", {"param": id})
 		.catch(error => {
 			if (error.response.status === 409)
 				alert("Vas nalog je vec aktiviran!");

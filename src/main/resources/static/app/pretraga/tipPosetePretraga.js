@@ -60,11 +60,11 @@ Vue.component("tipPosetePretraga", {
 			<th> Tip </th>
 		</tr>
 		
-		<tr v-for="t in tipoviPregleda" v-on:click="selektovanTip(t)">
-			<td>{{t.naziv}}</td>
-			<td v-if="t.pregled">pregled</td>
-			<td v-else>operacija</td>
-			<td v-if="selectedCenovnik">{{t.cena}}</td>
+		<tr v-for="t in tipoviPregleda" >
+			<td v-on:click="selektovanTip(t)">{{t.naziv}}</td>
+			<td v-if="t.pregled" v-on:click="selektovanTip(t)">pregled</td>
+			<td v-else v-on:click="selektovanTip(t)">operacija</td>
+			<td v-if="selectedCenovnik" v-on:click="selektovanTip(t)"> {{t.cena}}</td>
 			<td><button v-on:click="deleteTipPosete(t.id)" class="btn"><i class="fa fa-trash "></i>Obrisi</button></td></tr>
 	
 	</table>	
@@ -192,7 +192,6 @@ Vue.component("tipPosetePretraga", {
 		},
 		
 		deleteTipPosete: function(id) {
-			this.brisanjeSelected = true;
 			axios.delete("/tipPosete/brisanje/" + id)
 			.then(response => {
 				alert("Tip posete uspesno obrisan!");

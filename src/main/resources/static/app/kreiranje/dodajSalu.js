@@ -39,19 +39,17 @@ Vue.component("dodajSalu", {
 		</div>
 		</nav>
 	
-		<div class="registracija">
+		<div class="card" id="box">
 		
-			<div>
-			
-				<table>
+			<h2>Kreiranje sale</h2><br>
+		
+			<table class="table">
 				
 					<tr><td class="left">Broj: </td><td class="right"><input type="text" v-model="sala.broj"></td><td>{{greskaBroj}}</td></tr>
 					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="sala.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<tr><td><button v-on:click="dodajSalu()">DODAJ</button><br></td></tr>
 					
 				</table>
-			
-			</div>
 		</div>
 		</div>
 	

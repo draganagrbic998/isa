@@ -12,18 +12,16 @@ Vue.component("promenaSifre", {
 	
 	template: `
 	
-		<div class="card" id="box">
+		<div class="card" id="tableBox" style="margin-top: 100px;">
 		
-			<h1>Promena sifre</h1><br>
+			<h2>Promena sifre</h2><br>
 			
 			<table class="table">
 			
-				<tbody>
-				
-					<tr>
+				<tr>
 						<th scope="row">Lozinka: </th>
 						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
-						<td>{{greskaNovaLozinka}}</td>
+						<td style="width: 33%;">{{greskaNovaLozinka}}</td>
 					</tr>
 					
 					<tr>
@@ -31,11 +29,10 @@ Vue.component("promenaSifre", {
 						<td><input type="password" v-model="ponovljenaLozinka" class="form-control"></td>
 						<td>{{greskaPonovljenaLozinka}}</td>
 					</tr>
+
 					<tr>
-						<td><button v-on:click="promenaSifre()" class="btn btn-primary">IZMENI LOZINKU</button></td>
+						<td><button v-on:click="promenaSifre()" class="btn btn-outline-success my-2 my-sm-0">IZMENI LOZINKU</button></td>
 					</tr>
-				
-				</tbody>
 			
 			</table>
 		
@@ -76,7 +73,7 @@ Vue.component("promenaSifre", {
 			
 			if (this.greska) return;
 			
-			axios.post("/user/lozinka", {"novaLozinka": this.novaLozinka, "ponovljenaLozinka": this.ponovljenaLozinka})
+			axios.post("/user/lozinka", {"param": this.novaLozinka})
 			.then(response => {
 				if (response.data == "pacijent")
 					this.$router.push("/pacijentHome");

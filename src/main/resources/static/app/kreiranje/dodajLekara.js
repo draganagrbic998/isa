@@ -67,11 +67,11 @@ Vue.component("dodajLekara", {
 		</div>
 		</nav>
 		
-		<div class="card" id="tableBox">
+		<div class="card" id="box">
 		
-			<h1>Registracija medicinskog radnika</h1><br>
+			<h2>Registracija medicinskog radnika</h2><br>
 			
-			<table class="table">
+			<table>
 			
 				<tbody>
 					
@@ -121,8 +121,8 @@ Vue.component("dodajLekara", {
 					<td><select v-model="nazivSpecijalizacije" class="form-control">
 						<option v-for="s in specijalizacije">{{s.naziv}}</option>
 					</select></td><td>{{greskaSpecijalizacija}}</td></tr>
-					
-					<tr><td><button v-on:click="dodajLekara()" class="form-control">KREIRAJ PROFIL</button><br></td></tr>
+					<br>
+					<tr><td colspan="3"><button v-on:click="dodajLekara()" class="form-control">KREIRAJ PROFIL</button><br></td></tr>
 					
 				</tbody>	
 			</table>

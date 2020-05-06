@@ -520,7 +520,7 @@ Vue.component("klinikeLekari", {
 				for (let i of this.lekariBackup){
 					let imePassed = lowerPretraga1 != '' ? i.ime.toLowerCase().includes(lowerPretraga1) : true;
 					let prezimePassed = lowerPretraga2 != '' ? i.prezime.toLowerCase().includes(lowerPretraga2) : true;
-					let ocenaPassed = i.ocena >= this.ocenaLekara;
+					let ocenaPassed = i.prosecnaOcena >= this.ocenaLekara;
 					if (imePassed && prezimePassed && ocenaPassed) this.selectedKlinika.lekari.push(i);
 				}
 			}

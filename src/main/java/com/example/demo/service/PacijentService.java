@@ -30,6 +30,9 @@ public class PacijentService {
 	
 	@Transactional(readOnly = false)
 	public boolean aktiviraj(String id) {
+
+		
+
 		
 		for (Pacijent p: this.pacijentRepository.findAll()) {
 			if (this.passwordEncoder.encoder().matches(p.getId() + "", id)) {
