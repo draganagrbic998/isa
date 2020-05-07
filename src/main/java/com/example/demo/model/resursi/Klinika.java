@@ -1,7 +1,10 @@
 package com.example.demo.model.resursi;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,6 +97,33 @@ public class Klinika implements Ocenjivanje{
 		for (Poseta p: this.getPosete())
 			suma += p.getProfit(pocetak, kraj);
 		return suma;
+	}
+	
+	public HashMap<String, Integer> podaciGraf(String parametar) {
+		Date danas = new Date();
+		GregorianCalendar gc = new GregorianCalendar();	
+		gc.setTime(danas);
+		if (parametar.equals("nedeljni")) {
+			gc.add(Calendar.DAY_OF_WEEK, -7);
+		}
+		if (parametar.equals("mesecni")) {
+			gc.add(Calendar.DAY_OF_MONTH, -30);
+		}
+		if (parametar.equals("godisnji")) {
+			gc.add(Calendar.DAY_OF_YEAR, -365);
+		}
+		HashMap<String, Integer> podaci = new HashMap<String,Integer>();
+		for (Poseta p : this.getPosete()) {
+			if ((p.getDatum().after(gc.getTime()) || p.getDatum().equals(gc.getTime())) && (p.getDatum().before(danas) || p.getDatum().equals(danas))) {
+				if (podaci.containsKey(p.getTipPosete().getNaziv())) {
+					podaci.computeIfPresent(p.getTipPosete().getNaziv(), (k, v) -> v + 1);
+				}
+				else {
+					podaci.put(p.getTipPosete().getNaziv(), 1);
+				}
+			}
+		}
+		return podaci;
 	}
 	
 	public List<Poseta> getPosete(){

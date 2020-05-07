@@ -63,6 +63,7 @@ const godisnjiOdmori = {template: '<godisnjiOdmori></godisnjiOdmori>'}
 const zapocetPregled = {template: '<zapocetPregled></zapocetPregled>'}
 const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
 
+
 const router = new VueRouter({
 	
 	mode: 'hash', 
@@ -126,6 +127,7 @@ const router = new VueRouter({
 		{path: '/zapocetPregled', component: zapocetPregled},
 		{path: '/lekarPacijenti', component: lekarPacijenti},
 
+		
 	]
 	
 });

@@ -9,7 +9,7 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet" />
 	
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	
+
     
     <script type="text/x-template" id="modal-template">
       <transition name="modal">
@@ -58,6 +58,9 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/moment.js"></script>
         <script src="js/lodash.js"></script>
+        
+        <script src="https://unpkg.com/chart.js@2.8.0/dist/Chart.bundle.js"></script>
+		<script src="https://unpkg.com/vue-chartkick@0.5.1"></script>
         
         <script src="app/autentifikacija/prijava.js"></script>
 		<script src="app/autentifikacija/registracija.js"></script>
@@ -116,8 +119,11 @@
 		<script src="app/lekar/zapocetPregled.js"></script>
         <script src="app/lekar/lekarPacijenti.js"></script>
         
+        
         <script src="app/app.js"></script>
 
+
+	
 	<script>
 	Vue.component("modal", {
 	    template: "#modal-template"

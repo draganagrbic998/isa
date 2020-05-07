@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.total.KlinikaConversion;
 import com.example.demo.dto.model.KlinikaDTO;
 import com.example.demo.dto.pretraga.BolestDTO;
-import com.example.demo.dto.pretraga.PeriodDTO;
 import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
 import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
+import com.example.demo.dto.pretraga.PeriodDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
 import com.example.demo.dto.unos.PretragaDTO;
 import com.example.demo.model.korisnici.Admin;
@@ -47,6 +48,19 @@ public class KlinikaController {
 		try {
 			Admin admin = (Admin) userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.klinikaConversion.get(admin.getKlinika()), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/graf/{parametar}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, Integer>> getGraf(@PathVariable String parametar){
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(admin.getKlinika().podaciGraf(parametar), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

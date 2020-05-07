@@ -1,7 +1,9 @@
 Vue.component("izvestaj", {
-	
 	data: function(){
 		return{
+			parametar: 'nedeljni',
+			graf: {},
+			podaci: {},
 			ocena: {},
 			pocetak: '',
 			kraj: '',
@@ -9,9 +11,9 @@ Vue.component("izvestaj", {
 			period: {
 				pocetak: '',
 				kraj: ''
-			},
-			nemaRezultata: ''
+			}
 		}
+
 	},
 	template: `
 	
@@ -34,8 +36,14 @@ Vue.component("izvestaj", {
       </ul>
   </div>
 </nav>
+	
 
-	<div class="card" id="box">
+	<div class="container"> 
+		
+		<div class="row">
+		
+			<div class="col card" id="left">
+
 		
 			<h2>Klinika</h2><br>
 			
@@ -61,14 +69,43 @@ Vue.component("izvestaj", {
 			</table>
 		
 		</div>
-	
-		<h3>{{nemaRezultata}}</h3>
+		<div class="col-md-5" style="margin-top: 3%">
+				<table>
+				<tr><h2>Grafikon pregleda</h2></tr>
+				<tr><td class="form-control"> <h5>Odaberite nivo:</h5> </td>
+				<td> <select v-model="parametar" class="form-control">
+						<option>dnevni</option>
+						<option>nedeljni</option>
+						<option>mesecni</option>
+						<option>godisnji</option>
+					</select></td></tr>
+				</table>
+			<column-chart :data="podaci"></column-chart>
+				
+		</div>
+		</div>
+		</div>
 	</div>
 	
 	`
 	,
+	watch: {
+		parametar: function(){
+			if (this.parametar != '') {
+				axios.get("/klinika/admin/graf/" + this.parametar)
+				.then(response => {
+					this.podaci = response.data;
+					
+				})
+				.catch(response => {
+					this.$router.push("/");
+				});	
+			}
+				
+		},
+
+	},
 	mounted() {
-		
 		axios.get("/klinika/admin/ocena")
 		.then(response => {
 			this.ocena = response.data;
@@ -77,6 +114,14 @@ Vue.component("izvestaj", {
 			this.$router.push("/");
 		});
 		
+		axios.get("/klinika/admin/graf/" + this.parametar)
+		.then(response => {
+			this.podaci = response.data;
+			
+		})
+		.catch(response => {
+			this.$router.push("/");
+		});	
 	}, 
 	methods: {
 		nadjiPrihode:function() {
@@ -89,5 +134,6 @@ Vue.component("izvestaj", {
 				alert("Datum nije validan!");
 			});
 		}
-	}
+	},
+	
 });
