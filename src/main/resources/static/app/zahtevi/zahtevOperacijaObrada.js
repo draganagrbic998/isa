@@ -157,7 +157,7 @@ Vue.component("zahtevOperacijaObrada", {
 	
 	mounted(){
 		//dobavljam zahteve za kliniku
-		axios.get("/zahtevPoseta/klinika/getOperacije")
+		axios.get("/zahtevPoseta/klinika/operacije")
 		.then(response => {
 			this.zahtevi = response.data;
 			this.zahteviBackup = response.data;
@@ -196,7 +196,7 @@ Vue.component("zahtevOperacijaObrada", {
 				'lekari': this.selectedLekari
 			}
 			
-			axios.post("/sala/admin/getPrviSlobodan", data)
+			axios.post("/sala/admin/prviSlobodan", data)
 			.then(response => {
 				this.salaSelected.prviSlobodan = response.data;
 			})
@@ -324,7 +324,7 @@ Vue.component("zahtevOperacijaObrada", {
 		//salje post zahtev
 		nadjiSale : function() {
 			console.log(this.zahtevSelected.datum);
-			axios.post("/sala/admin/pregledSlobodne", this.zahtevSelected)
+			axios.post("/sala/admin/slobodni", this.zahtevSelected)
 			.then(response => {
 				this.salePretraga = response.data;
 				this.salePretragaBackup = response.data;
@@ -341,7 +341,7 @@ Vue.component("zahtevOperacijaObrada", {
 		},
 
 		nadjiLekare : function() {
-			axios.post("/lekar/admin/getSlobodne", this.zahtevSelected)
+			axios.post("/lekar/admin/slobodni", this.zahtevSelected)
 			.then(response => {
 				this.lekari = response.data;
 			})
@@ -368,7 +368,7 @@ Vue.component("zahtevOperacijaObrada", {
 			this.zahtevOperacijaObrada.kraj = this.zahtevSelected.kraj;
 			this.zahtevOperacijaObrada.lekariId = this.selectedLekari;
 						
-			axios.post("/sala/admin/rezervacijaSaleOperacije", this.zahtevOperacijaObrada)
+			axios.post("/sala/admin/operacija/rezervacijaSale", this.zahtevOperacijaObrada)
 			.then(response => {
 				alert("Uspesno rezervisano!");
 				this.$router.push("/adminHome");

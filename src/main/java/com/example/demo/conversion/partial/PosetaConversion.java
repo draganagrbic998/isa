@@ -14,7 +14,7 @@ import com.example.demo.dto.model.SalaDTO;
 import com.example.demo.dto.pretraga.PosetaDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
 import com.example.demo.dto.unos.ZahtevOperacijaObradaDTO;
-import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
+import com.example.demo.dto.unos.ZahtevPregledObradaDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
@@ -59,7 +59,7 @@ public class PosetaConversion {
 	}
 
 	@Transactional(readOnly = true)
-	public Poseta get(ZahtevPosetaObradaDTO poseta, SalaDTO salaDTO) throws ParseException {
+	public Poseta get(ZahtevPregledObradaDTO poseta, SalaDTO salaDTO) throws ParseException {
 
 		Date pocetak = this.f.parse(poseta.getDatum());
 		return new Poseta(StanjePosete.ZAUZETO, 

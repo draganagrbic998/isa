@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.conversion.total.ZahtevPosetaConversion;
 import com.example.demo.dto.model.ZahtevPosetaDTO;
-import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
-import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
+import com.example.demo.dto.unos.ZahtevPregledObradaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Korisnik;
 import com.example.demo.model.korisnici.Lekar;
@@ -31,7 +29,6 @@ import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.service.EmailService;
-import com.example.demo.service.KlinikaService;
 import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
@@ -56,14 +53,11 @@ public class ZahtevPosetaController {
 	@Autowired
 	private EmailService emailService;
 	
-	@Autowired
-	private KlinikaService klinikaService;
-
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@PostMapping(value="/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<KlinikaPretragaDTO> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
+	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
 
-		ZahtevPoseta zahtev = null;
+		ZahtevPoseta zahtev;
 		try {
 			Korisnik korisnik = this.userService.getSignedKorisnik();
 			if (korisnik instanceof Pacijent)
@@ -71,9 +65,6 @@ public class ZahtevPosetaController {
 			else{
 				zahtevDTO.setKarton(((Lekar) korisnik).getZapocetaPoseta().getKarton().getId());
 				zahtevDTO.setLekar(korisnik.getId());
-			}
-			if (zahtevDTO.getDatum().before(new Date())) {
-				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			zahtev = this.zahtevPosetaConversion.get(zahtevDTO);
 			this.zahtevPosetaService.save(zahtev);
@@ -91,19 +82,19 @@ public class ZahtevPosetaController {
 				if (z instanceof Admin)
 					this.emailService.sendMessage(new Message(z.getEmail(), "Poslat zahtev za posetu", obavestenje));
 			}
-			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.getOne(zahtev.getKlinika().getId())), HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(new KlinikaPretragaDTO(this.klinikaService.getOne(zahtev.getKlinika().getId())), HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value="/klinika/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ZahtevPosetaObradaDTO>> pregled(){
+	@GetMapping(value="/klinika/pregledi", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ZahtevPregledObradaDTO>> pregledi(){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.zahtevPosetaService.findAll(admin.getKlinika()), HttpStatus.OK);
+			return new ResponseEntity<>(this.zahtevPosetaService.pregledi(admin.getKlinika()), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -111,11 +102,11 @@ public class ZahtevPosetaController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value="/klinika/getOperacije", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ZahtevPosetaObradaDTO>> getOperacije(){
+	@GetMapping(value="/klinika/operacije", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ZahtevPregledObradaDTO>> operacije(){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.zahtevPosetaService.getOperacije(admin.getKlinika()), HttpStatus.OK);
+			return new ResponseEntity<>(this.zahtevPosetaService.operacije(admin.getKlinika()), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

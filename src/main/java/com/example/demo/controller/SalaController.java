@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.partial.PosetaConversion;
 import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
-import com.example.demo.dto.pretraga.GetPrviSlobodanDTO;
+import com.example.demo.dto.pretraga.PrviSlobodanDTO;
 import com.example.demo.dto.unos.ZahtevOperacijaObradaDTO;
-import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
+import com.example.demo.dto.unos.ZahtevPregledObradaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
@@ -93,12 +93,12 @@ public class SalaController {
 	
 
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/admin/pregledSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SalaDTO>> pregled(@RequestBody ZahtevPosetaObradaDTO zahtev) {
+	@PostMapping(value = "/admin/slobodni", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SalaDTO>> slobodni(@RequestBody ZahtevPregledObradaDTO zahtev) {
 		try {
 			zahtev.osveziKraj();
-			Date pocetak = f.parse(zahtev.getDatum());
-			Date kraj = f.parse(zahtev.getKraj());
+			Date pocetak = this.f.parse(zahtev.getDatum());
+			Date kraj = this.f.parse(zahtev.getKraj());
 			List<SalaDTO> rezultat = new ArrayList<>();
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			List<SalaDTO> lista = this.salaConversion.get(this.salaService.findAll(admin));
@@ -114,8 +114,8 @@ public class SalaController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/admin/getPrviSlobodan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getPrviSlobodan(@RequestBody GetPrviSlobodanDTO data) throws ParseException {		
+	@PostMapping(value = "/admin/prviSlobodan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> prviSlobodan(@RequestBody PrviSlobodanDTO data) throws ParseException {		
 		try {
 			data.getZahtev().osveziKraj();
 			
@@ -131,8 +131,8 @@ public class SalaController {
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/admin/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> reserve(@RequestBody ZahtevPosetaObradaDTO zahtevDTO) {
+	@PostMapping(value = "/admin/pregled/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> pregledRezervacija(@RequestBody ZahtevPregledObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
 		Date slobodan = null;
 		try {
@@ -162,8 +162,8 @@ public class SalaController {
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/admin/rezervacijaSaleOperacije", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> reserveOperacija(@RequestBody ZahtevOperacijaObradaDTO zahtevDTO) {
+	@PostMapping(value = "/admin/operacija/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> operacijaRezervacija(@RequestBody ZahtevOperacijaObradaDTO zahtevDTO) {
 		SalaDTO salaDTO = new SalaDTO();
 		try {
 			Sala sala = this.salaService.getOne(zahtevDTO.getSalaId());

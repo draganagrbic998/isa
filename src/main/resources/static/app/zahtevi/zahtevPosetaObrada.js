@@ -179,7 +179,7 @@ Vue.component("zahtevPosetaObrada", {
 	
 	mounted(){
 		//dobavljam zahteve za kliniku
-		axios.get("/zahtevPoseta/klinika/pregled")
+		axios.get("/zahtevPoseta/klinika/pregledi")
 		.then(response => {
 			this.zahtevi = response.data;
 			this.backup = response.data;
@@ -275,17 +275,7 @@ Vue.component("zahtevPosetaObrada", {
 			}
 			return this.vreme; 
 		},
-		//dobavlja slobodni termin koji kreiram prilikom neuspele rezervacije
-		//cuvam ga na serveru SalaController
-		//nadjiTermin: function() {
-			//axios.get("/sala/admin/SlobodniTermin")
-			//.then(response => {
-				//this.slobodan = response.data;
-			//})
-			//.catch(response => {
-				//console.log("greska");
-			//});
-		//},
+
 		//rezervacija kod pretrage datuma u kalendaru zauzeca
 		reserve: function() {
 			this.osvezi();
@@ -311,7 +301,7 @@ Vue.component("zahtevPosetaObrada", {
 		},
 		//salje zahtev za registraciju
 		posaljiZahtev: function() {
-			axios.post("/sala/admin/rezervacijaSale", this.zahtevSelected)
+			axios.post("/sala/admin/pregled/rezervacijaSale", this.zahtevSelected)
 			.then(response => {
 				alert("Uspesno rezervisano!");
 				this.$router.push("/adminHome");
@@ -329,7 +319,7 @@ Vue.component("zahtevPosetaObrada", {
 		//salje post zahtev
 		nadjiSale : function() {
 			console.log(this.zahtevSelected.datum);
-			axios.post("/sala/admin/pregledSlobodne", this.zahtevSelected)
+			axios.post("/sala/admin/slobodni", this.zahtevSelected)
 			.then(response => {
 				this.sale = response.data;
 				this.backup = response.data;

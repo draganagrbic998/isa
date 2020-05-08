@@ -46,8 +46,8 @@ Vue.component("klinikeLekari", {
       </li>
       <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected || lekarSelected || zakazivanje">
         <a class="nav-link" href="#/klinikeLekari" v-on:click="refresh()">
-          <i class="fa fa-hotel"></i>
-          Klinike centra
+          <i class="fa fa-reply"></i>
+          Nazad
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -333,7 +333,7 @@ Vue.component("klinikeLekari", {
 			
 				<h2>Zaposleni lekari</h2><br>
 				
-				<table class="table table-hover">
+				<table v-if="selectedKlinika.lekari.length>0" class="table table-hover">
 					
 					<thead>
 						<tr>
@@ -352,6 +352,10 @@ Vue.component("klinikeLekari", {
 					
 					</tbody>
 				</table>
+				
+				<h3 v-if="selectedKlinika.lekari.length==0" style="color: #00CED1;">
+					Nema rezultata pretrage.
+				</h3>
 			
 			
 			</div>
@@ -360,7 +364,7 @@ Vue.component("klinikeLekari", {
 				
 				<h2>Klinike</h2><br>
 				
-				<table class="table table-hover">
+				<table v-if="klinike.length>0" class="table table-hover">
 					
 					<thead>
 					
@@ -388,6 +392,10 @@ Vue.component("klinikeLekari", {
 					</tbody>
 				
 				</table>
+				
+				<h3 v-if="klinike.length==0" style="color: #00CED1;">
+					Nema rezultata pretrage.
+				</h3>
 			
 			</div>
 			
@@ -541,8 +549,7 @@ Vue.component("klinikeLekari", {
 			axios.post("/zahtevPoseta/kreiranje", this.zahtev)
 			.then(response => {
 				alert("Zahtev poslat!");
-				this.selectKlinika(response.data);
-				this.pretraga = false;
+				this.$router.push("/zahtevTermini");
 			})
 			.catch(response => {
 				alert("Imate zakazane posete u isto vreme!!");
@@ -551,7 +558,12 @@ Vue.component("klinikeLekari", {
 		}, 
 		
 		refresh: function(){
-			location.reload();
+			if (this.klinikaSelected)
+				location.reload();
+			else if (this.lekarSelected)
+				this.selectKlinika(this.selectedKlinika);
+			else
+				this.selectLekar(this.selectedLekar);
 		}, 
 		
 		ime_sort(){

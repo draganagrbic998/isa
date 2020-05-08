@@ -18,13 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.conversion.partial.IzvestajConversion;
 import com.example.demo.conversion.partial.PosetaConversion;
 import com.example.demo.dto.model.IzvestajDTO;
-import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
 import com.example.demo.dto.unos.PredefinisanaPosetaDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.service.EmailService;
-import com.example.demo.service.KlinikaService;
 import com.example.demo.service.Message;
 import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
@@ -38,10 +36,7 @@ public class PosetaController {
 	
 	@Autowired
 	private PosetaConversion posetaConversion;
-	
-	@Autowired
-	private KlinikaService klinikaService;
-	
+		
 	@Autowired
 	private IzvestajConversion izvestajConversion;
 	
@@ -67,7 +62,7 @@ public class PosetaController {
 				
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value = "/zakazi/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<KlinikaSlobodnoDTO> zakazi(@PathVariable Integer id){
+	public ResponseEntity<HttpStatus> zakazi(@PathVariable Integer id){
 
 		Pacijent pacijent;
 		Poseta poseta;
@@ -85,7 +80,7 @@ public class PosetaController {
 					+ this.f.format(poseta.getDatum()) + " uspesno zakazan. ";
 			Message poruka = new Message(pacijent.getEmail(), "Pregled zakazan", obavestenje);
 			this.emailService.sendMessage(poruka);
-			return new ResponseEntity<>(this.klinikaService.getKlinikaSlobodno(id), HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.OK);

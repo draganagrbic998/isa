@@ -33,8 +33,8 @@ Vue.component("klinikeSlobodno", {
       </li>
       <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected || posetaSelected">
         <a class="nav-link" href="#/klinikeSlobodno" v-on:click="refresh()">
-          <i class="fa fa-bell"></i>
-          Povoljni termini
+          <i class="fa fa-reply"></i>
+          Nazad
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -152,7 +152,7 @@ Vue.component("klinikeSlobodno", {
 			
 			<h2>Slobodni termini</h2><br>
 				
-			<table class="table table-hover">
+			<table v-if="selectedKlinika.posete.length>0" class="table table-hover">
 				
 				<thead>
 					<tr>
@@ -169,17 +169,21 @@ Vue.component("klinikeSlobodno", {
 					</tr>
 				</tbody>
 			</table>
+			
+			<h3 v-if="selectedKlinika.posete.length==0" style="color: #00CED1;">
+				Nema rezultata pretrage.
+			</h3>
 		
 		</div>
 	
 		<div v-else class="container" id="cosak">
 		
-			<h2>Klinike</h2><br>
+			<h2>Povoljni pregledi</h2><br>
 			
-			<table class="table table-hover">
+			<table v-if="klinike.length>0" class="table table-hover">
 			
 				<thead>
-					<th scope="col">Naziv</th>
+					<th scope="col">Naziv klinike</th>
 					<th scope="col">Adresa</th>
 					<th scope="col">Ocena</th>
 				</thead>
@@ -193,6 +197,10 @@ Vue.component("klinikeSlobodno", {
 				</tbody>
 			
 			</table>
+			
+			<h3 v-if="klinike.length==0" style="color: #00CED1;">
+				Nema rezultata pretrage.
+			</h3>
 		
 		</div>
 		
@@ -276,8 +284,7 @@ Vue.component("klinikeSlobodno", {
 			axios.get("/poseta/zakazi/" + this.selectedPoseta.id)
 			.then(response => {
 				alert("Pregled zakazan!");
-				this.selectKlinika(response.data);
-				
+				this.$router.push("/termini");				
 			})
 			.catch(response => {
 				alert("Imate zakazane posete u isto vreme!!");
@@ -286,7 +293,10 @@ Vue.component("klinikeSlobodno", {
 		}, 
 		
 		refresh: function(){
-			location.reload();
+			if (this.klinikaSelected)
+				location.reload();
+			else
+				this.selectKlinika(this.selectedKlinika);
 		}, 
 		
 		naziv_sort(){

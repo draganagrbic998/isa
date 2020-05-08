@@ -97,7 +97,7 @@ Vue.component("zahtevTermini", {
 		
 			<h2>Zahtevi za posete</h2><br>
 			
-			<table class="table table-hover">
+			<table v-if="zahtevi.length>0" class="table table-hover">
 			
 				<thead>
 				
@@ -124,6 +124,10 @@ Vue.component("zahtevTermini", {
 				</tbody>
 			
 			</table>
+			
+			<h3 v-if="zahtevi.length==0" style="color: #00CED1;">
+				Nema rezultata pretrage.
+			</h3>
 		
 		</div>
 		

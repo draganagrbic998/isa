@@ -267,7 +267,7 @@ Vue.component("bolesti", {
 		
 			<h2>Istorija bolesti</h2><br>
 			
-			<table class="table table-hover">
+			<table v-if="bolesti.length>0" class="table table-hover">
 			
 				<thead>
 				
@@ -298,6 +298,10 @@ Vue.component("bolesti", {
 				</tbody>
 			
 			</table>
+			
+			<h3 v-if="bolesti.length==0" style="color: #00CED1;">
+				Nema rezultata pretrage.
+			</h3>
 		
 		</div>
 		

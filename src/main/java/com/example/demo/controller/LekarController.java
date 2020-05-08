@@ -27,7 +27,7 @@ import com.example.demo.dto.model.LekarDTO;
 import com.example.demo.dto.pretraga.ObavezaDTO;
 import com.example.demo.dto.pretraga.PacijentPretragaDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
-import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
+import com.example.demo.dto.unos.ZahtevPregledObradaDTO;
 import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
@@ -83,8 +83,8 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/admin/getSlobodne", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<LekarDTO>> getSlobodne(@RequestBody ZahtevPosetaObradaDTO zahtev) {
+	@PostMapping(value = "/admin/slobodni", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<LekarDTO>> slobodni(@RequestBody ZahtevPregledObradaDTO zahtev) {
 		try {
 			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 			zahtev.osveziKraj();

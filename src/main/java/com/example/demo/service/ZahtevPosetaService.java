@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.conversion.total.SalaConversion;
 import com.example.demo.dto.model.SalaDTO;
-import com.example.demo.dto.unos.ZahtevPosetaObradaDTO;
+import com.example.demo.dto.unos.ZahtevPregledObradaDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.posete.Karton;
 import com.example.demo.model.posete.Poseta;
@@ -56,21 +56,21 @@ public class ZahtevPosetaService {
 		this.lekarRepository.save(l);
 	}
 
-	public List<ZahtevPosetaObradaDTO> findAll(Klinika klinika) {
-		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
+	public List<ZahtevPregledObradaDTO> pregledi(Klinika klinika) {
+		List<ZahtevPregledObradaDTO> zahtevi = new ArrayList<>();
 		for (ZahtevPoseta z : this.zahtevPosetaRepository.findByKlinikaId(klinika.getId())) {
 			if (z.getTipPosete().isPregled())
-				zahtevi.add(new ZahtevPosetaObradaDTO(z));
+				zahtevi.add(new ZahtevPregledObradaDTO(z));
 		}
 		return zahtevi;
 	}
 
 	@Transactional(readOnly = true)
-	public List<ZahtevPosetaObradaDTO> getOperacije(Klinika klinika) {
-		List<ZahtevPosetaObradaDTO> zahtevi = new ArrayList<>();
+	public List<ZahtevPregledObradaDTO> operacije(Klinika klinika) {
+		List<ZahtevPregledObradaDTO> zahtevi = new ArrayList<>();
 		for (ZahtevPoseta z : this.zahtevPosetaRepository.findByKlinikaId(klinika.getId())) {
 			if (!z.getTipPosete().isPregled())
-				zahtevi.add(new ZahtevPosetaObradaDTO(z));
+				zahtevi.add(new ZahtevPregledObradaDTO(z));
 		}
 		return zahtevi;
 	}
@@ -94,7 +94,7 @@ public class ZahtevPosetaService {
 			Date najboljiTermin = null;
 			Sala najboljaSala = null;
 
-			for (Sala s : salaRepository.findAll()) {
+			for (Sala s : this.salaRepository.findAll()) {
 				SalaDTO salaDTO = salaConversion.get(s);
 				salaDTO.nadjiSlobodanTermin(f.format(z.getDatum()), f.format(z.kraj()), z.getLekar());
 				Date trenutni = salaDTO.getPrviSlobodan();

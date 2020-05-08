@@ -111,7 +111,7 @@ Vue.component("termini", {
 		
 			<h2>Zakazane posete</h2><br>
 			
-			<table class="table table-hover">
+			<table v-if="termini.length>0" class="table table-hover">
 			
 				<thead>
 					
@@ -139,6 +139,10 @@ Vue.component("termini", {
 				</tbody>
 			
 			</table>
+			
+			<h3 v-if="termini.length==0" style="color: #00CED1;">
+				Nema rezultata pretrage.
+			</h3>
 		
 		</div>
 		

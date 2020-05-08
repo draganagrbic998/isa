@@ -33,7 +33,8 @@ public class KlinikaPretragaDTO extends KlinikaDTO{
 	}
 
 	public KlinikaPretragaDTO(Klinika klinika, double cena, double trajanje) {
-		this(klinika);
+		super(klinika);
+		this.lekari = new ArrayList<>();
 		this.cena = cena;
 		this.trajanje = trajanje;
 	}

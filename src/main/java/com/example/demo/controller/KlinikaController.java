@@ -152,7 +152,7 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<KlinikaPretragaDTO>> pretragaParam(@RequestBody PretragaDTO param){
+	public ResponseEntity<Collection<KlinikaPretragaDTO>> pretraga(@RequestBody PretragaDTO param){
 		try {
 			return new ResponseEntity<>(this.klinikaService.pretraga(param), HttpStatus.OK);
 		}

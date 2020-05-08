@@ -180,13 +180,13 @@ Vue.component("adminHome", {
 			this.$router.push("/");
 		});
 		
-		axios.get("/zahtevPoseta/klinika/pregled")
+		axios.get("/zahtevPoseta/klinika/pregledi")
 		.then(response => {this.zahteviPosetaBroj = response.data.length})
 		.catch(reponse => {
 			this.$router.push("/");
 		});
 		
-		axios.get("/zahtevPoseta/klinika/getOperacije")
+		axios.get("/zahtevPoseta/klinika/operacije")
 		.then(response => {this.zahteviOperacijaBroj = response.data.length})
 		.catch(reponse => {
 			this.$router.push("/");

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.pretraga.KlinikaPretragaDTO;
-import com.example.demo.dto.pretraga.KlinikaSlobodnoDTO;
 import com.example.demo.dto.pretraga.LekarSatnicaDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
 import com.example.demo.dto.unos.PretragaDTO;
@@ -92,20 +91,13 @@ public class KlinikaService {
 		}
 
 		List<KlinikaPretragaDTO> lista = new ArrayList<>();
-		for (KlinikaPretragaDTO k: mapa.values())
+		for (KlinikaPretragaDTO k: mapa.values()) {
+			Collections.sort(k.getLekari());
 			lista.add(k);
+		}
 		Collections.sort(lista);
 		return lista;
 		
-	}
-	
-	@Transactional(readOnly = true)
-	public KlinikaSlobodnoDTO getKlinikaSlobodno(Integer posetaId) {
-
-		Poseta p = this.posetaRepository.getOne(posetaId);
-		Klinika k = p.getSala().getKlinika();
-		return new KlinikaSlobodnoDTO(k);
-
 	}
 	
 }
