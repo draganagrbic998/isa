@@ -143,7 +143,9 @@ Vue.component("adminHome", {
 					</tr>
 				</tbody>
 			</table>
+		<div id="map" style="width: 600px; height: 400px"></div>
 		</div>
+		
 		</div>
 	`, 	
 	
@@ -173,6 +175,60 @@ Vue.component("adminHome", {
 		.catch(reponse => {
 			this.$router.push("/");
 		});
+
+		ymaps.ready(function () {
+			axios
+		      .get('http://www.mapquestapi.com/geocoding/v1/address?key=RsieL5Qcb2EAtLOSE3fmKCkWxGetBnzX&street=Bate+Brkica+8&city=Novi+Sad')
+		      .then(res => {
+		    	  console.log(res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng);
+				    	var myMap = new ymaps.Map('map', {
+				    	center: [res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng],
+				    	zoom: 9
+			        }, {
+			            searchControlProvider: 'yandex#search'
+			        }),
+			        MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+			            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+			        ),
+			        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+			            hintContent: 'A custom placemark icon',
+			            balloonContent: 'This is a pretty placemark'
+			        }, {
+			            iconLayout: 'default#image',
+			            iconImageHref: 'https://findicons.com/files/icons/2796/metro_uinvert_dock/256/google_maps.png',
+			            iconImageSize: [48, 48],
+			            iconImageOffset: [-5, -38]
+			        }),
+
+			        myPlacemarkWithContent = new ymaps.Placemark([res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng], {
+			            hintContent: 'A custom placemark icon with contents',
+			            balloonContent: 'This one — for Christmas',
+			            iconImageSize: [48, 48],
+			            iconContent: '12'
+			        }, {
+			            iconLayout: 'default#imageWithContent',
+			            
+			            iconImageHref: '',
+			            
+			            iconImageSize: [48, 48],
+			            
+			            iconImageOffset: [-24, -24],
+			            
+			            iconContentOffset: [15, 15],
+			            
+			            iconContentLayout: MyIconContentLayout
+			        });
+
+			    myMap.geoObjects
+			        .add(myPlacemark)
+			        .add(myPlacemarkWithContent);
+
+				    }
+
+				);
+		});
+		
+
 	},
 	
 	methods: {
