@@ -28,11 +28,11 @@ public class SestraConversion {
 	private PasswordEncoder passwordEncoder;
 
 	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-	private static final String baseDate = "2020-04-20 ";
 	
 	@Transactional(readOnly = true)
 	public Sestra get(SestraDTO sestraDTO) throws ParseException {
 				
+		String baseDate = "2020-04-20 ";
 		String lozinka;
 		long version;
 		

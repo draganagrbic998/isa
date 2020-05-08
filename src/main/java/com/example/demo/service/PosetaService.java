@@ -132,8 +132,5 @@ public class PosetaService {
 
 	}
 
-	@Transactional(readOnly = false)
-	public void izmeniIzvestaj(Izvestaj izvestaj) {
-		this.izvestajRepository.save(izvestaj);
-	}
+	
 }

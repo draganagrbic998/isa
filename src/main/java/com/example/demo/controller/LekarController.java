@@ -33,10 +33,10 @@ import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.posete.KrvnaGrupa;
 import com.example.demo.service.EmailService;
+import com.example.demo.service.IzvestajService;
 import com.example.demo.service.KartonService;
 import com.example.demo.service.LekarService;
 import com.example.demo.service.Message;
-import com.example.demo.service.PosetaService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -57,9 +57,9 @@ public class LekarController {
 	
 	@Autowired
 	private KartonConversion kartonConversion;
-	
+		
 	@Autowired
-	private PosetaService posetaService;
+	private IzvestajService izvestajService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -242,7 +242,7 @@ public class LekarController {
 	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajDTO izvestajDTO) {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			this.posetaService.izmeniIzvestaj(this.izvestajConversion.get(izvestajDTO, lekar));
+			this.izvestajService.save(this.izvestajConversion.get(izvestajDTO, lekar));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

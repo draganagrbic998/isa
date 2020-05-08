@@ -119,9 +119,8 @@ public class PacijentController {
 	
 	@PostMapping(value="/aktiviranje/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> aktiviranje(@RequestBody ParamDTO param){
-		System.out.println("MAMA MIA");
 		try {
-			boolean retval = this.pacijentService.aktiviraj(param.getParam());
+			boolean retval = this.pacijentService.aktiviranje(param.getParam());
 			if (retval)
 				return new ResponseEntity<>(HttpStatus.OK);
 			else

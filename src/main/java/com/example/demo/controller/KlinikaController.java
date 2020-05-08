@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,7 +57,7 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/graf/{parametar}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HashMap<String, Integer>> getGraf(@PathVariable String parametar){
+	public ResponseEntity<Map<String, Integer>> getGraf(@PathVariable String parametar){
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(admin.getKlinika().podaciGraf(parametar), HttpStatus.OK);
