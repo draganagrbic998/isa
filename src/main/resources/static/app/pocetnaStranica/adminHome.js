@@ -7,6 +7,11 @@ Vue.component("adminHome", {
 			zahteviOperacijaBroj: '',
 			greskaNaziv: '', 
 			greskaAdresa: '', 
+			ulica: '',
+			grad: '',
+			url: '',
+			defaultURL: 'http://www.mapquestapi.com/geocoding/v1/address?key=RsieL5Qcb2EAtLOSE3fmKCkWxGetBnzX&street=Bate+Brkica+8&city=Novi+Sad',
+			nemaRezultata: '',
 			greska: false
 		}
 	}, 
@@ -113,9 +118,13 @@ Vue.component("adminHome", {
 </nav>
 		
 		
-		<div class="card" id="tableBox">
+	<div class="container"> 
 		
-			<h1>Osnovne informacije o klinici</h1><br>
+		<div class="row">
+		
+			<div class="col card" id="left">
+		
+			<h2>Osnovne informacije o klinici</h2><br>
 			
 			<table class="table">
 			
@@ -143,13 +152,20 @@ Vue.component("adminHome", {
 					</tr>
 				</tbody>
 			</table>
-		<div id="map" style="width: 600px; height: 400px"></div>
+		</div>
+		<div class="col card" id="right" style="width: 700px; height: 600px">
+		<h2>Prikaz na mapi</h2><br>
+		<h3>{{nemaRezultata}}</h3>
+		<div id="map" style="width: 500px; height: 400px"></div>
+		</div>
+		</div>
 		</div>
 		
 		</div>
 	`, 	
 	
 	mounted(){
+		
 		axios.get("/klinika/admin/pregled")
 		.then(response => {
 			this.klinika = response.data
@@ -176,57 +192,84 @@ Vue.component("adminHome", {
 			this.$router.push("/");
 		});
 
+		
 		ymaps.ready(function () {
-			axios
-		      .get('http://www.mapquestapi.com/geocoding/v1/address?key=RsieL5Qcb2EAtLOSE3fmKCkWxGetBnzX&street=Bate+Brkica+8&city=Novi+Sad')
-		      .then(res => {
-		    	  console.log(res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng);
-				    	var myMap = new ymaps.Map('map', {
-				    	center: [res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng],
-				    	zoom: 9
-			        }, {
-			            searchControlProvider: 'yandex#search'
-			        }),
-			        MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
-			            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
-			        ),
-			        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-			            hintContent: 'A custom placemark icon',
-			            balloonContent: 'This is a pretty placemark'
-			        }, {
-			            iconLayout: 'default#image',
-			            iconImageHref: 'https://findicons.com/files/icons/2796/metro_uinvert_dock/256/google_maps.png',
-			            iconImageSize: [48, 48],
-			            iconImageOffset: [-5, -38]
-			        }),
+			axios.get("/klinika/admin/pregled")
+			.then(response => {
+				this.klinika = response.data;
+				console.log(this.klinika);
+				if (this.klinika.adresa.includes(",")) {
+					var podaci = this.klinika.adresa.split(",");
+					if (podaci[1].includes(" ")){
+						this.grad = podaci[1].trim();
+						this.grad = this.grad.replace(" ","+");
+					}
+					else {
+						this.grad = podaci[1];
+					}
+					if (podaci[0].includes(" ")){
+						this.ulica = podaci[0].split(" ").join("+");
 
-			        myPlacemarkWithContent = new ymaps.Placemark([res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng], {
-			            hintContent: 'A custom placemark icon with contents',
-			            balloonContent: 'This one — for Christmas',
-			            iconImageSize: [48, 48],
-			            iconContent: '12'
-			        }, {
-			            iconLayout: 'default#imageWithContent',
-			            
-			            iconImageHref: '',
-			            
-			            iconImageSize: [48, 48],
-			            
-			            iconImageOffset: [-24, -24],
-			            
-			            iconContentOffset: [15, 15],
-			            
-			            iconContentLayout: MyIconContentLayout
-			        });
+						console.log(this.ulica);
+					}
+				}
+				axios 
+			      .get('http://www.mapquestapi.com/geocoding/v1/address?key=RsieL5Qcb2EAtLOSE3fmKCkWxGetBnzX&street='.concat(this.ulica,'&city=',this.grad))
+			      .then(res => {
+			    	  console.log(res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng);
+					    	var myMap = new ymaps.Map('map', {
+					    	center: [res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng],
+					    	zoom: 9
+				        }, {
+				            searchControlProvider: 'yandex#search'
+				        }),
+				        MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+				            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+				        ),
+				        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+				            hintContent: 'A custom placemark icon',
+				            balloonContent: 'This is a pretty placemark'
+				        }, {
+				            iconLayout: 'default#image',
+				            iconImageHref: 'https://findicons.com/files/icons/2796/metro_uinvert_dock/256/google_maps.png',
+				            iconImageSize: [48, 48],
+				            iconImageOffset: [-5, -38]
+				        }),
 
-			    myMap.geoObjects
-			        .add(myPlacemark)
-			        .add(myPlacemarkWithContent);
+				        myPlacemarkWithContent = new ymaps.Placemark([res.data.results[0].locations[0].displayLatLng.lat, res.data.results[0].locations[0].displayLatLng.lng], {
+				            hintContent: 'A custom placemark icon with contents',
+				            balloonContent: 'This one — for Christmas',
+				            iconImageSize: [48, 48],
+				            iconContent: '12'
+				        }, {
+				            iconLayout: 'default#imageWithContent',
+				            
+				            iconImageHref: '',
+				            
+				            iconImageSize: [48, 48],
+				            
+				            iconImageOffset: [-24, -24],
+				            
+				            iconContentOffset: [15, 15],
+				            
+				            iconContentLayout: MyIconContentLayout
+				        });
 
-				    }
+				    myMap.geoObjects
+				        .add(myPlacemark)
+				        .add(myPlacemarkWithContent);
 
-				);
-		});
+					    }
+
+					);
+				
+			});
+			})
+			.catch(reponse => {
+				this.nemaRezultata = "Lokacija nije validna!";
+			});
+			
+			
 		
 
 	},
@@ -236,6 +279,7 @@ Vue.component("adminHome", {
 		osvezi: function(){
 			this.greskaNaziv = '';
 			this.greskaAdresa= '';
+			this.nemaRezultata = '';
 			this.greska = false;
 		}, 
 		

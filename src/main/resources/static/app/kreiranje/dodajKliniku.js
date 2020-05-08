@@ -26,7 +26,7 @@ Vue.component("dodajKliniku", {
 				
 					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="klinika.naziv"></td><td>{{greskaNaziv}}</td></tr>
 					<tr><td class="left">Opis: </td><td class="right"><input type="text" v-model="klinika.opis"></td><td></td></tr>
-					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="klinika.adresa"></td><td>{{greskaAdresa}}</td></tr>
+					<tr><td class="left">Adresa: </td><td class="right"><input type="text" placeholder="Ulica i broj, grad" v-model="klinika.adresa"></td><td>{{greskaAdresa}}</td></tr>
 					<tr><td><button v-on:click="dodajKliniku()">KREIRAJ PROFIL KLINIKE</button><br></td></tr>
 					
 				</table>

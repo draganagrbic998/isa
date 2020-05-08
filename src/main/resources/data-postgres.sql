@@ -9,7 +9,7 @@ where id = 1;
 
 -------------GLAVNA KLINIKA, SALA I TIP POSETE KOJE KORISTIM-----------------------
 insert into klinika (naziv, opis, adresa)
-values ('moja klinika', 'super klinika', 'moja adresa');
+values ('moja klinika', 'super klinika', 'Vase Stajica 3, Novi Sad');
 insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
 values (true, 'super pregled', 1, 200, 1, 30, true);
 insert into sala (broj, naziv, klinika, aktivan)
