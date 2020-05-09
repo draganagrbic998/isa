@@ -25,6 +25,7 @@ public class BolestDTO implements Comparable<BolestDTO>{
 	private List<LekarDTO> lekari;
 	private List<DijagnozaDTO> dijagnoze;
 	private List<ReceptDTO> recepti;
+	private Integer selectedLekar;
 	
 	public BolestDTO() {
 		super();
@@ -52,6 +53,11 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		Collections.sort(this.lekari);
 		Collections.sort(this.dijagnoze);
 		Collections.sort(this.recepti);
+	}
+
+	public BolestDTO(Poseta poseta, Integer id) {
+		this(poseta);
+		this.selectedLekar = id;
 	}
 
 	@Override
@@ -147,4 +153,12 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		this.recepti = recepti;
 	}
 
+	public Integer getSelectedLekar() {
+		return selectedLekar;
+	}
+
+	public void setSelectedLekar(Integer selectedLekar) {
+		this.selectedLekar = selectedLekar;
+	}
+	
 }

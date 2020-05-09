@@ -34,8 +34,8 @@ Vue.component("bolesti", {
       </li>
       <li class="nav-item active" style="min-width: 100px;" v-if="bolestSelected || lekarSelected">
         <a class="nav-link" href="#/bolesti" v-on:click="refresh()">
-          <i class="fa fa-line-chart"></i>
-          Istorija bolesti
+          <i class="fa fa-reply"></i>
+          Nazad
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -337,7 +337,10 @@ Vue.component("bolesti", {
 		},
 		
 		refresh: function(){
-			location.reload();
+			if (this.bolestSelected)
+				location.reload();
+			else
+				this.selectBolest(this.selectedBolest);
 		},
 		
 		selectBolest: function(bolest){
@@ -367,9 +370,13 @@ Vue.component("bolesti", {
 		
 		oceniLekar: function(){
 			
-			axios.post("/lekar/ocenjivanje", {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
+			axios.post("/lekar/ocenjivanje/" + this.selectedBolest.posetaId, {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
 			.then(response => {
-				this.selectLekar(response.data);
+				this.selectBolest(response.data);
+				for (let i of this.selectedBolest.lekari){
+					if (i.id == this.selectedBolest.selectedLekar)
+						this.selectLekar(i);
+				}
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

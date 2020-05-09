@@ -12,9 +12,11 @@ import com.example.demo.model.korisnici.Admin;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.ostalo.Ocena;
+import com.example.demo.model.posete.Poseta;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.OcenaRepository;
 import com.example.demo.repository.PacijentRepository;
+import com.example.demo.repository.PosetaRepository;
 
 @Component
 @Transactional(readOnly = true)
@@ -28,6 +30,9 @@ public class LekarService {
 	
 	@Autowired
 	private PacijentRepository pacijentRepository;
+	
+	@Autowired
+	private PosetaRepository posetaRepository;
 
 	@Transactional(readOnly = false)
 	public void save(Lekar lekar) {
@@ -67,12 +72,12 @@ public class LekarService {
 	}
 
 	@Transactional(readOnly = false)
-	public Lekar ocenjivanje(Pacijent pacijent, OcenaParamDTO param) {
+	public Poseta ocenjivanje(Pacijent pacijent, OcenaParamDTO param, Integer posetaId) {
 
 		Lekar l = this.lekarRepository.getOne(param.getId());
 		Ocena o = l.refreshOcena(pacijent, param.getOcena());
 		this.ocenaRepository.save(o);
-		return l;
+		return this.posetaRepository.getOne(posetaId);
 
 	}	
 	
