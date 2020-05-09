@@ -76,12 +76,12 @@ Vue.component("termini", {
 			</tr>
 				
 			<tr>
-				<th scope="row">Naziv termina: </th>
+				<th scope="row">Naziv posete: </th>
 				<td><input type="text" v-model="selectedTermin.naziv" class="form-control" disabled></td>
 			</tr>
 					
 			<tr>
-				<th scope="row">Trajanje termina: </th>
+				<th scope="row">Trajanje posete: </th>
 				<td><input type="text" v-model="selectedTermin.trajanje" class="form-control" disabled></td>
 			</tr>
 				
@@ -119,7 +119,7 @@ Vue.component("termini", {
 					
 						<th scope="col">Datum</th>
 						<th scope="col">Klinika</th>
-						<th scope="col">Vrsta termina</th>
+						<th scope="col">Tip posete</th>
 						<th scope="col">Cena</th>
 					
 					</tr>

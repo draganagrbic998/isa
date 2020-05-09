@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.example.demo.dto.model.DijagnozaDTO;
 import com.example.demo.dto.model.LekarDTO;
+import com.example.demo.dto.unos.OcenaParamDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.resursi.Dijagnoza;
@@ -55,9 +56,9 @@ public class BolestDTO implements Comparable<BolestDTO>{
 		Collections.sort(this.recepti);
 	}
 
-	public BolestDTO(Poseta poseta, Integer id) {
+	public BolestDTO(Poseta poseta, OcenaParamDTO param) {
 		this(poseta);
-		this.selectedLekar = id;
+		this.selectedLekar = param.getId();
 	}
 
 	@Override

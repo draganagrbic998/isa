@@ -96,7 +96,7 @@ Vue.component("klinikeSlobodno", {
 	
 		<div v-if="posetaSelected" class="card" id="box">
 		
-			<h2>Detalji posete</h2><br>
+			<h2>Detalji pregleda</h2><br>
 			
 				<table>
 				
@@ -117,7 +117,7 @@ Vue.component("klinikeSlobodno", {
 						<td><input type="text" v-model="selectedPoseta.naziv" class="form-control" disabled></td>
 					</tr>
 					<tr>
-						<th scope="col">Trajanje: </th>
+						<th scope="col">Trajanje pregleda: </th>
 						<td><input type="text" v-model="selectedPoseta.trajanje" class="form-control" disabled></td>
 					</tr>
 					<tr>
@@ -150,7 +150,7 @@ Vue.component("klinikeSlobodno", {
 				<thead>
 					<tr>
 						<th scope="col">Datum</th>
-						<th scope="col">Tip pregleda</th>
+						<th scope="col">Naziv pregleda</th>
 						<th scope="col">Popust</th>
 					</tr>
 				</thead>

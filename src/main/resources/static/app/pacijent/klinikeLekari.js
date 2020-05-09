@@ -193,7 +193,7 @@ Vue.component("klinikeLekari", {
 							<td><input type="text" v-model="imePrezime" class="form-control" disabled></td>
 						</tr>
 						<tr>
-							<th scope="row">Tip pregleda: </th>
+							<th scope="row">Naziv pregleda: </th>
 							<td><input type="text" v-model="tipPregleda" class="form-control" disabled></td>
 						</tr>	
 						<tr>
