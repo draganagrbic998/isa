@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,44 +26,43 @@ public class PosetaService {
 
 	@Autowired
 	private PosetaRepository posetaRepository;
-	
+
 	@Autowired
 	private ZahtevPosetaRepository zahtevRepository;
 
 	@Autowired
 	private IzvestajRepository izvestajRepository;
-	
+
 	@Autowired
 	private TerapijaRepository terapijaRepository;
-	
+
 	@Autowired
 	private LekarRepository lekarRepository;
 
 	@Transactional(readOnly = false)
 	public void save(Poseta poseta, Integer id) {
-				
+
 		if (!poseta.getTipPosete().isAktivan())
 			throw new MyRuntimeException();
-		
+
 		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj()))
 			throw new MyRuntimeException();
-		
-		for (Lekar l: poseta.getLekari()) {
-			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || 
-					!l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
+
+		for (Lekar l : poseta.getLekari()) {
+			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || !l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
 				throw new MyRuntimeException();
 		}
-		
+
 		this.posetaRepository.save(poseta);
-		
+
 		for (Lekar l : poseta.getLekari()) {
 			l.setPoslednjaIzmena(new Date());
 			this.lekarRepository.save(l);
 		}
-		
+
 		if (id != null)
 			this.zahtevRepository.deleteById(id);
-		
+
 	}
 
 	@Transactional(readOnly = false)
@@ -97,7 +99,7 @@ public class PosetaService {
 
 	@Transactional(readOnly = false)
 	public void zapocni(Integer id, Lekar lekar) {
-		
+
 		Poseta p = this.posetaRepository.getOne(id);
 
 		if (!p.getStanje().equals(StanjePosete.ZAUZETO))
@@ -110,12 +112,12 @@ public class PosetaService {
 		this.posetaRepository.save(p);
 		lekar.setZapocetaPoseta(p);
 		this.lekarRepository.save(lekar);
-		
+
 	}
 
 	@Transactional(readOnly = false)
 	public void zavrsi(Izvestaj izvestaj, Lekar lekar) {
-		
+
 		lekar.setZapocetaPoseta(null);
 		this.lekarRepository.save(lekar);
 		this.terapijaRepository.save(izvestaj.getTerapija());
@@ -127,5 +129,39 @@ public class PosetaService {
 
 	}
 
-	
+	@Transactional(readOnly = false)
+	public void save(Map<Poseta, Integer> novePosete) {
+		Set<Lekar> lekariIzmena = new HashSet<Lekar>();
+
+		for (Poseta poseta : novePosete.keySet()) {
+			Integer id = novePosete.get(poseta);
+
+			if (!poseta.getTipPosete().isAktivan())
+				throw new MyRuntimeException();
+
+			if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj()))
+				throw new MyRuntimeException();
+
+			for (Lekar l : poseta.getLekari()) {
+				if (!l.slobodan(poseta.pocetak(), poseta.kraj())
+						|| !l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
+					throw new MyRuntimeException();
+			}
+
+			this.posetaRepository.save(poseta);
+
+			for (Lekar l : poseta.getLekari()) {
+				lekariIzmena.add(l);
+			}
+
+			if (id != null)
+				this.zahtevRepository.deleteById(id);
+		}
+
+		for (Lekar l : lekariIzmena) {
+			l.setPoslednjaIzmena(new Date());
+			this.lekarRepository.save(l);
+		}
+	}
+
 }
