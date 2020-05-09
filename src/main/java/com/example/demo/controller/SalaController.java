@@ -145,7 +145,7 @@ public class SalaController {
 	@PostMapping(value = "/admin/pregled/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> pregledRezervacija(@RequestBody ZahtevPregledObradaDTO zahtevDTO) {
 		Date slobodan;
-		SalaDTO salaDTO = null;
+		SalaDTO salaDTO = new SalaDTO();
 		Lekar lekar;
 		Pacijent pacijent;
 		try {
