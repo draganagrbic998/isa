@@ -53,11 +53,9 @@ public class PosetaService {
 		
 		this.posetaRepository.save(poseta);
 		
-		if (id == null) {
-			for (Lekar l : poseta.getLekari()) {
-				l.setPoslednjaIzmena(new Date());
-				this.lekarRepository.save(l);
-			}
+		for (Lekar l : poseta.getLekari()) {
+			l.setPoslednjaIzmena(new Date());
+			this.lekarRepository.save(l);
 		}
 		
 		if (id != null)

@@ -114,10 +114,10 @@ public class ZahtevPosetaController {
 	}
 
 	//Cron expression: sekunde, minuti, sati, dan u nedelji, dan, mesec, godina
-	@Scheduled(cron = "0 59 23 * * *")
+	@Scheduled(cron = "0 13 14 * * *")
 	public void obradiZahteveAutomatski() throws ParseException {
 		Map<Poseta, Integer> novePosete = this.zahtevPosetaService.obradiAutomatski();
-		for (Poseta np : novePosete.keySet())
-			this.posetaService.save(np, novePosete.get(np));
+		for (Poseta p : novePosete.keySet())
+			this.posetaService.save(p, novePosete.get(p));
 	}
 }
