@@ -61,7 +61,8 @@ public class Poseta implements Zauzetost, Profitiranje{
 		super();
 	}
 	
-	public Poseta(StanjePosete stanje, Date datum, Double popust, TipPosete tipPosete, Sala sala, Karton karton, Lekar lekar) {
+	public Poseta(StanjePosete stanje, Date datum, Double popust, 
+			TipPosete tipPosete, Sala sala, Karton karton, Lekar lekar) {
 		super();
 		this.stanje = stanje;
 		this.datum = datum;
@@ -72,8 +73,8 @@ public class Poseta implements Zauzetost, Profitiranje{
 		this.lekari.add(lekar);
 	}
 	
-	public Poseta(StanjePosete stanje, Date datum, Double popust, TipPosete tipPosete, Sala sala, Karton karton,
-			Set<Lekar> lekari) {
+	public Poseta(StanjePosete stanje, Date datum, Double popust, 
+			TipPosete tipPosete, Sala sala, Karton karton, Set<Lekar> lekari) {
 		super();
 		this.stanje = stanje;
 		this.datum = datum;

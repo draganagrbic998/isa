@@ -44,16 +44,26 @@ public class ZahtevPosetaService {
 
 	@Transactional(readOnly = false)
 	public void save(ZahtevPoseta zahtev) {
-		this.zahtevPosetaRepository.save(zahtev);
 		Lekar l = zahtev.getLekar();
-		if (!l.slobodan(zahtev.pocetak(), zahtev.kraj())) {
+		if (!l.slobodan(zahtev.pocetak(), zahtev.kraj()) 
+				|| !l.slobodanZahtev(zahtev.pocetak(), zahtev.kraj(), zahtev.getId()))
 			throw new MyRuntimeException();
-		}
 		Karton k = zahtev.getKarton();
 		if (!k.slobodan(zahtev.pocetak(), zahtev.kraj()))
 			throw new MyRuntimeException();
+		this.zahtevPosetaRepository.save(zahtev);
 		l.setPoslednjaIzmena(new Date());
 		this.lekarRepository.save(l);
+	}
+	
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		this.zahtevPosetaRepository.deleteById(id);
+	}
+
+	@Transactional(readOnly = false)
+	public ZahtevPoseta getOne(Integer id) {
+		return this.zahtevPosetaRepository.getOne(id);
 	}
 
 	public List<ZahtevPregledObradaDTO> pregledi(Klinika klinika) {
@@ -75,18 +85,9 @@ public class ZahtevPosetaService {
 		return zahtevi;
 	}
 
-	@Transactional(readOnly = false)
-	public void obrisi(Integer id) {
-		this.zahtevPosetaRepository.deleteById(id);
-	}
-
-	@Transactional(readOnly = false)
-	public ZahtevPoseta nadji(Integer id) {
-		return this.zahtevPosetaRepository.getOne(id);
-	}
-
 	@Transactional(readOnly = true)
 	public Map<Poseta, Integer> obradiAutomatski() throws ParseException {
+		
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 		Map<Poseta, Integer> novePosete = new HashMap<>();
 
@@ -95,7 +96,7 @@ public class ZahtevPosetaService {
 			Sala najboljaSala = null;
 
 			for (Sala s : this.salaRepository.findAll()) {
-				SalaDTO salaDTO = salaConversion.get(s);
+				SalaDTO salaDTO = this.salaConversion.get(s);
 				salaDTO.nadjiSlobodanTermin(f.format(z.getDatum()), f.format(z.kraj()), z.getLekar());
 				Date trenutni = salaDTO.getPrviSlobodan();
 

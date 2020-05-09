@@ -38,15 +38,14 @@ const lekoviPretraga = {template: '<lekoviPretraga></lekoviPretraga>'}
 const tipPosetePretraga = {template: '<tipPosetePretraga></tipPosetePretraga>'}
 const salaPretraga = {template: '<salaPretraga></salaPretraga>'}
 
-
 //zahtevi:
 const zahtevRegistracijaObrada = {template: '<zahtevRegistracijaObrada></zahtevRegistracijaObrada>'}
 const zahtevPosetaSlanje = {template: '<zahtevPosetaSlanje></zahtevPosetaSlanje>'}
+const zahtevPregledObrada = {template: '<zahtevPregledObrada></zahtevPregledObrada>'}
+const zahtevOperacijaObrada = {template: '<zahtevOperacijaObrada></zahtevOperacijaObrada>'}
 const zahtevOdmorSlanje = {template: '<zahtevOdmorSlanje></zahtevOdmorSlanje>'}
 const zahtevOdmorObrada = {template: '<zahtevOdmorObrada></zahtevOdmorObrada>'}
 const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
-const zahtevPosetaObrada = {template: '<zahtevPosetaObrada></zahtevPosetaObrada>'}
-const zahtevOperacijaObrada = {template: '<zahtevOperacijaObrada></zahtevOperacijaObrada>'}
 const izvestaj = {template: '<izvestaj></izvestaj>'}
 
 //pacijent:
@@ -62,7 +61,6 @@ const radniKalendar = {template: '<radniKalendar></radniKalendar>'}
 const godisnjiOdmori = {template: '<godisnjiOdmori></godisnjiOdmori>'}
 const zapocetPregled = {template: '<zapocetPregled></zapocetPregled>'}
 const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
-
 
 const router = new VueRouter({
 	
@@ -103,17 +101,15 @@ const router = new VueRouter({
 		{path: '/lekoviPretraga', component: lekoviPretraga}, 
 		{path: '/tipPosetePretraga', component: tipPosetePretraga},
 		{path: '/salaPretraga', component: salaPretraga},
-	
 			
 		{path: '/zahtevRegistracijaObrada', component: zahtevRegistracijaObrada},
 		{path: '/zahtevPosetaSlanje', component: zahtevPosetaSlanje},
+		{path: '/zahtevPregledObrada', component: zahtevPregledObrada},
+		{path: '/zahtevOperacijaObrada', component: zahtevOperacijaObrada},
 		{path: '/zahtevOdmorSlanje', component: zahtevOdmorSlanje},
 		{path: '/zahtevOdmorObrada', component: zahtevOdmorObrada},
-		{path: '/zahtevPosetaObrada', component: zahtevPosetaObrada},
-		{path: '/zahtevOperacijaObrada', component: zahtevOperacijaObrada},
 		{path: '/overaRecepta', component: overaRecepta},
 		{path: '/izvestaj', component: izvestaj},
-		
 		
 		{path: '/karton', component: karton},
 		{path: '/bolesti', component: bolesti},
@@ -126,7 +122,6 @@ const router = new VueRouter({
 		{path: '/godisnjiOdmori', component: godisnjiOdmori},
 		{path: '/zapocetPregled', component: zapocetPregled},
 		{path: '/lekarPacijenti', component: lekarPacijenti},
-
 		
 	]
 	

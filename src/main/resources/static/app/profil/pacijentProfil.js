@@ -18,7 +18,6 @@ Vue.component("pacijentProfil", {
 	
 	template: `
 	
-	
 		<div>
 		
 		<div>
@@ -52,7 +51,7 @@ Vue.component("pacijentProfil", {
 							
 			<h2>Podaci o korisniku</h2><br>
 									
-			<table>
+				<table>
 			
 					<tr>
 						<th>Email: </th>
@@ -112,11 +111,8 @@ Vue.component("pacijentProfil", {
 						<td><button v-on:click="izmeni()" class="btn btn-outline-success my-2 my-sm-0">IZMENI</button></td>
 						<td></td>
 						<td><button v-on:click="odustani()" class="btn btn-outline-success my-2 my-sm-0 pull-right">ODUSTANI</button></td>
-
 					</tr>
 				
-				
-			
 			</table>
 		
 		</div>
@@ -157,12 +153,12 @@ Vue.component("pacijentProfil", {
 			this.greska = false;
 		}, 
 		
-		odustani: function(){
-			this.$router.push("/pacijentHome");
-		},
-		
 		refresh: function(){
 			location.reload();
+		},
+		
+		odustani: function(){
+			this.$router.push("/pacijentHome");
 		},
 		
 		izmeni: function(){

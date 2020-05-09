@@ -3,9 +3,10 @@ Vue.component("aktiviranjeNaloga", {
 	template: `
 	
 		<div class="card" style="text-align:center; font-size: 15px;">
-		
+			
+			<br>
 			<h1>Nalog aktiviran</h1><br>
-			Vas nalog je uspesno aktiviran!\n
+			Vas nalog je uspesno aktiviran!
 			Kliknite na sledeci link da bi ste se ulogovali: <br><br>
 			<router-link to="/">PRIJAVA</router-link><br><br>
 		

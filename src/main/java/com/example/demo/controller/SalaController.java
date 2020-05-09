@@ -43,54 +43,66 @@ import com.example.demo.service.UserService;
 public class SalaController {
 	
 	@Autowired
-	private LekarService lekarService;
-
-	@Autowired
 	private SalaService salaService;
+	
+	@Autowired
+	private SalaConversion salaConversion;
+	
+	@Autowired
+	private PosetaService posetaService;
 
 	@Autowired
-	private UserService userService;
+	private PosetaConversion posetaConversion;
+		
+	@Autowired
+	private LekarService lekarService;
 
 	@Autowired
 	private PacijentService pacijentService;
 
 	@Autowired
-	private SalaConversion salaConversion;
-
-	@Autowired
-	private PosetaConversion posetaConversion;
-
-	@Autowired
-	private PosetaService posetaService;
+	private UserService userService;
 
 	@Autowired
 	private EmailService emailService;
 	
 	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 
-
-	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody SalaDTO salaDTO) {
-		try {
-			this.salaService.save(this.salaConversion.get(salaDTO));
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SalaDTO>> getS() {
+	public ResponseEntity<List<SalaDTO>> pregled() {
 		try {
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
 			return new ResponseEntity<>(this.salaConversion.get(this.salaService.findAll(admin)), HttpStatus.OK);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody SalaDTO salaDTO) {
+		try {
+			this.salaService.save(this.salaConversion.get(salaDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}	
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id) {
+		try {
+			this.salaService.delete(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/slobodni", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,16 +111,17 @@ public class SalaController {
 			zahtev.osveziKraj();
 			Date pocetak = this.f.parse(zahtev.getDatum());
 			Date kraj = this.f.parse(zahtev.getKraj());
-			List<SalaDTO> rezultat = new ArrayList<>();
+			List<SalaDTO> retval = new ArrayList<>();
 			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			List<SalaDTO> lista = this.salaConversion.get(this.salaService.findAll(admin));
-			for (SalaDTO sala : lista) {
-				if (sala.proveriDatum(pocetak, kraj)) {
-					rezultat.add(sala);
-				}
+			
+			for (SalaDTO sala : this.salaConversion.get(this.salaService.findAll(admin))) {
+				if (sala.proveriDatum(pocetak, kraj))
+					retval.add(sala);
 			}
-			return new ResponseEntity<>(rezultat, HttpStatus.OK);
-		} catch (Exception e) {
+			
+			return new ResponseEntity<>(retval, HttpStatus.OK);
+		} 
+		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -118,14 +131,12 @@ public class SalaController {
 	public ResponseEntity<String> prviSlobodan(@RequestBody PrviSlobodanDTO data) throws ParseException {		
 		try {
 			data.getZahtev().osveziKraj();
-			
 			SalaDTO sala = this.salaConversion.get(this.salaService.getOne(data.getSalaId()));
-			
 			List<Lekar> lekari = lekarService.getOnes(data.getLekari());
-			
 			sala.nadjiSlobodanTermin(data.getZahtev().getDatum(), data.getZahtev().getKraj(), lekari);
-			return new ResponseEntity<>(f.format(sala.getPrviSlobodan()), HttpStatus.OK);
-		} catch (Exception e) {
+			return new ResponseEntity<>(this.f.format(sala.getPrviSlobodan()), HttpStatus.OK);
+		} 
+		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -133,77 +144,65 @@ public class SalaController {
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/pregled/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> pregledRezervacija(@RequestBody ZahtevPregledObradaDTO zahtevDTO) {
-		SalaDTO salaDTO = new SalaDTO();
-		Date slobodan = null;
+		Date slobodan;
+		SalaDTO salaDTO = null;
+		Lekar lekar;
+		Pacijent pacijent;
 		try {
-			Lekar lekar = this.lekarService.getOne(zahtevDTO.getIdLekar());
-			Pacijent pacijent = this.pacijentService.getOne(zahtevDTO.getIdPacijent());
+			lekar = this.lekarService.getOne(zahtevDTO.getIdLekar());
+			pacijent = this.pacijentService.getOne(zahtevDTO.getIdPacijent());
 			zahtevDTO.osveziKraj();
 			salaDTO = new SalaDTO(this.salaService.getOne(zahtevDTO.getIdSale()));
-			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
 			salaDTO.nadjiSlobodanTermin(zahtevDTO.getDatum(),zahtevDTO.getKraj(), lekar);
 			slobodan = salaDTO.getPrviSlobodan();
-			if (poseta != null ) { 
-				this.posetaService.save(poseta, zahtevDTO.getId());
-				String obavestenjePacijentu = "Postovani\n, pregled "+ zahtevDTO.getNaziv()+ " kod lekara " + zahtevDTO.getLekar() + " zakazan je za datum "+zahtevDTO.getDatum();
-				String obavestenjeLekaru = "Postovani\n, pregled"+ zahtevDTO.getNaziv()+ " za pacijenta " + zahtevDTO.getPacijent() + " zakazan je za datum "+zahtevDTO.getDatum();
-				Message porukaPacijent = new Message(pacijent.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjePacijentu);
-				Message porukaLekar = new Message(lekar.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjeLekaru);
-				this.emailService.sendMessage(porukaPacijent);
-				this.emailService.sendMessage(porukaLekar);
-				return new ResponseEntity<>(this.f.format(slobodan), HttpStatus.OK);
-			} else { 
-				return new ResponseEntity<>(this.f.format(slobodan), HttpStatus.NOT_FOUND);
-			}
-		} catch (Exception e) {
+			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
+			this.posetaService.save(poseta, zahtevDTO.getId());
+		}
+		catch (Exception e) {
 			slobodan = salaDTO.getPrviSlobodan();
-			return new ResponseEntity<>(f.format(slobodan), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(this.f.format(slobodan), HttpStatus.NOT_FOUND);
+		}
+		try {
+			String obavestenjePacijentu = "Postovani,\n pregled "+ zahtevDTO.getNaziv()+ " kod lekara " + zahtevDTO.getLekar() + " zakazan je za datum " + zahtevDTO.getDatum();
+			String obavestenjeLekaru = "Postovani,\n pregled" + zahtevDTO.getNaziv() + " za pacijenta " + zahtevDTO.getPacijent() + " zakazan je za datum " + zahtevDTO.getDatum();
+			Message porukaPacijent = new Message(pacijent.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjePacijentu);
+			Message porukaLekar = new Message(lekar.getEmail(), "Obavestenje o zakazanom pregledu", obavestenjeLekaru);
+			this.emailService.sendMessage(porukaPacijent);
+			this.emailService.sendMessage(porukaLekar);
+			return new ResponseEntity<>(this.f.format(slobodan), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/admin/operacija/rezervacijaSale", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> operacijaRezervacija(@RequestBody ZahtevOperacijaObradaDTO zahtevDTO) {
-		SalaDTO salaDTO = new SalaDTO();
+		SalaDTO salaDTO = null;
 		try {
 			Sala sala = this.salaService.getOne(zahtevDTO.getSalaId());
 			salaDTO = new SalaDTO(sala);
-
 			Poseta poseta = this.posetaConversion.get(zahtevDTO, salaDTO);
-			if (!poseta.getTipPosete().isPregled()) {
-				this.posetaService.save(poseta, zahtevDTO.getId());
-			}
-			else {
-				return new ResponseEntity<>(HttpStatus.CONFLICT);
-			}
-		} catch (Exception e) {
+			this.posetaService.save(poseta, zahtevDTO.getId());
+		} 
+		catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 		try {
-			if (!zahtevDTO.getPocetak().equals(zahtevDTO.getPocetakOriginalni())) {
-				Pacijent p = pacijentService.getOne(zahtevDTO.getPacijentId());
+			Pacijent p = this.pacijentService.getOne(zahtevDTO.getPacijentId());
 
-				String obavestenje = "Operacija zakazana za " + zahtevDTO.getPocetakOriginalni() + " pomerena je za "
-						+ zahtevDTO.getPocetak();
-
+			if (!zahtevDTO.getPocetakOriginalni().equals(zahtevDTO.getPocetak())) {
+				String obavestenje = "Operacija zakazana za " + zahtevDTO.getPocetakOriginalni() + 
+						" pomerena je za " + zahtevDTO.getPocetak();
 				Message poruka = new Message(p.getEmail(), "Pomeranje zakazane operacije", obavestenje);
 				this.emailService.sendMessage(poruka);
 			}
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@PreAuthorize("hasAuthority('Admin')")
-	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
-		try {
-			this.salaService.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

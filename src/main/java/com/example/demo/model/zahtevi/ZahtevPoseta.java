@@ -43,7 +43,8 @@ public class ZahtevPoseta implements Zauzetost{
 		super();
 	}
 
-	public ZahtevPoseta(Integer id, Date datum, Karton karton, Lekar lekar, TipPosete tipPosete, Klinika klinika) {
+	public ZahtevPoseta(Integer id, Date datum, Karton karton, 
+			Lekar lekar, TipPosete tipPosete, Klinika klinika) {
 		super();
 		this.id = id;
 		this.datum = datum;

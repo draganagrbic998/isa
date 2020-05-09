@@ -36,9 +36,22 @@ public class UserController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('SIFRA')")
+	@PostMapping(value="/lozinka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> lozinka(@RequestBody ParamDTO promenaSifre){
+		try {
+			Korisnik k = this.userService.getSignedKorisnik();
+			this.userService.lozinka(k, promenaSifre.getParam());
+			return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/check/{uloga}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> checkUloga(@PathVariable String uloga){
+	public ResponseEntity<HttpStatus> check(@PathVariable String uloga){
 		try {
 			Korisnik k = this.userService.getSignedKorisnik();
 			if (uloga.equalsIgnoreCase("sifra") && !k.isPromenjenaSifra())
@@ -49,19 +62,6 @@ public class UserController {
 			if (Hibernate.getClass(k).getSimpleName().equalsIgnoreCase(uloga))
 				return new ResponseEntity<>(HttpStatus.OK);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('SIFRA')")
-	@PostMapping(value="/lozinka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> promenaSifre(@RequestBody ParamDTO promenaSifre){
-		try {
-			Korisnik k = this.userService.getSignedKorisnik();
-			this.userService.promenaSifre(k, promenaSifre.getParam());
-			return new ResponseEntity<>(Hibernate.getClass(k).getSimpleName().toLowerCase(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

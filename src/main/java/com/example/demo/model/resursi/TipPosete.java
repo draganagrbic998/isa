@@ -48,7 +48,8 @@ public class TipPosete implements Brisanje {
 		super();
 	}
 
-	public TipPosete(Integer id, boolean pregled, String naziv, double cena, int sati, int minute, Klinika klinika, boolean aktivan) {
+	public TipPosete(Integer id, boolean pregled, String naziv, double cena, 
+			int sati, int minute, Klinika klinika, boolean aktivan) {
 		super();
 		this.id = id;
 		this.pregled = pregled;
@@ -62,12 +63,12 @@ public class TipPosete implements Brisanje {
 
 	@Override
 	public boolean mozeBrisanje() {
+		if (!this.posetaZahtevi.isEmpty())
+			return false;
 		for (Poseta p: this.posete) {
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO))
 				return false;
 		}
-		if (!this.posetaZahtevi.isEmpty())
-			return false;
 		return true;
 	}
 

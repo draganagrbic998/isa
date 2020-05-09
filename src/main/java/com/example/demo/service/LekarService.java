@@ -35,16 +35,12 @@ public class LekarService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Lekar getOne(Integer id) {
-		return this.lekarRepository.getOne(id);
-	}
-
-	@Transactional(readOnly = true)
-	public List<Lekar> getOnes(List<Integer> ids) {
-		List<Lekar> lekari = new ArrayList<>();
-		for (Integer id: ids)
-			lekari.add(this.lekarRepository.getOne(id));
-		return lekari;
+	public void delete(Integer id) {
+		Lekar l = this.lekarRepository.getOne(id);
+		if (!l.mozeBrisanje())
+			throw new MyRuntimeException();
+		l.setAktivan(false);
+		this.lekarRepository.save(l);
 	}
 	
 	@Transactional(readOnly = true)
@@ -58,16 +54,20 @@ public class LekarService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		Lekar l = this.lekarRepository.getOne(id);
-		if (!l.mozeBrisanje())
-			throw new MyRuntimeException();
-		l.setAktivan(false);
-		this.lekarRepository.save(l);
+	public Lekar getOne(Integer id) {
+		return this.lekarRepository.getOne(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Lekar> getOnes(List<Integer> ids) {
+		List<Lekar> lekari = new ArrayList<>();
+		for (Integer id: ids)
+			lekari.add(this.lekarRepository.getOne(id));
+		return lekari;
 	}
 
 	@Transactional(readOnly = false)
-	public Lekar oceni(Pacijent pacijent, OcenaParamDTO param) {
+	public Lekar ocenjivanje(Pacijent pacijent, OcenaParamDTO param) {
 
 		Lekar l = this.lekarRepository.getOne(param.getId());
 		Ocena o = l.refreshOcena(pacijent, param.getOcena());
@@ -79,9 +79,9 @@ public class LekarService {
 	@Transactional(readOnly = true)
 	public List<Pacijent> pacijentiLekara(Lekar lekar) {
 		List<Pacijent> pacijenti = new ArrayList<>();
-		for (Pacijent pacijent : this.pacijentRepository.findAll()) {
-			if (pacijent.posetioLekara(lekar))
-				pacijenti.add(pacijent);
+		for (Pacijent p : this.pacijentRepository.findAll()) {
+			if (p.posetioLekara(lekar))
+				pacijenti.add(p);
 		}
 		return pacijenti;
 	}

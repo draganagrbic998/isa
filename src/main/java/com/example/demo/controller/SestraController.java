@@ -78,18 +78,6 @@ public class SestraController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('Admin')")
-	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
-		try {
-			this.sestraService.delete(id);
-			return new ResponseEntity<>(HttpStatus.OK);			
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
-		}
-	}
-	
 	@PreAuthorize("hasAuthority('Sestra')")
 	@GetMapping(value="/profil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SestraDTO> profil(){
@@ -111,6 +99,18 @@ public class SestraController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
+		try {
+			this.sestraService.delete(id);
+			return new ResponseEntity<>(HttpStatus.OK);			
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
 		}
 	}
 	

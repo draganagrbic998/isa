@@ -37,25 +37,25 @@ import com.example.demo.service.ZahtevPosetaService;
 @RestController
 @RequestMapping(value="/zahtevPoseta")
 public class ZahtevPosetaController {
-	
-	@Autowired
-	private UserService userService;
-		
-	@Autowired
-	private ZahtevPosetaConversion zahtevPosetaConversion;
-	
+				
 	@Autowired
 	private ZahtevPosetaService zahtevPosetaService;
 	
 	@Autowired
+	private ZahtevPosetaConversion zahtevPosetaConversion;
+
+	@Autowired
 	private PosetaService posetaService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private EmailService emailService;
 	
 	@PreAuthorize("hasAnyAuthority('Lekar','Pacijent')")
 	@PostMapping(value="/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevPosetaDTO zahtevDTO){
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody ZahtevPosetaDTO zahtevDTO){
 
 		ZahtevPoseta zahtev;
 		try {

@@ -54,8 +54,8 @@ public class Karton implements Slobodnost{
 		super();
 	}
 	
-	public Karton(Integer id, String brojOsiguranika, double visina, double tezina, double levaDioptrija,
-			double desnaDioptrija, KrvnaGrupa krvnaGrupa, Pacijent pacijent) {
+	public Karton(Integer id, String brojOsiguranika, double visina, double tezina, 
+			double levaDioptrija, double desnaDioptrija, KrvnaGrupa krvnaGrupa, Pacijent pacijent) {
 		super();
 		this.id = id;
 		this.brojOsiguranika = brojOsiguranika;

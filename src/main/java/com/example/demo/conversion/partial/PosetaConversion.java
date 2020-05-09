@@ -41,16 +41,16 @@ public class PosetaConversion {
 	private final SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
 
 	@Transactional(readOnly = true)
-	public Poseta get(PredefinisanaPosetaDTO poseta) throws ParseException {
+	public Poseta get(PredefinisanaPosetaDTO posetaDTO) throws ParseException {
 
-		String temp1 = this.f.format(poseta.getDatum());
+		String temp1 = this.f.format(posetaDTO.getDatum());
 		String temp2 = temp1.substring(0, temp1.length() - 6);
 		return new Poseta(StanjePosete.SLOBODNO, 
-				this.f.parse(temp2 + " " + poseta.getVreme()), 
-				poseta.getPopust(),
-				this.tipPoseteRepository.getOne(poseta.getTipPregleda()), 
-				this.salaRepository.getOne(poseta.getSala()),
-				null, this.lekarRepository.getOne(poseta.getLekar()));
+				this.f.parse(temp2 + " " + posetaDTO.getVreme()), 
+				posetaDTO.getPopust(),
+				this.tipPoseteRepository.getOne(posetaDTO.getTipPregleda()), 
+				this.salaRepository.getOne(posetaDTO.getSala()),
+				null, this.lekarRepository.getOne(posetaDTO.getLekar()));
 		
 	}
 	
@@ -59,16 +59,16 @@ public class PosetaConversion {
 	}
 
 	@Transactional(readOnly = true)
-	public Poseta get(ZahtevPregledObradaDTO poseta, SalaDTO salaDTO) throws ParseException {
+	public Poseta get(ZahtevPregledObradaDTO zahtevDTO, SalaDTO salaDTO) throws ParseException {
 
-		Date pocetak = this.f.parse(poseta.getDatum());
+		Date pocetak = this.f.parse(zahtevDTO.getDatum());
 		return new Poseta(StanjePosete.ZAUZETO, 
 				pocetak, 
 				null,
-				this.tipPoseteRepository.getOne(poseta.getIdTipa()),
-				this.salaRepository.getOne(poseta.getIdSale()), 
-				this.pacijentRepository.getOne(poseta.getIdPacijent()).getKarton(),
-				this.lekarRepository.getOne(poseta.getIdLekar()));
+				this.tipPoseteRepository.getOne(zahtevDTO.getIdTipa()),
+				this.salaRepository.getOne(zahtevDTO.getIdSale()), 
+				this.pacijentRepository.getOne(zahtevDTO.getIdPacijent()).getKarton(),
+				this.lekarRepository.getOne(zahtevDTO.getIdLekar()));
 
 	}
 

@@ -48,10 +48,7 @@ public class LekarController {
 	
 	@Autowired
 	private LekarConversion lekarConversion;
-	
-	@Autowired
-	private UserService userService;
-	
+		
 	@Autowired
 	private KartonService kartonService;
 	
@@ -62,14 +59,17 @@ public class LekarController {
 	private IzvestajService izvestajService;
 	
 	@Autowired
+	private IzvestajConversion izvestajConversion;
+		
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private EmailService emailService;
 	
 	@Autowired
 	private ApplicationName name;
-	
-	@Autowired
-	private IzvestajConversion izvestajConversion;
-		
+			
 	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<LekarDTO>> pregled(){
@@ -83,33 +83,8 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value = "/admin/slobodni", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<LekarDTO>> slobodni(@RequestBody ZahtevPregledObradaDTO zahtev) {
-		try {
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-			zahtev.osveziKraj();
-			Date pocetak = f.parse(zahtev.getDatum());
-			Date kraj = f.parse(zahtev.getKraj());
-			List<LekarDTO> rezultat = new ArrayList<>();
-			
-			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			List<Lekar> lista = this.lekarService.findAll(admin);
-			
-			for (Lekar lekar : lista ) {
-				if (lekar.slobodan(pocetak, kraj)){
-					rezultat.add(lekarConversion.get(lekar));
-				}
-			}
-			
-			return new ResponseEntity<>(rezultat, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Admin')")
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody LekarDTO lekarDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody LekarDTO lekarDTO) {
 		Lekar lekar;
 		try {
 			lekar = this.lekarConversion.get(lekarDTO);
@@ -128,30 +103,6 @@ public class LekarController {
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}	
-	}
-	
-	@PreAuthorize("hasAuthority('Admin')")
-	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable Integer id){
-		try {
-			this.lekarService.delete(id);
-			return new ResponseEntity<>(HttpStatus.OK);			
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@PostMapping(value = "/ocenjivanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<LekarDTO> oceni(@RequestBody OcenaParamDTO param){
-		try {
-			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(new LekarDTO(this.lekarService.oceni(pacijent, param)), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 	}
 	
 	@PreAuthorize("hasAuthority('Lekar')")
@@ -178,6 +129,30 @@ public class LekarController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Admin')")
+	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id){
+		try {
+			this.lekarService.delete(id);
+			return new ResponseEntity<>(HttpStatus.OK);			
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@PostMapping(value = "/ocenjivanje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<LekarDTO> ocenjivanje(@RequestBody OcenaParamDTO param){
+		try {
+			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(new LekarDTO(this.lekarService.ocenjivanje(pacijent, param)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@GetMapping(value="/obaveze", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ObavezaDTO>> getObaveze(){
@@ -195,9 +170,8 @@ public class LekarController {
 	public ResponseEntity<List<PacijentPretragaDTO>> getPacijenteLekara(){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			List<Pacijent> pacijenti = this.lekarService.pacijentiLekara(lekar);
 			List<PacijentPretragaDTO> pacijentiPretraga = new ArrayList<>();
-			for (Pacijent p: pacijenti)
+			for (Pacijent p: this.lekarService.pacijentiLekara(lekar))
 				pacijentiPretraga.add(new PacijentPretragaDTO(p, lekar));
 			return new ResponseEntity<>(pacijentiPretraga, HttpStatus.OK);
 		}
@@ -219,7 +193,7 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@PostMapping(value="/izmenaKartona", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> izmena(@RequestBody KartonDTO kartonDTO){
+	public ResponseEntity<HttpStatus> izmenaKartona(@RequestBody KartonDTO kartonDTO){
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			
@@ -239,14 +213,37 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Lekar')")
 	@PostMapping(value = "/izmenaIzvestaja", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> zavrsi(@RequestBody IzvestajDTO izvestajDTO) {
+	public ResponseEntity<HttpStatus> izmenaIzvestaja(@RequestBody IzvestajDTO izvestajDTO) {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
 			this.izvestajService.save(this.izvestajConversion.get(izvestajDTO, lekar));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value = "/admin/slobodni", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<LekarDTO>> slobodni(@RequestBody ZahtevPregledObradaDTO zahtev) {
+		try {
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+			zahtev.osveziKraj();
+			Date pocetak = f.parse(zahtev.getDatum());
+			Date kraj = f.parse(zahtev.getKraj());
+			List<LekarDTO> retval = new ArrayList<>();
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			
+			for (Lekar lekar : this.lekarService.findAll(admin)) {
+				if (lekar.slobodan(pocetak, kraj) && lekar.slobodanZahtev(pocetak, kraj, zahtev.getId()))
+					retval.add(this.lekarConversion.get(lekar));
+			}
+			
+			return new ResponseEntity<>(retval, HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

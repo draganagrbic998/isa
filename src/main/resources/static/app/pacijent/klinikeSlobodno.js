@@ -46,16 +46,13 @@ Vue.component("klinikeSlobodno", {
         </a>
         <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
 			<form>
-			
 			<h2>{{selectedKlinika.naziv}}</h2>
-			
 			<table class="table-sm" style="min-width: 350px;">
 			
-				<tr>
+					<tr>
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
 					</tr>
-					
 					<tr>
 						<th scope="row">Ocena: </th>
 						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
@@ -66,14 +63,11 @@ Vue.component("klinikeSlobodno", {
 				<label style="font-size: 25px">Opis</label>
 				<textarea disabled>{{selectedKlinika.opis}}</textarea>
 
-			
 			</form>
 		</div>
       </li>
-
     </ul>    
         
-
         <ul class="navbar-nav mr-auto" style="margin: auto;" v-if="!klinikaSelected && !posetaSelected">
       <li class="nav-item dropdown" style="min-width: 100px;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,21 +85,22 @@ Vue.component("klinikeSlobodno", {
     </ul>
 
         <form class="form-inline my-2 my-lg-0" v-if="!posetaSelected">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+      <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
 
   </div>
 </nav>		
+
 		</div>
 	
 		<div v-if="posetaSelected" class="card" id="box">
 		
 			<h2>Detalji posete</h2><br>
 			
-			<table>
+				<table>
 				
-				<tr>
+					<tr>
 						<th scope="col">Datum: </th>
 						<td><input type="text" v-model="datum" class="form-control" disabled></td>
 					</td>
@@ -118,7 +113,7 @@ Vue.component("klinikeSlobodno", {
 						<td><input type="text" v-model="selectedPoseta.popust" class="form-control" disabled></td>
 					</tr>
 					<tr>
-						<th scope="col">Tip pregleda: </th>
+						<th scope="col">Naziv pregleda: </th>
 						<td><input type="text" v-model="selectedPoseta.naziv" class="form-control" disabled></td>
 					</tr>
 					<tr>
@@ -148,8 +143,6 @@ Vue.component("klinikeSlobodno", {
 	
 		<div v-else-if="klinikaSelected" class="container" id="cosak">
 		
-			
-			
 			<h2>Slobodni termini</h2><br>
 				
 			<table v-if="selectedKlinika.posete.length>0" class="table table-hover">
@@ -223,32 +216,6 @@ Vue.component("klinikeSlobodno", {
 	
 	methods: {
 		
-		search: function(){
-
-			
-			let lowerPretraga = this.pretraga.toLowerCase();
-			
-			if (!this.klinikaSelected){
-				
-				this.klinike = [];
-				for (let k of this.klinikeBackup){
-					let nazivPassed = lowerPretraga != '' ? k.naziv.toLowerCase().includes(lowerPretraga) : true;
-					let adresaPassed = lowerPretraga != '' ? k.adresa.toLowerCase().includes(lowerPretraga) : true;
-					if (nazivPassed || adresaPassed) this.klinike.push(k);
-				}
-				
-			}
-			
-			else{
-				this.selectedKlinika.posete = [];
-				for (let p of this.poseteBackup){
-					let nazivPassed = lowerPretraga != '' ? p.naziv.toLowerCase().includes(lowerPretraga) : true;
-					if (nazivPassed) this.selectedKlinika.posete.push(p);
-				}
-			}
-			
-		},
-		
 		formatiraj: function (date) {
 			
 			  date = new Date(date);
@@ -265,6 +232,13 @@ Vue.component("klinikeSlobodno", {
 			  
 		},
 		
+		refresh: function(){
+			if (this.klinikaSelected)
+				location.reload();
+			else
+				this.selectKlinika(this.selectedKlinika);
+		}, 
+				
 		selectKlinika: function(klinika){
 			this.selectedKlinika = klinika;
 			this.klinikaSelected = true;
@@ -292,12 +266,30 @@ Vue.component("klinikeSlobodno", {
 			
 		}, 
 		
-		refresh: function(){
-			if (this.klinikaSelected)
-				location.reload();
-			else
-				this.selectKlinika(this.selectedKlinika);
-		}, 
+		search: function(){
+
+			let lowerPretraga = this.pretraga.toLowerCase();
+			
+			if (!this.klinikaSelected){
+				
+				this.klinike = [];
+				for (let k of this.klinikeBackup){
+					let nazivPassed = lowerPretraga != '' ? k.naziv.toLowerCase().includes(lowerPretraga) : true;
+					let adresaPassed = lowerPretraga != '' ? k.adresa.toLowerCase().includes(lowerPretraga) : true;
+					if (nazivPassed || adresaPassed) this.klinike.push(k);
+				}
+				
+			}
+			
+			else{
+				this.selectedKlinika.posete = [];
+				for (let p of this.poseteBackup){
+					let nazivPassed = lowerPretraga != '' ? p.naziv.toLowerCase().includes(lowerPretraga) : true;
+					if (nazivPassed) this.selectedKlinika.posete.push(p);
+				}
+			}
+			
+		},
 		
 		naziv_sort(){
 			let lista = this.klinike;

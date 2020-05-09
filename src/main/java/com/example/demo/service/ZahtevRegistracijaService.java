@@ -30,6 +30,11 @@ public class ZahtevRegistracijaService {
 	public void save(ZahtevRegistracija zahtev) {
 		this.zahtevRepository.save(zahtev);
 	}
+	
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		this.zahtevRepository.deleteById(id);
+	}
 
 	@Transactional(readOnly = true)
 	public List<ZahtevRegistracija> findAll() {
@@ -48,19 +53,14 @@ public class ZahtevRegistracijaService {
 				zahtev.getIme(), zahtev.getPrezime(), zahtev.getTelefon(), 
 				zahtev.getDrzava(), zahtev.getGrad(), zahtev.getAdresa(), 
 				false, true, null, 0);
-		this.pacijentRepository.save(pacijent);
 		Karton karton = new Karton(null, zahtev.getBrojOsiguranika(), 0, 0, 0, 0, null, pacijent);
-		this.kartonRepository.save(karton);
 		pacijent.setKarton(karton);
+		
 		this.pacijentRepository.save(pacijent);
+		this.kartonRepository.save(karton);
 		this.delete(zahtev.getId());
 		return pacijent;
 		
-	}
-
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		this.zahtevRepository.deleteById(id);
 	}
 
 }

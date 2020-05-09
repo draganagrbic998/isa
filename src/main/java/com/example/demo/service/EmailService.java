@@ -19,7 +19,6 @@ public class EmailService {
 	@Async
 	public void sendMessage(Message poruka) {
 		
-		
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom(this.configuration.getProperty("spring.mail.username"));
 		message.setTo(poruka.getTo());

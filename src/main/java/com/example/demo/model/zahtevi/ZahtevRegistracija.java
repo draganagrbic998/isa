@@ -35,8 +35,8 @@ public class ZahtevRegistracija {
 		super();
 	}
 
-	public ZahtevRegistracija(Integer id, String email, String lozinka, String ime, String prezime, String telefon,
-			String brojOsiguranika, String drzava, String grad, String adresa) {
+	public ZahtevRegistracija(Integer id, String email, String lozinka, String ime, String prezime, 
+			String telefon, String brojOsiguranika, String drzava, String grad, String adresa) {
 		super();
 		this.id = id;
 		this.email = email;

@@ -22,12 +22,11 @@ import com.example.demo.repository.ZahtevOdmorRepository;
 public class ZahtevOdmorService {
 
 	@Autowired
-	private LekarRepository lekarRepository;
-		
-	@Autowired
 	private ZahtevOdmorRepository zahtevOdmorRepository;
-	
-	
+
+	@Autowired
+	private LekarRepository lekarRepository;
+			
 	@Transactional(readOnly = false)
 	public void save(ZahtevOdmor zahtev) {
 		if (zahtev.getId() == null && 
@@ -43,11 +42,6 @@ public class ZahtevOdmorService {
 		}
 	}
 	
-	@Transactional(readOnly = true)
-	public ZahtevOdmor getOne(Integer id) {
-		return this.zahtevOdmorRepository.getOne(id);
-	}
-	
 	@Transactional(readOnly = false)
 	public void delete(Integer id) {
 		this.zahtevOdmorRepository.deleteById(id);
@@ -60,6 +54,11 @@ public class ZahtevOdmorService {
 				zahtevi.add(new ZahtevOdmorDTO(z));
 		}
 		return zahtevi;
+	}
+	
+	@Transactional(readOnly = true)
+	public ZahtevOdmor getOne(Integer id) {
+		return this.zahtevOdmorRepository.getOne(id);
 	}
 	
 }

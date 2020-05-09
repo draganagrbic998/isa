@@ -40,6 +40,19 @@ public class TipPoseteService {
 		this.tipPoseteRepository.save(tipPosete);
 	}
 	
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		TipPosete tp = this.tipPoseteRepository.getOne(id);
+		if (!tp.mozeBrisanje())
+			throw new MyRuntimeException();
+		for (Lekar l: this.lekarRepository.findBySpecijalizacijaId(id)) {
+			if (l.isAktivan())
+				throw new MyRuntimeException();
+		}
+		tp.setAktivan(false);
+		this.tipPoseteRepository.save(tp);
+	}
+	
 	@Transactional(readOnly = true)
 	public List<TipPosete> findAll(Zaposleni zaposleni) {
 		List<TipPosete> tipovi = new ArrayList<>();
@@ -50,21 +63,8 @@ public class TipPoseteService {
 		return tipovi;
 	}
 	
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		TipPosete tipPosete = this.tipPoseteRepository.getOne(id);
-		if (!tipPosete.mozeBrisanje())
-			throw new MyRuntimeException();
-		for (Lekar l: this.lekarRepository.findBySpecijalizacijaId(id)) {
-			if (l.isAktivan())
-				throw new MyRuntimeException();
-		}
-		tipPosete.setAktivan(false);
-		this.tipPoseteRepository.save(tipPosete);
-	}
-	
 	@Transactional(readOnly = true)
-	public Set<String> sviTipovi(){
+	public Set<String> nazivi(){
 		
 		Set<String> lista = new HashSet<>();
 		for (TipPosete tp: this.tipPoseteRepository.findAll()) {

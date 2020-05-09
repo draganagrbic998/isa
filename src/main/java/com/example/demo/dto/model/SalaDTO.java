@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -45,39 +46,53 @@ public class SalaDTO implements Comparable<SalaDTO>{
 		        this.kalendar.add(new PeriodDTO(p.getDatum(), kraj));
 			}
 		}
+		Collections.sort(this.kalendar);
 	}
+
+	@Override
+	public int compareTo(SalaDTO s) {
+		return this.broj.compareTo(s.broj);
+	}
+	
 	public boolean proveriDatum(Date pocetak, Date kraj) {
-		for (PeriodDTO interval : this.getKalendar()) {
-			if ((kraj.after(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) {
+		for (PeriodDTO period : this.kalendar) {
+			if ((pocetak.after(period.getPocetak()) || pocetak.equals(period.getPocetak())) && pocetak.before(period.getKraj()))
 				return false;
-			}
-			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.before(interval.getKraj()) || kraj.equals(interval.getKraj()))) { 
+			if (kraj.after(period.getPocetak()) && (kraj.before(period.getKraj()) || kraj.equals(period.getKraj())))
 				return false;
-			}
-			else if ((pocetak.after(interval.getPocetak()) || pocetak.equals(interval.getPocetak())) && (kraj.after(interval.getKraj())) && pocetak.before(interval.getKraj()))  {
+			if ((pocetak.before(period.getPocetak()) || pocetak.equals(period.getPocetak())) && (kraj.after(period.getKraj()) || kraj.equals(period.getKraj())))
 				return false;
-			}
-			else if(interval.getPocetak().after(pocetak) && interval.getKraj().before(kraj)){
-				return false;
-			}
 		}
-			
 		return true;
-	}
-	public List<PeriodDTO> getKalendar() {
-		return kalendar;
+		
 	}
 
-	public void setKalendar(List<PeriodDTO> kalendar) {
-		this.kalendar = kalendar;
+	public void nadjiSlobodanTermin(String p, String k, Lekar lekar) throws ParseException {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		GregorianCalendar pocetak = new GregorianCalendar();
+		GregorianCalendar kraj = new GregorianCalendar();
+		pocetak.setTime(f.parse(p));
+		kraj.setTime(f.parse(k));
+		while (!this.proveriDatum(pocetak.getTime(), kraj.getTime()) || !lekar.slobodan(pocetak.getTime(), kraj.getTime()) || !lekar.slobodanZahtev(pocetak.getTime(), kraj.getTime(), null)) {
+			pocetak.add(Calendar.HOUR_OF_DAY, 1);
+			kraj.add(Calendar.HOUR_OF_DAY, 1);
+		}
+		this.prviSlobodan = pocetak.getTime();
 	}
 
-	public Date getPrviSlobodan() {
-		return prviSlobodan;
-	}
-
-	public void setPrviSlobodan(Date prviSlobodan) {
-		this.prviSlobodan = prviSlobodan;
+	public void nadjiSlobodanTermin(String p, String k, List<Lekar> lekari) throws ParseException {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+		GregorianCalendar pocetak = new GregorianCalendar();
+		GregorianCalendar kraj = new GregorianCalendar();
+		pocetak.setTime(f.parse(p));
+		kraj.setTime(f.parse(k));
+		for (Lekar l : lekari) {
+			while (!this.proveriDatum(pocetak.getTime(), kraj.getTime()) || !l.slobodan(pocetak.getTime(), kraj.getTime()) || !l.slobodanZahtev(pocetak.getTime(), kraj.getTime(), null)) {
+				pocetak.add(Calendar.HOUR_OF_DAY, 1);
+				kraj.add(Calendar.HOUR_OF_DAY, 1);
+			}	
+		}
+		this.prviSlobodan = pocetak.getTime();		
 	}
 
 	public Integer getId() {
@@ -120,40 +135,20 @@ public class SalaDTO implements Comparable<SalaDTO>{
 		this.aktivan = aktivan;
 	}
 
-	@Override
-	public int compareTo(SalaDTO s) {
-		return this.broj.compareTo(s.broj);
+	public Date getPrviSlobodan() {
+		return prviSlobodan;
 	}
 
-	public void nadjiSlobodanTermin(String p, String k, Lekar l) throws ParseException {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		GregorianCalendar gc = new GregorianCalendar();
-		GregorianCalendar gc1 = new GregorianCalendar();
-		gc.setTime(f.parse(p));
-		gc1.setTime(f.parse(k));
-		while (!this.proveriDatum(gc.getTime(), gc1.getTime()) || !l.slobodan(gc.getTime(), gc1.getTime())) {
-			gc.add(Calendar.HOUR_OF_DAY, 1);
-			gc1.add(Calendar.HOUR_OF_DAY, 1);
-		}
-		this.prviSlobodan = gc.getTime();
-		
+	public void setPrviSlobodan(Date prviSlobodan) {
+		this.prviSlobodan = prviSlobodan;
 	}
 
-	public void nadjiSlobodanTermin(String p, String k, List<Lekar> lekari) throws ParseException {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-		GregorianCalendar pocetak = new GregorianCalendar();
-		pocetak.setTime(f.parse(p));
-		GregorianCalendar kraj = new GregorianCalendar();
-		kraj.setTime(f.parse(k));
-		
-		for (Lekar l : lekari) {
-			while (!this.proveriDatum(pocetak.getTime(), kraj.getTime()) || !l.slobodan(pocetak.getTime(), kraj.getTime())) {
-				pocetak.add(Calendar.HOUR_OF_DAY, 1);
-				kraj.add(Calendar.HOUR_OF_DAY, 1);
-			}	
-		}
-		
-		this.prviSlobodan = pocetak.getTime();		
+	public List<PeriodDTO> getKalendar() {
+		return kalendar;
+	}
+
+	public void setKalendar(List<PeriodDTO> kalendar) {
+		this.kalendar = kalendar;
 	}
 	
 }

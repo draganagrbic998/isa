@@ -33,9 +33,9 @@ Vue.component("karton", {
 		
 			<h2>Zdravstveni karton</h2><br>
 			
-			<table class="table">
+				<table class="table">
 			
-				<tr>
+					<tr>
 						<th scope="row">Broj osiguranika: </th>
 						<td><input type="text" v-model="karton.brojOsiguranika" class="form-control" disabled></td>
 					</tr>
@@ -83,12 +83,6 @@ Vue.component("karton", {
 			this.$router.push("/");
 		});
 		
-	}, 
-	
-	methods: {
-		refresh: function(){
-			location.reload();
-		}
 	}
 	
 });

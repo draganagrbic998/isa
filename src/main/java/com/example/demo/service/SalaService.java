@@ -23,6 +23,17 @@ public class SalaService {
 		this.salaRepository.save(sala);
 	}
 	
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		
+		Sala s = this.salaRepository.getOne(id);
+		if (!s.mozeBrisanje())
+			throw new MyRuntimeException();
+		s.setAktivan(false);
+		this.salaRepository.save(s);
+		
+	}
+	
 	@Transactional(readOnly = true)
 	public List<Sala> findAll(Admin admin) {
 		List<Sala> sale = new ArrayList<>();
@@ -36,17 +47,6 @@ public class SalaService {
 	@Transactional(readOnly = false)
 	public Sala getOne(Integer id) {
 		return this.salaRepository.getOne(id);
-	}
-	
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		
-		Sala sala = this.salaRepository.getOne(id);
-		if (!sala.mozeBrisanje())
-			throw new MyRuntimeException();
-		sala.setAktivan(false);
-		this.salaRepository.save(sala);
-		
 	}
 	
 }

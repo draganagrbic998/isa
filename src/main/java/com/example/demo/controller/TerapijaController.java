@@ -36,7 +36,7 @@ public class TerapijaController {
 	public ResponseEntity<List<TerapijaDTO>> neovereno(){
 		try {
 			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.terapijaConversion.get(this.terapijaService.nadjiNeoverene(sestra)), HttpStatus.OK);
+			return new ResponseEntity<>(this.terapijaConversion.get(this.terapijaService.neovereno(sestra)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

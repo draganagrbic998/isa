@@ -16,6 +16,10 @@ textarea{
 	width: 100%;
 }
 
+#red{
+	margin-top: 4%;
+}
+
 #cosak{
 	margin-left: 2%;
 	margin-top: 2%;
@@ -42,17 +46,6 @@ textarea{
 	border-bottom: 2px outset green;
 }
 
-#levo{
-	padding: 15px;	
-	min-width: 250px;
-	margin-top: 5%;
-	margin-left: 10%;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-}
-
 #box{
 	padding: 15px;
 	width: 40%;
@@ -69,22 +62,6 @@ textarea{
 	border-spacing: 2px;
 }
 
-#okvir{
-		padding: 15px;
-	margin-right: 10%;
-		border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-	
-}
-
-#rasiri{
-		border-collapse: separate; 
-	border-spacing: 2px;
-	
-}
-
 #tableBox{
 	padding: 15px;
 	width: 50%;
@@ -96,8 +73,18 @@ textarea{
 	border-bottom: 2px outset green;
 }
 
-#red{
-	margin-top: 4%;
+#okvir{
+	padding: 15px;
+	margin-right: 10%;
+	border-left: 2px inset lightgreen;
+	border-top: 2px inset lightgreen;
+	border-right: 2px outset green;
+	border-bottom: 2px outset green;
+}
+
+#rasiri{
+	border-collapse: separate; 
+	border-spacing: 2px;
 }
 
 .radniKalendarLevaTabelaDiv{

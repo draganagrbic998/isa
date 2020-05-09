@@ -24,12 +24,13 @@ import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.korisnici.Zaposleni;
 import com.example.demo.model.ostalo.Ocena;
 import com.example.demo.model.ostalo.Ocenjivanje;
+import com.example.demo.model.ostalo.Profitiranje;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 @Entity
-public class Klinika implements Ocenjivanje{
+public class Klinika implements Ocenjivanje, Profitiranje{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +70,16 @@ public class Klinika implements Ocenjivanje{
 	}
 	
 	@Override
+	public double prosecnaOcena() {
+		if (this.ocene.isEmpty())
+			return 0.0;
+		double suma = 0.0;
+		for (Ocena o : this.ocene)
+			suma += o.getVrednost();
+		return suma/this.ocene.size();
+	}
+	
+	@Override
 	public Ocena refreshOcena(Pacijent pacijent, int ocena) {
 
 		for (Ocena o: this.ocene) {
@@ -84,15 +95,6 @@ public class Klinika implements Ocenjivanje{
 	}
 	
 	@Override
-	public double prosecnaOcena() {
-		if (this.ocene.isEmpty())
-			return 0.0;
-		double suma = 0.0;
-		for (Ocena o : this.ocene)
-			suma += o.getVrednost();
-		return suma/this.ocene.size();
-	}
-	
 	public double getProfit(Date pocetak, Date kraj) {
 		double suma = 0.0;
 		for (Poseta p: this.getPosete())

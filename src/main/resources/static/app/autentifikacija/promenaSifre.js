@@ -18,7 +18,7 @@ Vue.component("promenaSifre", {
 			
 			<table class="table">
 			
-				<tr>
+					<tr>
 						<th scope="row">Lozinka: </th>
 						<td><input type="password" v-model="novaLozinka" class="form-control"></td>
 						<td style="width: 33%;">{{greskaNovaLozinka}}</td>

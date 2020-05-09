@@ -12,18 +12,18 @@ Vue.component("klinikeLekari", {
 			lekarSelected: false, 
 			tipPregleda: '', 
 			datumPregleda: null, 
+			nazivKlinike: '',
 			lokacijaKlinike: '', 
 			ocenaKlinike: 0, 
 			imeLekara: '', 
 			prezimeLekara: '', 
 			ocenaLekara: 0, 
-			greskaPretraga: '', 
 			pretraga: false, 
 			zakazivanje: false, 
+			greskaPretraga: '', 
 			zahtev: {}, 
 			imePrezime: '', 
-			datum: '', 
-			nazivKlinike: ''
+			datum: '' 
 		}
 	}, 
 	
@@ -58,13 +58,12 @@ Vue.component("klinikeLekari", {
           <span class="sr-only">(current)</span>
         </a>
         <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
-						<form>
-			
+			<form>
 			<h2>{{selectedKlinika.naziv}}</h2>
 			
 			<table class="table-sm" style="min-width: 350px;">
 			
-				<tr>
+					<tr>
 						<th scope="row">Adresa: </th>
 						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
 					</tr>
@@ -79,13 +78,11 @@ Vue.component("klinikeLekari", {
 				<label style="font-size: 25px">Opis</label>
 				<textarea disabled>{{selectedKlinika.opis}}</textarea>
 
-			
 			</form>
 
 		</div>
       </li>
     </ul>    
-    
     
     <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="!lekarSelected && !zakazivanje">
       <li class="nav-item dropdown">
@@ -105,9 +102,8 @@ Vue.component("klinikeLekari", {
         </div>
       </li>
     </ul>
+    
     <ul class="navbar-nav " style="margin-left: 150px;"  v-if="!lekarSelected && !zakazivanje">
-      
-
 		<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-search"></i>
@@ -117,8 +113,7 @@ Vue.component("klinikeLekari", {
         <div  class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" id="pretraga">
 			
 			<form>
-			<h3>Pretraga</h3>
-				
+				<h3>Pretraga</h3>
 					<table class="table">
 				
 						<tr>
@@ -176,8 +171,6 @@ Vue.component("klinikeLekari", {
       </li>
     </ul>
     
-    
- 
   </div>
 </nav>
 	
@@ -189,9 +182,9 @@ Vue.component("klinikeLekari", {
 			
 				<h2>Detalji zakazivanja</h2><br>
 				
-				<table class="table">
+					<table class="table">
 				
-					<tr>
+						<tr>
 							<th scope="row">Datum pregleda: </th>
 							<td><input type="text" v-model="datum" class="form-control" disabled></td>
 						</tr>
@@ -255,12 +248,11 @@ Vue.component("klinikeLekari", {
 				
 			</div>
 			
-			
 			<div v-else-if="lekarSelected && selectedLekar.satnica.length>0" class="container">
 			
 				<div class="row" id="red">
 				
-					<div class="card col" id="okvir">
+				<div class="card col" id="okvir">
 				
 				<h2>Detalji lekara</h2><br>
 					
@@ -295,7 +287,6 @@ Vue.component("klinikeLekari", {
 				
 				</div>
 				
-				
 				<div class="col" style="overflow: scroll; max-height: 500px;">
 									
 					<table class="table table-bordered" style="text-align: center;">
@@ -315,7 +306,6 @@ Vue.component("klinikeLekari", {
 								<td><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="zakazi(s)">ZAKAZI</button></td>
 								
 							</tr>
-							
 						
 						</tbody>
 					
@@ -325,8 +315,6 @@ Vue.component("klinikeLekari", {
 				
 				</div>
 				
-			
-			
 			</div>
 			
 			<div v-else-if="klinikaSelected" class="container" id="cosak">
@@ -347,9 +335,7 @@ Vue.component("klinikeLekari", {
 							<td>{{l.ime}}</td>
 							<td>{{l.prezime}}</td>
 							<td>{{l.prosecnaOcena}}</td>
-
 						</tr>
-					
 					</tbody>
 				</table>
 				
@@ -445,6 +431,15 @@ Vue.component("klinikeLekari", {
 			  return day + '/' + month + '/' + year + " " + hours + ":" + minutes;
 			  
 		},
+		
+		refresh: function(){
+			if (this.klinikaSelected)
+				location.reload();
+			else if (this.lekarSelected)
+				this.selectKlinika(this.selectedKlinika);
+			else
+				this.selectLekar(this.selectedLekar);
+		}, 
 		
 		osvezi: function(){
 			this.greskaPretraga = '';
@@ -557,14 +552,50 @@ Vue.component("klinikeLekari", {
 			
 		}, 
 		
-		refresh: function(){
-			if (this.klinikaSelected)
-				location.reload();
-			else if (this.lekarSelected)
-				this.selectKlinika(this.selectedKlinika);
-			else
-				this.selectLekar(this.selectedLekar);
+		naziv_sort(){
+			let lista = this.klinike;
+			this.klinike = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].naziv > lista[i].naziv) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.klinike = lista;
 		}, 
+		
+		adresa_sort(){
+			let lista = this.klinike;
+			this.klinike = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].adresa > lista[i].adresa) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.klinike = lista;
+		}, 
+		
+		klinika_ocena_sort(){
+			let lista = this.klinike;
+			this.klinike = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].ocena < lista[i].ocena) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.klinike = lista;
+		},
 		
 		ime_sort(){
 
@@ -615,51 +646,6 @@ Vue.component("klinikeLekari", {
 			}		
 			this.selectedKlinika.lekari = lista;
 
-		},
-		
-		naziv_sort(){
-			let lista = this.klinike;
-			this.klinike = [];
-			for (let i in lista) {
-				for (let j in lista) {
-					if (lista[j].naziv > lista[i].naziv) {
-						let temp = lista[j];
-						lista[j] = lista[i];
-						lista[i] = temp;
-					}
-				}
-			}		
-			this.klinike = lista;
-		}, 
-		
-		adresa_sort(){
-			let lista = this.klinike;
-			this.klinike = [];
-			for (let i in lista) {
-				for (let j in lista) {
-					if (lista[j].adresa > lista[i].adresa) {
-						let temp = lista[j];
-						lista[j] = lista[i];
-						lista[i] = temp;
-					}
-				}
-			}		
-			this.klinike = lista;
-		}, 
-		
-		klinika_ocena_sort(){
-			let lista = this.klinike;
-			this.klinike = [];
-			for (let i in lista) {
-				for (let j in lista) {
-					if (lista[j].ocena < lista[i].ocena) {
-						let temp = lista[j];
-						lista[j] = lista[i];
-						lista[i] = temp;
-					}
-				}
-			}		
-			this.klinike = lista;
 		}
 		
 	}, 

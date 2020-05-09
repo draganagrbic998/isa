@@ -1,4 +1,4 @@
-Vue.component("zahtevPosetaObrada", {
+Vue.component("zahtevPregledObrada", {
 	
 	data: function(){
 		return{

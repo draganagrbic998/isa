@@ -44,7 +44,7 @@ public class ZahtevRegistracijaController {
 
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ZahtevRegistracijaDTO>> getZahteviRegistracija(){
+	public ResponseEntity<List<ZahtevRegistracijaDTO>> pregled(){
 		try {
 			return new ResponseEntity<>(this.zahtevRegistracijaConversion.get(this.zahtevRegistracijaService.findAll()), HttpStatus.OK);
 		}
@@ -54,7 +54,7 @@ public class ZahtevRegistracijaController {
 	}
 	
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody ZahtevRegistracijaDTO zahtevDTO) {
 		try {
 			this.zahtevRegistracijaService.save(this.zahtevRegistracijaConversion.get(zahtevDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -76,7 +76,7 @@ public class ZahtevRegistracijaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			String obavestenje = "Uspesno ste registrovani kao pacijent klinike 'POSLEDNJI TRZAJ'. Molimo vas da "
+			String obavestenje = "Uspesno ste registrovani kao pacijent klinickog centra 'POSLEDNJI TRZAJ'. Molimo Vas da "
 					+ "aktivirate svoj nalog klikom na link: \n" + this.name.getName() + "/#/aktiviranjeNaloga?id=" + this.encoder.encoder().encode(pacijent.getId() + "");
 			Message poruka = new Message(pacijent.getEmail(), "Registracija uspesna", obavestenje);
 			this.emailService.sendMessage(poruka);
@@ -99,8 +99,8 @@ public class ZahtevRegistracijaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		try {
-			String obavestenje = "Vasa registracija je odbijena iz sledecih razloga: \n\n" + obradaZahteva.getRazlog() + ""
-					+ "\n\nMolimo Vas da pokusate ponovo. \n";
+			String obavestenje = "Vasa registracija je odbijena iz sledecih razloga: \n" + obradaZahteva.getRazlog() + ""
+					+ "\nMolimo Vas da pokusate ponovo. \n";
 			Message poruka = new Message(zahtev.getEmail(), "Registracija odbijena", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);

@@ -36,7 +36,7 @@ Vue.component("termini", {
           </a>
       </li>
     </ul>
-        <form class="form-inline my-2 my-lg-0" v-if="!selected">
+      <form class="form-inline my-2 my-lg-0" v-if="!selected">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
@@ -186,6 +186,9 @@ Vue.component("termini", {
 			  
 		},
 		
+		refresh: function(){
+			location.reload();
+		}, 
 		
 		selectTermin: function(termin){
 			this.selectedTermin = termin;
@@ -206,10 +209,6 @@ Vue.component("termini", {
 			.catch(response => {
 				alert("SERVER ERROR!!");
 			});
-		}, 
-		
-		refresh: function(){
-			location.reload();
 		}, 
 		
 		search: function(){

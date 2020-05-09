@@ -35,7 +35,9 @@ public class ZahtevOdmor {
 	public ZahtevOdmor() {
 		super();
 	}
-	public ZahtevOdmor(Integer id, Date pocetak, Date kraj, boolean odobren, Zaposleni zaposleni, Klinika klinika) {
+	
+	public ZahtevOdmor(Integer id, Date pocetak, Date kraj, 
+			boolean odobren, Zaposleni zaposleni, Klinika klinika) {
 		this.id = id;
 		this.pocetak = pocetak;
 		this.kraj = kraj;
@@ -45,7 +47,7 @@ public class ZahtevOdmor {
 	}
 
 	public int getTrajanje() {
-		return (int) ((kraj.getTime() - pocetak.getTime()) / 1000 / 60 / 60 / 24);
+		return (int) ((this.kraj.getTime() - this.pocetak.getTime()) / 1000 / 60 / 60 / 24);
 	}
 	
 	public Integer getId() {

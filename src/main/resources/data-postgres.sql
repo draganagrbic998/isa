@@ -226,13 +226,13 @@ values ('2020-04-28 12:00', 0.5, 2, 1, 1, 1, 0);
 
 
 --------DODAVANJE LEKARA----------------
---insert into lekar_poseta (lekar, poseta)
---values (2, 15);
+insert into lekar_poseta (lekar, poseta)
+values (2, 15);
 
 
 -----------UPDATE LEKARA DA BI IMAO POSETU ZAPOCETU--------
---update korisnik set zapoceta_poseta = 15
---where id = 2;
+update korisnik set zapoceta_poseta = 15
+where id = 2;
 
 ----------------JOS JEDAN TIP PREGLEDA------------
 insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)

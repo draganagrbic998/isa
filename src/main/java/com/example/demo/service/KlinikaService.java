@@ -57,7 +57,7 @@ public class KlinikaService {
 	}
 	
 	@Transactional(readOnly = false)
-	public Poseta oceni(Pacijent pacijent, OcenaParamDTO param, Integer posetaId) {
+	public Poseta ocenjivanje(Pacijent pacijent, OcenaParamDTO param, Integer posetaId) {
 		
 		Klinika k = this.klinikaRepository.getOne(param.getId());
 		Ocena o = k.refreshOcena(pacijent, param.getOcena());
@@ -73,7 +73,6 @@ public class KlinikaService {
 		for (Lekar l: this.lekarRepository.findAll()) {
 			if (l.getSpecijalizacija().getNaziv().equalsIgnoreCase(param.getTipPregleda()) 
 					&& l.getSpecijalizacija().isPregled()) {
-				
 				List<Date> satnica = l.getSatnica(param.getDatumPregleda());
 				if (!satnica.isEmpty()) {
 					LekarSatnicaDTO ls = new LekarSatnicaDTO(l, satnica);

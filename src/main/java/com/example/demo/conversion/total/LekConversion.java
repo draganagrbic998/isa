@@ -12,7 +12,6 @@ import com.example.demo.model.resursi.Lek;
 @Component
 public class LekConversion {
 	
-
 	public Lek get(LekDTO lekDTO) {
 		return new Lek(lekDTO.getId(), 
 				lekDTO.getSifra(), 

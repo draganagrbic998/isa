@@ -4,10 +4,10 @@ Vue.component("zahtevTermini", {
 		return{
 			zahtevi: [], 
 			zahteviBackup: [],
-			pretraga: '', 
 			selectedZahtev: {}, 
 			selected: false, 
-			datum: ''
+			datum: '', 
+			pretraga: ''
 		}
 	}, 
 	
@@ -36,14 +36,13 @@ Vue.component("zahtevTermini", {
           </a>
       </li>
     </ul>
-        <form class="form-inline my-2 my-lg-0" v-if="!selected">
+      <form class="form-inline my-2 my-lg-0" v-if="!selected">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>	
 			
-		
 		</div>
 		
 		<div v-if="selected" class="card" id="box">
@@ -56,9 +55,7 @@ Vue.component("zahtevTermini", {
 				<th>Datum: </th>
 				<td><input type="text" v-model="datum" class="form-control" disabled></td>
 			</tr>
-				
-			
-				
+					
 			<tr>
 				<th scope="row">Tip posete: </th>
 				<td><input type="text" v-model="selectedZahtev.tipPosete" class="form-control" disabled></td>
@@ -68,8 +65,6 @@ Vue.component("zahtevTermini", {
 				<th scope="row">Naziv posete: </th>
 				<td><input type="text" v-model="selectedZahtev.nazivPosete" class="form-control" disabled></td>
 			</tr>
-					
-			
 				
 			<tr>
 				<th scope="row">Lekar: </th>
@@ -88,7 +83,6 @@ Vue.component("zahtevTermini", {
 			
 			</table>
 
-			
 			</table>
 		
 		</div>
@@ -146,12 +140,11 @@ Vue.component("zahtevTermini", {
 			this.$router.push("/");
 		});
 		
-		
-		
 	}, 
 	
 	
 	methods: {
+		
 		formatiraj: function (date) {
 			
 			  date = new Date(date);
@@ -168,14 +161,14 @@ Vue.component("zahtevTermini", {
 			  
 		},
 		
+		refresh: function(){
+			location.reload();
+		}, 
+		
 		selectZahtev: function(zahtev){
 			this.selectedZahtev = zahtev;
 			this.selected = true;
 			this.datum = this.formatiraj(this.selectedZahtev.datum);
-		}, 
-		
-		refresh: function(){
-			location.reload();
 		}, 
 		
 		search: function(){

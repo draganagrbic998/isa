@@ -25,9 +25,9 @@ public class SestraService {
 	
 	@Transactional(readOnly = false)
 	public void delete(Integer id) {
-		Sestra sestra = this.sestraRepository.getOne(id);
-		sestra.setAktivan(false);
-		this.sestraRepository.save(sestra);
+		Sestra s = this.sestraRepository.getOne(id);
+		s.setAktivan(false);
+		this.sestraRepository.save(s);
 	}
 	
 	@Transactional(readOnly = true)

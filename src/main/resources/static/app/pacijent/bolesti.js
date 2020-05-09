@@ -53,11 +53,8 @@ Vue.component("bolesti", {
 			</tr>
 			<tr>
 				<th scope="row"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="oceniKlinika()">OCENI KLINIKU</button></th>
-
 			</tr>
-         	
          	</table>
-          
           </form>
         </div>
       </li>
@@ -76,18 +73,15 @@ Vue.component("bolesti", {
          	<tr>
 				<th scope="row"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="oceniLekar()">OCENI LEKARA</button></th>			
 			</tr>
-			
-         	
          	</table>
-          
           </form>
         </div>
       </li>
 
     </ul>   
     <form class="form-inline my-2 my-lg-0" v-if="!bolestSelected && !lekarSelected">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Search</button>
+      <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>		
@@ -99,7 +93,7 @@ Vue.component("bolesti", {
 			
 			<table class="table">
 			
-				<tr>
+					<tr>
 						<th scope="row">Ime: </th>
 						<td><input type="text" v-model="selectedLekar.ime" class="form-control" disabled></td>
 					</tr>
@@ -124,8 +118,6 @@ Vue.component("bolesti", {
 						<td><input type="text" v-model="selectedLekar.prosecnaOcena" class="form-control" disabled></td>
 					</tr>
 					
-					
-			
 			</table>
 		
 		</div>
@@ -138,9 +130,9 @@ Vue.component("bolesti", {
 			
 				<h2>Detalji bolesti</h2><br>
 				
-				<table id="rasiri">
+					<table id="rasiri">
 				
-					<tr>
+						<tr>
 							<th scope="row">Datum: </th>
 							<td><input type="text" v-model="datum" class="form-control" disabled></td>
 						</tr>
@@ -165,13 +157,10 @@ Vue.component("bolesti", {
 							<td><input type="text" v-model="selectedBolest.ocenaKlinike" class="form-control" disabled></td>
 						</tr>
 						
-						
-				
 				</table><br>
 				
 				<label style="font-size: 25px">Izvestaj</label>
 				<textarea disabled>{{selectedBolest.izvestaj}}</textarea>
-			
 			
 			</div>
 			
@@ -204,7 +193,7 @@ Vue.component("bolesti", {
 				
 				<h2>Dijagnoze</h2>
 				
-				<table class="table table-bordered">
+				<table v-if="selectedBolest.dijagnoze.length>0" class="table table-bordered">
 				
 					<thead>
 					
@@ -226,9 +215,13 @@ Vue.component("bolesti", {
 				
 				</table>
 				
+				<h3 v-if="selectedBolest.dijagnoze.length==0" style="color: #90EE90">
+					Nema dijagnoza
+				</h3>
+				
 				<h2>Recepti</h2>
 				
-				<table class="table table-bordered">
+				<table v-if="selectedBolest.recepti.length>0" class="table table-bordered">
 				
 					<thead>
 					
@@ -255,11 +248,14 @@ Vue.component("bolesti", {
 					</tbody>
 				
 				</table>
+				
+				<h3 v-if="selectedBolest.recepti.length==0" style="color: #90EE90">
+					Nema recepata
+				</h3>
 			
 			</div>
 			
 			</div>
-			
 		
 		</div>
 	
@@ -340,6 +336,10 @@ Vue.component("bolesti", {
 			  
 		},
 		
+		refresh: function(){
+			location.reload();
+		},
+		
 		selectBolest: function(bolest){
 			this.selectedBolest = bolest;
 			this.bolestSelected = true;
@@ -375,11 +375,7 @@ Vue.component("bolesti", {
 				alert("SERVER ERROR!!");
 			});
 			
-		}, 
-		
-		refresh: function(){
-			location.reload();
-		}, 
+		},  
 		
 		search: function(){
 			this.bolesti = [];

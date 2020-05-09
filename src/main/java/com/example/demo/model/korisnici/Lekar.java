@@ -60,11 +60,12 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 		super();
 	}
 
-	public Lekar(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
-			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, Date pocetnoVreme, Date krajnjeVreme,
+	public Lekar(Integer id, String email, String lozinka, String ime, String prezime, 
+			String telefon, String drzava, String grad, String adresa, 
+			boolean aktivan, boolean promenjenaSifra, Date pocetnoVreme, Date krajnjeVreme,
 			Klinika klinika, TipPosete specijalizacija, long version) {
-		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra, pocetnoVreme,
-				krajnjeVreme, klinika, version);
+		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, 
+				aktivan, promenjenaSifra, pocetnoVreme, krajnjeVreme, klinika, version);
 		this.specijalizacija = specijalizacija;
 	}
 	
@@ -152,12 +153,13 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 		return true;
 	}
 	
-	public boolean zahtevPreklapanje(Date pocetak, Date kraj, Integer id) {
+	public boolean slobodanZahtev(Date pocetak, Date kraj, Integer id) {
 		for (ZahtevPoseta p: this.posetaZahtevi) {
 			if (!p.getId().equals(id)) {
 				if ((pocetak.equals(p.pocetak()) || pocetak.after(p.pocetak()))
 					&&  pocetak.before(p.kraj())) {
-					return false; }
+					return false; 
+				}
 				if ((kraj.after(p.pocetak())) 
 					&& ( kraj.equals(p.kraj()) ||  kraj.before(p.kraj()))) {
 					return false;
@@ -180,8 +182,8 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 	
 	@Override
 	public boolean odmorPreklapanje(ZahtevOdmor zahtev) {
+		
 		for (Poseta p: this.posete) {
-			
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
 				if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().after(p.pocetak()))
 						&&  zahtev.getPocetak().before(p.kraj()))
@@ -192,17 +194,18 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 			}
 
 		}
+		
 		for (ZahtevPoseta p: this.posetaZahtevi) {
 			if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().after(p.pocetak()))
 					&&  zahtev.getPocetak().before(p.kraj())) {
 					return false; 
-				}
+			}
 			if ((zahtev.getKraj().after(p.pocetak())) 
 					&& (zahtev.getKraj().equals(p.kraj()) || zahtev.getKraj().before(p.kraj()))) {
 					return false;
-
-				}
+			}
 		}
+		
 		return super.odmorPreklapanje(zahtev);
 		
 	}
@@ -222,7 +225,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 	public List<Date> getSatnica(Date datum) {
 
 		List<Date> satnica = new ArrayList<>();
-		if (datum == null)
+		if (datum == null || !this.isAktivan())
 			return satnica;
 		
 		for  (ZahtevOdmor z: this.getOdmorZahtevi()) {
@@ -319,21 +322,18 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 				gc.setTime(temp2);
 				start = gc.getTime();
 				sledeci = true;
-
 			}
 			
 			else if ((temp1.after(zauzetost.pocetak())) && (temp1.before(temp2) || temp1.equals(temp2))) {
 				gc.setTime(temp2);
 				start = gc.getTime();
 				sledeci = true;
-
 			}
 			
 			else if (start.before(zauzetost.pocetak()) && temp1.after(temp2)) {
 				gc.setTime(temp2);
 				start = gc.getTime();
 				sledeci = true;
-
 			}
 			
 			else {

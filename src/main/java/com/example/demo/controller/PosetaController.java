@@ -114,9 +114,10 @@ public class PosetaController {
 	public ResponseEntity<Integer> zapoceto() {
 		try {
 			Lekar lekar = (Lekar) this.userService.getSignedKorisnik();
-			if (lekar.getZapocetaPoseta() != null)
-				return new ResponseEntity<>(lekar.getZapocetaPoseta().getKarton().getId(), HttpStatus.OK);
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			if (lekar.getZapocetaPoseta() == null)
+				return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(lekar.getZapocetaPoseta().getKarton().getId(), HttpStatus.OK);
+
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -145,7 +146,7 @@ public class PosetaController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -98,7 +98,7 @@ Vue.component("adminHome", {
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#/zahtevPosetaObrada">
+        <a class="nav-link" href="#/zahtevPregledObrada">
           <i class="fa fa-globe">
             <span class="badge badge-success">{{zahteviPosetaBroj}}</span>
           </i>

@@ -36,9 +36,9 @@ Vue.component("dodajPacijenta", {
 		
 			<h2>Registracija novog pacijenta</h2><br>
 			
-			<table>
+				<table>
 			
-				<tr>
+					<tr>
 						<th scope="row">Email: </th>
 						<td><input type="text" v-model="zahtev.email" class="form-control"></td>
 						<td style="width: 35%;">&nbsp&nbsp&nbsp{{greskaEmail}}</td>

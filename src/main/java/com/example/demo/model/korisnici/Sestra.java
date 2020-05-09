@@ -15,11 +15,12 @@ public class Sestra extends Zaposleni{
 		super();
 	}
 
-	public Sestra(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
-			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, Date pocetnoVreme, Date krajnjeVreme,
+	public Sestra(Integer id, String email, String lozinka, String ime, String prezime, 
+			String telefon, String drzava, String grad, String adresa, 
+			boolean aktivan, boolean promenjenaSifra, Date pocetnoVreme, Date krajnjeVreme,
 			Klinika klinika, long version) {
-		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra, pocetnoVreme,
-				krajnjeVreme, klinika, version);
+		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, 
+				aktivan, promenjenaSifra, pocetnoVreme, krajnjeVreme, klinika, version);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -41,43 +40,6 @@ public class KlinikaController {
 
 	@Autowired
 	private UserService userService;
-
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<KlinikaDTO> getClinic(){
-		try {
-			Admin admin = (Admin) userService.getSignedKorisnik();
-			return new ResponseEntity<>(this.klinikaConversion.get(admin.getKlinika()), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/admin/graf/{parametar}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, Integer>> getGraf(@PathVariable String parametar){
-		try {
-			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(admin.getKlinika().podaciGraf(parametar), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	@PreAuthorize("hasAuthority('Admin')")
-	@GetMapping(value = "/admin/ocena", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Double> getOcena(){
-		try {
-			Admin admin = (Admin) userService.getSignedKorisnik();
-			return new ResponseEntity<>(admin.getKlinika().prosecnaOcena(), HttpStatus.OK);
-		}
-		catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
 	
 	@PreAuthorize("hasAuthority('SuperAdmin')")
 	@GetMapping(value = "/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,13 +52,12 @@ public class KlinikaController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping(value="/admin/profit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> profit(@RequestBody PeriodDTO period){
+	@PreAuthorize("hasAuthority('SuperAdmin')")
+	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HttpStatus> kreiranje(@RequestBody KlinikaDTO klinikaDTO) {
 		try {
-			Admin admin = (Admin) this.userService.getSignedKorisnik();
-			double profit = admin.getKlinika().getProfit(period.getPocetak(), period.getKraj()); 
-			return new ResponseEntity<>(profit+" din", HttpStatus.OK);
+			this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -115,12 +76,12 @@ public class KlinikaController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('SuperAdmin')")
-	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HttpStatus> create(@RequestBody KlinikaDTO klinikaDTO) {
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/pregled", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<KlinikaDTO> profil(){
 		try {
-			this.klinikaService.save(this.klinikaConversion.get(klinikaDTO));
-			return new ResponseEntity<>(HttpStatus.OK);
+			Admin admin = (Admin) userService.getSignedKorisnik();
+			return new ResponseEntity<>(this.klinikaConversion.get(admin.getKlinika()), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -129,10 +90,21 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BolestDTO> oceni(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
+	public ResponseEntity<BolestDTO> ocenjivanje(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(new BolestDTO(this.klinikaService.oceni(pacijent, param, posetaId)), HttpStatus.OK);
+			return new ResponseEntity<>(new BolestDTO(this.klinikaService.ocenjivanje(pacijent, param, posetaId)), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Pacijent')")
+	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<KlinikaSlobodnoDTO>> slobodno(){
+		try {
+			return new ResponseEntity<>(this.klinikaConversion.getSlobodno(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -152,7 +124,7 @@ public class KlinikaController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<KlinikaPretragaDTO>> pretraga(@RequestBody PretragaDTO param){
+	public ResponseEntity<List<KlinikaPretragaDTO>> pretraga(@RequestBody PretragaDTO param){
 		try {
 			return new ResponseEntity<>(this.klinikaService.pretraga(param), HttpStatus.OK);
 		}
@@ -161,11 +133,37 @@ public class KlinikaController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('Pacijent')")
-	@GetMapping(value = "/slobodno", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<KlinikaSlobodnoDTO>> slobodno(){
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/ocena", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Double> ocena(){
 		try {
-			return new ResponseEntity<>(this.klinikaConversion.getSlobodno(), HttpStatus.OK);
+			Admin admin = (Admin) userService.getSignedKorisnik();
+			return new ResponseEntity<>(admin.getKlinika().prosecnaOcena(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@PostMapping(value="/admin/profit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> profit(@RequestBody PeriodDTO period){
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			double profit = admin.getKlinika().getProfit(period.getPocetak(), period.getKraj()); 
+			return new ResponseEntity<>(profit + " din", HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/graf/{parametar}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String, Integer>> graf(@PathVariable String parametar){
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+			return new ResponseEntity<>(admin.getKlinika().podaciGraf(parametar), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

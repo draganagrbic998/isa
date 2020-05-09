@@ -46,8 +46,9 @@ public abstract class Korisnik {
 		super();
 	}
 
-	public Korisnik(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
-			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, long version) {
+	public Korisnik(Integer id, String email, String lozinka, String ime, String prezime, 
+			String telefon, String drzava, String grad, String adresa, 
+			boolean aktivan, boolean promenjenaSifra, long version) {
 		super();
 		this.id = id;
 		this.email = email;

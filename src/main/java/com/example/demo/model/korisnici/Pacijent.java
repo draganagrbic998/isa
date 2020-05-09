@@ -20,9 +20,11 @@ public class Pacijent extends Korisnik{
 		super();
 	}
 
-	public Pacijent(Integer id, String email, String lozinka, String ime, String prezime, String telefon, String drzava,
-			String grad, String adresa, boolean aktivan, boolean promenjenaSifra, Karton karton, long version) {
-		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjenaSifra, version);
+	public Pacijent(Integer id, String email, String lozinka, String ime, String prezime, 
+			String telefon, String drzava, String grad, String adresa, 
+			boolean aktivan, boolean promenjenaSifra, Karton karton, long version) {
+		super(id, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, 
+				aktivan, promenjenaSifra, version);
 		this.karton = karton;
 	}
 

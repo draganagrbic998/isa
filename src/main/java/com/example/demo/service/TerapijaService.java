@@ -24,12 +24,13 @@ public class TerapijaService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Terapija> nadjiNeoverene(Sestra sestra) {
+	public List<Terapija> neovereno(Sestra sestra) {
 		List<Terapija> terapije = new ArrayList<>();
 		
 		for (Terapija t : this.terapijaRepository.findAll()) {
-			if (t.getSestra() == null && t.getIzvestaj().getPoseta().getSala().
-					getKlinika().getId().equals(sestra.getKlinika().getId())) 
+			if (t.getSestra() == null && 
+					t.getIzvestaj().getPoseta().getSala().getKlinika().
+					getId().equals(sestra.getKlinika().getId())) 
 				terapije.add(t);
 
 		}
@@ -40,13 +41,13 @@ public class TerapijaService {
 	@Transactional(readOnly = false)
 	public void overi(Integer id, Sestra sestra) {
 		
-		Terapija terapija = this.terapijaRepository.getOne(id);
+		Terapija t = this.terapijaRepository.getOne(id);
 		
-		if (terapija.getSestra() != null)
+		if (t.getSestra() != null)
 			throw new MyRuntimeException();
 		
-		terapija.setSestra(sestra);
-		this.terapijaRepository.save(terapija);
+		t.setSestra(sestra);
+		this.terapijaRepository.save(t);
 				
 	}
 

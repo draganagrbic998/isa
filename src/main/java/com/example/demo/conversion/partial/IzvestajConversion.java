@@ -17,6 +17,9 @@ import com.example.demo.repository.PosetaRepository;
 public class IzvestajConversion {
 
 	@Autowired
+	private IzvestajRepository izvestajRepository;
+
+	@Autowired
 	private PosetaRepository posetaRepository;
 	
 	@Autowired
@@ -24,15 +27,13 @@ public class IzvestajConversion {
 	
 	@Autowired
 	private LekRepository lekRepository;
-	
-	@Autowired
-	private IzvestajRepository izvestajRepository;
-		
+			
 	@Transactional(readOnly = true)
 	public Izvestaj get(IzvestajDTO izvestajDTO, Lekar lekar) {
 		
 		Izvestaj izvestaj;
 		Terapija terapija;
+		
 		if (izvestajDTO.getId() == null) {
 			izvestaj = new Izvestaj();
 			terapija = new Terapija();
@@ -48,7 +49,6 @@ public class IzvestajConversion {
 		izvestaj.setId(izvestajDTO.getId());
 		izvestaj.setOpis(izvestajDTO.getOpis());
 		izvestaj.getDijagnoze().clear();
-		
 		for (Integer id : izvestajDTO.getDijagnoze())
 			izvestaj.getDijagnoze().add(this.dijagnozaRepository.getOne(id));
 				

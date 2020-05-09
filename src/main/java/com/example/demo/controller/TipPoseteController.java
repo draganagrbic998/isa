@@ -100,7 +100,7 @@ public class TipPoseteController {
 	@GetMapping(value="/nazivi", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Set<String>> nazivi(){
 		try {
-			return new ResponseEntity<>(this.tipPoseteService.sviTipovi(), HttpStatus.OK);
+			return new ResponseEntity<>(this.tipPoseteService.nazivi(), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

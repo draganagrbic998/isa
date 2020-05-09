@@ -42,14 +42,13 @@ public class PosetaService {
 		if (!poseta.getTipPosete().isAktivan())
 			throw new MyRuntimeException();
 		
-		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj())) {
+		if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj()))
 			throw new MyRuntimeException();
-		}
 		
 		for (Lekar l: poseta.getLekari()) {
-			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || !l.zahtevPreklapanje(poseta.pocetak(), poseta.kraj(), id)) {
+			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || 
+					!l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
 				throw new MyRuntimeException();
-			}
 		}
 		
 		this.posetaRepository.save(poseta);
@@ -63,23 +62,23 @@ public class PosetaService {
 		
 		if (id != null)
 			this.zahtevRepository.deleteById(id);
+		
 	}
-	
+
+	@Transactional(readOnly = false)
+	public void delete(Integer id) {
+		this.posetaRepository.deleteById(id);
+	}
+
 	@Transactional(readOnly = true)
 	public Poseta getOne(Integer id) {
 		return this.posetaRepository.getOne(id);
 	}
 
 	@Transactional(readOnly = false)
-	public void delete(Integer posetaId) {
-		this.posetaRepository.deleteById(posetaId);
-	}
+	public void zakazi(Integer id, Karton karton) {
 
-	@Transactional(readOnly = false)
-	public void zakazi(Integer posetaId, Karton karton) {
-
-		
-		Poseta p = this.posetaRepository.getOne(posetaId);
+		Poseta p = this.posetaRepository.getOne(id);
 		if (!p.getStanje().equals(StanjePosete.SLOBODNO))
 			throw new MyRuntimeException();
 		if (!karton.slobodan(p.pocetak(), p.kraj()))
@@ -93,9 +92,9 @@ public class PosetaService {
 
 	@Transactional(readOnly = false)
 	public Poseta otkazi(Integer id) {
-		Poseta poseta = this.posetaRepository.getOne(id);
+		Poseta p = this.posetaRepository.getOne(id);
 		this.posetaRepository.deleteById(id);
-		return poseta;
+		return p;
 	}
 
 	@Transactional(readOnly = false)
@@ -111,7 +110,6 @@ public class PosetaService {
 
 		p.setStanje(StanjePosete.U_TOKU);
 		this.posetaRepository.save(p);
-
 		lekar.setZapocetaPoseta(p);
 		this.lekarRepository.save(lekar);
 		
@@ -122,7 +120,6 @@ public class PosetaService {
 		
 		lekar.setZapocetaPoseta(null);
 		this.lekarRepository.save(lekar);
-
 		this.terapijaRepository.save(izvestaj.getTerapija());
 		this.izvestajRepository.save(izvestaj);
 
