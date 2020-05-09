@@ -49,7 +49,8 @@ public class PosetaService {
 			throw new MyRuntimeException();
 
 		for (Lekar l : poseta.getLekari()) {
-			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || !l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
+			if (!l.slobodan(poseta.pocetak(), poseta.kraj()) || 
+					!l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
 				throw new MyRuntimeException();
 		}
 
@@ -130,29 +131,28 @@ public class PosetaService {
 	}
 
 	@Transactional(readOnly = false)
-	public void save(Map<Poseta, Integer> novePosete) {
-		Set<Lekar> lekariIzmena = new HashSet<Lekar>();
+	public void save(Map<Poseta, Integer> posete) {
+		Set<Lekar> lekariIzmena = new HashSet<>();
 
-		for (Poseta poseta : novePosete.keySet()) {
-			Integer id = novePosete.get(poseta);
+		for (Poseta p : posete.keySet()) {
+			Integer id = posete.get(p);
 
-			if (!poseta.getTipPosete().isAktivan())
+			if (!p.getTipPosete().isAktivan())
 				throw new MyRuntimeException();
 
-			if (!poseta.getSala().slobodan(poseta.pocetak(), poseta.kraj()))
+			if (!p.getSala().slobodan(p.pocetak(), p.kraj()))
 				throw new MyRuntimeException();
 
-			for (Lekar l : poseta.getLekari()) {
-				if (!l.slobodan(poseta.pocetak(), poseta.kraj())
-						|| !l.slobodanZahtev(poseta.pocetak(), poseta.kraj(), id))
+			for (Lekar l : p.getLekari()) {
+				if (!l.slobodan(p.pocetak(), p.kraj())
+						|| !l.slobodanZahtev(p.pocetak(), p.kraj(), id))
 					throw new MyRuntimeException();
 			}
 
-			this.posetaRepository.save(poseta);
+			this.posetaRepository.save(p);
 
-			for (Lekar l : poseta.getLekari()) {
+			for (Lekar l : p.getLekari())
 				lekariIzmena.add(l);
-			}
 
 			if (id != null)
 				this.zahtevRepository.deleteById(id);
