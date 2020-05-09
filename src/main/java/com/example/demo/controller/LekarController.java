@@ -143,7 +143,7 @@ public class LekarController {
 	}
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
-	@PostMapping(value = "/ocenjivanje//{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BolestDTO> ocenjivanje(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
