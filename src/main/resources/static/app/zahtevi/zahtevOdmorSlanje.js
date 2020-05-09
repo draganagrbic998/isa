@@ -24,7 +24,6 @@ Vue.component("zahtevOdmorSlanje", {
       <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/lekarHome">
           <i class="fa fa-home"></i>
-          Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -35,7 +34,7 @@ Vue.component("zahtevOdmorSlanje", {
 
 	<div class="card" id="tableBox">
 		
-		<h1>Zahtev za godisnji odmor</h1><br>
+		<h2 class="row justify-content-center">Zahtev za godisnji odmor</h2><br>
 			
 			<table class="table">
 			
@@ -43,20 +42,20 @@ Vue.component("zahtevOdmorSlanje", {
 				
 					<tr>
 						<th scope="row">Datum pocetka: </th>
-						<td><input type="date" v-model="zahtev.pocetak" name="name"></td>
+						<td><input type="date" v-model="zahtev.pocetak" class="form-control"></td>
 						<td>{{greskaPocetak}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Datum kraja: </th>
-						<td><input type="date" v-model="zahtev.kraj" name="name"></td>
+						<td><input type="date" v-model="zahtev.kraj" class="form-control"></td>
 						<td>{{greskaKraj}}</td>
-					</tr>
-					<tr>
-						<td><button v-on:click="posalji()" class="btn btn-primary">POSALJI</button></td>
 					</tr>
 				</tbody>
 			</table>
+			<div class="row justify-content-center">
+				<td><button v-on:click="posalji()" class="btn btn-success">POSALJI</button></td>
+			</div>
 		
 		</div>
 		

@@ -38,7 +38,6 @@ Vue.component("lekarPacijenti", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/lekarHome">
           <i class="fa fa-home"></i>
-          Home
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -48,14 +47,14 @@ Vue.component("lekarPacijenti", {
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       
-      <li class="nav-item dropdown">
+      <li v-if="this.selected==false" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Sortiraj po
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" @click.prevent="sort_ime()" href="#">imenu</a>
           <a class="dropdown-item" @click.prevent="sort_prezime()" href="#">prezimenu</a>
-          <a class="dropdown-item" @click.prevent="sort_email()" href="#">emailu</a>
+          <a  class="dropdown-item" @click.prevent="sort_email()" href="#">emailu</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>
@@ -63,7 +62,7 @@ Vue.component("lekarPacijenti", {
    </div>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretrazite" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
     </form>
 
 </nav>	
@@ -73,7 +72,7 @@ Vue.component("lekarPacijenti", {
 		
 			<div class="col card" id="left">
 			
-				<h1>Karton</h1><br>
+				<h2 class="row justify-content-center">Karton</h2><br>
 				
 				<table class="table">
 				
@@ -125,7 +124,7 @@ Vue.component("lekarPacijenti", {
 		
 			<div class="col-md-5" style="margin-top: 3%">
 				
-				<h1>Izvestaji</h1><br>
+				<h2 class="row justify-content-center">Izvestaji</h2><br>
 				
 				<table class="table table-hover">
 					
@@ -161,7 +160,7 @@ Vue.component("lekarPacijenti", {
 		
 		<div class="card" id="tableBox">
 			
-			<h1>Izmena izvestaja o poseti</h1><br>
+			<h2 class="row justify-content-center">Izmena izvestaja o poseti</h2><br>
 				
 			<table lass="table">
 				<tbody>
@@ -204,20 +203,23 @@ Vue.component("lekarPacijenti", {
 			</table>		
 		</div>
 	</div>
-	<div v-else class="row">
+	
+	<div v-else class="box">
 		<table class="table">
 		<tr bgcolor="#f2f2f2">
 			<th> Ime </th>
 			<th> Prezime </th>
 		</tr>
 		
-		<tr v-for="p in pacijenti" v-on:click="selektovanPacijent(p)">
+		<tr v-for="p in pacijenti" >
 			<td>{{p.ime}}</td>
 			<td>{{p.prezime}}</td>
+			<td><button  @click="showModal = true" v-on:click="selektovanPacijent(p)" class="btn btn-success"><i class="fa fa-info-circle"></i>Detalji</button></td>
 			
 		</tr>
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
+	</div>
 	</div>
 	</div>
 	`, 

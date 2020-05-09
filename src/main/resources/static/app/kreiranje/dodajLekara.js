@@ -58,7 +58,6 @@ Vue.component("dodajLekara", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -69,7 +68,7 @@ Vue.component("dodajLekara", {
 		
 		<div class="card" id="box">
 		
-			<h2>Registracija medicinskog radnika</h2><br>
+			<h2 class="row justify-content-center">Registracija medicinskog radnika</h2><br>
 			
 			<table>
 			
@@ -121,11 +120,15 @@ Vue.component("dodajLekara", {
 					<td><select v-model="nazivSpecijalizacije" class="form-control">
 						<option v-for="s in specijalizacije">{{s.naziv}}</option>
 					</select></td><td>{{greskaSpecijalizacija}}</td></tr>
-					<br>
-					<tr><td colspan="3"><button v-on:click="dodajLekara()" class="form-control">KREIRAJ PROFIL</button><br></td></tr>
+					
+					
 					
 				</tbody>	
 			</table>
+			<br>
+			<div class="row justify-content-center">
+				<button v-on:click="dodajLekara()" class="btn btn-success">KREIRAJ PROFIL</button>
+			</div>
 		</div>
 		</div>
 		

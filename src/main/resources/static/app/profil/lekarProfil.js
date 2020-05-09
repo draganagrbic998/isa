@@ -35,7 +35,6 @@ Vue.component("lekarProfil", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/lekarHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -45,10 +44,10 @@ Vue.component("lekarProfil", {
 		</nav>
 		
 		</div>
-	
+		<div class="container">
 		<div class="card" id="tableBox">
 		
-			<h1>Podaci o korisniku</h1><br>
+			<h2 class="row justify-content-center">Podaci o korisniku</h2><br>
 			
 			<table class="table">
 			
@@ -109,8 +108,8 @@ Vue.component("lekarProfil", {
 					</tr>
 					
 					<tr>
-						<td><button v-on:click="izmeni()" class="btn btn-primary">IZMENI</button></td>
-						<td><button v-on:click="odustani()" class="btn btn-primary">ODUSTANI</button></td>
+						<td><button v-on:click="izmeni()" class="btn btn-dark">IZMENI</button></td>
+						<td><button v-on:click="odustani()" class="btn btn-secondary float-right">ODUSTANI</button></td>
 					</tr>
 				
 				</tbody>
@@ -118,7 +117,7 @@ Vue.component("lekarProfil", {
 			</table>
 		
 		</div>
-		
+		</div>
 		</div>
 	
 	`, 

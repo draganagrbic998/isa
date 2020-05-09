@@ -6,7 +6,7 @@ Vue.component("tipPosetePretraga", {
 			backup: {},
 			tipSelected: {}, 
 			selectedCenovnik: false,
-			selected: false, 
+			showModal: false,
 			brisanjeSelected: false,
 			operacija: 'Operacija',
 			pregled: 'Pregled',
@@ -33,12 +33,11 @@ Vue.component("tipPosetePretraga", {
       <li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
       </li>
       </ul>
-      <ul v-if="selected==false" class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" @click.prevent="selektovanCenovnik()" href="#">
           <i class="fa fa-money"></i>
@@ -47,34 +46,34 @@ Vue.component("tipPosetePretraga", {
           </a>
       </li>
       </ul>
-       <form v-if="selected==false" class="form-inline my-2 my-lg-0">
-      <input v-if="selected==false" class="form-control mr-sm-2" type="text" placeholder="Unesite naziv tipa pregleda" aria-label="Search" v-model="pretraga">
-      <button v-if="selected==false" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
+       <form  class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Unesite naziv tipa pregleda" aria-label="Search" v-model="pretraga">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
     </form>
   </div>
 </nav>
-	<div v-if="selected==false" class="row">
 	<table class="table">
-		<tr bgcolor="#f2f2f2">
+		<tr >
 			<th> Naziv </th>
 			<th> Tip </th>
 		</tr>
 		
 		<tr v-for="t in tipoviPregleda" >
-			<td v-on:click="selektovanTip(t)">{{t.naziv}}</td>
-			<td v-if="t.pregled" v-on:click="selektovanTip(t)">pregled</td>
-			<td v-else v-on:click="selektovanTip(t)">operacija</td>
-			<td v-if="selectedCenovnik" v-on:click="selektovanTip(t)"> {{t.cena}}</td>
-			<td><button v-on:click="deleteTipPosete(t.id)" class="btn"><i class="fa fa-trash "></i>Obrisi</button></td></tr>
+			<td >{{t.naziv}}</td>
+			<td v-if="t.pregled">pregled</td>
+			<td v-else>operacija</td>
+			<td v-if="selectedCenovnik" > {{t.cena}}</td>
+			<td><button  @click="showModal = true" v-on:click="selektovanTip(t)" class="btn btn-success"><i class="fa fa-pencil "></i>Izmeni</button></td>
+			<td><button v-on:click="deleteTipPosete(t.id)" class="btn btn-danger"><i class="fa fa-trash "></i>Obrisi</button></td></tr>
 	
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
-	</div>
+		
 	
-	<div v-else-if="brisanjeSelected==false && selected">
-		<div class="card" id="left">
-			
-				<h1>Tip posete</h1><br>
+	<div>
+		<modal v-if="showModal" @close="showModal = false">
+        	<h3 slot="header">Izmena tipa posete</h3>
+			<div slot="body">
 				
 				<table class="table">
 				
@@ -108,13 +107,20 @@ Vue.component("tipPosetePretraga", {
 						<td>{{greskaCena}}</td>
 					</tr>
 					<tr>
-					<td colspan="3">
-						<button class="btn btn-outline-success my-2 my-sm-0" v-on:click="izmeni()">Izmeni</button>
+					
 					</td>
 					</tr>
 				</tbody>
 			</table>		
-		</div>
+
+			</div>
+        					
+        		<div slot="footer">
+        		<button @click="showModal=false" style="margin:5px;" class="btn btn-dark" v-on:click="izmeni()"> Sacuvaj </button>       						
+				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" > Nazad </button>								
+				</div>
+		</modal>
+		
 	</div>
 	</div>
 	
@@ -142,6 +148,7 @@ Vue.component("tipPosetePretraga", {
 		},
 		izmeni: function() {
 			this.osvezi();
+			this.showModal = false;
 			if (this.tipSelected.sati==''){
 				this.greskaSati = "Unesite broj sati";
 				this.greska = true;
@@ -155,10 +162,10 @@ Vue.component("tipPosetePretraga", {
 				this.greska = true;
 			}
 			if (this.greska){return;}
-			axios.post("/tipPosete/izmena", this.tipSelected)
+			axios.post("/tipPosete/kreiranje", this.tipSelected)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');
-				location.reload();
+				//location.reload();
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");
@@ -166,11 +173,16 @@ Vue.component("tipPosetePretraga", {
 		},
 		selektovanTip: function(t) {
 			this.tipSelected = t;
-			this.selected = true;
 		},
 		
 		selektovanCenovnik: function() {
-			this.selectedCenovnik = true;
+			if (this.selectedCenovnik ){
+				this.selectedCenovnik=false;
+			}
+			else {
+				this.selectedCenovnik = true;
+			}
+			
 			
 		},
 		
@@ -199,7 +211,6 @@ Vue.component("tipPosetePretraga", {
 			})
 			.catch(error => {
 				alert("Postoje zakazane posete sa odabranim tipom i nije moguce brisanje!");
-				location.reload();
 			});
 		}
 		

@@ -14,17 +14,57 @@ Vue.component("prijava", {
 	}, 
 	
 	template: `
-	
-		<div class="card" id="prijava">
+	<section class="forms-section">
+  <h2>Klinicki centar Vojvodine</h2>
+  <div class="forms">
+    <div class="form-wrapper is-active">
+      <button type="button" class="switcher switcher-login">
+        Prijava
+        <span class="underline"></span>
+      </button>
+      <form class="form form-login">
+        <fieldset>
+          <legend>Unesite korisnicko ime i lozinku.</legend>
+          <div class="input-block">
+            <label for="login-email" style="color: black;">Email</label>
+            <input id="login-email" type="email" v-model="user.email" required>
+          </div>
+          <div class="input-block">
+            <label for="login-password" style="color: black;">Lozinka</label>
+            <input id="login-password" type="password" v-model="user.lozinka" required>
+          </div>
+        </fieldset>
+        <button v-on:click="prijava()" class="btn btn-success">PRIJAVA</button><br>{{greskaPrijava}}<br><br>
+		Niste registrovani? <router-link to="/dodajPacijenta">REGISTRACIJA</router-link><br><br>
+        
 		
-			<h2>Prijava</h2><br>
-			Email: <input type="text" v-model="user.email" class="form-control" placeholder="Email...">{{greskaEmail}}<br><br>
-			Lozinka: <input type="password" v-model="user.lozinka" class="form-control" placeholder="Lozinka...">{{greskaLozinka}}<br><br>
-			<button v-on:click="prijava()" class="btn btn-primary">PRIJAVA</button><br>{{greskaPrijava}}<br><br>
-			Niste registrovani? <router-link to="/dodajPacijenta">REGISTRACIJA</router-link><br><br>
-		
-		</div>
-	
+      </form>
+    </div>
+    <div class="form-wrapper">
+      <button type="button" class="switcher switcher-signup">
+        <span class="underline"></span>
+      </button>
+      <form class="form form-signup">
+        <fieldset>
+          <legend>Please, enter your email, password and password confirmation for sign up.</legend>
+          <div class="input-block">
+            <label for="signup-email">E-mail</label>
+            <input id="signup-email" type="email" required>
+          </div>
+          <div class="input-block">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" type="password" required>
+          </div>
+          <div class="input-block">
+            <label for="signup-password-confirm">Confirm password</label>
+            <input id="signup-password-confirm" type="password" required>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn-signup">Continue</button>
+      </form>
+    </div>
+  </div>
+</section>
 	`, 
 	
 	methods: {

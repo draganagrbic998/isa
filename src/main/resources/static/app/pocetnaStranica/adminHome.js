@@ -124,7 +124,7 @@ Vue.component("adminHome", {
 		
 			<div class="col card" id="left">
 		
-			<h2>Osnovne informacije o klinici</h2><br>
+			<h2 class="row justify-content-center">Osnovne informacije o klinici</h2><br>
 			
 			<table class="table">
 			
@@ -147,14 +147,15 @@ Vue.component("adminHome", {
 						<td><input type="text" v-model="klinika.adresa" class="form-control"></td>
 						<td>{{greskaAdresa}}</td>
 					</tr>
-					<tr>
-						<td><button v-on:click="izmeni()" class="btn btn-primary">IZMENI</button></td>
-					</tr>
 				</tbody>
 			</table>
+			
+			<div class="row justify-content-center">
+				<button v-on:click="izmeni()" class="btn btn-success">SACUVAJ IZMENE</button>
+			</div>
 		</div>
 		<div class="col card" id="right" style="width: 700px; height: 600px">
-		<h2>Prikaz na mapi</h2><br>
+		<h2 h2 class="row justify-content-center">Prikaz na mapi</h2><br>
 		<h3>{{nemaRezultata}}</h3>
 		<div id="map" style="width: 500px; height: 400px"></div>
 		</div>

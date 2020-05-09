@@ -98,7 +98,7 @@ Vue.component("zahtevPregledObrada", {
 			</div>
         					
         		<div slot="footer">
-        		<button @click="showModal=false" style="margin:5px;" class="btn btn-success" v-on:click="promeniLekara(noviLekar)"> Sacuvaj </button>       						
+        		<button @click="showModal=false" style="margin:5px;" class="btn btn-dark" v-on:click="promeniLekara(noviLekar)"> Sacuvaj </button>       						
 				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" > Nazad </button>								
 				</div>
 		</modal>
@@ -106,7 +106,7 @@ Vue.component("zahtevPregledObrada", {
 	</div>
 	<div v-if="selectedZahtev==false && selectedSala==false" >
 	<table class="table">
-		<tr bgcolor="#f2f2f2">
+		<tr >
 			<th>Lekar</th>
 			<th>Pacijent</th>
 			<th>Naziv pregleda</th>
@@ -121,7 +121,7 @@ Vue.component("zahtevPregledObrada", {
 			<td v-if="z.pregled">Pregled</td>
 			<td v-else>Operacija</td>
 			<td> {{formatiraj(z.datum)}} </td> 
-			<td v-if="zahtevi.length != 0"> <button v-on:click="selektovanZahtev(z)" class="btn"><i class="fa fa-ticket"></i>Nadji salu</button></td></tr>
+			<td v-if="zahtevi.length != 0"> <button v-on:click="selektovanZahtev(z)" class="btn btn-success"><i class="fa fa-ticket"></i>Nadji salu</button></td></tr>
 		</table>	
 	</div>
 		<div v-else-if="selectedZahtev && promenjenDatum==false">
@@ -135,7 +135,7 @@ Vue.component("zahtevPregledObrada", {
 		<tr v-for="s in sale">
 			<td>{{s.naziv}}</td>
 			<td>{{s.broj}}</td>
-			<td><button v-on:click="detaljiSala(s)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
+			<td><button v-on:click="detaljiSala(s)" class="btn btn-success"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
 		</table>	
 		<h3>{{nemaRezultata}}</h3>
 		</div>
@@ -143,7 +143,7 @@ Vue.component("zahtevPregledObrada", {
 		<div v-else-if="promenjenDatum && selectedZahtev && selectedSala==false">
 			
 		<table class="table">
-		<tr bgcolor="#f2f2f2">
+		<tr >
 			<th>Naziv </th>
 			<th> Broj </th>
 		</tr>
@@ -151,7 +151,7 @@ Vue.component("zahtevPregledObrada", {
 		<tr v-for="s in sale">
 			<td>{{s.naziv}}</td>
 			<td>{{s.broj}}</td>
-			<td><button v-on:click="detaljiSala(s)" class="btn"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
+			<td><button v-on:click="detaljiSala(s)" class="btn btn-success"><i class="fa fa-ticket"></i>REZERVISI</button></td></tr>
 		</table>	
 		
 		<h3>{{nemaRezultata}}</h3>

@@ -30,7 +30,6 @@ Vue.component("dodajSalu", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -39,20 +38,26 @@ Vue.component("dodajSalu", {
 		</div>
 		</nav>
 	
+	<div class = "container">
 		<div class="card" id="box">
 		
-			<h2>Kreiranje sale</h2><br>
+			<h2 class="row justify-content-center">Kreiranje sale</h2><br>
 		
 			<table class="table">
 				
-					<tr><td class="left">Broj: </td><td class="right"><input type="text" v-model="sala.broj"></td><td>{{greskaBroj}}</td></tr>
-					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="sala.naziv"></td><td>{{greskaNaziv}}</td></tr>
-					<tr><td><button v-on:click="dodajSalu()">DODAJ</button><br></td></tr>
+					<tr><th scope="row">Broj: </th>
+					<td><input class="form-control" type="text" v-model="sala.broj"></td><td>{{greskaBroj}}</td></tr>
 					
+					<tr><th scope="row">Naziv: </th>
+					<td><input class="form-control" type="text" v-model="sala.naziv"></td><td>{{greskaNaziv}}</td></tr>					
 				</table>
+				<br>
+			<div class="row justify-content-center">
+				<button v-on:click="dodajSalu()" class="btn btn-success">KREIRAJ</button>
+			</div>
 		</div>
 		</div>
-	
+	</div>
 	`, 
 	
 	mounted () {

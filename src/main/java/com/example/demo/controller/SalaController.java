@@ -92,6 +92,7 @@ public class SalaController {
 		}
 	}	
 	
+	
 	@PreAuthorize("hasAuthority('Admin')")
 	@DeleteMapping(value = "/brisanje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> brisanje(@PathVariable Integer id) {

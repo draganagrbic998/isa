@@ -23,20 +23,18 @@ Vue.component("lekariPretraga", {
       <li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
       </li>
       </ul>
        <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretrazite" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
     </form>
   </div>
 </nav>
-
 	<table class="table">
-		<tr bgcolor="#f2f2f2">
+		<tr >
 			<th> Ime </th>
 			<th> Prezime </th>
 			<th> Ocena </th>
@@ -46,7 +44,7 @@ Vue.component("lekariPretraga", {
 			<td>{{l.ime}}</td>
 			<td>{{l.prezime}}</td>
 			<td>{{l.prosecnaOcena}}</td>
-			<td><button v-on:click="deleteLekar(l.id)" class="btn"><i class="fa fa-trash fa-2x"></i>Obrisi</button></td></tr>
+			<td><button v-on:click="deleteLekar(l.id)" class="btn btn-danger"><i class="fa fa-trash "></i>Obrisi</button></td></tr>
 	</table>	
 	
 		<h3>{{nemaRezultata}}</h3>

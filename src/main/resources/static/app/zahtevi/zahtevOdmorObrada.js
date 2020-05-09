@@ -26,20 +26,18 @@ Vue.component("zahtevOdmorObrada", {
       <li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
       </li>
       </ul>
        <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretrazite" aria-label="Search" v-model="pretraga">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">>Pretrazi</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
     </form>
   </div>
 </nav>
-
 	<table class="table">
-		<tr bgcolor="#f2f2f2">
+		<tr >
 			<th>Profesija</th>
 			<th>Ime</th>
 			<th>Prezime</th>
@@ -53,13 +51,14 @@ Vue.component("zahtevOdmorObrada", {
 			<td> {{z.prezime}} </td>
 			<td> {{formatiraj(z.pocetak)}} </td>
 			<td> {{formatiraj(z.kraj)}} </td>
-			<td><button v-on:click="potvrdiZahtev(z)" class="btn"><i class="fa fa-check"></i></button></td>
-			<td><button v-on:click="odbijZahtev(z)" class="btn"><i class="fa fa-ban"></i></button></td></tr>
-		<tr v-if="this.odbijanje"><td>Razlog za odbijanje:</td> <td><input type="text" v-model="razlog" name="name"></td><td>{{this.greskaRazlog}}</td> 
-		<td><button v-on:click="posalji()" class="btn"><i class="fa fa-paper-plane"></i>Posalji</button></td></tr>
+			<td><button v-on:click="potvrdiZahtev(z)" class="btn btn-success"><i class="fa fa-check"></i></button></td>
+			<td><button v-on:click="odbijZahtev(z)" class="btn btn-danger"><i class="fa fa-ban"></i></button></td></tr>
+		<tr v-if="this.odbijanje"><td>Razlog za odbijanje:</td> <td><input type="text" v-model="razlog" name="name"></td>
+		<td><button v-on:click="posalji()" class="btn btn-warning"><i class="fa fa-paper-plane"></i>Posalji</button></td>{{this.greskaRazlog}}</tr>
 	
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
+	
 	</div>
 	
 	`, 
@@ -78,7 +77,32 @@ Vue.component("zahtevOdmorObrada", {
 	}, 
 	
 	methods: {
-		
+search: function(){
+			
+			this.zahtevi = [];
+			this.nemaRezultata = '';
+            let lowerPretraga = (this.pretraga).toLowerCase();
+            
+            for (let l of this.backup){
+            	let imePrezime = (l.ime.concat(" ",l.prezime)).toLowerCase();
+            	let prezimeIme = (l.prezime.concat(" ", l.ime)).toLowerCase();
+            	if (lowerPretraga.includes(" ")) { //ime i prezime
+            		let passedImePrezime = (this.pretraga != '') ? (imePrezime.includes(lowerPretraga) || imePrezime === lowerPretraga) : true;
+                    let passedPrezimeIme = (this.pretraga != '') ? (prezimeIme.includes(lowerPretraga) || prezimeIme === lowerPretraga) : true;
+                    if (passedImePrezime || passedPrezimeIme ) this.lekari.push(l);
+            	}
+            	else { //ili ime ili prezime
+            		let passedIme = (this.pretraga != '') ? (l.ime.toLowerCase().includes(lowerPretraga)) : true;
+                    let passedPrezime = (this.pretraga != '') ? (l.prezime.toLowerCase().includes(lowerPretraga)) : true;                    
+                    let passedProfesija = (this.pretraga != '') ? (l.profesija.toLowerCase().includes(lowerPretraga)) : true;
+                    if (passedIme  || passedPrezime || passedProfesija) this.zahtevi.push(l);
+            	}
+            }
+            
+            if (this.zahtevi.length===0) {
+            	this.nemaRezultata = "Nema rezultata pretrage."
+            }
+		},
 		formatiraj: function (date) {
 			
 			  date = new Date(date);

@@ -30,7 +30,6 @@ Vue.component("zapocetPregled", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/lekarHome">
           <i class="fa fa-home"></i>
-          Home
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -43,7 +42,7 @@ Vue.component("zapocetPregled", {
 	
 		<div class="card" id="tableBox">
 		
-			<h1>Unos izvestaja o poseti</h1><br>
+			<h2 class="row justify-content-center">Unos izvestaja o poseti</h2><br>
 			
 			<table class="table">
 			
@@ -80,11 +79,8 @@ Vue.component("zapocetPregled", {
 					</tr>
 
 					<tr>
-						<td><button v-on:click="zakaziNovuPosetu()" class="btn btn-primary">ZAKAZI NOVU POSETU</button></td>
-					</tr>
-					
-					<tr>
-						<td><button v-on:click="zavrsi()" class="btn btn-primary">ZAVRSI POSETU</button></td>
+						<td><button v-on:click="zakaziNovuPosetu()" class="btn btn-success float-left">ZAKAZI NOVU POSETU</button></td>
+						<td><button v-on:click="zavrsi()" class="btn btn-success float-right">ZAVRSI POSETU</button></td>
 					</tr>
 				
 				</tbody>

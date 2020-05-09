@@ -111,6 +111,19 @@ public class KlinikaController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('Admin')")
+	@GetMapping(value = "/admin/naziv", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> naziv(){
+		try {
+			Admin admin = (Admin) this.userService.getSignedKorisnik();
+					
+			return new ResponseEntity<>(admin.getKlinika().getNaziv(), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@GetMapping(value="/pretraga", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KlinikaPretragaDTO>> pretraga(){

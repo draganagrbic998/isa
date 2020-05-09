@@ -5,6 +5,7 @@ Vue.component("izvestaj", {
 			graf: {},
 			podaci: {},
 			ocena: {},
+			klinika: '',
 			pocetak: '',
 			kraj: '',
 			profit: '',
@@ -37,41 +38,41 @@ Vue.component("izvestaj", {
   </div>
 </nav>
 	
-
 	<div class="container"> 
 		
 		<div class="row">
-		
-			<div class="col card" id="left">
-
-		
-			<h2>Klinika</h2><br>
-			
-			<table class="table">
-			
+		<div class="card border-info mb-9" style="max-width: 40rem;">
+		<div class="card-header"><h2 class="row justify-content-center">Klinika "{{klinika}}"</h2><br></div>
+		<div class="card">
+		<table class="table">
+			<tr>
+					<th scope="row">Prosecna ocena:</th>
+					<td>{{ocena}}</td>
+				</tr>			
+		</table>
+		<br>
+		<table>
+				<tr><th colspan="3" scope="row" style="text-align:center" >PRIHODI KLINIKE</th></tr>
+				<br>
 				<tr>
-						<th scope="row">Prosecna ocena: </th>
-						<td><input type="text" v-model ="ocena" class="form-control" disabled></td>
-					</tr>
-					<tr><th scope="row">PRIHODI KLINIKE</th></tr>
-					<tr>
-						<td><input type="date" v-model="period.pocetak"></td>
-						<td><input type="date" v-model="period.kraj"></td>
-						<td><button v-on:click="nadjiPrihode()">PRIKAZI</button></td>
-					</tr>
-					
-					<tr>
-						<th scope="row">Profit: </th>
-						<td><input type="text" class="form-control" v-model="profit" disabled></td>
-					</tr>
-					
-								
+					<td><input type="date" v-model="period.pocetak"></td>
+					<td><input type="date" v-model="period.kraj"></td>
+					<td><button v-on:click="nadjiPrihode()">PRIKAZI</button></td>
+				</tr>
+				<br>	
+				<tr>
+					<th scope="row">Profit: </th>
+					<td>{{profit}}</td>
+				</tr>			
 			</table>
-		
 		</div>
-		<div class="col-md-5" style="margin-top: 3%">
+		</div>
+		<div class="col-md-7" >
+		<div class="card border-info mb-9" style="max-width: 40rem;">
+		<div class="card-header"><h2 class="row justify-content-center">Grafikon pregleda</h2><br></div>
+		<div class="card">
+
 				<table>
-				<tr><h2>Grafikon pregleda</h2></tr>
 				<tr><td class="form-control"> <h5>Odaberite nivo:</h5> </td>
 				<td> <select v-model="parametar" class="form-control">
 						<option>dnevni</option>
@@ -80,8 +81,8 @@ Vue.component("izvestaj", {
 						<option>godisnji</option>
 					</select></td></tr>
 				</table>
-			<column-chart :data="podaci"></column-chart>
-				
+			<column-chart :data="podaci"></column-chart>	
+		</div>
 		</div>
 		</div>
 		</div>
@@ -119,6 +120,13 @@ Vue.component("izvestaj", {
 			this.podaci = response.data;
 			
 		})
+		
+		axios.get("/klinika/admin/naziv")
+		.then(response => {
+			this.klinika = response.data;
+			
+		})
+		
 		.catch(response => {
 			this.$router.push("/");
 		});	

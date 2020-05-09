@@ -33,7 +33,6 @@ Vue.component("zahtevPosetaSlanje", {
       <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/lekarHome">
           <i class="fa fa-home"></i>
-          Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
@@ -43,7 +42,7 @@ Vue.component("zahtevPosetaSlanje", {
 </nav>
 		<div class="card" id="tableBox">
 		
-			<h1>Zakazivanje pregleda</h1><br>
+			<h2 class="row justify-content-center">Zakazivanje pregleda</h2><br>
 			
 			<table class="table">
 			
@@ -51,25 +50,26 @@ Vue.component("zahtevPosetaSlanje", {
 				
 					<tr>
 						<th scope="row">Datum: </th>
-						<td><input type="date" v-model="pregled.datum" name="name"></td>
+						<td><input class="form-control" type="date" v-model="pregled.datum"></td>
 						<td>{{greskaDatum}}</td>
 					</tr>
 					
 					<tr>
 						<th scope="row">Vreme: </th>
-						<td><input type="text" v-model="vreme" name="name"></td>
+						<td><input type="text" v-model="vreme" class="form-control" ></td>
 						<td>{{greskaVreme}}</td>
 					</tr>
 					
 					<tr><th scope="row">Tip pregleda: </th>
-						<td><select v-model="nazivTipa">
+						<td><select v-model="nazivTipa" class="form-control">
 						<option v-for="t in tipovi">{{t.naziv}}</option>
 					</select></td><td>{{greskaTip}}</td></tr>
-					
-						<td><button v-on:click="zakazi()" class="btn btn-primary">ZAKAZI</button></td>
 					</tr>
 				</tbody>
 			</table>
+			<div class="row justify-content-center">
+				<td><button v-on:click="zakazi()" class="btn btn-success">ZAKAZI</button></td>
+			</div>
 		</div>
 		
 		</div>

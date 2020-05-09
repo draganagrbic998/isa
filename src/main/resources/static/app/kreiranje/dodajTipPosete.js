@@ -36,7 +36,6 @@ Vue.component("dodajTipPosete", {
 		<li class="nav-item active">
         <a class="nav-link" href="#/adminHome">
           <i class="fa fa-home"></i>
-          Pocetna stranica
           <span class="sr-only">(current)</span>
           </a>
 		</li>
@@ -44,25 +43,38 @@ Vue.component("dodajTipPosete", {
        
 		</div>
 		</nav>
-		
 		<div class="card" id="box">
 		
-			<h2>Kreiranje tipa posete</h2><br>
+			<h2 class="row justify-content-center">Kreiranje tipa posete</h2><br>
 
-				<table class="table">
+				<table>
+			
+				<tbody>
 				
-					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="tipPosete.naziv"></td><td>{{greskaNaziv}}</td></tr>
-					<tr><td class="left">Pregled: </td><td class="right"><select v-model="tipPosete.pregled">
+					<tr><th scope="row">Naziv: </th>
+					<td><input type="text" class="form-control" v-model="tipPosete.naziv"></td><td>{{greskaNaziv}}</td></tr>
+					
+					<tr> <th scope="row">Pregled: </th>
+					<td><select v-model="tipPosete.pregled" class="form-control">
 						<option value="true">pregled</option>
 						<option value="false">operacija</option>
 					</select></td><td>{{greskaPregled}}</td></tr>
-					<tr><td class="left">Sati: </td><td class="right"><input type="text" v-model="tipPosete.sati"></td><td>{{greskaSati}}</td></tr>
-					<tr><td class="left">Minute: </td><td class="right"><input type="text" v-model="tipPosete.minute"></td><td>{{greskaMinute}}</td></tr>
-					<tr><td class="left">Cena: </td><td class="right"><input type="text" v-model="tipPosete.cena"></td><td>{{greskaCena}}</td></tr>
-					<tr><td><button v-on:click="dodajTipPosete()">DODAJ</button><br></td></tr>
 					
-				</table>
+					<tr> <th scope="row">Sati: </th>
+					<td><input type="text" v-model="tipPosete.sati" class="form-control"></td><td>{{greskaSati}}</td></tr>
+					
+					<tr><th scope="row">Minute: </th>
+					<td><input type="text" v-model="tipPosete.minute" class="form-control"></td><td>{{greskaMinute}}</td></tr>
+					
+					<tr><th scope="row">Cena: </th>
+					<td><input type="text" v-model="tipPosete.cena" class="form-control"></td><td>{{greskaCena}}</td></tr>
 
+				</tbody>
+				</table>
+				<br>
+			<div class="row justify-content-center">
+				<button v-on:click="dodajTipPosete()" class="btn btn-success">KREIRAJ</button>
+			</div>
 		</div>
 		</div>
 	
