@@ -24,7 +24,6 @@ import com.example.demo.conversion.total.LekarConversion;
 import com.example.demo.dto.model.IzvestajDTO;
 import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.LekarDTO;
-import com.example.demo.dto.pretraga.BolestDTO;
 import com.example.demo.dto.pretraga.ObavezaDTO;
 import com.example.demo.dto.pretraga.PacijentPretragaDTO;
 import com.example.demo.dto.unos.OcenaParamDTO;
@@ -144,10 +143,10 @@ public class LekarController {
 	
 	@PreAuthorize("hasAuthority('Pacijent')")
 	@PostMapping(value = "/ocenjivanje/{posetaId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BolestDTO> ocenjivanje(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
+	public ResponseEntity<LekarDTO> ocenjivanje(@PathVariable Integer posetaId, @RequestBody OcenaParamDTO param){
 		try {
 			Pacijent pacijent = (Pacijent) this.userService.getSignedKorisnik();
-			return new ResponseEntity<>(new BolestDTO(this.lekarService.ocenjivanje(pacijent, param, posetaId), param.getId()), HttpStatus.OK);
+			return new ResponseEntity<>(new LekarDTO(this.lekarService.ocenjivanje(pacijent, param)), HttpStatus.OK);
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

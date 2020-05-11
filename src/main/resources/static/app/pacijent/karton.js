@@ -63,7 +63,7 @@ Vue.component("karton", {
 					<tr>
 						<th scope="row">Krvna grupa: </th>
 						<td><input type="text" v-model="karton.krvnaGrupa" class="form-control" disabled></td>
-					</tr>
+					</tr><br>
 			
 			</table>
 		

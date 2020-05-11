@@ -21,93 +21,83 @@ Vue.component("termini", {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;" v-if="!selected">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active" style="min-width: 100px;" v-if="selected">
-        <a class="nav-link" href="#/termini" v-on:click="refresh()">
-          <i class="fa fa-reply"></i>
-          Nazad
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
     </ul>
-      <form class="form-inline my-2 my-lg-0" v-if="!selected">
+      <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>		
 		</div>
-	
-		<div v-if="selected" class="card" id="box">
 		
-			<h2>Detalji posete</h2><br>
+		<div>
+		
+			<modal v-if="selected" @close="selected=false">
+							
+				<div slot="body">
+
+				<table class="table">
 			
-			<table>
-			
-			<tr>
-				<th scope="row" style="width: 40%;">Datum: </th>
-				<td><input type="text" v-model="datum" class="form-control" disabled></td>
-			</tr>
+					<tr>
+						<th scope="row">Datum: </th>
+						<td><input type="text" v-model="datum" class="form-control" disabled></td>
+					</tr>
+								
+					<tr>
+						<th scope="row">Adresa: </th>
+						<td><input type="text" v-model="selectedTermin.adresa" class="form-control" disabled></td>
+					</tr>
 				
-			<tr>
-				<th scope="row">Klinika: </th>
-				<td><input type="text" v-model="selectedTermin.klinika" class="form-control" disabled></td>
-			</tr>
-				
-			<tr>
-				<th scope="row">Adresa: </th>
-				<td><input type="text" v-model="selectedTermin.adresa" class="form-control" disabled></td>
-			</tr>
-				
-			<tr>
-				<th scope="row">Originalna cena: </th>
-				<td><input type="text" v-model="selectedTermin.cena" class="form-control" disabled></td>
-			</tr>
-				
-			<tr>
-				<th scope="row">Popust: </th>
-				<td><input type="text" v-model="selectedTermin.popust" class="form-control" disabled></td>
-			</tr>
-				
-			<tr>
-				<th scope="row">Naziv posete: </th>
-				<td><input type="text" v-model="selectedTermin.naziv" class="form-control" disabled></td>
-			</tr>
+					<tr>
+						<th scope="row">Cena: </th>
+						<td><input type="text" v-model="selectedTermin.novaCena" class="form-control" disabled></td>
+					</tr>
+								
+					<tr>
+						<th scope="row">Naziv termina: </th>
+						<td><input type="text" v-model="selectedTermin.naziv" class="form-control" disabled></td>
+					</tr>
 					
-			<tr>
-				<th scope="row">Trajanje posete: </th>
-				<td><input type="text" v-model="selectedTermin.trajanje" class="form-control" disabled></td>
-			</tr>
+					<tr>
+						<th scope="row" style="width: 50%;">Trajanje termina: </th>
+						<td style="width: 70%;"><input type="text" v-model="selectedTermin.trajanje" class="form-control" disabled></td>
+					</tr>
 				
-			<tr>
-				<th scope="row">Sala: </th>
-				<td><input type="text" v-model="selectedTermin.sala" class="form-control" disabled></td>
-			</tr>
-				
-			<tr>
-				<th scope="row">Lekari: </th>
-				<td><select class="form-control" v-bind:size="selectedTermin.lekari.length" disabled multiple>
-					<option v-for="l in selectedTermin.lekari">
-						{{l}}
-					</option>
-				</select></td>
-				</tr>
-				<br>
-				<tr>
-				<td><button v-on:click="otkazi()" class="btn btn-outline-success my-2 my-sm-0" v-bind:hidden="new Date().addHours(24) >= new Date(selectedTermin.datum)">OTKAZI</button></td>
-			</tr>
+					<tr>
+						<th scope="row">Sala: </th>
+						<td><input type="text" v-model="selectedTermin.sala" class="form-control" disabled></td>
+					</tr>
+						
+					<tr>
+						<th scope="row">Lekari: </th>
+						<td><select class="form-control" v-bind:size="selectedTermin.lekari.length" disabled multiple>
+							<option v-for="l in selectedTermin.lekari">
+								{{l}}
+							</option>
+						</select></td>
+					</tr>
 			
-			</table>
+				</table>
+
+				</div>
+				
+				<div slot="footer">
+	        		<button style="margin:5px;" class="btn btn-dark" v-on:click="otkazi()">Otkazi</button>       						
+					<button style="margin:5px;" class="btn btn-secondary" @click="selected=false">Nazad</button>								
+				</div>			
+				
+			</modal>
 		
 		</div>
-	
-		<div v-else class="container" id="cosak">
+		
+		<div class="container" id="cosak">
 		
 			<h2>Zakazane posete</h2><br>
 			
@@ -119,7 +109,7 @@ Vue.component("termini", {
 					
 						<th scope="col">Datum</th>
 						<th scope="col">Klinika</th>
-						<th scope="col">Tip posete</th>
+						<th scope="col">Vrsta termina</th>
 						<th scope="col">Cena</th>
 					
 					</tr>

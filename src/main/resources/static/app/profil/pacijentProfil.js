@@ -106,11 +106,11 @@ Vue.component("pacijentProfil", {
 						<td><input type="password" v-model="ponovljenaLozinka" v-bind:disabled="novaLozinka==''" class="form-control"></td>
 						<td>&nbsp&nbsp&nbsp{{greskaLozinka}}</td>
 					</tr>
-					<br>
+					<br><br>
 					<tr>
-						<td><button v-on:click="izmeni()" class="btn btn-outline-success my-2 my-sm-0">IZMENI</button></td>
+						<td><button v-on:click="izmeni()" class="btn btn-outline-secondary">IZMENI</button></td>
 						<td></td>
-						<td><button v-on:click="odustani()" class="btn btn-outline-success my-2 my-sm-0 pull-right">ODUSTANI</button></td>
+						<td><button v-on:click="odustani()" class="btn btn-outline-secondary pull-right">ODUSTANI</button></td>
 					</tr>
 				
 			</table>

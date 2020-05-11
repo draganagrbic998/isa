@@ -10,7 +10,8 @@ Vue.component("klinikeSlobodno", {
 			selectedPoseta: {}, 
 			posetaSelected: false, 
 			datum: '', 
-			pretraga: ''
+			pretraga: '', 
+			prikaziKliniku: false
 		}
 	}, 
 	
@@ -24,51 +25,32 @@ Vue.component("klinikeSlobodno", {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;" v-if="!klinikaSelected && !posetaSelected">
+      <li class="nav-item active" style="min-width: 100px;" v-if="!klinikaSelected">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected || posetaSelected">
+      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected">
         <a class="nav-link" href="#/klinikeSlobodno" v-on:click="refresh()">
           <i class="fa fa-reply"></i>
           Nazad
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item dropdown"  style="min-width: 100px; margin-left: 50px;" v-if="klinikaSelected && !posetaSelected">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </ul>
+      <ul class="navbar-nav" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected">
+        <a class="nav-link" href="#" v-on:click="prikaziKliniku=true" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-info"></i>
           Detalji klinike
           <span class="sr-only">(current)</span>
         </a>
-        <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
-			<form>
-			<h2>{{selectedKlinika.naziv}}</h2>
-			<table class="table-sm" style="min-width: 350px;">
-			
-					<tr>
-						<th scope="row">Adresa: </th>
-						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
-					</tr>
-					<tr>
-						<th scope="row">Ocena: </th>
-						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
-					</tr>
-
-			</table>
-
-				<label style="font-size: 25px">Opis</label>
-				<textarea disabled>{{selectedKlinika.opis}}</textarea>
-
-			</form>
-		</div>
       </li>
     </ul>    
         
-        <ul class="navbar-nav mr-auto" style="margin: auto;" v-if="!klinikaSelected && !posetaSelected">
+        <ul class="navbar-nav mr-auto" style="margin: auto;" v-if="!klinikaSelected">
       <li class="nav-item dropdown" style="min-width: 100px;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-sort"></i>
@@ -84,7 +66,7 @@ Vue.component("klinikeSlobodno", {
       </li>
     </ul>
 
-        <form class="form-inline my-2 my-lg-0" v-if="!posetaSelected">
+        <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
@@ -93,17 +75,61 @@ Vue.component("klinikeSlobodno", {
 </nav>		
 
 		</div>
-	
-		<div v-if="posetaSelected" class="card" id="box">
 		
-			<h2>Detalji pregleda</h2><br>
+		<div>
+		
+			<modal v-if="prikaziKliniku" @close="prikaziKliniku=false">
+					
+				<div slot="body">
+				
+				<table class="table">
+				
+					<tr>
+						<th scope="row">Naziv: </th>
+						<td><input type="text" v-model="selectedKlinika.naziv" class="form-control" disabled></td>
+					</tr>
 			
-				<table>
+					<tr>
+						<th scope="row">Adresa: </th>
+						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Ocena: </th>
+						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
+					</tr>
+					
+				</table>
+				
+				<label style="font-size: 25px">Opis</label>
+				<textarea disabled>{{selectedKlinika.opis}}</textarea>
+				
+				</div>
+				
+				<div slot="footer">
+					<button style="margin:5px;" class="btn btn-secondary" @click="prikaziKliniku=false">Zatvori</button>								
+				</div>			
+		
+			</modal>
+		
+		</div>
+		
+		<div>
+		
+			<modal v-if="posetaSelected" @close="posetaSelected=false">
+			
+				<div slot="body">
+				
+				<table class="table">
 				
 					<tr>
 						<th scope="col">Datum: </th>
 						<td><input type="text" v-model="datum" class="form-control" disabled></td>
-					</td>
+					</tr>
+					<tr>
+						<th scope="col">Naziv pregleda: </th>
+						<td><input type="text" v-model="selectedPoseta.naziv" class="form-control" disabled></td>
+					</tr>
 					<tr>
 						<th scope="col">Originalna cena: </th>
 						<td><input type="text" v-model="selectedPoseta.cena" class="form-control" disabled></td>
@@ -111,10 +137,6 @@ Vue.component("klinikeSlobodno", {
 					<tr>
 						<th scope="col">Popust: </th>
 						<td><input type="text" v-model="selectedPoseta.popust" class="form-control" disabled></td>
-					</tr>
-					<tr>
-						<th scope="col">Naziv pregleda: </th>
-						<td><input type="text" v-model="selectedPoseta.naziv" class="form-control" disabled></td>
 					</tr>
 					<tr>
 						<th scope="col">Trajanje pregleda: </th>
@@ -132,16 +154,21 @@ Vue.component("klinikeSlobodno", {
 							</option>
 						</select></td>
 					</tr>
-					<br>
-					<tr>	
-						<td><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="zakazi()">ZAKAZI</button></td>
-					</tr>	
 			
-			</table>
+				</table>
+
+				</div>
+				
+				<div slot="footer">
+	        		<button style="margin:5px;" class="btn btn-dark" v-on:click="zakazi()">Zakazi</button>       						
+					<button style="margin:5px;" class="btn btn-secondary" @click="posetaSelected=false">Nazad</button>								
+				</div>			
+
+			</modal>
 		
 		</div>
-	
-		<div v-else-if="klinikaSelected" class="container" id="cosak">
+		
+		<div v-if="klinikaSelected" class="container" id="cosak">
 		
 			<h2>Slobodni termini</h2><br>
 				
@@ -233,10 +260,8 @@ Vue.component("klinikeSlobodno", {
 		},
 		
 		refresh: function(){
-			if (this.klinikaSelected)
-				location.reload();
-			else
-				this.selectKlinika(this.selectedKlinika);
+			this.klinikaSelected = false;
+			this.posetaSelected = false;
 		}, 
 				
 		selectKlinika: function(klinika){
@@ -249,7 +274,6 @@ Vue.component("klinikeSlobodno", {
 		selectPoseta: function(poseta){
 			this.selectedPoseta = poseta;
 			this.posetaSelected = true;
-			this.klinikaSelected = false;
 			this.datum = this.formatiraj(this.selectedPoseta.datum);
 		}, 
 		
@@ -335,6 +359,7 @@ Vue.component("klinikeSlobodno", {
 			}		
 			this.klinike = lista;
 		}
+		
 	}
 	
 });

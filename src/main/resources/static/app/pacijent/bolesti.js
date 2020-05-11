@@ -25,112 +25,33 @@ Vue.component("bolesti", {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;" v-if="!bolestSelected && !lekarSelected">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active" style="min-width: 100px;" v-if="bolestSelected || lekarSelected">
-        <a class="nav-link" href="#/bolesti" v-on:click="refresh()">
-          <i class="fa fa-reply"></i>
-          Nazad
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-      <li class="nav-item dropdown" v-if="bolestSelected && !lekarSelected" style="margin-left: 50px;">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-star"></i>
-          Oceni kliniku
-          <span class="sr-only">(current)</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="pretraga">
-          <form>
-         	<table class="table">
-         	<tr>
-				<td><input type="number" min="0" max="10" v-model="klinikaOcena" class="form-control" disable onKeyDown="return false"></td>
-			</tr>
-			<tr>
-				<th scope="row"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="oceniKlinika()">OCENI KLINIKU</button></th>
-			</tr>
-         	</table>
-          </form>
-        </div>
-      </li>
-      <li class="nav-item dropdown" v-if="!bolestSelected && lekarSelected" style="margin-left: 50px;">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-star"></i>
-          Oceni lekara
-          <span class="sr-only">(current)</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="pretraga">
-          <form>
-         	<table class="table">
-         	<tr>
-				<td><input type="number" min="0" max="10" v-model="lekarOcena" class="form-control" disable onKeyDown="return false"></td>
-			</tr>
-         	<tr>
-				<th scope="row"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="oceniLekar()">OCENI LEKARA</button></th>			
-			</tr>
-         	</table>
-          </form>
-        </div>
-      </li>
-
     </ul>   
-    <form class="form-inline my-2 my-lg-0" v-if="!bolestSelected && !lekarSelected">
+    <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>		
 		</div>
-	
-		<div v-if="lekarSelected" class="card" id="box">
 		
-			<h2>Detalji lekara</h2><br>
-			
-			<table class="table">
-			
-					<tr>
-						<th scope="row">Ime: </th>
-						<td><input type="text" v-model="selectedLekar.ime" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
-						<th scope="row">Prezime: </th>
-						<td><input type="text" v-model="selectedLekar.prezime" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
-						<th scope="row">Telefon: </th>
-						<td><input type="text" v-model="selectedLekar.telefon" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
-						<th scope="row">Email: </th>
-						<td><input type="text" v-model="selectedLekar.email" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
-						<th scope="row">Ocena: </th>
-						<td><input type="text" v-model="selectedLekar.prosecnaOcena" class="form-control" disabled></td>
-					</tr>
-					
-			</table>
+			<div>
 		
-		</div>
-	
-		<div v-else-if="bolestSelected" class="container">
-		
-			<div class="row" id="red">
-			
-				<div class="col card" id="okvir">
-			
-				<h2>Detalji bolesti</h2><br>
+			<modala v-if="bolestSelected" @close="bolestSelected=false">
+							
+				<div slot="body">
 				
-					<table id="rasiri">
+				<div class="row">
+			
+				<div class="card" id="okvir" style="width: 45%;">
+							
+					<table class="table">
 				
 						<tr>
 							<th scope="row">Datum: </th>
@@ -141,12 +62,7 @@ Vue.component("bolesti", {
 							<th scope="row">Klinika: </th>
 							<td><input type="text" v-model="selectedBolest.klinika" class="form-control" disabled></td>
 						</tr>
-						
-						<tr>
-							<th scope="row">Tip posete: </th>
-							<td><input type="text" v-model="selectedBolest.tipPosete" class="form-control" disabled></td>
-						</tr>
-						
+												
 						<tr>
 							<th scope="row">Naziv posete: </th>
 							<td><input type="text" v-model="selectedBolest.nazivPosete" class="form-control" disabled></td>
@@ -156,8 +72,12 @@ Vue.component("bolesti", {
 							<th scope="row">Ocena klinike: </th>
 							<td><input type="text" v-model="selectedBolest.ocenaKlinike" class="form-control" disabled></td>
 						</tr>
+						<tr>
+							<th scope="row"><button class="btn btn-outline-secondary" v-on:click="oceniKlinika()">OCENI KLINIKU</button></th>			
+							<td><input type="number" min="0" max="10" v-model="klinikaOcena" class="form-control" disable onKeyDown="return false"></td>
+						</tr>
 						
-				</table><br>
+				</table>
 				
 				<label style="font-size: 25px">Izvestaj</label>
 				<textarea disabled>{{selectedBolest.izvestaj}}</textarea>
@@ -256,10 +176,72 @@ Vue.component("bolesti", {
 			</div>
 			
 			</div>
+				
+				</div>
+				
+				<div slot="footer">
+					<button class="btn btn-secondary" @click="bolestSelected=false">Zatvori</button>								
+				</div>			
+			
+			</modala>	
 		
 		</div>
-	
-		<div v-else class="container" id="cosak">
+
+		
+		<div>
+		
+			<modal v-if="lekarSelected" @close="lekarSelected=false">
+			
+				<h2 slot="header">Detalji lekara</h2>
+				
+				<div slot="body">
+				
+				<table class="table">
+			
+					<tr>
+						<th scope="row">Ime: </th>
+						<td><input type="text" v-model="selectedLekar.ime" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Prezime: </th>
+						<td><input type="text" v-model="selectedLekar.prezime" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Telefon: </th>
+						<td><input type="text" v-model="selectedLekar.telefon" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Email: </th>
+						<td><input type="text" v-model="selectedLekar.email" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Ocena: </th>
+						<td><input type="text" v-model="selectedLekar.prosecnaOcena" class="form-control" disabled></td>
+					</tr>
+					<tr>
+						<th scope="row"><button class="btn btn-outline-secondary" v-on:click="oceniLekar()">OCENI LEKARA</button></th>			
+						<td><input type="number" min="0" max="10" v-model="lekarOcena" class="form-control" disable onKeyDown="return false"></td>
+					</tr>
+
+					
+				</table>
+
+				</div>
+				
+				<div slot="footer">
+					<button class="btn btn-secondary" @click="lekarSelected=false">Zatvori</button>								
+				</div>
+			
+			</modal>
+		
+		</div>
+		
+		
+		<div class="container" id="cosak">
 		
 			<h2>Istorija bolesti</h2><br>
 			
@@ -336,13 +318,6 @@ Vue.component("bolesti", {
 			  
 		},
 		
-		refresh: function(){
-			if (this.bolestSelected)
-				location.reload();
-			else
-				this.selectBolest(this.selectedBolest);
-		},
-		
 		selectBolest: function(bolest){
 			this.selectedBolest = bolest;
 			this.bolestSelected = true;
@@ -353,13 +328,18 @@ Vue.component("bolesti", {
 		selectLekar: function(lekar){
 			this.selectedLekar = lekar;
 			this.lekarSelected = true;
-			this.bolestSelected = false;
 		},
 		
 		oceniKlinika: function(){
 			
 			axios.post("/klinika/ocenjivanje/" + this.selectedBolest.posetaId, {"id": this.selectedBolest.klinikaId, "ocena": this.klinikaOcena})
 			.then(response => {
+				for (let b of this.bolesti){
+					if (b.posetaId == response.data.posetaId){
+						b.ocenaKlinike = response.data.ocenaKlinike;
+						break;
+					}
+				}
 				this.selectBolest(response.data);
 			})
 			.catch(response => {
@@ -372,10 +352,12 @@ Vue.component("bolesti", {
 			
 			axios.post("/lekar/ocenjivanje/" + this.selectedBolest.posetaId, {"id": this.selectedLekar.id, "ocena": this.lekarOcena})
 			.then(response => {
-				this.selectBolest(response.data);
-				for (let i of this.selectedBolest.lekari){
-					if (i.id == this.selectedBolest.selectedLekar)
-						this.selectLekar(i);
+				this.selectLekar(response.data);
+				for (let l of this.selectedBolest.lekari){
+					if (l.id == response.data.id){
+						l.prosecnaOcena = response.data.prosecnaOcena;
+						break;
+					}
 				}
 			})
 			.catch(response => {

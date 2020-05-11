@@ -23,7 +23,8 @@ Vue.component("klinikeLekari", {
 			greskaPretraga: '', 
 			zahtev: {}, 
 			imePrezime: '', 
-			datum: '' 
+			datum: '', 
+			prikaziKliniku: false
 		}
 	}, 
 	
@@ -44,47 +45,25 @@ Vue.component("klinikeLekari", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected || lekarSelected || zakazivanje">
+      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected">
         <a class="nav-link" href="#/klinikeLekari" v-on:click="refresh()">
           <i class="fa fa-reply"></i>
           Nazad
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item dropdown" style="min-width: 100px; margin-left: 50px;" v-if="klinikaSelected">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </ul>
+      <ul class="navbar-nav" style="margin: auto;">
+      <li class="nav-item active" style="min-width: 100px;" v-if="klinikaSelected">
+        <a class="nav-link" href="#" v-on:click="prikaziKliniku=true" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-info"></i>
           Detalji klinike
           <span class="sr-only">(current)</span>
         </a>
-        <div class="dropdown-menu " aria-labelledby="navbarDropdown" id="pretraga">
-			<form>
-			<h2>{{selectedKlinika.naziv}}</h2>
-			
-			<table class="table-sm" style="min-width: 350px;">
-			
-					<tr>
-						<th scope="row">Adresa: </th>
-						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
-					</tr>
-					
-					<tr>
-						<th scope="row">Ocena: </th>
-						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
-					</tr>
-
-			</table>
-
-				<label style="font-size: 25px">Opis</label>
-				<textarea disabled>{{selectedKlinika.opis}}</textarea>
-
-			</form>
-
-		</div>
       </li>
     </ul>    
     
-    <ul class="navbar-nav mr-auto" style="margin-left: 150px;" v-if="!lekarSelected && !zakazivanje">
+    <ul class="navbar-nav mr-auto" style="margin-left: 150px;">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-sort"></i>
@@ -103,7 +82,7 @@ Vue.component("klinikeLekari", {
       </li>
     </ul>
     
-    <ul class="navbar-nav " style="margin-left: 150px;"  v-if="!lekarSelected && !zakazivanje">
+    <ul class="navbar-nav " style="margin-left: 150px;">
 		<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-search"></i>
@@ -129,7 +108,7 @@ Vue.component("klinikeLekari", {
 							<td><input type="date" v-model="datumPregleda" class="form-control" onKeyDown="return false"></td>
 						</tr>
 						<tr>
-							<td><button v-on:click="pretrazi()" class="btn btn-outline-success my-2 my-sm-0">PRETRAZI</button></td>
+							<td><button v-on:click="pretrazi()" class="btn btn-outline-secondary">PRETRAZI</button></td>
 							<td>{{greskaPretraga}}</td>
 						</tr>
 						<tr v-if="!klinikaSelected">
@@ -160,7 +139,7 @@ Vue.component("klinikeLekari", {
 
 						</tr>
 						<tr>
-							<td v-if="!lekarSelected"><button v-on:click="filtriraj()" class="btn btn-outline-success my-2 my-sm-0">FILTIRAJ</button></td>
+							<td v-if="!lekarSelected"><button v-on:click="filtriraj()" class="btn btn-outline-secondary">FILTIRAJ</button></td>
 						</tr>
 				
 				</table>
@@ -176,46 +155,52 @@ Vue.component("klinikeLekari", {
 	
 	</div>
 	
-		<div class="row">
+		<div>
 		
-			<div v-if="zakazivanje" class="card" id="box">
-			
-				<h2>Detalji zakazivanja</h2><br>
-				
-					<table class="table">
-				
-						<tr>
-							<th scope="row">Datum pregleda: </th>
-							<td><input type="text" v-model="datum" class="form-control" disabled></td>
-						</tr>
-						<tr>
-							<th scope="row">Lekar: </th>
-							<td><input type="text" v-model="imePrezime" class="form-control" disabled></td>
-						</tr>
-						<tr>
-							<th scope="row">Naziv pregleda: </th>
-							<td><input type="text" v-model="tipPregleda" class="form-control" disabled></td>
-						</tr>	
-						<tr>
-							<th scope="row">Cena pregleda: </th>
-							<td><input type="text" v-model="selectedKlinika.cena" class="form-control" disabled></td>
-						</tr>
-						<tr>
-							<th scope="row">Trajanje pregleda: </th>
-							<td><input type="text" v-model="selectedKlinika.trajanje" class="form-control" disabled></td>
-						</tr>
-						<tr>
-							<td colspan="2"><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="zakaziPregled()">ZAKAZI</button></td>
-						</tr>
-				
-				</table>
-			
-			</div>
-		
-			<div v-else-if="lekarSelected && selectedLekar.satnica.length==0" class="card" id="box">
-			
-				<h2>Detalji lekara</h2><br>
+			<modal v-if="prikaziKliniku" @close="prikaziKliniku=false">
 					
+				<div slot="body">
+				
+				<table class="table">
+				
+					<tr>
+						<th scope="row">Naziv: </th>
+						<td><input type="text" v-model="selectedKlinika.naziv" class="form-control" disabled></td>
+					</tr>
+			
+					<tr>
+						<th scope="row">Adresa: </th>
+						<td><input type="text" v-model="selectedKlinika.adresa" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Ocena: </th>
+						<td><input type="text" v-model="selectedKlinika.ocena" class="form-control" disabled></td>
+					</tr>
+					
+				</table>
+				
+				<label style="font-size: 25px">Opis</label>
+				<textarea disabled>{{selectedKlinika.opis}}</textarea>
+				
+				</div>
+				
+				<div slot="footer">
+					<button style="margin:5px;" class="btn btn-secondary" @click="prikaziKliniku=false">Zatvori</button>								
+				</div>			
+		
+			</modal>
+		
+		</div>
+	
+		<div>
+		
+			<modal v-if="lekarSelected && selectedLekar.satnica.length==0" @close="lekarSelected=false">
+			
+				<h2 slot="header">Detalji lekara</h2>
+			
+				<div slot="body">
+				
 					<table class="table">
 					
 						<tr>
@@ -244,15 +229,28 @@ Vue.component("klinikeLekari", {
 						</tr>
 					
 					</table>
+
+				</div>
 				
-				
-			</div>
+				<div slot="footer">
+					<button style="margin:5px;" class="btn btn-secondary" @click="lekarSelected=false">Zatvori</button>								
+				</div>			
 			
-			<div v-else-if="lekarSelected && selectedLekar.satnica.length>0" class="container">
-			
-				<div class="row" id="red">
+			</modal>
+		
+		</div>
+		
+		<div>
+		
+			<modala v-if="lekarSelected && selectedLekar.satnica.length>0" @close="lekarSelected=false">
+																					
+				<div slot="body">
 				
-				<div class="card col" id="okvir">
+				<br>
+				
+				<div class="row">
+				
+				<div class="col" id="okvir">
 				
 				<h2>Detalji lekara</h2><br>
 					
@@ -287,7 +285,7 @@ Vue.component("klinikeLekari", {
 				
 				</div>
 				
-				<div class="col" style="overflow: scroll; max-height: 500px;">
+				<div class="col" style="overflow: scroll; max-height: 450px;" >
 									
 					<table class="table table-bordered" style="text-align: center;">
 					
@@ -303,7 +301,7 @@ Vue.component("klinikeLekari", {
 							<tr v-for="s in selectedLekar.satnica">
 								
 								<td style="width: 50%;">{{formatiraj(s)}}</td>
-								<td><button class="btn btn-outline-success my-2 my-sm-0" v-on:click="zakazi(s)">ZAKAZI</button></td>
+								<td><button class="btn btn-outline-secondary" v-on:click="zakazi(s)">ZAKAZI</button></td>
 								
 							</tr>
 						
@@ -314,10 +312,63 @@ Vue.component("klinikeLekari", {
 				</div>
 				
 				</div>
+
+				</div>
 				
-			</div>
+				<div slot="footer">
+					<button class="btn btn-secondary" @click="lekarSelected=false">Zatvori</button>								
+				</div>			
 			
-			<div v-else-if="klinikaSelected" class="container" id="cosak">
+			</modala>
+		
+		</div>
+		
+		<div>
+		
+			<modal v-if="zakazivanje" @close="zakazivanje=false">
+			
+				<div slot="body">
+				
+					<table class="table">
+				
+						<tr>
+							<th scope="row">Datum pregleda: </th>
+							<td><input type="text" v-model="datum" class="form-control" disabled></td>
+						</tr>
+						<tr>
+							<th scope="row">Naziv pregleda: </th>
+							<td><input type="text" v-model="tipPregleda" class="form-control" disabled></td>
+						</tr>	
+						<tr>
+							<th scope="row">Trajanje pregleda: </th>
+							<td><input type="text" v-model="selectedKlinika.trajanje" class="form-control" disabled></td>
+						</tr>
+						<tr>
+							<th scope="row">Lekar: </th>
+							<td><input type="text" v-model="imePrezime" class="form-control" disabled></td>
+						</tr>
+						<tr>
+							<th scope="row">Cena pregleda: </th>
+							<td><input type="text" v-model="selectedKlinika.cena" class="form-control" disabled></td>
+						</tr>
+				
+					</table>
+
+				
+				</div>
+				
+				<div slot="footer">
+	        		<button style="margin:5px;" class="btn btn-dark" v-on:click="zakaziPregled()">Zakazi</button>       						
+					<button style="margin:5px;" class="btn btn-secondary" @click="zakazivanje=false">Nazad</button>								
+				</div>
+			
+			</modal>
+		
+		</div>
+	
+		<div class="row">
+										
+			<div v-if="klinikaSelected" class="container" id="cosak">
 			
 				<h2>Zaposleni lekari</h2><br>
 				
@@ -433,12 +484,9 @@ Vue.component("klinikeLekari", {
 		},
 		
 		refresh: function(){
-			if (this.klinikaSelected)
-				location.reload();
-			else if (this.lekarSelected)
-				this.selectKlinika(this.selectedKlinika);
-			else
-				this.selectLekar(this.selectedLekar);
+			this.klinikaSelected = false;
+			this.lekarSelected = false;
+			this.zakazivanje = false;
 		}, 
 		
 		osvezi: function(){
@@ -456,17 +504,15 @@ Vue.component("klinikeLekari", {
 		
 		selectLekar: function(lekar){
 			this.osvezi();
-			this.klinikaSelected = false;
 			this.lekarSelected = true;
-			this.zakazivanje = false;
 			this.selectedLekar = lekar;			
 		}, 
 		
 		pretrazi: function(){
 			
 			this.osvezi();
-			
-			if (this.tipPregelda == '' || this.datumPregleda == null){
+						
+			if (this.tipPregelda == '' || this.datumPregleda == null || this.datumPregleda == ''){
 				this.greskaPretraga = "Unesite tip pregleda i datum. ";
 				return;
 			}
@@ -531,8 +577,6 @@ Vue.component("klinikeLekari", {
 		}, 
 		
 		zakazi: function(vreme){
-			this.klinikaSelected = false;
-			this.lekarSelected = false;
 			this.zakazivanje = true;
 			this.zahtev = {"lekar": this.selectedLekar.id, "datum": vreme, "id": null};
 			this.imePrezime = this.selectedLekar.ime + " " + this.selectedLekar.prezime;

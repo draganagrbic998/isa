@@ -25,7 +25,7 @@ values ('2020-04-30 12:00', 0.2, 1, 1, 1, 1, 0);
 
 --------------LEKARI ANGAZOVANI NA ZAKAZANIM POSETAMA GLAVNOG PACIJENTA-----------------------
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', '$2a$10$Ji4eOOFafuhNBdiM8yZZWe2MCjO8eA2qKOch5NmJc3Wr1DfI7XHDK', 1,  '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
+values ('lekar', 'baba', 'deda', 'dragana.grbic.98@uns.ac.rs', '$2a$10$Ji4eOOFafuhNBdiM8yZZWe2MCjO8eA2qKOch5NmJc3Wr1DfI7XHDK', 1,  '2020-04-20 08:00', '2020-04-20 22:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
 values ('lekar', 'mama', 'tata', 'draganaasd@gmail.com', '$2a$10$Ji4eOOFafuhNBdiM8yZZWe2MCjO8eA2qKOch5NmJc3Wr1DfI7XHDK', 1, '2020-04-20 10:00', '2020-04-20 20:00', 1, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 --------------------------------------------

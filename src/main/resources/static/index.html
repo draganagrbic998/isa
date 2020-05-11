@@ -13,17 +13,39 @@
 	    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
 		<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
     
+    <script type="text/x-template" id="modala-template">
+    
+    	<transition name="modala">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container" style="width: 70%; height: 92%;">
+
+              <div class="modal-body">
+                <slot name="body">
+                </slot>
+              </div>
+
+              <div class="modal-footer">
+                <slot name="footer">
+                  default footer
+                  <button class="modal-default-button" @click="$emit('close')">
+                    OK
+                  </button>
+                </slot>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </transition>
+
+    </script>
+    
     <script type="text/x-template" id="modal-template">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-container">
-
-              <div class="modal-header">
-                <slot name="header">
-                  default header
-                </slot>
-              </div>
 
               <div class="modal-body">
                 <slot name="body">
@@ -43,6 +65,7 @@
           </div>
         </div>
       </transition>
+
     </script>
     
 	</head>
@@ -126,6 +149,9 @@
 		Vue.component("modal", {
 		    template: "#modal-template"
 		  });
+		Vue.component("modala", {
+		    template: "#modala-template"
+		});
 		</script>
 			
 	</body>

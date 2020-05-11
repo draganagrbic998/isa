@@ -4,10 +4,10 @@ Vue.component("zahtevTermini", {
 		return{
 			zahtevi: [], 
 			zahteviBackup: [],
+			pretraga: '', 
 			selectedZahtev: {}, 
 			selected: false, 
-			datum: '', 
-			pretraga: ''
+			datum: ''
 		}
 	}, 
 	
@@ -21,73 +21,74 @@ Vue.component("zahtevTermini", {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;" v-if="!selected">
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/pacijentHome">
           <i class="fa fa-home"></i>
           Home 
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active" style="min-width: 100px;" v-if="selected">
-        <a class="nav-link" href="#/zahtevTermini" v-on:click="refresh()">
-          <i class="fa fa-reply"></i>
-          Nazad
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
     </ul>
-      <form class="form-inline my-2 my-lg-0" v-if="!selected">
+        <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
     </form>
   </div>
 </nav>	
 			
-		</div>
+		<div>
 		
-		<div v-if="selected" class="card" id="box">
+			<modal v-if="selected" @close="selected=false">
 		
-			<h2>Detalji zahteva</h2><br>
-			
-			<table class="table">
-			
-			<tr>
-				<th>Datum: </th>
-				<td><input type="text" v-model="datum" class="form-control" disabled></td>
-			</tr>
+				<div slot="body">
+				
+				<table class="table">
 					
-			<tr>
-				<th scope="row">Tip posete: </th>
-				<td><input type="text" v-model="selectedZahtev.tipPosete" class="form-control" disabled></td>
-			</tr>
-			
-			<tr>
-				<th scope="row">Naziv posete: </th>
-				<td><input type="text" v-model="selectedZahtev.nazivPosete" class="form-control" disabled></td>
-			</tr>
+					<tr>
+						<th>Datum: </th>
+						<td><input type="text" v-model="datum" class="form-control" disabled></td>
+					</tr>
 				
-			<tr>
-				<th scope="row">Lekar: </th>
-				<td><input type="text" v-model="selectedZahtev.lekar" class="form-control" disabled></td>
-			</tr>
+					<tr>
+						<th scope="row">Tip posete: </th>
+						<td><input type="text" v-model="selectedZahtev.tipPosete" class="form-control" disabled></td>
+					</tr>
+			
+					<tr>
+						<th scope="row">Naziv posete: </th>
+						<td><input type="text" v-model="selectedZahtev.nazivPosete" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Lekar: </th>
+						<td><input type="text" v-model="selectedZahtev.lekar" class="form-control" disabled></td>
+					</tr>
+						
+					<tr>
+						<th scope="row">Trajanje posete: </th>
+						<td><input type="text" v-model="selectedZahtev.trajanje" class="form-control" disabled></td>
+					</tr>
+					
+					<tr>
+						<th scope="row">Cena posete: </th>
+						<td><input type="text" v-model="selectedZahtev.cena" class="form-control" disabled></td>
+					</tr>
+			
+				</table>
 				
-			<tr>
-				<th scope="row">Trajanje posete: </th>
-				<td><input type="text" v-model="selectedZahtev.trajanje" class="form-control" disabled></td>
-			</tr>
+				</div>
+				
+				<div slot="footer">
+					<button style="margin:5px;" class="btn btn-secondary" @click="selected=false">Zatvori</button>												
+				</div>
 			
-			<tr>
-				<th scope="row">Cena posete: </th>
-				<td><input type="text" v-model="selectedZahtev.cena" class="form-control" disabled></td>
-			</tr>
-			
-			</table>
-
-			</table>
+			</modal>
 		
 		</div>
 		
-		<div v-else class="container" id="cosak">
+		</div>
+				
+		<div class="container" id="cosak">
 		
 			<h2>Zahtevi za posete</h2><br>
 			
@@ -140,11 +141,12 @@ Vue.component("zahtevTermini", {
 			this.$router.push("/");
 		});
 		
+		
+		
 	}, 
 	
 	
 	methods: {
-		
 		formatiraj: function (date) {
 			
 			  date = new Date(date);
@@ -161,14 +163,14 @@ Vue.component("zahtevTermini", {
 			  
 		},
 		
-		refresh: function(){
-			location.reload();
-		}, 
-		
 		selectZahtev: function(zahtev){
 			this.selectedZahtev = zahtev;
 			this.selected = true;
 			this.datum = this.formatiraj(this.selectedZahtev.datum);
+		}, 
+		
+		refresh: function(){
+			location.reload();
 		}, 
 		
 		search: function(){
