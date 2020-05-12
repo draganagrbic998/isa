@@ -99,14 +99,14 @@ insert into korisnik (tip, ime, prezime, email, lozinka, telefon, drzava, grad, 
 values ('sestra', 'mama', 'tata', 'asd2@gmail.com', '$2a$10$nt06aM1C.v9xx.7WoTo4h.T7P0Vfsnum5kw61.mxQWmpgFU0Ko24.', 'asd', 'asd', 'asd', 'asd', true, true, 1, 0, '2020-04-01 10:00', '2020-04-01 18:00');
 
 --------------TERAPIJE ZA GLAVNOG PACIJENTA-----------------------
-insert into terapija (izvestaj, sestra)
-values (1, 4);
-insert into terapija (izvestaj, sestra)
-values (2, 5);
-insert into terapija (izvestaj, sestra)
-values (3, null);
-insert into terapija (izvestaj, sestra)
-values (4, null);
+insert into terapija (izvestaj, sestra, version)
+values (1, 4, 0);
+insert into terapija (izvestaj, sestra, version)
+values (2, 5, 0);
+insert into terapija (izvestaj, sestra, version)
+values (3, null, 0);
+insert into terapija (izvestaj, sestra, version)
+values (4, null, 0);
 -------------
 insert into terapija_lek (terapija, lek)
 values (1, 1);
