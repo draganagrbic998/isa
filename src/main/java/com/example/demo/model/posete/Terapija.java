@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import com.example.demo.model.korisnici.Sestra;
 import com.example.demo.model.resursi.Dijagnoza;
@@ -37,6 +38,8 @@ public class Terapija {
     joinColumns = @JoinColumn(name = "terapija"),
     inverseJoinColumns = @JoinColumn(name = "lek"))
 	private Set<Lek> lekovi = new HashSet<>();
+	@Version
+	private long version;
 	
 	public Terapija() {
 		super();
