@@ -10,10 +10,10 @@ where id = 1;
 -------------GLAVNA KLINIKA, SALA I TIP POSETE KOJE KORISTIM-----------------------
 insert into klinika (naziv, opis, adresa)
 values ('moja klinika', 'super klinika', 'Vase Stajica 3, Novi Sad');
-insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
-values (true, 'super pregled', 1, 200, 1, 30, true);
-insert into sala (broj, naziv, klinika, aktivan)
-values ('21', 'sala jedna mala', 1, true);
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan, version)
+values (true, 'super pregled', 1, 200, 1, 30, true, 0);
+insert into sala (broj, naziv, klinika, aktivan, version)
+values ('21', 'sala jedna mala', 1, true, 0);
 
 -----------ZAKAZANE POSETE ZA GLAVNOG PACIJENTA------------------------
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
@@ -203,8 +203,8 @@ values ('lekar', 'miroslav', 'glisic', 'glisa@gmail.com', '$2a$10$zcFdgHGQG1BAOH
 ----------DODATANA KLINIKA, TIP POSETE, LEKAR--------------------
 insert into klinika (naziv, opis, adresa)
 values ('njegova klinika', 'ok klinika', 'tamo neka adresa');
-insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
-values (true, 'super pregled', 2, 300, 2, 45, true);
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan, version)
+values (true, 'super pregled', 2, 300, 2, 45, true, 0);
 insert into korisnik (tip, ime, prezime, email, lozinka, klinika, pocetno_vreme, krajnje_vreme, specijalizacija,  telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
 values ('lekar', 'prababa', 'pradeda', 'isanalog7@gmail.com', '$2a$10$cYhYDcfjJJq.cVF7y9DRtOkhbDTj4EV.1K7dloGs4MRu82IfgrdS.', 2,  '2020-04-20 10:00', '2020-04-20 20:00', 2, 'asd', 'asd', 'asd', 'asd', true, true, 0);
 
@@ -217,8 +217,8 @@ insert into zahtev_odmor (pocetak, kraj, odobren, zaposleni, klinika)
 values ('2020-04-30 12:00:00', '2020-05-30 12:00:00', true, 5, 1);
 
 ------------PRVA OPERACIJA-------------------
-insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
-values (false, 'super operacija', 1, 200, 1, 30, true);
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan, version)
+values (false, 'super operacija', 1, 200, 1, 30, true, 0);
 
 -----------PREGLED U TOKU-------------------
 insert into poseta (datum, popust, stanje, karton, sala, tip_posete, version)
@@ -235,7 +235,7 @@ update korisnik set zapoceta_poseta = 15
 where id = 2;
 
 ----------------JOS JEDAN TIP PREGLEDA------------
-insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan)
-values (true, 'ocajan pregled', 1, 200, 2, 30, true);
+insert into tip_posete (pregled, naziv, klinika, cena, sati, minute, aktivan, version)
+values (true, 'ocajan pregled', 1, 200, 2, 30, true, 0);
 
 

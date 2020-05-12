@@ -17,7 +17,9 @@ import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.repository.IzvestajRepository;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.PosetaRepository;
+import com.example.demo.repository.SalaRepository;
 import com.example.demo.repository.TerapijaRepository;
+import com.example.demo.repository.TipPoseteRepository;
 import com.example.demo.repository.ZahtevPosetaRepository;
 
 @Component
@@ -26,6 +28,12 @@ public class PosetaService {
 
 	@Autowired
 	private PosetaRepository posetaRepository;
+	
+	@Autowired
+	private SalaRepository salaRepository;
+	
+	@Autowired
+	private TipPoseteRepository tipRepository;
 
 	@Autowired
 	private ZahtevPosetaRepository zahtevRepository;
@@ -60,7 +68,13 @@ public class PosetaService {
 			l.setPoslednjaIzmena(new Date());
 			this.lekarRepository.save(l);
 		}
-
+		
+		poseta.getSala().setPoslednjaIzmena(new Date());
+		this.salaRepository.save(poseta.getSala());
+		
+		poseta.getTipPosete().setPoslednjaIzmena(new Date());
+		this.tipRepository.save(poseta.getTipPosete());
+		
 		if (id != null)
 			this.zahtevRepository.deleteById(id);
 

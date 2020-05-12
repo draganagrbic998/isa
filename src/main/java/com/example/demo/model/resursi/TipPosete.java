@@ -1,5 +1,6 @@
 package com.example.demo.model.resursi;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 import com.example.demo.model.ostalo.Brisanje;
 import com.example.demo.model.posete.Poseta;
@@ -43,13 +45,17 @@ public class TipPosete implements Brisanje {
 	private Set<Poseta> posete = new HashSet<>();
 	@OneToMany(mappedBy = "tipPosete", fetch = FetchType.EAGER)
 	private Set<ZahtevPoseta> posetaZahtevi = new HashSet<>();
-
+	@Column
+	private Date poslednjaIzmena;	
+	@Version
+	private long version;
+	
 	public TipPosete() {
 		super();
 	}
 
 	public TipPosete(Integer id, boolean pregled, String naziv, double cena, 
-			int sati, int minute, Klinika klinika, boolean aktivan) {
+			int sati, int minute, Klinika klinika, boolean aktivan,long version) {
 		super();
 		this.id = id;
 		this.pregled = pregled;
@@ -59,6 +65,7 @@ public class TipPosete implements Brisanje {
 		this.minute = minute;
 		this.klinika = klinika;
 		this.aktivan = aktivan;
+		this.version = version;
 	}
 
 	@Override
@@ -151,5 +158,23 @@ public class TipPosete implements Brisanje {
 	public void setPosetaZahtevi(Set<ZahtevPoseta> posetaZahtevi) {
 		this.posetaZahtevi = posetaZahtevi;
 	}
+
+	
+	public Date getPoslednjaIzmena() {
+		return poslednjaIzmena;
+	}
+
+	public void setPoslednjaIzmena(Date poslednjaIzmena) {
+		this.poslednjaIzmena = poslednjaIzmena;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
+	
 	
 }

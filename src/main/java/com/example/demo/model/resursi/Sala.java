@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 import com.example.demo.model.ostalo.Brisanje;
 import com.example.demo.model.ostalo.Slobodnost;
@@ -36,18 +37,23 @@ public class Sala implements Slobodnost, Brisanje{
 	private Klinika klinika;
 	@OneToMany(mappedBy = "sala", fetch = FetchType.EAGER)
 	private Set<Poseta> posete = new HashSet<>();
-
+	@Column
+	private Date poslednjaIzmena;
+	@Version
+	private long version;
+	
 	public Sala() {
 		super();
 	}
 
-	public Sala(Integer id, String broj, String naziv, Klinika klinika, boolean aktivan) {
+	public Sala(Integer id, String broj, String naziv, Klinika klinika, boolean aktivan, long version) {
 		super();
 		this.id = id;
 		this.broj = broj;
 		this.naziv = naziv;
 		this.klinika = klinika;
 		this.aktivan = aktivan;
+		this.version = version;
 	}
 
 	@Override
@@ -125,5 +131,24 @@ public class Sala implements Slobodnost, Brisanje{
 	public void setPosete(Set<Poseta> posete) {
 		this.posete = posete;
 	}
+
+	
+	public Date getPoslednjaIzmena() {
+		return poslednjaIzmena;
+	}
+
+	public void setPoslednjaIzmena(Date poslednjaIzmena) {
+		this.poslednjaIzmena = poslednjaIzmena;
+	}
+
+	public long getVersion() {
+		return version;
+	}
+
+	public void setVersion(long version) {
+		this.version = version;
+	}
+	
+	
 	
 }

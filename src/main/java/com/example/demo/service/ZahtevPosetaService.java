@@ -24,6 +24,7 @@ import com.example.demo.model.resursi.Sala;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.SalaRepository;
+import com.example.demo.repository.TipPoseteRepository;
 import com.example.demo.repository.ZahtevPosetaRepository;
 
 @Component
@@ -41,6 +42,9 @@ public class ZahtevPosetaService {
 
 	@Autowired
 	private SalaConversion salaConversion;
+	
+	@Autowired
+	private TipPoseteRepository tipRepository;
 
 	@Transactional(readOnly = false)
 	public void save(ZahtevPoseta zahtev) {
@@ -54,6 +58,8 @@ public class ZahtevPosetaService {
 		this.zahtevPosetaRepository.save(zahtev);
 		l.setPoslednjaIzmena(new Date());
 		this.lekarRepository.save(l);
+		zahtev.getTipPosete().setPoslednjaIzmena(new Date());
+		this.tipRepository.save(zahtev.getTipPosete());
 	}
 	
 	@Transactional(readOnly = false)
