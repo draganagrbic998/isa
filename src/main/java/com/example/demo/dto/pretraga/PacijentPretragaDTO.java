@@ -12,6 +12,7 @@ import com.example.demo.dto.model.KartonDTO;
 import com.example.demo.dto.model.PacijentDTO;
 import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.korisnici.Pacijent;
+import com.example.demo.model.korisnici.Sestra;
 import com.example.demo.model.posete.Poseta;
 import com.example.demo.model.posete.StanjePosete;
 
@@ -48,6 +49,20 @@ public class PacijentPretragaDTO extends PacijentDTO {
 		}
 	}
 
+	public PacijentPretragaDTO(Pacijent pacijent, Sestra sestra) {
+		super(pacijent);
+		this.kartonObj = new KartonDTO(pacijent.getKarton());
+		this.stariIzvestaji = new ArrayList<>();
+		
+		for (Poseta p: pacijent.getKarton().getPosete()) {
+			if (p.getSala().getKlinika().equals(sestra.getKlinika()) && 
+					p.getStanje().equals(StanjePosete.OBAVLJENO))
+				this.stariIzvestaji.add(new IzvestajDTO(p.getIzvestaj()));
+		}
+		
+		Collections.sort(this.stariIzvestaji);
+	}
+	
 	public KartonDTO getKartonObj() {
 		return kartonObj;
 	}

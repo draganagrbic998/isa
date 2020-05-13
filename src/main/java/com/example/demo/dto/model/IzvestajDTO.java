@@ -15,6 +15,8 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 	private String opis;
 	private List<Integer> dijagnoze;
 	private List<Integer> lekovi;
+	private List<String> dijagnozeSifre;
+	private List<String> lekoviSifre;
 	private Integer poseta;
 	private Integer terapija;
 	private String posetaNaziv;
@@ -32,14 +34,20 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 		this.terapija = izvestaj.getTerapija().getId();
 		this.posetaNaziv = izvestaj.getPoseta().getTipPosete().getNaziv();
 		
+		this.dijagnozeSifre = new ArrayList<>();
+		this.lekoviSifre = new ArrayList<>();
+		
 		this.dijagnoze = new ArrayList<>();
-		for (Dijagnoza d : izvestaj.getDijagnoze())
+		for (Dijagnoza d : izvestaj.getDijagnoze()) {
 			this.dijagnoze.add(d.getId());
+			this.dijagnozeSifre.add(d.getSifra());
+		}
 		
 		this.lekovi = new ArrayList<>();
-		for (Lek l : izvestaj.getTerapija().getLekovi())
+		for (Lek l : izvestaj.getTerapija().getLekovi()) {
 			this.lekovi.add(l.getId());
-		
+			this.lekoviSifre.add(l.getSifra());
+		}
 	}
 
 	@Override
@@ -109,6 +117,22 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 
 	public void setPosetaNaziv(String posetaNaziv) {
 		this.posetaNaziv = posetaNaziv;
+	}
+
+	public List<String> getDijagnozeSifre() {
+		return dijagnozeSifre;
+	}
+
+	public void setDijagnozeSifre(List<String> dijagnozeSifre) {
+		this.dijagnozeSifre = dijagnozeSifre;
+	}
+
+	public List<String> getLekoviSifre() {
+		return lekoviSifre;
+	}
+
+	public void setLekoviSifre(List<String> lekoviSifre) {
+		this.lekoviSifre = lekoviSifre;
 	}
 
 }

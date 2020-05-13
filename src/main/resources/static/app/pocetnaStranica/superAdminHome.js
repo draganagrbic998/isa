@@ -67,15 +67,12 @@ Vue.component("superAdminHome", {
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-line-chart">
-          </i>
-          Zahtevi
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#/zahtevRegistracijaObrada">Za Registraciju Pacijenata</a>
-          <div class="dropdown-divider"></div>
-        </div>
+        <a class="nav-link" href="#/zahtevRegistracijaObrada">
+          <i class="fa fa-line-chart"></i>
+          Zahtevi za registraciju\n
+          pacijenata
+          <span class="sr-only">(current)</span>
+          </a>
       </li>
       <li class="nav-item active" style="min-width: 140px;">
         <a class="nav-link" href="#/superAdminProfil">

@@ -30,16 +30,10 @@ Vue.component("zahtevRegistracijaObrada", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#"">
-          <i class="fa fa-address-book">
-          </i>
-          Sifra
-        </a>
-      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-	  <select v-model="selected.id">
+      <a class="navbar-brand" href="#" disabled>Odaberite zahtev: </a>
+	  <select class="form-control mr-sm-2" v-model="selected.id">
        	<option v-for="z in zahtevi">{{z.id}}</option>
 	  </select>
 	  <input class="form-control mr-sm-2" type="text" v-model="selected.razlog" placeholder="Razlog Odbijanja" aria-label="Razlog Odbijanja">

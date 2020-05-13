@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.conversion.total.SestraConversion;
 import com.example.demo.dto.model.SestraDTO;
+import com.example.demo.dto.pretraga.PacijentPretragaDTO;
 import com.example.demo.model.korisnici.Admin;
+import com.example.demo.model.korisnici.Pacijent;
 import com.example.demo.model.korisnici.Sestra;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.Message;
@@ -111,6 +114,21 @@ public class SestraController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}
+	}
+	
+	@PreAuthorize("hasAuthority('Sestra')")
+	@GetMapping(value="/pacijenti", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PacijentPretragaDTO>> getPacijenteKlinike(){
+		try {
+			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
+			List<PacijentPretragaDTO> pacijentiPretraga = new ArrayList<>();
+			for (Pacijent p: this.sestraService.pacijentiKlinike(sestra))
+				pacijentiPretraga.add(new PacijentPretragaDTO(p, sestra));
+			return new ResponseEntity<>(pacijentiPretraga, HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

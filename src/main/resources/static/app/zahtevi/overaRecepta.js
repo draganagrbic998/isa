@@ -2,8 +2,7 @@ Vue.component("overaRecepta", {
 	
 	data: function(){
 		return{
-			recepti: [],
-			selectedId: ''
+			recepti: []
 		}
 	},
 	
@@ -27,13 +26,6 @@ Vue.component("overaRecepta", {
           </a>
       </li>
     </ul>
-    
-    <form class="form-inline my-2 my-lg-0">
-	  <select v-model="selectedId">
-       	<option v-for="r in recepti">{{r.id}}</option>
-	  </select>
-      <button class="btn btn-outline-success my-2 my-sm-0" v-on:click="overi()">Overi</button>
-    </form>
   </div>
 </nav>
 
@@ -43,6 +35,7 @@ Vue.component("overaRecepta", {
 			<th> Broj Osiguranika </th>
 			<th> Lekovi </th>
 			<th> Dijagnoze </th>
+			<th></th>
 		</tr>
 		
 		<tr v-for="r in recepti">
@@ -57,6 +50,9 @@ Vue.component("overaRecepta", {
 			<select>
 				<option v-for="d in r.dijagnoze">{{d}}</option>
 			</select>
+			</td>
+			<td>
+	        	<button class="btn btn-success" v-on:click="overi(r.id)">Overi</button>
 			</td>
 		</tr>
 	</table>
@@ -77,14 +73,14 @@ Vue.component("overaRecepta", {
 	
 	methods: {
 		
-		overi: function() {
+		overi: function(rid) {
 						
-			if (this.selectedId === "") {
+			if (rid === "") {
 				alert("Morate odabrati recept!");
 				return;
 			}
 			
-			axios.get("/terapija/overi/" + this.selectedId)
+			axios.get("/terapija/overi/" + rid)
 			.then(response => {
 				alert("Recept uspesno overen!");
 				location.reload();

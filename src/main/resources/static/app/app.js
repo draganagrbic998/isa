@@ -45,7 +45,6 @@ const zahtevPregledObrada = {template: '<zahtevPregledObrada></zahtevPregledObra
 const zahtevOperacijaObrada = {template: '<zahtevOperacijaObrada></zahtevOperacijaObrada>'}
 const zahtevOdmorSlanje = {template: '<zahtevOdmorSlanje></zahtevOdmorSlanje>'}
 const zahtevOdmorObrada = {template: '<zahtevOdmorObrada></zahtevOdmorObrada>'}
-const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
 const izvestaj = {template: '<izvestaj></izvestaj>'}
 
 //pacijent:
@@ -61,6 +60,11 @@ const radniKalendar = {template: '<radniKalendar></radniKalendar>'}
 const godisnjiOdmori = {template: '<godisnjiOdmori></godisnjiOdmori>'}
 const zapocetPregled = {template: '<zapocetPregled></zapocetPregled>'}
 const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
+
+//sestra:
+const sestraPacijenti = {template: '<sestraPacijenti></sestraPacijenti>'}
+const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
+
 
 const router = new VueRouter({
 	
@@ -122,6 +126,8 @@ const router = new VueRouter({
 		{path: '/godisnjiOdmori', component: godisnjiOdmori},
 		{path: '/zapocetPregled', component: zapocetPregled},
 		{path: '/lekarPacijenti', component: lekarPacijenti},
+		
+		{path: '/sestraPacijenti', component: sestraPacijenti},
 		
 	]
 	

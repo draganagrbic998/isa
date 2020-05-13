@@ -19,7 +19,14 @@ Vue.component("sestraHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item active" style="min-width: 100px;">
+        <a class="nav-link" href="#/sestraPacijenti">
+          <i class="fa fa-list"></i>
+          Lista pacijenata klinike
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item active" style="min-width: 100px;">
         <a class="nav-link" href="#/overaRecepta">
           <i class="fa fa-home"></i>
           Overa Recepata
