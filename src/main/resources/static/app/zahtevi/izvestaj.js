@@ -37,44 +37,37 @@ Vue.component("izvestaj", {
       </ul>
   </div>
 </nav>
-	
-	<div class="container"> 
-		
+		<div class="container"> 
 		<div class="row">
-		<div class="card border-info mb-9" style="max-width: 40rem;">
-		<div class="card-header"><h2 class="row justify-content-center">Klinika "{{klinika}}"</h2><br></div>
-		<div class="card">
-		<table class="table">
-			<tr>
-					<th scope="row">Prosecna ocena:</th>
-					<td>{{ocena}}</td>
-				</tr>			
-		</table>
-		<br>
-		<table>
-				<tr><th colspan="3" scope="row" style="text-align:center" >PRIHODI KLINIKE</th></tr>
+		<div>
+			<h2 class="row justify-content-center">Klinika "{{klinika}}"</h2><br>
+		<table class="table ">
+			<tbody>
+				<tr><th scope="row" >Prihodi klinike: </th></tr>
 				<br>
 				<tr>
 					<td><input type="date" v-model="period.pocetak"></td>
 					<td><input type="date" v-model="period.kraj"></td>
-					<td><button v-on:click="nadjiPrihode()">PRIKAZI</button></td>
+					<td><button v-on:click="nadjiPrihode()" class="btn btn-primary">PRIKAZI</button></td>
 				</tr>
 				<br>	
 				<tr>
 					<th scope="row">Profit: </th>
 					<td>{{profit}}</td>
 				</tr>			
+				<tr>
+							<th scope="row">Prosecna ocena:</th>
+							<td>{{ocena}}</td>
+						</tr>		
+			</tbody>
 			</table>
 		</div>
-		</div>
-		<div class="col-md-7" >
-		<div class="card border-info mb-9" style="max-width: 40rem;">
-		<div class="card-header"><h2 class="row justify-content-center">Grafikon pregleda</h2><br></div>
-		<div class="card">
-
-				<table>
-				<tr><td class="form-control"> <h5>Odaberite nivo:</h5> </td>
-				<td> <select v-model="parametar" class="form-control">
+		
+		<div class="col-md-5 ">
+		<h2 class="row justify-content-center">Grafikon pregleda</h2><br>
+				<table >
+				<tr><th>&nbsp &nbsp Odaberite nivo:&nbsp </th>
+				<td><select v-model="parametar" class="browser-default custom-select">
 						<option>dnevni</option>
 						<option>nedeljni</option>
 						<option>mesecni</option>
@@ -83,11 +76,9 @@ Vue.component("izvestaj", {
 				</table>
 			<column-chart :data="podaci"></column-chart>	
 		</div>
-		</div>
-		</div>
-		</div>
 	</div>
-	
+	</div>
+	</div>
 	`
 	,
 	watch: {

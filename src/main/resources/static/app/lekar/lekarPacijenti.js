@@ -127,16 +127,13 @@ Vue.component("lekarPacijenti", {
 				<h2 class="row justify-content-center">Izvestaji</h2><br>
 				
 				<table class="table table-hover">
-					
 					<thead>
 						<tr>
 							<th scope="col">Poseta</th>
 							<th scope="col">Datum</th>
 							<th scope="col">Opis</th>
 						</tr>
-					
 					</thead>
-					
 					<tbody>
 						
 						<tr v-for="i in selectedPacijent.stariIzvestaji" v-on:click="selektovanIzvestaj(i)">
@@ -162,7 +159,7 @@ Vue.component("lekarPacijenti", {
 			
 			<h2 class="row justify-content-center">Izmena izvestaja o poseti</h2><br>
 				
-			<table lass="table">
+			<table class="table">
 				<tbody>
 					<tr>
 						<th scope="row">Opis: </th>
@@ -206,7 +203,7 @@ Vue.component("lekarPacijenti", {
 	
 	<div v-else class="box">
 		<table class="table">
-		<tr bgcolor="#f2f2f2">
+		<tr >
 			<th> Ime </th>
 			<th> Prezime </th>
 		</tr>
