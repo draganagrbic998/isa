@@ -31,7 +31,7 @@ Vue.component("promenaSifre", {
 					</tr>
 
 					<tr>
-						<td><button v-on:click="promenaSifre()" class="btn btn-outline-success my-2 my-sm-0">IZMENI LOZINKU</button></td>
+						<td><button v-on:click="promenaSifre()" class="btn btn-outline-secondary">IZMENI LOZINKU</button></td>
 					</tr>
 			
 			</table>

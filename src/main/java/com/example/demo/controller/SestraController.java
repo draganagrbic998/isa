@@ -119,7 +119,7 @@ public class SestraController {
 	
 	@PreAuthorize("hasAuthority('Sestra')")
 	@GetMapping(value="/pacijenti", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<PacijentPretragaDTO>> getPacijenteKlinike(){
+	public ResponseEntity<List<PacijentPretragaDTO>> pacijenti(){
 		try {
 			Sestra sestra = (Sestra) this.userService.getSignedKorisnik();
 			List<PacijentPretragaDTO> pacijentiPretraga = new ArrayList<>();

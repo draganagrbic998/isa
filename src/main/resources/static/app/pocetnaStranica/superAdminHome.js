@@ -19,7 +19,7 @@ Vue.component("superAdminHome", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item active">
         <a class="nav-link" href="#/dodajKliniku">
           <i class="fa fa-line-chart"></i>
           Dodaj Kliniku
@@ -62,7 +62,7 @@ Vue.component("superAdminHome", {
           <div class="dropdown-divider"></div>
         </div>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item active">
         <a class="nav-link" href="#/zahtevRegistracijaObrada">
           <i class="fa fa-line-chart"></i>
           Zahtevi za registraciju\n

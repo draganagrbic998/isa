@@ -32,8 +32,9 @@ public class AdminConversion {
 		String lozinka;
 		
 		if (adminDTO.getId() != null) {
-			version = this.adminRepository.getOne(adminDTO.getId()).getVersion();
-			if (!adminDTO.getLozinka().equals(this.adminRepository.getOne(adminDTO.getId()).getLozinka()))
+			Admin temp = this.adminRepository.getOne(adminDTO.getId());
+			version = temp.getVersion();
+			if (!adminDTO.getLozinka().equals(temp.getLozinka()))
 				lozinka = this.passwordEncoder.encoder().encode(adminDTO.getLozinka());
 			else
 				lozinka = adminDTO.getLozinka();

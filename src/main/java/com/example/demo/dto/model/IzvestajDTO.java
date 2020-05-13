@@ -95,6 +95,22 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 		this.lekovi = lekovi;
 	}
 
+	public List<String> getDijagnozeSifre() {
+		return dijagnozeSifre;
+	}
+
+	public void setDijagnozeSifre(List<String> dijagnozeSifre) {
+		this.dijagnozeSifre = dijagnozeSifre;
+	}
+
+	public List<String> getLekoviSifre() {
+		return lekoviSifre;
+	}
+
+	public void setLekoviSifre(List<String> lekoviSifre) {
+		this.lekoviSifre = lekoviSifre;
+	}
+
 	public Integer getPoseta() {
 		return poseta;
 	}
@@ -117,22 +133,6 @@ public class IzvestajDTO implements Comparable<IzvestajDTO>{
 
 	public void setPosetaNaziv(String posetaNaziv) {
 		this.posetaNaziv = posetaNaziv;
-	}
-
-	public List<String> getDijagnozeSifre() {
-		return dijagnozeSifre;
-	}
-
-	public void setDijagnozeSifre(List<String> dijagnozeSifre) {
-		this.dijagnozeSifre = dijagnozeSifre;
-	}
-
-	public List<String> getLekoviSifre() {
-		return lekoviSifre;
-	}
-
-	public void setLekoviSifre(List<String> lekoviSifre) {
-		this.lekoviSifre = lekoviSifre;
 	}
 
 }

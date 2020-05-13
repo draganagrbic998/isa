@@ -15,6 +15,7 @@ Vue.component("prijava", {
 	
 	template: `
 	<section class="forms-section">
+	<br>
   <h2>Klinicki centar Vojvodine</h2>
   <div class="forms">
     <div class="form-wrapper is-active">

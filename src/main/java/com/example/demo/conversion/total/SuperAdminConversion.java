@@ -28,8 +28,9 @@ public class SuperAdminConversion {
 		String lozinka;
 		
 		if (superAdminDTO.getId() != null) {
-			version = this.superAdminRepository.getOne(superAdminDTO.getId()).getVersion();
-			if (!superAdminDTO.getLozinka().equals(this.superAdminRepository.getOne(superAdminDTO.getId()).getLozinka()))
+			SuperAdmin temp = this.superAdminRepository.getOne(superAdminDTO.getId());
+			version = temp.getVersion();
+			if (!superAdminDTO.getLozinka().equals(temp.getLozinka()))
 				lozinka = this.passwordEncoder.encoder().encode(superAdminDTO.getLozinka());
 			else
 				lozinka = superAdminDTO.getLozinka();

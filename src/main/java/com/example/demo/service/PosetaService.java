@@ -68,12 +68,12 @@ public class PosetaService {
 			l.setPoslednjaIzmena(new Date());
 			this.lekarRepository.save(l);
 		}
+				
+		poseta.getTipPosete().setPoslednjaIzmena(new Date());
+		this.tipRepository.save(poseta.getTipPosete());
 		
 		poseta.getSala().setPoslednjaIzmena(new Date());
 		this.salaRepository.save(poseta.getSala());
-		
-		poseta.getTipPosete().setPoslednjaIzmena(new Date());
-		this.tipRepository.save(poseta.getTipPosete());
 		
 		if (id != null)
 			this.zahtevRepository.deleteById(id);

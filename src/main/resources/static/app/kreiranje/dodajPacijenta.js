@@ -99,7 +99,7 @@ Vue.component("dodajPacijenta", {
 					</tr>
 					<br>
 					<tr>
-						<td><button v-on:click="dodajPacijenta()" class="btn btn-outline-success my-2 my-sm-0">POSALJI ZAHTEV</button></td>
+						<td><button v-on:click="dodajPacijenta()" class="btn btn-outline-secondary">POSALJI ZAHTEV</button></td>
 					</tr>
 			
 			</table>

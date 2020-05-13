@@ -19,7 +19,7 @@ Vue.component("sestraPacijenti", {
 <div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">LISTA PACIJENATA</a>
+  <a class="navbar-brand" href="#/sestraPacijenti">LISTA PACIJENATA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -37,9 +37,11 @@ Vue.component("sestraPacijenti", {
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       
-      <li v-if="this.selected==false" class="nav-item dropdown">
+      <li v-if="!selected && !izvestajSelected" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-sort"></i>
           Sortiraj po
+          <span class="sr-only">(current)</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" @click.prevent="sort_ime()" href="#">imenu</a>
@@ -60,9 +62,9 @@ Vue.component("sestraPacijenti", {
 		
 		<div class="row">
 		
-			<div class="col card" id="left">
+			<div class="card" id="box">
 			
-				<h2 class="row justify-content-center">Karton</h2><br>
+				<h2>Karton</h2><br>
 				
 				<table class="table">
 				
@@ -101,9 +103,9 @@ Vue.component("sestraPacijenti", {
 			</table>		
 		</div>
 		
-			<div class="col-md-5" style="margin-top: 3%">
+			<div style="margin-top: 10%; margin-left: 10%;">
 				
-				<h2 class="row justify-content-center">Izvestaji</h2><br>
+				<h2>Izvestaji</h2><br>
 				
 				<table class="table table-hover">
 					<thead>

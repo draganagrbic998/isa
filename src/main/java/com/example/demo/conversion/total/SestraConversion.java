@@ -37,8 +37,9 @@ public class SestraConversion {
 		long version;
 		
 		if (sestraDTO.getId() != null) {
-			version = this.sestraRepository.getOne(sestraDTO.getId()).getVersion();
-			if (!sestraDTO.getLozinka().equals(this.sestraRepository.getOne(sestraDTO.getId()).getLozinka()))
+			Sestra temp = this.sestraRepository.getOne(sestraDTO.getId());
+			version = temp.getVersion();
+			if (!sestraDTO.getLozinka().equals(temp.getLozinka()))
 				lozinka = this.passwordEncoder.encoder().encode(sestraDTO.getLozinka());
 			else
 				lozinka = sestraDTO.getLozinka();

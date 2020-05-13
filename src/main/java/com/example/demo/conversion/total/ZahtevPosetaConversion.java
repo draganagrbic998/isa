@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.ZahtevPosetaDTO;
+import com.example.demo.model.korisnici.Lekar;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 import com.example.demo.repository.KartonRepository;
 import com.example.demo.repository.LekarRepository;
@@ -38,14 +39,14 @@ public class ZahtevPosetaConversion {
 		String temp1 = this.f.format(zahtevDTO.getDatum());
 		String temp2 = temp1.substring(0, temp1.length() - 6);
 		Date datum = zahtevDTO.getVreme() == null ? zahtevDTO.getDatum() : this.f.parse(temp2 + " " + zahtevDTO.getVreme());
-		
+		Lekar temp =this.lekarRepository.getOne(zahtevDTO.getLekar());
 		return new ZahtevPoseta(zahtevDTO.getId(), 
 				datum, 
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
 				this.lekarRepository.getOne(zahtevDTO.getLekar()), 
 				zahtevDTO.getTipPosete() != null ? this.tipPoseteRepository.getOne(zahtevDTO.getTipPosete()) : 
-					this.lekarRepository.getOne(zahtevDTO.getLekar()).getSpecijalizacija(), 
-					this.lekarRepository.getOne(zahtevDTO.getLekar()).getKlinika());
+					temp.getSpecijalizacija(), 
+					temp.getKlinika());
 	}
 	
 	

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.model.LekarDTO;
 import com.example.demo.model.korisnici.Lekar;
+import com.example.demo.model.posete.Poseta;
 import com.example.demo.repository.KlinikaRepository;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.TipPoseteRepository;
@@ -39,20 +40,23 @@ public class LekarConversion {
 		String baseDate = "2020-04-20 ";
 		long version;
 		String lozinka;
+		Poseta zapoceto = null;
 		
 		if (lekarDTO.getId() != null) {
-			version = this.lekarRepository.getOne(lekarDTO.getId()).getVersion();		
-			if (!lekarDTO.getLozinka().equals(this.lekarRepository.getOne(lekarDTO.getId()).getLozinka()))
+			Lekar temp = this.lekarRepository.getOne(lekarDTO.getId());
+			version = temp.getVersion();		
+			if (!lekarDTO.getLozinka().equals(temp.getLozinka()))
 				lozinka = this.passwordEncoder.encoder().encode(lekarDTO.getLozinka());
 			else
 				lozinka = lekarDTO.getLozinka();
+			zapoceto = temp.getZapocetaPoseta();
 		}
 		else {
 			version = 0l;	
 			lozinka = this.passwordEncoder.encoder().encode(lekarDTO.getLozinka());
 		}
 
-		return new Lekar(lekarDTO.getId(), 
+		Lekar result = new Lekar(lekarDTO.getId(), 
 				lekarDTO.getEmail(), 
 				lozinka, 
 				lekarDTO.getIme(),
@@ -67,7 +71,10 @@ public class LekarConversion {
 				this.f.parse(baseDate + lekarDTO.getKrajnjeVreme()),
 				this.klinikaRepository.getOne(lekarDTO.getKlinika()),
 				this.tipPoseteRepository.getOne(lekarDTO.getSpecijalizacija()), version);
-
+		if (zapoceto != null)
+			result.setZapocetaPoseta(zapoceto);
+		return result;
+		
 	}
 
 	public LekarDTO get(Lekar lekar) {

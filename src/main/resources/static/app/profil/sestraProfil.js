@@ -25,7 +25,7 @@ Vue.component("sestraProfil", {
 		<div>
 		
 		<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">VAS PROFIL</a>
+		<a class="navbar-brand" href="#/sestraProfil">VAS PROFIL</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -48,7 +48,7 @@ Vue.component("sestraProfil", {
 	
 		<div class="card" id="tableBox">
 		
-			<h1>Podaci o korisniku</h1><br>
+			<h2>Podaci o korisniku</h2><br>
 			
 			<table class="table">
 			

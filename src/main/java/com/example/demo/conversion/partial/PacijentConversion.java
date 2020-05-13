@@ -30,8 +30,9 @@ public class PacijentConversion {
 		String lozinka;
 		
 		if (pacijentDTO.getId() != null) {
-			version = this.pacijentRepository.getOne(pacijentDTO.getId()).getVersion();
-			if (!pacijentDTO.getLozinka().equals(this.pacijentRepository.getOne(pacijentDTO.getId()).getLozinka()))
+			Pacijent temp = this.pacijentRepository.getOne(pacijentDTO.getId());
+			version = temp.getVersion();
+			if (!pacijentDTO.getLozinka().equals(temp.getLozinka()))
 				lozinka = this.passwordEncoder.encoder().encode(pacijentDTO.getLozinka());
 			else
 				lozinka = pacijentDTO.getLozinka();

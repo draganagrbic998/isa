@@ -65,7 +65,6 @@ const lekarPacijenti = {template: '<lekarPacijenti></lekarPacijenti>'}
 const sestraPacijenti = {template: '<sestraPacijenti></sestraPacijenti>'}
 const overaRecepta = {template: '<overaRecepta></overaRecepta>'}
 
-
 const router = new VueRouter({
 	
 	mode: 'hash', 

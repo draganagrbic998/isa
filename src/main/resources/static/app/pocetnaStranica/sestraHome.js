@@ -42,14 +42,14 @@ Vue.component("sestraHome", {
       </li>
     </ul>
     <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item dropdown">
+      <li class="nav-item active">
         <a class="nav-link" href="#/zahtevOdmorSlanje">
           <i class="fa fa-plane"></i>
           Zahtev za odmor
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item active">
         <a class="nav-link" href="#/sestraProfil">
           <i class="fa fa-home"></i>
           Profil

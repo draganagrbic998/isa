@@ -4,6 +4,10 @@ body {
 	background-repeat: no-repeat;	 
 }
 
+h1{
+  	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 1px 1px 2px black, 0 0 25px #3737ff, 0 0 5px #0000b3;
+}
+
 #maja {
 	font-size: 20px;
 	font-weight: bold;
@@ -18,10 +22,6 @@ th {
 td {
 	font-size: 18px;
 	font-weight: bold;
-}
-
-h1{
-  	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 1px 1px 2px black, 0 0 25px #3737ff, 0 0 5px #0000b3;
 }
 
 option {
@@ -43,23 +43,10 @@ textarea{
 	margin-top: 2%;
 }
 
-#prijava{
-	padding: 15px;
-	height: 30rem;
-	width: 25rem; 
-	margin-top: 3%;
-	margin-left: auto;
-	margin-right: auto;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
-	border-right: 2px outset green;
-	border-bottom: 2px outset green;
-}
-
 #pretraga{
 	padding: 10px;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
+	border-left: 2px inset gray;
+	border-top: 2px inset gray;
 	border-right: 2px outset green;
 	border-bottom: 2px outset green;
 }
@@ -69,8 +56,8 @@ textarea{
 	width: 40%;
 	margin: auto;
 	margin-top: 3%;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
+	border-left: 2px inset gray;
+	border-top: 2px inset gray;
 	border-right: 2px outset green;
 	border-bottom: 2px outset green;
 }
@@ -85,8 +72,8 @@ textarea{
 	width: 50%;
 	margin: auto;
 	margin-top: 3%;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
+	border-left: 2px inset gray;
+	border-top: 2px inset gray;
 	border-right: 2px outset green;
 	border-bottom: 2px outset green;
 }
@@ -94,15 +81,10 @@ textarea{
 #okvir{
 	padding: 15px;
 	margin-right: 10%;
-	border-left: 2px inset lightgreen;
-	border-top: 2px inset lightgreen;
+	border-left: 2px inset gray;
+	border-top: 2px inset gray;
 	border-right: 2px outset green;
 	border-bottom: 2px outset green;
-}
-
-#rasiri{
-	border-collapse: separate; 
-	border-spacing: 2px;
 }
 
 .radniKalendarLevaTabelaDiv{

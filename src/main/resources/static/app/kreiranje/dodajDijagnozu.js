@@ -50,7 +50,7 @@ Vue.component("dodajDijagnozu", {
 				<br>
 						
 				<div class="row justify-content-center">
-					<button v-on:click="dodajDijagnozu()" class="btn btn-success">DODAJ LEK</button>
+					<button v-on:click="dodajDijagnozu()" class="btn btn-success">DODAJ DIJAGNOZU</button>
 				</div>
 			
 			</div>
