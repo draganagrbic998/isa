@@ -120,16 +120,16 @@ Vue.component("sestraPacijenti", {
 							<td>{{formatiraj(i.datum)}}</td>
 							<td>{{i.opis}}</td>
 						</tr>
-						<tr>
-							<td>
-							<button class="btn btn-success" type="submit" v-on:click="povratakPacijenti()">Povratak</button>
-							</td>
-						</tr>
 					
 					</tbody>
-										
 
 				</table>
+				
+				<br>
+				
+				<div class="row justify-content-center">
+					<button class="btn btn-success" type="submit" v-on:click="povratakPacijenti()">Povratak</button>
+				</div>
 				
 			</div>
 	</div>
@@ -171,19 +171,17 @@ Vue.component("sestraPacijenti", {
 			            </td>
 						<td></td>
 					</tr>
-					
-					<tr>
-						<th scope="row"></th>
-						<td>
-						<button class="btn btn-success" type="submit" v-on:click="povratakDetalji()">Povratak</button>
-						</td>
-					</tr>
 
 				</tbody>
 						
-	
 			</table>
 		
+			<br>
+				
+			<div class="row justify-content-center">
+				<button class="btn btn-success" type="submit" v-on:click="povratakDetalji()">Povratak</button>
+			</div>
+				
 		</div>
 	</div>
 	
