@@ -21,7 +21,7 @@ Vue.component("adminHome", {
 		<div>
 
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">{{klinika.naziv}}</a>
+  <a class="navbar-brand" href="#/adminHome">{{klinika.naziv}}</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -228,8 +228,8 @@ Vue.component("adminHome", {
 				            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
 				        ),
 				        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-				            hintContent: 'A custom placemark icon',
-				            balloonContent: 'This is a pretty placemark'
+				            hintContent: this.klinika.adresa,
+				            balloonContent: this.klinika.adresa
 				        }, {
 				            iconLayout: 'default#image',
 				            iconImageHref: 'https://findicons.com/files/icons/2796/metro_uinvert_dock/256/google_maps.png',

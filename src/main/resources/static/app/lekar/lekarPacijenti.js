@@ -206,11 +206,13 @@ Vue.component("lekarPacijenti", {
 		<tr >
 			<th> Ime </th>
 			<th> Prezime </th>
+			<th> Broj osiguranika </th>
 		</tr>
 		
 		<tr v-for="p in pacijenti" >
 			<td>{{p.ime}}</td>
 			<td>{{p.prezime}}</td>
+			<td>{{p.kartonObj.brojOsiguranika}}</td>
 			<td><button  @click="showModal = true" v-on:click="selektovanPacijent(p)" class="btn btn-success"><i class="fa fa-info-circle"></i>Detalji</button></td>
 			
 		</tr>
@@ -344,7 +346,8 @@ Vue.component("lekarPacijenti", {
             	else { //ili ime ili prezime
             		let passedIme = (this.pretraga != '') ? (l.ime.toLowerCase().includes(lowerPretraga)) : true;
                     let passedPrezime = (this.pretraga != '') ? (l.prezime.toLowerCase().includes(lowerPretraga)) : true;                    
-                    if (passedIme  || passedPrezime) this.pacijenti.push(l);
+                    let passedBroj = (this.pretraga != '') ? (l.kartonObj.brojOsiguranika.includes(lowerPretraga)) : true;
+                    if (passedIme  || passedPrezime || passedBroj) this.pacijenti.push(l);
             	}
                                 
             }

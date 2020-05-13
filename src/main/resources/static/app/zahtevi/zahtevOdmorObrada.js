@@ -5,7 +5,6 @@ Vue.component("zahtevOdmorObrada", {
 			zahtevi: {},
 			backup: {},
 			razlog: '',
-			greskaRazlog: '',
 			pretraga: '',
 			nemaRezultata: '',
 			odbijanje: false,
@@ -54,7 +53,7 @@ Vue.component("zahtevOdmorObrada", {
 			<td><button v-on:click="potvrdiZahtev(z)" class="btn btn-success"><i class="fa fa-check"></i></button></td>
 			<td><button v-on:click="odbijZahtev(z)" class="btn btn-danger"><i class="fa fa-ban"></i></button></td></tr>
 		<tr v-if="this.odbijanje"><td>Razlog za odbijanje:</td> <td><input type="text" v-model="razlog" name="name"></td>
-		<td><button v-on:click="posalji()" class="btn btn-warning"><i class="fa fa-paper-plane"></i>Posalji</button></td>{{this.greskaRazlog}}</tr>
+		<td><button v-on:click="posalji()" class="btn btn-warning"><i class="fa fa-paper-plane"></i>Posalji</button></td></tr>
 	
 	</table>	
 		<h3>{{nemaRezultata}}</h3>
@@ -120,7 +119,6 @@ search: function(){
 		},
 		
 		osvezi: function(){
-			this.greskaRazlog = "";
 			this.greska = false;
 		}, 
 		
@@ -146,7 +144,7 @@ search: function(){
 			
 			this.osvezi();
 			if (this.razlog === '') {
-				this.greskaRazlog = "Morate uneti razlog!";
+				alert("Morate uneti razlog!");
 				return;
 			}
 						
