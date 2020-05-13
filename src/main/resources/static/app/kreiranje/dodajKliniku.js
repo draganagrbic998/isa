@@ -16,21 +16,44 @@ Vue.component("dodajKliniku", {
 	
 	template: `
 	
-		<div class="registracija">
-		
-			<h1>Registracija nove klinike</h1>
-			
-			<div>
+		<div>
+			<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+			  <a class="navbar-brand" href="#/dodajKliniku">DODAVANJE KLINIKE</a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mr-auto">
+			      <li class="nav-item active">
+			        <a class="nav-link" href="#/superAdminHome">
+			          <i class="fa fa-home"></i>
+			          Home
+			          <span class="sr-only">(current)</span>
+			          </a>
+			      </li>
+			    </ul>
+			  </div>
+			</nav>
+
+			<div class="card" id="box">
+					
+				<h2 class="row justify-content-center">Registracija nove klinike</h2>
+				
+				<br>
 			
 				<table>
-				
-					<tr><td class="left">Naziv: </td><td class="right"><input type="text" v-model="klinika.naziv"></td><td>{{greskaNaziv}}</td></tr>
-					<tr><td class="left">Opis: </td><td class="right"><input type="text" v-model="klinika.opis"></td><td></td></tr>
-					<tr><td class="left">Adresa: </td><td class="right"><input type="text" placeholder="Ulica i broj, grad" v-model="klinika.adresa"></td><td>{{greskaAdresa}}</td></tr>
-					<tr><td><button v-on:click="dodajKliniku()">KREIRAJ PROFIL KLINIKE</button><br></td></tr>
-					
+					<tbody>
+					<tr><th scope="row">Naziv: </th><td><input type="text" v-model="klinika.naziv" class="form-control"></td><td>{{greskaNaziv}}</td></tr>
+					<tr><th scope="row">Opis: </th><td><input type="text" v-model="klinika.opis" class="form-control"></td><td></td></tr>
+					<tr><th scope="row">Adresa: </th><td><input type="text" placeholder="Ulica i broj, grad" v-model="klinika.adresa" class="form-control"></td><td>{{greskaAdresa}}</td></tr>
+					</tbody>
 				</table>
 				
+				<br>
+						
+				<div class="row justify-content-center">
+					<button v-on:click="dodajKliniku()" class="btn btn-success">KREIRAJ PROFIL KLINIKE</button>
+				</div>
 			
 			</div>
 		

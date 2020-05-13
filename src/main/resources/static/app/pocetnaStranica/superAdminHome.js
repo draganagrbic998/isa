@@ -20,6 +20,13 @@ Vue.component("superAdminHome", {
           </a>
       </li>
       <li class="nav-item dropdown">
+        <a class="nav-link" href="#/dodajKliniku">
+          <i class="fa fa-line-chart"></i>
+          Dodaj Kliniku
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-address-book">
           </i>
@@ -28,17 +35,6 @@ Vue.component("superAdminHome", {
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#/dodajSuperAdmina">Dodaj Administratora Klinickog Centra</a>
           <a class="dropdown-item" href="#/dodajAdmina">Dodaj Administratora Klinike</a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-home"></i>
-          </i>
-          Klinike
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#/dodajKliniku">Dodaj Kliniku</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>

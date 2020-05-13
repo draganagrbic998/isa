@@ -28,19 +28,15 @@ Vue.component("dijagnozePretraga", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/dijagnozePretraga" v-on:click="sifra_sort()">
-          <i class="fa fa-address-book">
-          </i>
-          Sifra
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sortiraj po
         </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/dijagnozePretraga" v-on:click="naziv_sort()">
-          <i class="fa fa-address-book">
-          </i>
-          Naziv
-        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" @click.prevent="sifra_sort()" href="#">Sifri</a>
+          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">Nazivu</a>
+          <div class="dropdown-divider"></div>
+        </div>
       </li>
     </ul>
        <form class="form-inline my-2 my-lg-0">
@@ -84,27 +80,33 @@ Vue.component("dijagnozePretraga", {
 	methods: {
 		
 		sifra_sort: function(){
-			for (let i in this.dijagnoze) {
-				for (let j in this.dijagnoze) {
-					if (this.dijagnoze[j].sifra > this.dijagnoze[i].sifra) {
-						let temp = this.dijagnoze[j];
-						this.dijagnoze[j] = this.dijagnoze[i];
-						this.dijagnoze[i] = temp;
+			let lista = this.dijagnoze;
+			this.dijagnoze = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].sifra > lista[i].sifra) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
 					}
 				}
-			}
+			}		
+			this.dijagnoze = lista;
 		},
 		
 		naziv_sort: function(){
-			for (let i in this.dijagnoze) {
-				for (let j in this.dijagnoze) {
-					if (this.dijagnoze[j].naziv > this.dijagnoze[i].naziv) {
-						let temp = this.dijagnoze[j];
-						this.dijagnoze[j] = this.dijagnoze[i];
-						this.dijagnoze[i] = temp;
+			let lista = this.dijagnoze;
+			this.dijagnoze = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].naziv > lista[i].naziv) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
 					}
 				}
-			}
+			}		
+			this.dijagnoze = lista;
 		},
 		
 		search: function(){

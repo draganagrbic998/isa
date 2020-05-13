@@ -28,19 +28,15 @@ Vue.component("lekoviPretraga", {
           <span class="sr-only">(current)</span>
           </a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/lekoviPretraga" v-on:click="sifra_sort()">
-          <i class="fa fa-address-book">
-          </i>
-          Sifra
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sortiraj po
         </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#/lekoviPretraga" v-on:click="naziv_sort()">
-          <i class="fa fa-address-book">
-          </i>
-          Naziv
-        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" @click.prevent="sifra_sort()" href="#">Sifri</a>
+          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">Nazivu</a>
+          <div class="dropdown-divider"></div>
+        </div>
       </li>
     </ul>
        <form class="form-inline my-2 my-lg-0">
@@ -83,27 +79,33 @@ Vue.component("lekoviPretraga", {
 	methods: {
 		
 		sifra_sort: function(){
-			for (let i in this.lekovi) {
-				for (let j in this.lekovi) {
-					if (this.lekovi[j].sifra > this.lekovi[i].sifra) {
-						let temp = this.lekovi[j];
-						this.lekovi[j] = this.lekovi[i];
-						this.lekovi[i] = temp;
+			let lista = this.lekovi;
+			this.lekovi = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].sifra > lista[i].sifra) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
 					}
 				}
-			}
+			}		
+			this.lekovi = lista;
 		},
 		
 		naziv_sort: function(){
-			for (let i in this.lekovi) {
-				for (let j in this.lekovi) {
-					if (this.lekovi[j].naziv > this.lekovi[i].naziv) {
-						let temp = this.lekovi[j];
-						this.lekovi[j] = this.lekovi[i];
-						this.lekovi[i] = temp;
+			let lista = this.lekovi;
+			this.lekovi = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].naziv > lista[i].naziv) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
 					}
 				}
-			}
+			}		
+			this.lekovi = lista;
 		},
 		
 		search: function(){

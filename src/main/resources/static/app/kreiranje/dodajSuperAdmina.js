@@ -32,28 +32,52 @@ Vue.component("dodajSuperAdmina", {
 	}, 
 	
 	template: `
-	
-		<div class="registracija">
+		<div>
+			<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+			  <a class="navbar-brand" href="#/dodajSuperAdmina">DODAVANJE ADMINA <br> KLINICKOG CENTRA</a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mr-auto">
+			      <li class="nav-item active">
+			        <a class="nav-link" href="#/superAdminHome">
+			          <i class="fa fa-home"></i>
+			          Home
+			          <span class="sr-only">(current)</span>
+			          </a>
+			      </li>
+			    </ul>
+			  </div>
+			</nav>
+
+			<div class="card" id="box">
 		
-			<h1>Registracija novog administratora klinickog centra</h1>
-			
-			<div>
-			
-				<table>
+				<h2 class="row justify-content-center">Registracija novog administratora</h2>
+				<h2 class="row justify-content-center">klinickog centra</h2>
+
+				<br>
 				
-					<tr><td class="left">Email: </td><td class="right"><input type="text" v-model="admin.email"></td><td>{{greskaEmail}}</td></tr>
-					<tr><td class="left">Ime: </td><td class="right"><input type="text" v-model="admin.ime"></td><td>{{greskaIme}}</td></tr>
-					<tr><td class="left">Prezime: </td><td class="right"><input type="text" v-model="admin.prezime"></td><td>{{greskaPrezime}}</td></tr>
-					<tr><td class="left">Telefon: </td><td class="right"><input type="text" v-model="admin.telefon"></td><td>{{greskaTelefon}}</td></tr>
-					<tr><td class="left">Drzava: </td><td class="right"><input type="text" v-model="admin.drzava"></td><td>{{greskaDrzava}}</td></tr>
-					<tr><td class="left">Grad: </td><td class="right"><input type="text" v-model="admin.grad"></td><td>{{greskaGrad}}</td></tr>
-					<tr><td class="left">Adresa: </td><td class="right"><input type="text" v-model="admin.adresa"></td><td>{{greskaAdresa}}</td></tr>
-					<tr><td class="left">Lozinka: </td><td class="right"><input type="password" v-model="novaLozinka"></td><td>{{greskaNovaLozinka}}</td></tr>
-					<tr><td class="left">Ponovljena lozinka: </td><td class="right"><input type="password" v-model="ponovljenaLozinka"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
-					<tr><td><button v-on:click="dodajSuperAdmina()">KREIRAJ PROFIL</button><br></td></tr>
-					
+				<table>
+					<tbody>
+					<tr><th scope="row">Email: </th><td><input type="text" v-model="admin.email" class="form-control"></td><td>{{greskaEmail}}</td></tr>
+					<tr><th scope="row">Ime: </th><td><input type="text" v-model="admin.ime" class="form-control"></td><td>{{greskaIme}}</td></tr>
+					<tr><th scope="row">Prezime: </th><td><input type="text" v-model="admin.prezime" class="form-control"></td><td>{{greskaPrezime}}</td></tr>
+					<tr><th scope="row">Telefon: </th><td><input type="text" v-model="admin.telefon" class="form-control"></td><td>{{greskaTelefon}}</td></tr>
+					<tr><th scope="row">Drzava: </th><td><input type="text" v-model="admin.drzava" class="form-control"></td><td>{{greskaDrzava}}</td></tr>
+					<tr><th scope="row">Grad: </th><td><input type="text" v-model="admin.grad" class="form-control"></td><td>{{greskaGrad}}</td></tr>
+					<tr><th scope="row">Adresa: </th><td><input type="text" v-model="admin.adresa" class="form-control"></td><td>{{greskaAdresa}}</td></tr>
+					<tr><th scope="row">Lozinka: </th><td><input type="password" v-model="novaLozinka" class="form-control"></td><td>{{greskaNovaLozinka}}</td></tr>
+					<tr><th scope="row">Ponovljena lozinka: </th><td><input type="password" v-model="ponovljenaLozinka" class="form-control"></td><td>{{greskaPonovljenaLozinka}}</td></tr>
+					</tbody>
 				</table>
 				
+				<br>
+						
+				<div class="row justify-content-center">
+					<button v-on:click="dodajSuperAdmina()" class="btn btn-success">KREIRAJ PROFIL</button>
+				</div>
+			
 			</div>
 		
 		</div>
