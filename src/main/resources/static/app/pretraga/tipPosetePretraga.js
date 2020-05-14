@@ -14,7 +14,10 @@ Vue.component("tipPosetePretraga", {
 			greskaSati: '',
 			greskaMinuti: '',
 			greskaCena: '',
-			nemaRezultata: ''
+			nemaRezultata: '',
+			sati: '',
+			minuti: '',
+			cena: ''
 		}
 	}, 
 
@@ -117,7 +120,7 @@ Vue.component("tipPosetePretraga", {
         					
         		<div slot="footer">
         		<button @click="showModal=false" style="margin:5px;" class="btn btn-dark" v-on:click="izmeni()"> Sacuvaj </button>       						
-				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" > Nazad </button>								
+				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" v-on:click="backupData()" > Nazad </button>								
 				</div>
 		</modal>
 		
@@ -140,6 +143,11 @@ Vue.component("tipPosetePretraga", {
 	}, 
 	
 	methods: {
+		backupData : function() {
+			this.tipSelected.sati = this.sati;
+			this.tipSelected.minute = this.minuti;
+			this.tipSelected.cena = this.cena;
+		},
 		osvezi: function() {
 			greskaSati = '',
 			greskaMinuti = '',
@@ -173,6 +181,9 @@ Vue.component("tipPosetePretraga", {
 		},
 		selektovanTip: function(t) {
 			this.tipSelected = t;
+			this.sati = t.sati;
+			this.minuti = t.minute;
+			this.cena = t.cena;
 		},
 		
 		selektovanCenovnik: function() {

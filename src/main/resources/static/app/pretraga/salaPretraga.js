@@ -9,7 +9,8 @@ Vue.component("salaPretraga", {
 			greskaNaziv: '',
 			greska: false,
 			salaSelected : '',
-			nemaRezultata: ''
+			nemaRezultata: '',
+			naziv: ''
 		}
 	}, 
 
@@ -78,7 +79,7 @@ Vue.component("salaPretraga", {
         					
         		<div slot="footer">
         		<button @click="showModal=false" style="margin:5px;" class="btn btn-dark" v-on:click="izmeni()"> Sacuvaj </button>       						
-				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" > Nazad </button>								
+				<button style="margin:5px;" class="btn btn-secondary" @click="showModal=false" v-on:click="backupData()"> Nazad </button>								
 				</div>
 		</modal>
 		
@@ -101,6 +102,9 @@ Vue.component("salaPretraga", {
 	}, 
 	
 	methods: {
+		backupData : function() {
+			this.salaSelected.naziv = this.naziv;
+		},
 		osvezi: function() {
 			this.greskaNaziv = '';
 			this.greska = false;
@@ -125,6 +129,7 @@ Vue.component("salaPretraga", {
 
 		selektovanaSala: function(s) {
 			this.salaSelected = s;
+			this.naziv = this.salaSelected.naziv;
 		},
 		
 		search: function(){
