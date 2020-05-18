@@ -34,6 +34,7 @@ public class TipPoseteService {
 			}
 		}
 		else {
+			tipPosete = this.tipPoseteRepository.getOne(tipPosete.getId());
 			if (!tipPosete.mozeBrisanje())
 				throw new MyRuntimeException();
 		}

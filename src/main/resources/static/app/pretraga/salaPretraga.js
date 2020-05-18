@@ -123,7 +123,7 @@ Vue.component("salaPretraga", {
 				alert('Izmene uspesno sacuvane!');
 			})
 			.catch(response => {
-				alert("SERVER ERROR!!");
+				alert("Sala je zakazana za posete i ne moze biti izmenjena!");
 			});
 		},
 

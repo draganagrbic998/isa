@@ -173,10 +173,10 @@ Vue.component("tipPosetePretraga", {
 			axios.post("/tipPosete/kreiranje", this.tipSelected)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');
-				//location.reload();
+				location.reload();
 			})
 			.catch(response => {
-				alert("SERVER ERROR!!");
+				alert("Postoje zakazane posete sa odabranim tipom i nija moguca izmena!");
 			});
 		},
 		selektovanTip: function(t) {
@@ -193,7 +193,6 @@ Vue.component("tipPosetePretraga", {
 			else {
 				this.selectedCenovnik = true;
 			}
-			
 			
 		},
 		

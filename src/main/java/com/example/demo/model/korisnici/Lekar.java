@@ -214,7 +214,7 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 		List<ObavezaDTO> obaveze = new ArrayList<>();
 
 		for (Poseta p : this.posete) {
-			if (p.getStanje().equals(StanjePosete.ZAUZETO))
+			if (p.getStanje().equals(StanjePosete.ZAUZETO) || p.getStanje().equals(StanjePosete.SLOBODNO))
 				obaveze.add(new ObavezaDTO(p));
 		}
 

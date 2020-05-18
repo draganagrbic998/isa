@@ -149,6 +149,4 @@ public class Sala implements Slobodnost, Brisanje{
 		this.version = version;
 	}
 	
-	
-	
 }
