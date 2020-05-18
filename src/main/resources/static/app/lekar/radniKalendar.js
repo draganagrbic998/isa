@@ -96,6 +96,7 @@ Vue.component("radniKalendar", {
 					<th> Pocetak </th>
 					<th> Trajanje </th>
 					<th> Tip </th>
+					<th> Pacijent </th>
 					<th> Akcija </th>
 				</tr>
 				
@@ -103,6 +104,7 @@ Vue.component("radniKalendar", {
 				    <td>{{obaveza.pocetak}}</td>
 					<td>{{obaveza.trajanje}}</td>
 					<td>{{obaveza.tip}}</td>
+					<td>{{obaveza.pacijent}}</td>
 					<td>
 						<button v-if="can_start(obaveza.pocetak) && !trenutnaPostoji" class="btn btn-outline-success my-2 my-sm-0" v-on:click="zapocni(obaveza.id)">Zapocni</button>
 					    <button v-if="can_cancel(obaveza.pocetak)" class="btn btn-outline-success my-2 my-sm-0" v-on:click="otkazi(obaveza.id)">Otkazi</button>

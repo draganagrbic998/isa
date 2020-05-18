@@ -99,9 +99,9 @@ public class PosetaController {
 		}
 		try {
 			String obavestenje = "Poseta zakazana za " + this.f.format(poseta.getDatum()) + " je otkazana. ";
-			this.emailService.sendMessage(new Message(poseta.getKarton().getPacijent().getEmail(), "Poseta otkazana", obavestenje));
 			for (Lekar l: poseta.getLekari())
 				this.emailService.sendMessage(new Message(l.getEmail(), "Poseta otkazana", obavestenje));
+			this.emailService.sendMessage(new Message(poseta.getKarton().getPacijent().getEmail(), "Poseta otkazana", obavestenje));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e) {

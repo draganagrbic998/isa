@@ -12,6 +12,7 @@ public class ObavezaDTO {
 	private Integer trajanje;
 	private boolean pregled;
 	private String tip;
+	private String pacijent;
 
 	public ObavezaDTO() {
 		super();
@@ -26,6 +27,7 @@ public class ObavezaDTO {
 		this.trajanje = poseta.sati() * 60 + poseta.minute();
 		this.pregled = poseta.getTipPosete().isPregled();
 		this.tip = poseta.getTipPosete().getNaziv();
+		this.pacijent = poseta.getKarton() != null ? poseta.getKarton().getPacijent().getIme() + " " + poseta.getKarton().getPacijent().getPrezime() : "SLOBODNO";
 	}
 
 	public Integer getId() {
@@ -74,6 +76,14 @@ public class ObavezaDTO {
 
 	public void setTip(String tip) {
 		this.tip = tip;
+	}
+
+	public String getPacijent() {
+		return pacijent;
+	}
+
+	public void setPacijent(String pacijent) {
+		this.pacijent = pacijent;
 	}
 
 }
