@@ -134,9 +134,9 @@ values ('S43', 'Najmanja sala', 4, true, 0);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
 values ('pacijent', 'draganaasd@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Dragana', 'Grbic', '0649604001', 'Srbija', 'Novi Sad', 'Lasla Gala 23', true, true, 0);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('pacijent', 'dragana.grbic.98@uns.ac.rs', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ognjen', 'Markovic', '0640043024', 'Srbija', 'Novi Sad', 'Cara Lazara 12', true, true, 0);
+values ('pacijent', 'pacijent1@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ognjen', 'Markovic', '0640043024', 'Srbija', 'Novi Sad', 'Cara Lazara 12', true, true, 0);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('pacijent', 'nasmejlservis@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Nada', 'Ivkovic', '0643101459', 'Srbija', 'Novi Sad', 'Vojvodjanskih brigada 10', true, true, 0);
+values ('pacijent', 'pacijent2@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Nada', 'Ivkovic', '0643101459', 'Srbija', 'Novi Sad', 'Vojvodjanskih brigada 10', true, true, 0);
 
 ----------KARTONI----------
 insert into karton (broj_osiguranika, visina, tezina, leva_dioptrija, desna_dioptrija, krvna_grupa, pacijent)
@@ -151,53 +151,53 @@ update korisnik set karton = 3 where id = 3;
 
 ----------SUPER ADMINI----------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('super', 'nikolicpetar91@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Petar', 'Nikolic', '0628847810', 'Srbija', 'Novi Sad', 'Patrijarha Pavla 7', true, true, 0);
+values ('super', 'dragana.grbic.98@uns.ac.rs', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Petar', 'Nikolic', '0628847810', 'Srbija', 'Novi Sad', 'Patrijarha Pavla 7', true, true, 0);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version)
-values ('super', 'nikolicpetar91@yahoo.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Nektarije', 'Valjevski', '0648804045','Srbija', 'Novi Sad', 'Zeleznicka 13', true, true, 0);
+values ('super', 'superadmin@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Nektarije', 'Valjevski', '0648804045','Srbija', 'Novi Sad', 'Zeleznicka 13', true, true, 0);
 
 ----------ADMINI----------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika)
 values ('admin', 'malinavojvodic123@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Milica', 'Poparic', '0611178980', 'Srbija', 'Novi Sad', 'Maksima Gorkog 62', true, true, 0, 1);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika)
-values ('admin', 'covekimastan@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Djole', 'Vlajkovic', '0607789123', 'Srbija', 'Novi Sad', 'Kisacka 25', true, true, 0, 2);
+values ('admin', 'poparic.sw21.2017@uns.ac.rs', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Djole', 'Vlajkovic', '0607789123', 'Srbija', 'Novi Sad', 'Kisacka 25', true, true, 0, 2);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika)
-values ('admin', 'poparic.sw21.2017@uns.ac.rs', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Marina', 'Blekarski', '0659980403', 'Srbija', 'Novi Sad', 'Temerinski put 17', true, true, 0, 3);
+values ('admin', 'covekimastan@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Marina', 'Blekarski', '0659980403', 'Srbija', 'Novi Sad', 'Temerinski put 17', true, true, 0, 3);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika)
-values ('admin', 'nikolic.sw31.2017@uns.ac.rs', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ivan', 'Gasparovski', '0613345699', 'Srbija', 'Novi Sad', 'Radnicka 19A', true, true, 0, 4);
+values ('admin', 'admin@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ivan', 'Gasparovski', '0613345699', 'Srbija', 'Novi Sad', 'Radnicka 19A', true, true, 0, 4);
 
 ----------LEKARI----------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '1', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ivona', 'Miljakovic', '0645576987', 'Srbija', 'Novi Sad', 'Puskinova 21', true, true, 0, 1, '2020-04-01 10:00', '2020-04-01 20:00', 1);
+values ('lekar', 'nasmejlservis@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ivona', 'Miljakovic', '0645576987', 'Srbija', 'Novi Sad', 'Puskinova 21', true, true, 0, 1, '2020-04-01 10:00', '2020-04-01 20:00', 1);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '2', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Zoran', 'Ivkovic', '0617784543', 'Srbija', 'Novi Sad', 'Gogoljeva 15', true, true, 0, 1, '2020-04-01 10:00', '2020-04-01 18:00', 1);
+values ('lekar', 'nikolicpetar91@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Zoran', 'Ivkovic', '0617784543', 'Srbija', 'Novi Sad', 'Gogoljeva 15', true, true, 0, 1, '2020-04-01 10:00', '2020-04-01 18:00', 1);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '3', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Mirko', 'Pavlovic', '0654464576', 'Srbija', 'Novi Sad', 'Zmaj Jovina 10', true, true, 0, 1, '2020-04-01 08:00', '2020-04-01 16:00', 2);
+values ('lekar', 'nikolicpetar91@yahoo.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Mirko', 'Pavlovic', '0654464576', 'Srbija', 'Novi Sad', 'Zmaj Jovina 10', true, true, 0, 1, '2020-04-01 08:00', '2020-04-01 16:00', 2);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '4', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Uros', 'Kralj', '0636675600', 'Srbija', 'Novi Sad', 'Kralja Petra 38', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 14:00', 6);
+values ('lekar', 'nikolic.sw31.2017@uns.ac.rs', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Uros', 'Kralj', '0636675600', 'Srbija', 'Novi Sad', 'Kralja Petra 38', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 14:00', 6);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '5', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Milena', 'Parcevic', '0697785566', 'Srbija', 'Novi Sad', 'Narodnog Fronta 13', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 20:00', 7);
+values ('lekar', 'lekar1@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Milena', 'Parcevic', '0697785566', 'Srbija', 'Novi Sad', 'Narodnog Fronta 13', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 20:00', 7);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '6', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Teodor', 'Sofkovski', '0661234546', 'Srbija', 'Novi Sad', 'Trg Dositeja 7', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 17:00', 7);
+values ('lekar', 'lekar2@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Teodor', 'Sofkovski', '0661234546', 'Srbija', 'Novi Sad', 'Trg Dositeja 7', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 17:00', 7);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '7', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Filip', 'Valjevic', '0600099897', 'Srbija', 'Novi Sad', 'Alekse Santica 28', true, true, 0, 3, '2020-04-01 10:00', '2020-04-01 18:00', 11);
+values ('lekar', 'lekar3@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Filip', 'Valjevic', '0600099897', 'Srbija', 'Novi Sad', 'Alekse Santica 28', true, true, 0, 3, '2020-04-01 10:00', '2020-04-01 18:00', 11);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '8', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ilija', 'Hijevljanin', '0656656677', 'Srbija', 'Novi Sad', 'Brace Ribnikara 19', true, true, 0, 3, '2020-04-01 10:00', '2020-04-01 16:00', 11);
+values ('lekar', 'lekar4@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ilija', 'Hijevljanin', '0656656677', 'Srbija', 'Novi Sad', 'Brace Ribnikara 19', true, true, 0, 3, '2020-04-01 10:00', '2020-04-01 16:00', 11);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '9', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Mihajlo', 'Tatarkovski', '0697787700', 'Srbija', 'Novi Sad', 'Cara Dusana 16', true, true, 0, 3, '2020-04-01 10:00', '2020-04-01 14:00', 12);
+values ('lekar', 'lekar5@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Mihajlo', 'Tatarkovski', '0697787700', 'Srbija', 'Novi Sad', 'Cara Dusana 16', true, true, 0, 3, '2020-04-01 10:00', '2020-04-01 14:00', 12);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '10', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Goran', 'Curovski', '0624457878', 'Srbija', 'Novi Sad', 'Bulevar Oslobodjenja 35', true, true, 0, 4, '2020-04-01 10:00', '2020-04-01 22:00', 15);
+values ('lekar', 'lekar6@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Goran', 'Curovski', '0624457878', 'Srbija', 'Novi Sad', 'Bulevar Oslobodjenja 35', true, true, 0, 4, '2020-04-01 10:00', '2020-04-01 22:00', 15);
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme, specijalizacija)
-values ('lekar', '11', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Marta', 'Oljavljovic', '0666065566', 'Srbija', 'Novi Sad', 'Dimitrija Avramovica 24', true, true, 0, 4, '2020-04-01 10:00', '2020-04-01 14:00', 16);
+values ('lekar', 'lekar7@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Marta', 'Oljavljovic', '0666065566', 'Srbija', 'Novi Sad', 'Dimitrija Avramovica 24', true, true, 0, 4, '2020-04-01 10:00', '2020-04-01 14:00', 16);
 
 ----------SESTRE----------
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme)
 values ('sestra', 'isanalog1@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Ljubica', 'Hrkavski', '0655587070', 'Srbija', 'Novi Sad', 'Papa Pavla 46', true, true, 0, 1, '2020-04-01 10:00', '2020-04-01 22:00');
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme)
-values ('sestra', 'isanalog2@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Marica', 'Dundarovski', '0666666767', 'Srbija', 'Novi Sad', 'Rumenacka 159', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 22:00');
+values ('sestra', 'sestra1@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Marica', 'Dundarovski', '0666666767', 'Srbija', 'Novi Sad', 'Rumenacka 159', true, true, 0, 2, '2020-04-01 08:00', '2020-04-01 22:00');
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme)
-values ('sestra', 'isanalog3@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Dusanka', 'Gavrilovic', '0614567788', 'Srbija', 'Novi Sad', 'Cenejska 52', true, true, 0, 3, '2020-04-01 06:00', '2020-04-01 22:00');
+values ('sestra', 'sestra2@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Dusanka', 'Gavrilovic', '0614567788', 'Srbija', 'Novi Sad', 'Cenejska 52', true, true, 0, 3, '2020-04-01 06:00', '2020-04-01 22:00');
 insert into korisnik (tip, email, lozinka, ime, prezime, telefon, drzava, grad, adresa, aktivan, promenjena_sifra, version, klinika, pocetno_vreme, krajnje_vreme)
-values ('sestra', 'isanalog4@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Jagoda', 'Jabukovic', '0605567879', 'Srbija', 'Novi Sad', 'Bulevar Kralja Petra 11', true, true, 0, 4, '2020-04-01 06:00', '2020-04-01 18:00');
+values ('sestra', 'sestra3@gmail.com', '$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra', 'Jagoda', 'Jabukovic', '0605567879', 'Srbija', 'Novi Sad', 'Bulevar Kralja Petra 11', true, true, 0, 4, '2020-04-01 06:00', '2020-04-01 18:00');
 
 ----------ISTORIJA BOLESTI PRVOG PACIJENTA----------
 insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)

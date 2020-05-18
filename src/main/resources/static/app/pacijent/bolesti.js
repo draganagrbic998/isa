@@ -33,6 +33,22 @@ Vue.component("bolesti", {
           </a>
       </li>
     </ul>   
+        <ul class="navbar-nav mr-auto" style="margin-left: 150px;">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-sort"></i>
+          Sortiranje
+          <span class="sr-only">(current)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" @click.prevent="datum_sort()" href="#">datum</a>
+          <a class="dropdown-item" @click.prevent="tip_sort()" href="#">tip posete</a>
+          <a class="dropdown-item" @click.prevent="naziv_sort()" href="#">naziv posete</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
+
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretraga" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretraga</button>
@@ -376,6 +392,54 @@ Vue.component("bolesti", {
 				if (tipPosetePassed || nazivPosetePassed) this.bolesti.push(b);
 			}		
 			
+		}, 
+		
+		datum_sort: function(){
+			let lista = this.bolesti;
+			this.bolesti = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].datum > lista[i].datum) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.bolesti = lista;
+
+		}, 
+		
+		tip_sort: function(){
+			let lista = this.bolesti;
+			this.bolesti = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].tipPosete > lista[i].tipPosete) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.bolesti = lista;
+
+		}, 
+		
+		naziv_sort: function(){
+			let lista = this.bolesti;
+			this.bolesti = [];
+			for (let i in lista) {
+				for (let j in lista) {
+					if (lista[j].nazivPosete > lista[i].nazivPosete) {
+						let temp = lista[j];
+						lista[j] = lista[i];
+						lista[i] = temp;
+					}
+				}
+			}		
+			this.bolesti = lista;
+
 		}
 		
 	}

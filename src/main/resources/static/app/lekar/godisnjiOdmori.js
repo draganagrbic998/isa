@@ -16,15 +16,7 @@ Vue.component("godisnjiOdmori", {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/lekarHome">
-          <i class="fa fa-home"></i>
-          Home 
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-    </ul>
+
   </div>
 </nav>
 		

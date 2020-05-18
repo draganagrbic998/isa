@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import com.example.demo.model.ostalo.Brisanje;
@@ -21,6 +23,7 @@ import com.example.demo.model.posete.StanjePosete;
 import com.example.demo.model.zahtevi.ZahtevPoseta;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"klinika", "naziv"})})
 public class TipPosete implements Brisanje {
 
 	@Id

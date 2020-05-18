@@ -19,17 +19,14 @@ Vue.component("zahtevOdmorSlanje", {
 		
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
 
+  <a class="navbar-brand" href="#/zahtevOdmorSlanje">PREGLED GODISNJIH ODMORA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto" style="margin: auto;">
-      <li class="nav-item active" style="min-width: 100px;">
-        <a class="nav-link" href="#/lekarHome">
-          <i class="fa fa-home"></i>
-          <span class="sr-only">(current)</span>
-          </a>
-      </li>
-   
-    </ul>
+
   </div>
+
 </nav>
 
 	<div class="card" id="tableBox">

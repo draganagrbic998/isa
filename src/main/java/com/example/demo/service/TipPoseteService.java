@@ -27,13 +27,7 @@ public class TipPoseteService {
 		
 	@Transactional(readOnly = false)
 	public void save(TipPosete tipPosete) {
-		if (tipPosete.getId() == null) {
-			for (TipPosete tp: this.tipPoseteRepository.findByKlinikaId(tipPosete.getKlinika().getId())) {
-				if (tp.getNaziv().equals(tipPosete.getNaziv()))
-					throw new MyRuntimeException();
-			}
-		}
-		else {
+		if (tipPosete.getId() != null) {
 			tipPosete = this.tipPoseteRepository.getOne(tipPosete.getId());
 			if (!tipPosete.mozeBrisanje())
 				throw new MyRuntimeException();
