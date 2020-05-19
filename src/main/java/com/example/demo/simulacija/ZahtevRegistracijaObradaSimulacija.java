@@ -17,7 +17,7 @@ public class ZahtevRegistracijaObradaSimulacija {
 	// u bazi je registrovana sestra koja ima id 24 i
 	// terapija koja ima id 14, koja ima neoveren recept
 	@Scheduled(cron = "0 50 17 * * *")
-	public void ObradiZahtev1() {
+	public void obradiZahtev1() {
 		System.out.println("Super admin 1 pokusava da potvrdi zahtev");
 		try {
 			ZahtevRegistracija zahtev = this.zahtevRegistracijaService.getOne(1);
@@ -33,7 +33,7 @@ public class ZahtevRegistracijaObradaSimulacija {
 	// u bazi je registrovana sestra koja ima id 23 i
 	// terapija koja ima id 14, koja ima neoveren recept
 	@Scheduled(cron = "0 50 17 * * *")
-	public void ObradiZahtev2() {
+	public void obradiZahtev2() {
 		System.out.println("Super admin 2 pokusava da potvrdi zahtev");
 		try {
 		ZahtevRegistracija zahtev = this.zahtevRegistracijaService.getOne(1);
