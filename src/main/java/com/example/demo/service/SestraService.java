@@ -38,6 +38,11 @@ public class SestraService {
 	}
 
 	@Transactional(readOnly = true)
+	public Sestra getOne(Integer id) {
+		return this.sestraRepository.getOne(id);
+	}
+	
+	@Transactional(readOnly = true)
 	public List<Sestra> findAll(Admin admin) {
 		List<Sestra> sestre = new ArrayList<>();
 		for (Sestra s : this.sestraRepository.findByKlinikaId(admin.getKlinika().getId())) {
