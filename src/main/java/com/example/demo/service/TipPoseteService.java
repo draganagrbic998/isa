@@ -69,4 +69,8 @@ public class TipPoseteService {
 		return lista;
 		
 	}
+	@Transactional(readOnly = true)
+	public TipPosete getOne(int i) {
+		return this.tipPoseteRepository.getOne(i);
+	}
 }

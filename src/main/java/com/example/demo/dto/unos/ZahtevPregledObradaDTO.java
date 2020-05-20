@@ -39,6 +39,7 @@ public class ZahtevPregledObradaDTO {
 		this.id = zahtev.getId();
 		this.pregled = zahtev.getTipPosete() != null ? zahtev.getTipPosete().isPregled() : null;
 		this.datum = f.format(zahtev.getDatum());
+		System.out.println(this.datum+" OVO JE DATUM IZ ZAHTEVDTO");
 		this.naziv = zahtev.getTipPosete() != null ? zahtev.getTipPosete().getNaziv() : null;
 		this.lekar = zahtev.getLekar().getIme()+" "+zahtev.getLekar().getPrezime();
 		this.pacijent = zahtev.getKarton().getPacijent().getIme()+" "+zahtev.getKarton().getPacijent().getPrezime();

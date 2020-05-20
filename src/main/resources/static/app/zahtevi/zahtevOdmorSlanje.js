@@ -8,6 +8,7 @@ Vue.component("zahtevOdmorSlanje", {
 				'odobren': false
 			}, 
 			zaposleni: '',
+			tip: '',
 			greskaKraj: '', 
 			greskaPocetak: '', 
 			greska: false
@@ -36,6 +37,14 @@ Vue.component("zahtevOdmorSlanje", {
 			<table class="table">
 			
 				<tbody>
+					<tr>
+						<th scope="row">Odsustvo/odmor: </th>
+						<td><select v-model="tip" class="form-control">
+						<option value="" disabled selected>Odaberite tip odsustva</option>
+						<option>odsustvo</option>
+						<option>odmor</option>
+					</select></td><td></td></tr>
+					</tr>
 				
 					<tr>
 						<th scope="row">Datum pocetka: </th>
@@ -79,7 +88,21 @@ Vue.component("zahtevOdmorSlanje", {
 				this.greskaKraj = 'Odaberite krajnji datum';
 				this.greska = true;
 			}
+			if (this.zahtev.pocetak >= this.zahtev.kraj) {
+				this.greska = true;
+				alert("Pocetni datum mora biti pre krajnjeg!");
+			}
+			let datePocetak = new Date(this.zahtev.pocetak);
+			let dateKraj = new Date(this.zahtev.kraj);
+			let razlika = dateKraj.getTime() - datePocetak.getTime();
 			
+			let dani = (razlika/(1000*3600*24));
+			if (this.tip=="odsustvo") {
+				if (dani>3) {
+					this.greska = true;
+					alert("Odsustvo maksimalno moze trajati 3 dana!");
+				}
+			}
 			if (this.greska) return;
 						
 			axios.post("/zahtevOdmor/kreiranje", this.zahtev)

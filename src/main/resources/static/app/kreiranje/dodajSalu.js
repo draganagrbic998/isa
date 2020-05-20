@@ -73,8 +73,7 @@ Vue.component("dodajSalu", {
 		
 	},
 		
-	methods: {
-	
+	methods: {	
 		osvezi: function(){
 			this.greskaNaziv = '';
 			this.greskaBroj = '';
