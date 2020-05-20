@@ -89,7 +89,7 @@ Vue.component("termini", {
 				</div>
 				
 				<div slot="footer">
-	        		<button style="margin:5px;" class="btn btn-dark" v-on:click="otkazi()">Otkazi</button>       						
+	        		<button style="margin:5px;" class="btn btn-dark" v-on:click="otkazi()" v-if="can_cancel(selectedTermin.datum)">Otkazi</button>       						
 					<button style="margin:5px;" class="btn btn-secondary" @click="selected=false">Nazad</button>								
 				</div>			
 				
@@ -159,6 +159,15 @@ Vue.component("termini", {
 	}, 
 	
 	methods: {
+		
+		can_cancel: function(pocetak) {
+			let datum = Date.parse(pocetak);
+			
+			if (((datum - Date.now()) / 1000 / 60 / 60) >= 24)
+				return true;
+			
+			return false;
+		},
 		
 		formatiraj: function (date) {
 			

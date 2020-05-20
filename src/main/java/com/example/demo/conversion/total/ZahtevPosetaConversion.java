@@ -39,7 +39,7 @@ public class ZahtevPosetaConversion {
 		String temp1 = this.f.format(zahtevDTO.getDatum());
 		String temp2 = temp1.substring(0, temp1.length() - 6);
 		Date datum = zahtevDTO.getVreme() == null ? zahtevDTO.getDatum() : this.f.parse(temp2 + " " + zahtevDTO.getVreme());
-		Lekar temp =this.lekarRepository.getOne(zahtevDTO.getLekar());
+		Lekar temp = this.lekarRepository.getOne(zahtevDTO.getLekar());
 		return new ZahtevPoseta(zahtevDTO.getId(), 
 				datum, 
 				this.kartonRepository.getOne(zahtevDTO.getKarton()), 
