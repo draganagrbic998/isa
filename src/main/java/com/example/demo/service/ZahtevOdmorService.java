@@ -16,6 +16,7 @@ import com.example.demo.model.resursi.Klinika;
 import com.example.demo.model.zahtevi.ZahtevOdmor;
 import com.example.demo.repository.LekarRepository;
 import com.example.demo.repository.ZahtevOdmorRepository;
+import com.example.demo.repository.ZaposleniRepository;
 
 @Component
 @Transactional(readOnly = true)
@@ -26,15 +27,22 @@ public class ZahtevOdmorService {
 
 	@Autowired
 	private LekarRepository lekarRepository;
+	
+	@Autowired
+	private ZaposleniRepository zaposleniRepository;
 			
 	@Transactional(readOnly = false)
 	public void save(ZahtevOdmor zahtev) {
-		if (zahtev.getId() == null && 
-				zahtev.getZaposleni().odmorPreklapanje(zahtev))
-			throw new MyRuntimeException();
-		this.zahtevOdmorRepository.save(zahtev);
 		Zaposleni z = zahtev.getZaposleni();
 		z = (Zaposleni) Hibernate.unproxy(z);
+		if (z instanceof Lekar)
+			z = this.lekarRepository.getOne(zahtev.getZaposleni().getId());
+		else
+			z = this.zaposleniRepository.getOne(zahtev.getZaposleni().getId());
+		if (zahtev.getId() == null && 
+				z.odmorPreklapanje(zahtev))
+			throw new MyRuntimeException();
+		this.zahtevOdmorRepository.save(zahtev);
 		if (z instanceof Lekar) {
 			Lekar l = (Lekar) z;
 			l.setPoslednjaIzmena(new Date());

@@ -127,7 +127,7 @@ public class Poseta implements Zauzetost, Profitiranje{
 		if (!(this.kraj().after(pocetak) && this.kraj().before(kraj)))
 			return 0.0;
 		double suma = this.tipPosete.getCena();
-		if (this.popust != 0)
+		if (this.popust != null)
 			suma *= (1 - this.popust);
 		return suma;
 	}

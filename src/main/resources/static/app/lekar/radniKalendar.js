@@ -177,7 +177,7 @@ Vue.component("radniKalendar", {
 			
 			axios.get("/poseta/zapocni/" + id)
 			.then(response => {
-				this.$router.push("/zapocetPregled");
+				this.$router.push("/lekarHome");
 			})
 			.catch(error => {
 				alert("SERVER ERROR!");
