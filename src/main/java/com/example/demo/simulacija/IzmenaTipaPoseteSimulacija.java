@@ -12,19 +12,20 @@ import com.example.demo.service.TipPoseteService;
 
 
 @RestController
-public class IzmenaBrisanjeTipaPoseteSimulacija {
+public class IzmenaTipaPoseteSimulacija {
 
-	//brisanje(izmena) tipa posete 1 od strane admina 1 i 2 
+	//brisanje (izmena) tipa posete 1 
+	
 	@Autowired 
-	TipPoseteService tipService;
+	private TipPoseteService tipPoseteService;
 	
 	@Scheduled(cron = "0 15 20 * * *")
 	public void izmeniTipPoseteAdmin1() throws ParseException {
 		
 		System.out.println("ADMIN 1 KRENUO DA BRISE TIP POSETE");
-		TipPosete tip = this.tipService.getOne(4);
+		TipPosete tip = this.tipPoseteService.getOne(4);
 		try {
-			this.tipService.delete(tip.getId());
+			this.tipPoseteService.delete(tip.getId());
 			System.out.println("ADMIN 1 IZBRISAO TIP POSETE 1");
 		}
 		catch(ObjectOptimisticLockingFailureException e) {
@@ -41,9 +42,9 @@ public class IzmenaBrisanjeTipaPoseteSimulacija {
 	public void izmeniTipPoseteAdmin2() throws ParseException {
 		
 		System.out.println("ADMIN 2 KRENUO DA BRISE TIP POSETE");
-		TipPosete tip = this.tipService.getOne(4);
+		TipPosete tip = this.tipPoseteService.getOne(4);
 		try {
-			this.tipService.delete(tip.getId());
+			this.tipPoseteService.delete(tip.getId());
 			System.out.println("ADMIN 2 IZBRISAO TIP POSETE 1");
 		}
 		catch(ObjectOptimisticLockingFailureException e) {

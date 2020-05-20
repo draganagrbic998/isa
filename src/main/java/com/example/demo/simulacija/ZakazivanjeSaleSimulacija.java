@@ -38,12 +38,8 @@ public class ZakazivanjeSaleSimulacija {
 	public void rezervisiSaluAdmin1() throws ParseException {
 		
 		System.out.println("ADMIN 1 KRENUO DA REZERVISE SALU");
-		//Admin admin1 = this.adminService.getOne(6);
 		ZahtevPregledObradaDTO zahtev1 = new ZahtevPregledObradaDTO(this.zahtevPosetaService.getOne(1));
-		System.out.println("NAPRAVIO ZAHTEV 1");
-		System.out.println(this.zahtevPosetaService.getOne(1).getDatum()+ " ZAHTEV 1 DATUM");
 		SalaDTO sala = new SalaDTO(this.salaService.getOne(1));
-		System.out.println("NAPRAVIO SALU 1");
 		Poseta poseta = this.posetaConversion.get(zahtev1, sala);
 		
 		try {
@@ -64,14 +60,10 @@ public class ZakazivanjeSaleSimulacija {
 	public void rezervisiSaluAdmin2() throws ParseException {
 		
 		System.out.println("ADMIN 2 KRENUO DA REZERVISE SALU");
-		//Admin admin1 = this.adminService.getOne(6);
 		ZahtevPregledObradaDTO zahtev2 = new ZahtevPregledObradaDTO(this.zahtevPosetaService.getOne(2));
-		System.out.println("DOBAVIO ZAHTEV 2");
-		System.out.println(this.zahtevPosetaService.getOne(2).getDatum()+" ZAHTEV 2 DATUM");
 		SalaDTO sala = new SalaDTO(this.salaService.getOne(1));
-		System.out.println("DOBAVIO SALU 1");
 		Poseta poseta = this.posetaConversion.get(zahtev2, sala);
-		System.out.println("NAPRAVIO POSETU");
+
 		try {
 			this.posetaService.save(poseta, zahtev2.getId());
 			System.out.println("ADMIN 2 REZERVISAO SALU 1");
