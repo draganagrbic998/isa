@@ -46,7 +46,7 @@ Vue.component("sestraPacijenti", {
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" @click.prevent="sort_ime()" href="#">imenu</a>
           <a class="dropdown-item" @click.prevent="sort_prezime()" href="#">prezimenu</a>
-          <a  class="dropdown-item" @click.prevent="sort_email()" href="#">emailu</a>
+          <a  class="dropdown-item" @click.prevent="sort_email()" href="#">broju osiguranika</a>
           <div class="dropdown-divider"></div>
         </div>
       </li>

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,9 +149,10 @@ public class PosetaService {
 	public void save(Map<Poseta, Integer> posete) {
 		Set<Lekar> lekariIzmena = new HashSet<>();
 
-		for (Poseta p : posete.keySet()) {
-			Integer id = posete.get(p);
-
+		for (Entry<Poseta, Integer> e : posete.entrySet()) {
+			Poseta p = e.getKey();
+			Integer id = e.getValue();
+			
 			if (!p.getTipPosete().isAktivan())
 				throw new MyRuntimeException();
 
