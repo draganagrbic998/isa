@@ -70,7 +70,7 @@ public class TipPoseteService {
 		
 	}
 	@Transactional(readOnly = true)
-	public TipPosete getOne(int i) {
-		return this.tipPoseteRepository.getOne(i);
+	public TipPosete getOne(Integer id) {
+		return this.tipPoseteRepository.getOne(id);
 	}
 }

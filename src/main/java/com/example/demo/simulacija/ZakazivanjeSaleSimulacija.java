@@ -50,7 +50,6 @@ public class ZakazivanjeSaleSimulacija {
 			System.out.println("ADMIN 1 ZAKASNIO DA ZAKAZE SALU 1!");
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			System.out.println("NEKA DRUGA GRESKA DESILA SE!");
 		}
 		System.out.println("ADMIN 1 ZAVRSIO SA RADOM");
@@ -72,7 +71,6 @@ public class ZakazivanjeSaleSimulacija {
 			System.out.println("ADMIN 2 ZAKASNIO DA ZAKAZE SALU 1!");
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			System.out.println("NEKA DRUGA GRESKA DESILA SE!");
 		}
 		System.out.println("ADMIN 2 ZAVRSIO SA RADOM");
