@@ -169,6 +169,7 @@ Vue.component("tipPosetePretraga", {
 				this.greskaCena= "Unesite cenu";
 				this.greska = true;
 			}
+			console.log(this.tipSelected);
 			if (this.greska){return;}
 			axios.post("/tipPosete/kreiranje", this.tipSelected)
 			.then(response => {

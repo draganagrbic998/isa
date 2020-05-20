@@ -19,7 +19,7 @@ Vue.component("zahtevPregledObrada", {
 			pretraga: '',
 			datum: '',
 			vreme: '',
-			refreshDatum: {},
+			refreshDatum: '',
 			slobodan: {},
 			greska: false,
 			greskaDatum: '',
@@ -60,14 +60,14 @@ Vue.component("zahtevPregledObrada", {
       <form class="form-inline my-2 my-lg-0">
       <input v-if="selectedZahtev" class="form-control mr-sm-2" type="text" v-model="vreme" placeholder="Unesite vreme" aria-label="Search">
       <input v-if="selectedZahtev"  class="form-control mr-sm-0" type="date" v-model="refreshDatum" placeholder="Odaberite datum" aria-label="Search">
-	<button v-if="selectedZahtev"  v-on:click="osveziDatum()" class="btn"><i class="fa fa-refresh fa-2x"></i></button>
+	  <button v-if="selectedZahtev"  v-on:click="osveziDatum()" class="btn"><i class="fa fa-refresh fa-2x"></i></button>
       <input v-if="selectedZahtev" class="form-control mr-sm-2" type="text" placeholder="Unesite naziv/broj sale" aria-label="Search" v-model="pretraga">
       <button v-if="selectedZahtev" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
       
       
       <input v-if="selectedSala" class="form-control mr-sm-2" type="text" v-model="vreme" placeholder="Unesite vreme" aria-label="Search">
       <input v-if="selectedSala" class="form-control mr-sm-2" type="date" v-model="datum" placeholder="Odaberite datum" aria-label="Search">
-      {{greskaDatum}}
+      
       <button v-if="selectedSala" class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="reserve()">Rezervisi</button>
       
     </form>
@@ -245,13 +245,28 @@ Vue.component("zahtevPregledObrada", {
 			this.vremePromena();
 			this.osvezi();
 			this.proveriVreme();
-			if (this.refreshDatum=='') {
-				this.greskaDatum = 'Morate uneti datum';
+			
+			if (this.refreshDatum!='' && (new Date(this.refreshDatum) <= new Date())){
 				this.greska = true;
+				alert("Datum nije validan!")
+			}
+			
+			if (this.refreshDatum=='' && this.vreme==''){
+				this.greska = true;
+				alert("Unesite datum/vreme");
+			}
+			
+
+			if (this.refreshDatum=='' && this.vreme!='') {
+				this.zahtevSelected.datum = this.zahtevSelected.datum.slice(0,10).concat(" ",this.vreme);				
+			}
+			if (this.refreshDatum!='' && this.vreme==''){
+				this.zahtevSelected.datum = this.refreshDatum.concat(" ",this.zahtevSelected.datum.slice(11));
+			}
+			if (this.refreshDatum!='' && this.vreme!=''){
+				this.zahtevSelected.datum = this.refreshDatum.concat(" ",this.vreme);
 			}
 			if (this.greska) {return;}
-			this.zahtevSelected.datum = this.refreshDatum.concat(" ",this.vreme);
-			console.log(this.zahtevSelected.datum);
 			this.promenjenDatum = true;
 			this.nadjiSale();
  			
@@ -281,16 +296,30 @@ Vue.component("zahtevPregledObrada", {
 			this.osvezi();
 			this.vremePromena();
 			
-			if (this.datum == '') {
-				this.greskaDatum = "Odaberite datum!";
+			if (this.datum!='' && (new Date(this.datum) <= new Date())){
 				this.greska = true;
+				alert("Datum nije validan!")
+			}
+			
+			if (this.datum=='' && this.vreme==''){
+				this.greska = true;
+				alert("Unesite datum/vreme");
+			}
+			
+
+			if (this.datum=='' && this.vreme!='') {
+				this.zahtevSelected.datum = this.zahtevSelected.datum.slice(0,10).concat(" ",this.vreme);				
+			}
+			if (this.vreme==''){
+				this.greska = true;
+				alert("Odaberite vreme!");
+			}
+			if (this.datum!='' && this.vreme!=''){
+				this.zahtevSelected.datum = this.datum.concat(" ",this.vreme);
 			}
 			this.proveriVreme();
-			
 			if (this.greska) {return;}
 			this.zahtevSelected.idSale = this.salaSelected.id;
-			this.zahtevSelected.datum = this.datum.concat(" ",this.vreme);
-			
 			this.posaljiZahtev();
 		},
 		//kada klikne na dugme rezervisi sa stranice za pretragu sala
@@ -377,11 +406,6 @@ Vue.component("zahtevPregledObrada", {
 		},
 		//provera ispravnosti unetog vremena od strane korisnika
 		proveriVreme :function() {
-
-			if (this.vreme == '') {
-				this.greskaVreme = "Morate uneti vreme.";
-				this.greska = true;
-			}
 			
 			if (!this.vreme.includes(':') && ((this.vreme.length>2 || this.vreme.length<1) || parseInt(this.vreme)>25)) {
 				this.greskaVreme = "Nespravan format.";

@@ -533,3 +533,5 @@ insert into zahtev_poseta(datum, karton, lekar, tip_posete, klinika)
 values ('2020-09-10 10:00', 1, 10, 1, 1);
 insert into zahtev_poseta(datum, karton, lekar, tip_posete, klinika)
 values ('2020-09-10 10:00', 2, 11, 1, 1);
+
+
