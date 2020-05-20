@@ -50,26 +50,27 @@ public class PosetaConversion {
 				posetaDTO.getPopust(),
 				this.tipPoseteRepository.getOne(posetaDTO.getTipPregleda()), 
 				this.salaRepository.getOne(posetaDTO.getSala()),
-				null, this.lekarRepository.getOne(posetaDTO.getLekar()));
-		
+				null, this.lekarRepository.getOne(posetaDTO.getLekar()));	
 	}
-	
 	public PosetaDTO get(Poseta poseta) {
 		return new PosetaDTO(poseta);
 	}
 
 	@Transactional(readOnly = true)
 	public Poseta get(ZahtevPregledObradaDTO zahtevDTO, SalaDTO salaDTO) throws ParseException {
-
 		Date pocetak = this.f.parse(zahtevDTO.getDatum());
+		System.out.println("usao, imamo pocetak "+ pocetak);
+		System.out.println(zahtevDTO.getIdTipa() + " id tipa posete");
+		System.out.println(salaDTO.getId() + " id sale");
+		System.out.println(zahtevDTO.getIdPacijent() + " pacijent");
+		System.out.println(zahtevDTO.getIdLekar() + " id lekara");
 		return new Poseta(StanjePosete.ZAUZETO, 
 				pocetak, 
 				null,
 				this.tipPoseteRepository.getOne(zahtevDTO.getIdTipa()),
-				this.salaRepository.getOne(zahtevDTO.getIdSale()), 
+				this.salaRepository.getOne(salaDTO.getId()), 
 				this.pacijentRepository.getOne(zahtevDTO.getIdPacijent()).getKarton(),
 				this.lekarRepository.getOne(zahtevDTO.getIdLekar()));
-
 	}
 
 	@Transactional(readOnly = true)

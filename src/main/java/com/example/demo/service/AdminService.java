@@ -18,5 +18,8 @@ public class AdminService {
 	public void save(Admin admin) {
 		this.adminRepository.save(admin);
 	}
-	
+	@Transactional(readOnly = true)
+	public Admin getOne(Integer id) {
+		return this.adminRepository.getOne(id);
+	}
 }
