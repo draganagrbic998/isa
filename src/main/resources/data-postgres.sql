@@ -508,3 +508,22 @@ values (16, 21);
 insert into lekar_poseta (lekar, poseta)
 values (17, 22);
 
+----------RADNI KALENDAR----------
+insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)
+values ('2020-07-10 10:00', 1, 1, 1, 1, 0.2, 0);
+insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)
+values ('2020-07-11 11:00', 1, 1, 2, 2, 0.2, 0);
+insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)
+values ('2020-07-12 12:00', 1, 2, 2, 1, 0.2, 0);
+insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)
+values ('2020-07-13 13:00', 1, 3, 3, 2, 0.2, 0);
+
+------------------------------------------------------------
+insert into lekar_poseta (lekar, poseta)
+values (10, 23);
+insert into lekar_poseta (lekar, poseta)
+values (10, 24);
+insert into lekar_poseta (lekar, poseta)
+values (10, 25);
+insert into lekar_poseta (lekar, poseta)
+values (10, 26);
