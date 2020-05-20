@@ -182,15 +182,19 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 	
 	@Override
 	public boolean odmorPreklapanje(ZahtevOdmor zahtev) {
-		
+
 		for (Poseta p: this.posete) {
+
 			if (!p.getStanje().equals(StanjePosete.OBAVLJENO)) {
 				if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().after(p.pocetak()))
 						&&  zahtev.getPocetak().before(p.kraj()))
-					return false;
+					return true;
 				if ((zahtev.getKraj().after(p.pocetak()))
 						&& (zahtev.getKraj().equals(p.kraj()) ||  zahtev.getKraj().before(p.kraj())))
-					return false;
+					return true;
+				if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().before(p.pocetak())
+						&& (zahtev.getKraj().equals(p.kraj()) || zahtev.getKraj().after(p.kraj()))))
+					return true;
 			}
 
 		}
@@ -198,12 +202,15 @@ public class Lekar extends Zaposleni implements Ocenjivanje, Slobodnost, Brisanj
 		for (ZahtevPoseta p: this.posetaZahtevi) {
 			if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().after(p.pocetak()))
 					&&  zahtev.getPocetak().before(p.kraj())) {
-					return false; 
+					return true; 
 			}
 			if ((zahtev.getKraj().after(p.pocetak())) 
 					&& (zahtev.getKraj().equals(p.kraj()) || zahtev.getKraj().before(p.kraj()))) {
-					return false;
+					return true;
 			}
+			if ((zahtev.getPocetak().equals(p.pocetak()) || zahtev.getPocetak().before(p.pocetak())
+					&& (zahtev.getKraj().equals(p.kraj()) || zahtev.getKraj().after(p.kraj()))))
+				return true;
 		}
 		
 		return super.odmorPreklapanje(zahtev);

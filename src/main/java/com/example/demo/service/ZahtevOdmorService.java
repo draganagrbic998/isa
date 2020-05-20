@@ -30,19 +30,15 @@ public class ZahtevOdmorService {
 	
 	@Autowired
 	private ZaposleniRepository zaposleniRepository;
-			
+				
 	@Transactional(readOnly = false)
 	public void save(ZahtevOdmor zahtev) {
-		Zaposleni z = zahtev.getZaposleni();
-		z = (Zaposleni) Hibernate.unproxy(z);
-		if (z instanceof Lekar)
-			z = this.lekarRepository.getOne(zahtev.getZaposleni().getId());
-		else
-			z = this.zaposleniRepository.getOne(zahtev.getZaposleni().getId());
+		Zaposleni z = this.zaposleniRepository.getOne(zahtev.getZaposleni().getId());
 		if (zahtev.getId() == null && 
-				z.odmorPreklapanje(zahtev))
+				zahtev.getZaposleni().odmorPreklapanje(zahtev))
 			throw new MyRuntimeException();
 		this.zahtevOdmorRepository.save(zahtev);
+		z = (Zaposleni) Hibernate.unproxy(z);
 		if (z instanceof Lekar) {
 			Lekar l = (Lekar) z;
 			l.setPoslednjaIzmena(new Date());
