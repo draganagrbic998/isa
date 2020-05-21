@@ -681,7 +681,7 @@ Vue.component("klinikeLekari", {
 			this.selectedKlinika.lekari = [];
 			for (let i in lista) {
 				for (let j in lista) {
-					if (lista[j].ocena < lista[i].ocena) {
+					if (lista[j].prosecnaOcena < lista[i].prosecnaOcena) {
 						let temp = lista[j];
 						lista[j] = lista[i];
 						lista[i] = temp;

@@ -95,7 +95,7 @@ public class LekarController {
 		}
 		try {
 			String obavestenje = "Uspesno ste registrovani kao lekar klinike " + lekar.getKlinika().getNaziv() + "\n"
-					+ "lozinka: " + lekar.getLozinka() + "\nLink za prijavu: " + this.name.getName();
+					+ "lozinka: " + lekarDTO.getLozinka() + "\nLink za prijavu: " + this.name.getName();
 			Message poruka = new Message(lekar.getEmail(), "Registracija lekara klinike", obavestenje);
 			this.emailService.sendMessage(poruka);
 			return new ResponseEntity<>(HttpStatus.OK);

@@ -98,7 +98,7 @@ Vue.component("zahtevRegistracijaObrada", {
 				location.reload();
 			})
 			.catch(error => {
-				alert("SERVER ERROR!");
+				alert("Zahtev nije moguce odobriti! Email ili broj osiguranika nije jedinstven!");
 			});
 		},
 		

@@ -29,7 +29,7 @@ public class SalaConversion {
 			version = this.salaRepository.getOne(salaDTO.getId()).getVersion();
 		}
 		else {
-			version = 0;
+			version = 0l;
 		}
 		return new Sala(salaDTO.getId(), 
 				salaDTO.getBroj(), 

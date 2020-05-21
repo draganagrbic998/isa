@@ -191,6 +191,11 @@ Vue.component("dodajPregled", {
 				this.greskaDatum = "Morate uneti datum.";
 				this.greska = true;
 			}
+			
+			if (new Date(this.pregled.datum) <= new Date()){
+				this.greskaDatum = "Datum ne sme biti manji od trenutnog.";
+				this.greska = true;
+			}
 
 			if (this.pregled.vreme == '') {
 				this.greskaVreme = "Morate uneti vreme.";

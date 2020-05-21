@@ -38,9 +38,9 @@ Vue.component("zahtevOperacijaObrada", {
 	
 	<div>
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a v-if="selectedZahtev==false && selectedSala==false" class="navbar-brand" href="#">ZAHTEVI ZA POSETU</a>
-  <a v-else-if="selectedZahtev==true && selectedSala==false" class="navbar-brand" href="#">SLOBODNE SALE {{formatiraj(zahtevSelected.datum)}}</a>
-  <a v-else class="navbar-brand" href="#">KALENDAR ZAUZETOSTI SALE</a>
+  <a v-if="selectedZahtev==false && selectedSala==false" class="navbar-brand" href="#/zahtevOperacijaObrada">ZAHTEVI ZA POSETU</a>
+  <a v-else-if="selectedZahtev==true && selectedSala==false" class="navbar-brand" href="#/zahtevOperacijaObrada">SLOBODNE SALE {{formatiraj(zahtevSelected.datum)}}</a>
+  <a v-else class="navbar-brand" href="#/zahtevOperacijaObrada">KALENDAR ZAUZETOSTI SALE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -265,6 +265,12 @@ Vue.component("zahtevOperacijaObrada", {
 				this.greskaDatum = 'Morate uneti datum';
 				this.greska = true;
 			}
+			
+			if (new Date(this.datum) <= new Date()){
+				this.greskaDatum = "Datum ne sme biti manji od trenutnog.";
+				this.greska = true;
+			}
+			
 			if (this.greska) {return;}
 			this.zahtevSelected.datum = this.refreshDatum.concat(" ", this.vreme);
 			console.log(this.zahtevSelected.datum);

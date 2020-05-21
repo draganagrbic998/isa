@@ -62,7 +62,7 @@ Vue.component("lekarPacijenti", {
       </li>
     </ul>
    </div>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0" v-if="!selected && !izvestajSelected">
       <input class="form-control mr-sm-2" type="text" placeholder="Pretrazite" aria-label="Search" v-model="pretraga">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="search()">Pretrazi</button>
     </form>
@@ -324,7 +324,7 @@ Vue.component("lekarPacijenti", {
 		zapocni: function() {
 			axios.get("/poseta/zapocni/" + this.selectedPacijent.zakazanaPoseta)
 			.then(response => {
-				this.$router.push("/zapocetPregled");
+				this.$router.push("/lekarHome");
 			})
 			.catch(error => {
 				alert("SERVER ERROR!");

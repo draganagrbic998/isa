@@ -154,7 +154,7 @@ Vue.component("zahtevPosetaSlanje", {
 			axios.post("/zahtevPoseta/kreiranje", this.pregled, null)
 			.then(response => {
 				alert("Zahtev uspesno poslat!");
-				this.$router.push("/lekarHome");
+				this.$router.push("/zapocetPregled");
 			})
 			.catch((error) => {
 			    if (error.response.status === 404) {

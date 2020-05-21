@@ -20,11 +20,13 @@ public class SalaService {
 	
 	@Transactional(readOnly = false)
 	public void save(Sala sala) {
+		Sala temp = sala;
 		if (sala.getId() != null) {
 			sala = this.salaRepository.getOne(sala.getId());
 			if (!sala.mozeBrisanje())
 				throw new MyRuntimeException();
 		}
+		sala.setNaziv(temp.getNaziv());
 		this.salaRepository.save(sala);
 	}
 	

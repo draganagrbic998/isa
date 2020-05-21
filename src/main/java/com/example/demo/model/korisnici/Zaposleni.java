@@ -54,6 +54,10 @@ public abstract class Zaposleni extends Korisnik{
 					zahtev.getKraj().before(z.getKraj())))
 				return true;
 			
+			if ((zahtev.getPocetak().equals(z.getPocetak()) || zahtev.getPocetak().before(z.getPocetak())) &&
+					(zahtev.getKraj().equals(z.getKraj()) || zahtev.getKraj().after(z.getKraj())))
+				return true;
+			
 		}
 		
 		return false;
