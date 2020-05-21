@@ -64,10 +64,6 @@ public class TipPoseteController {
 	@PostMapping(value = "/kreiranje", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HttpStatus> kreiranje(@RequestBody TipPoseteDTO tipPoseteDTO) {
 		try {
-			System.out.println(tipPoseteDTO.getId()+" ovo je id");
-			System.out.println(tipPoseteDTO.getKlinika()+" ovo je id klinike");
-			System.out.println(tipPoseteDTO.getMinute()+" ovo su minuti koje saljem");
-			System.out.println(this.tipPoseteConversion.get(tipPoseteDTO).getMinute()+" nakon konverzije");
 			this.tipPoseteService.save(this.tipPoseteConversion.get(tipPoseteDTO));
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

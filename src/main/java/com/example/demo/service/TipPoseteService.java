@@ -27,14 +27,15 @@ public class TipPoseteService {
 		
 	@Transactional(readOnly = false)
 	public void save(TipPosete tipPosete) {
-		System.out.println(tipPosete.getMinute()+" ovo treba da se sacuva");
-		System.out.println(tipPosete.getId()+" ovo je id");
+		TipPosete temp = tipPosete;
 		if (tipPosete.getId() != null) {
 			tipPosete = this.tipPoseteRepository.getOne(tipPosete.getId());
 			if (!tipPosete.mozeBrisanje())
 				throw new MyRuntimeException();
 		}
-		
+		tipPosete.setSati(temp.getSati());
+		tipPosete.setMinute(temp.getMinute());
+		tipPosete.setCena(temp.getCena());
 		this.tipPoseteRepository.save(tipPosete);
 	}
 	

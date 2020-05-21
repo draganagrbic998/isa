@@ -84,6 +84,17 @@ Vue.component("zahtevOdmorSlanje", {
 				this.greskaPocetak = 'Odaberite pocetni datum';
 				this.greska = true;
 			}
+			
+			if (new Date(this.zahtev.pocetak) <= new Date()){
+				this.greskaPocetak = 'Datum ne sme biti manji od trenutnog.';
+				this.greska = true;
+			}
+			
+			if (new Date(this.zahtev.kraj) <= new Date()){
+				this.greskaKraj = 'Datum ne sme biti manji od trenutnog.';
+				this.greska = true;
+			}
+			
 			if (this.zahtev.kraj==='') {
 				this.greskaKraj = 'Odaberite krajnji datum';
 				this.greska = true;

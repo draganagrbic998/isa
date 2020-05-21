@@ -121,6 +121,7 @@ Vue.component("salaPretraga", {
 			axios.post("/sala/kreiranje", this.salaSelected)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');
+				location.reload();
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

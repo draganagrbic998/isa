@@ -510,7 +510,7 @@ values (17, 22);
 
 ----------RADNI KALENDAR----------
 insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)
-values ('2020-07-10 10:00', 1, 1, 1, 1, 0.2, 0);
+values ('2020-05-21 02:33', 1, 1, 1, 1, 0.2, 0);
 insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)
 values ('2020-07-11 11:00', 1, 1, 2, 2, 0.2, 0);
 insert into poseta (datum, stanje, karton, tip_posete, sala, popust, version)

@@ -157,11 +157,11 @@ Vue.component("tipPosetePretraga", {
 		izmeni: function() {
 			this.osvezi();
 			this.showModal = false;
-			if (this.tipSelected.sati==''){
+			if (this.tipSelected.sati===''){
 				this.greskaSati = "Unesite broj sati";
 				this.greska = true;
 			}
-			if (this.tipSelected.minute==''){
+			if (this.tipSelected.minute===''){
 				this.greskaMinuti = "Unesite broj minuta";
 				this.greska = true;
 			}
@@ -171,6 +171,7 @@ Vue.component("tipPosetePretraga", {
 			}
 			console.log(this.tipSelected);
 			if (this.greska){return;}
+
 			axios.post("/tipPosete/kreiranje", this.tipSelected)
 			.then(response => {
 				alert('Izmene uspesno sacuvane!');

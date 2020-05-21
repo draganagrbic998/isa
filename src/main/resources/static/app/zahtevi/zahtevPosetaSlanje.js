@@ -130,7 +130,7 @@ Vue.component("zahtevPosetaSlanje", {
 			this.osvezi();
 			this.vremePromena();
 			
-			if (this.pregled.tipPosete == '') {
+			if (this.pregled.tipPosete == '' || this.pregled.tipPosete == null) {
 				this.greskaTip = "Odaberite tip pregleda!";
 				this.greska = true;
 			}
@@ -158,7 +158,7 @@ Vue.component("zahtevPosetaSlanje", {
 			axios.post("/zahtevPoseta/kreiranje", this.pregled, null)
 			.then(response => {
 				alert("Zahtev uspesno poslat!");
-				this.$router.push("/zapocetPregled");
+				this.$router.push("/lekarHome");
 			})
 			.catch((error) => {
 			    if (error.response.status === 404) {
