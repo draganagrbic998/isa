@@ -31,6 +31,8 @@ public class LekarService {
 	
 	@Transactional(readOnly = false)
 	public void save(Lekar lekar) {
+		if (lekar.getId() != null)
+			lekar.setOcene(this.lekarRepository.getOne(lekar.getId()).getOcene());
 		this.lekarRepository.save(lekar);
 	}
 	

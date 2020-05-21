@@ -21,7 +21,7 @@ public class PredefinisaniPregledSimulacija {
 	//u bazi je registrovan karton koji ima id 1
 	//poseta koja ima id 15 je predefinisani pregled koji se nalazi u bazi
 	
-	@Scheduled(cron = "0 41 22 * * *")
+	@Scheduled(cron = "0 01 03 * * *")
 	public void zakaziPredefinisaniPregledKlijent1() {
 		
 		System.out.println("PACIJENT 1 KRENUO DA ZAKAZUJE PREGLED");
@@ -40,7 +40,7 @@ public class PredefinisaniPregledSimulacija {
 		
 	}
 	
-	@Scheduled(cron = "0 41 22 * * *")
+	@Scheduled(cron = "0 01 03 * * *")
 	public void zakaziPredefinisaniPregledKlijent2() {
 		
 		System.out.println("PACIJENT 2 KRENUO DA ZAKAZUJE PREGLED");

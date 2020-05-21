@@ -29,7 +29,7 @@ public class TipPoseteConversion {
 			version = this.tipRepository.getOne(tipPoseteDTO.getId()).getVersion();
 		}
 		else {
-			version = 0;
+			version = 0l;
 		}
 		return new TipPosete(tipPoseteDTO.getId(), 
 				tipPoseteDTO.isPregled(), 

@@ -59,11 +59,6 @@ public class PosetaConversion {
 	@Transactional(readOnly = true)
 	public Poseta get(ZahtevPregledObradaDTO zahtevDTO, SalaDTO salaDTO) throws ParseException {
 		Date pocetak = this.f.parse(zahtevDTO.getDatum());
-		System.out.println("usao, imamo pocetak "+ pocetak);
-		System.out.println(zahtevDTO.getIdTipa() + " id tipa posete");
-		System.out.println(salaDTO.getId() + " id sale");
-		System.out.println(zahtevDTO.getIdPacijent() + " pacijent");
-		System.out.println(zahtevDTO.getIdLekar() + " id lekara");
 		return new Poseta(StanjePosete.ZAUZETO, 
 				pocetak, 
 				null,

@@ -42,7 +42,7 @@ public class ZahtevPregledPosetaSimulacija {
 	//korisnik koji ima id 10 je lekar koji se nalazi u bazi
 	//u bazi je registrovana sala koja ima id 1
 	
-	@Scheduled(cron = "0 50 22 * * *")
+	@Scheduled(cron = "0 56 02 * * *")
 	public void zakaziPregledKlijent() {
 		
 		System.out.println("PACIJENT KRENUO DA ZAKAZUJE PREGLED");
@@ -64,7 +64,7 @@ public class ZahtevPregledPosetaSimulacija {
 		
 	}
 
-	@Scheduled(cron = "0 50 22 * * *")
+	@Scheduled(cron = "0 56 02 * * *")
 	public void kreirajPosetuKlijent() {
 		
 		System.out.println("ADMIN KRENUO DA KREIRA NOVU POSETU");

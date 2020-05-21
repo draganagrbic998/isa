@@ -15,7 +15,7 @@ public class IzmenaSaleSimulacija {
 	@Autowired 
 	private SalaService salaService;
 	
-	@Scheduled(cron = "0 57 19 * * *")
+	@Scheduled(cron = "0 50 02 * * *")
 	public void izmeniSaluAdmin1() {
 		
 		System.out.println("ADMIN 1 KRENUO DA BRISE SALU");
@@ -33,7 +33,7 @@ public class IzmenaSaleSimulacija {
 		System.out.println("ADMIN 1 ZAVRSIO SA RADOM");
 	}
 	
-	@Scheduled(cron = "0 57 19 * * *")
+	@Scheduled(cron = "0 50 02 * * *")
 	public void izmeniSaluAdmin2() {
 		
 		System.out.println("ADMIN 2 KRENUO DA BRISE SALU");

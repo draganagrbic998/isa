@@ -43,6 +43,8 @@ public class KlinikaService {
 
 	@Transactional(readOnly = false)
 	public void save(Klinika klinika) {
+		if (klinika.getId() != null)
+			klinika.setOcene(this.klinikaRepository.getOne(klinika.getId()).getOcene());
 		this.klinikaRepository.save(klinika);
 	}
 	

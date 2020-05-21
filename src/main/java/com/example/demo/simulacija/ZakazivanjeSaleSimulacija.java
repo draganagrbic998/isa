@@ -34,7 +34,7 @@ public class ZakazivanjeSaleSimulacija {
 	//dva admina pokusavaju konkuretno da za isti datum i vreme rezervisu salu id=1
 	//za dva razlicita zahteva za pregled, zahtev id=1 i zahtev id=2 
 
-	@Scheduled(cron = "0 13 19 * * *")
+	@Scheduled(cron = "0 59 02 * * *")
 	public void rezervisiSaluAdmin1() throws ParseException {
 		
 		System.out.println("ADMIN 1 KRENUO DA REZERVISE SALU");
@@ -55,7 +55,7 @@ public class ZakazivanjeSaleSimulacija {
 		System.out.println("ADMIN 1 ZAVRSIO SA RADOM");
 	}
 	
-	@Scheduled(cron = "0 13 19 * * *")
+	@Scheduled(cron = "0 59 02 * * *")
 	public void rezervisiSaluAdmin2() throws ParseException {
 		
 		System.out.println("ADMIN 2 KRENUO DA REZERVISE SALU");

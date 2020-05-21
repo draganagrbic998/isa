@@ -21,7 +21,7 @@ public class PrvaOcenaSimulacija {
 	//korisnik koji ima id 1 je pacijent koji se nalazi u bazi
 	//korisnik koji ima id 10 je lekar koji se nalazi u bazi
 
-	@Scheduled(cron = "0 44 22 * * *")
+	@Scheduled(cron = "0 54 02 * * *")
 	public void kreirajPrvuOcenuKlijent1() {
 		
 		System.out.println("KLIJENT 1 KRENUO DA KREIRA PRVU OCENU ZA LEKARA");
@@ -40,7 +40,7 @@ public class PrvaOcenaSimulacija {
 		
 	}
 	
-	@Scheduled(cron = "0 44 22 * * *")
+	@Scheduled(cron = "0 54 02 * * *")
 	public void kreirajPrvuOcenuKlijent2() {
 		
 		System.out.println("KLIJENT 2 KRENUO DA KREIRA PRVU OCENU ZA LEKARA");

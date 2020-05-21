@@ -175,7 +175,7 @@ Vue.component("dodajPregled", {
 		osvezi: function(){
 			this.greskaDatum = '';
 			this.greskaVreme = '';
-			this.greskaTipPrgleda = '';
+			this.greskaTipPregleda = '';
 			this.greskaSala = '';
 			this.greskaLekar = '';
 			this.greskaPopust = '';

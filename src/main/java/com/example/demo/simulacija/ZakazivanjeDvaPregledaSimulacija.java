@@ -30,7 +30,7 @@ public class ZakazivanjeDvaPregledaSimulacija {
 	//u bazi je registrovan karton koji ima id 1
 	//korisnik koji ima id 10 je lekar koji se nalazi u bazi
 
-	@Scheduled(cron = "0 36 22 * * *")
+	@Scheduled(cron = "0 02 03 * * *")
 	public void zakaziPregledKlijent1() {
 		
 		System.out.println("PACIJENT 1 KRENUO DA ZAKAZUJE PREGLED");
@@ -51,7 +51,7 @@ public class ZakazivanjeDvaPregledaSimulacija {
 		System.out.println("PACIJENT 1 ZAVRSIO SA RADOM");
 	}
 	
-	@Scheduled(cron = "0 36 22 * * *")
+	@Scheduled(cron = "0 02 03 * * *")
 	public void zakaziPregledKlijent2() {
 		
 		System.out.println("PACIJENT 2 KRENUO DA ZAKAZUJE PREGLED");

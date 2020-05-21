@@ -17,7 +17,7 @@ public class IzmenaTipaPoseteSimulacija {
 	@Autowired 
 	private TipPoseteService tipService;
 	
-	@Scheduled(cron = "0 15 20 * * *")
+	@Scheduled(cron = "0 51 02 * * *")
 	public void izmeniTipPoseteAdmin1() {
 		
 		System.out.println("ADMIN 1 KRENUO DA BRISE TIP POSETE");
@@ -35,7 +35,7 @@ public class IzmenaTipaPoseteSimulacija {
 		System.out.println("ADMIN 1 ZAVRSIO SA RADOM");
 	}
 	
-	@Scheduled(cron = "0 15 20 * * *")
+	@Scheduled(cron = "0 51 02 * * *")
 	public void izmeniTipPoseteAdmin2() {
 		
 		System.out.println("ADMIN 2 KRENUO DA BRISE TIP POSETE");

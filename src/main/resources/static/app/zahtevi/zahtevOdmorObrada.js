@@ -76,7 +76,8 @@ Vue.component("zahtevOdmorObrada", {
 	}, 
 	
 	methods: {
-search: function(){
+
+		search: function(){
 			
 			this.zahtevi = [];
 			this.nemaRezultata = '';
