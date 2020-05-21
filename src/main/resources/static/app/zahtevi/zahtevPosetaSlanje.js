@@ -148,6 +148,10 @@ Vue.component("zahtevPosetaSlanje", {
 				this.greskaVreme = "Nespravan format.";
 				this.greska = true;
 			}
+			if (new Date(this.pregled.datum) <= new Date()) {
+				this.greskaDatum = "Datum nije validan!";
+				this.greska = true;
+			}
 			
 			if (this.greska) return;
 						
