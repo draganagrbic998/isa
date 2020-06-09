@@ -23,3 +23,5 @@ Pokretanje projekta:
 3. preimenovati "data-postgres.sql" fajl na "data.sql"
 4. instalirati sve dependency-je iz pom.xml-a
 5. desni klik na projekat -> Run As -> Java Application/Spring Boot app
+
+Link ka heroku aplikaciji: https://nasaaplikacija.herokuapp.com/
