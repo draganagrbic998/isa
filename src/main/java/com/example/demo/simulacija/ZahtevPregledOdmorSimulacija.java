@@ -36,7 +36,7 @@ public class ZahtevPregledOdmorSimulacija {
 	//u bazi je registrovan karton koji ima id 1
 	//korisnik koji ima id 10 je lekar koji se nalazi u bazi
 	
-	@Scheduled(cron = "0 55 02 * * *")
+	@Scheduled(cron = "0 26 14 * * *")
 	public void zakaziPregledKlijent() {
 		
 		System.out.println("PACIJENT KRENUO DA ZAKAZUJE PREGLED");
@@ -58,7 +58,7 @@ public class ZahtevPregledOdmorSimulacija {
 		
 	}
 	
-	@Scheduled(cron = "0 55 02 * * *")
+	@Scheduled(cron = "0 26 14 * * *")
 	public void zakaziOdmorKlijent() {
 		
 		System.out.println("LEKAR KRENUO DA SALJE ZAHTEV ZA ODMOR");

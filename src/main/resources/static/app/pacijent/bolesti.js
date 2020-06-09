@@ -375,6 +375,14 @@ Vue.component("bolesti", {
 						break;
 					}
 				}
+				for (let b of this.bolesti){
+					for (let l of b.lekari){
+						if (l.id == response.data.id){
+							l.prosecnaOcena = response.data.prosecnaOcena;
+							break;
+						}
+					}
+				}
 			})
 			.catch(response => {
 				alert("SERVER ERROR!!");

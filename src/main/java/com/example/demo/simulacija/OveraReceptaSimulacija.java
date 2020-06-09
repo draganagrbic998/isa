@@ -20,7 +20,7 @@ public class OveraReceptaSimulacija {
 
 	// u bazi je registrovana sestra koja ima id 24 i
 	// terapija koja ima id 14, koja ima neoveren recept
-	@Scheduled(cron = "0 52 02 * * *")
+	@Scheduled(cron = "10 46 14 * * *")
 	public void overiRecept1() {
 		System.out.println("Sestra 1 overava recept");
 		Sestra s1 = this.sestraService.getOne(24);
@@ -37,7 +37,7 @@ public class OveraReceptaSimulacija {
 
 	// u bazi je registrovana sestra koja ima id 23 i
 	// terapija koja ima id 14, koja ima neoveren recept
-	@Scheduled(cron = "0 52 02 * * *")
+	@Scheduled(cron = "10 46 14 * * *")
 	public void overiRecept2() {
 		System.out.println("Sestra 2 overava recept");
 		Sestra s2 = this.sestraService.getOne(24);

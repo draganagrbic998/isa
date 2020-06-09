@@ -138,7 +138,7 @@ Vue.component("adminHome", {
 					
 					<tr>
 						<th scope="row">Opis: </th>
-						<td><input type="text" v-model="klinika.opis" class="form-control"></td>
+						<td> <textarea v-model="klinika.opis"></textarea> </td>
 						<td></td>
 					</tr>
 					
